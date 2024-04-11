@@ -22,12 +22,12 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<? super SignUpResponseDto> signUp(@RequestBody @Valid SignUpRequestDto requestBody){
-        return null;
+        return authService.signUp(requestBody);
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<? super SignInResponseDto> signUp(@RequestBody @Valid SignInRequestDto requestBody){
-        return null;
+    public ResponseEntity<? super SignInResponseDto> signIn(@RequestBody @Valid SignInRequestDto requestBody){
+        return authService.signIn(requestBody);
     }
 
 
