@@ -1,4 +1,13 @@
 spring:
     application:
         name: back
+    datasource:
+        url: jdbc:mysql://localhost:3306/e207?serverTimezone=Asia/Seoul
+        username: root
+        password: 1234
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: update
 secret-key: ThisIsSSAFYEFiveIsJwtSecretKeyDoNotUseThisStatement
+## .yml은 프로덕션 버전이 있을 것
