@@ -23,6 +23,4 @@ public class SkillEntity {
     @Column(name = "skill_name", nullable = false)
     private String skillName = "None";
 
-    @OneToMany(mappedBy = "skill")
-    private List<LearnedSkillEntity> learnedSkills;
 }

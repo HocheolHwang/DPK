@@ -29,30 +29,40 @@ public class LearnedSkillEntity {
     @JoinColumn(name = "skill_code")
     private SkillEntity skill;
 
+    @MapsId("classCode")  // LearnedSkillId 내의 skillCode 필드를 매핑합니다
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_code")
+    private ClassEntity classEntity;
+
+
     @Column(name = "skill_slot", nullable = false)
     private int skillSlot;
 
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
 
-    // Constructors, getters, and setters
+
 }
 
 @Embeddable
 @Getter
 @Setter
 class LearnedSkillId implements Serializable {
-
+    @Column(name = "player_id")
     private String playerId;
+    @Column(name = "skill_code")
     private String skillCode;
+    @Column(name = "class_code")
+    private String classCode;
 
     // 기본 생성자
     public LearnedSkillId() {}
 
     // 매개변수 있는 생성자
-    public LearnedSkillId(String playerId, String skillCode) {
+    public LearnedSkillId(String playerId, String skillCode, String classCode) {
         this.playerId = playerId;
         this.skillCode = skillCode;
+        this.classCode = classCode;
     }
 
     // getters, setters, hashCode, equals 구현

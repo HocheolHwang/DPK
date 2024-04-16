@@ -44,13 +44,13 @@ public class PartyMemberEntity {
 class PartyMemberId implements Serializable {
 
     private String playerId;
-    private Integer partyId;
+    private String partyId;
 
     // 기본 생성자
     public PartyMemberId() {}
 
     // 매개변수 있는 생성자
-    public PartyMemberId(String playerId, Integer partyId) {
+    public PartyMemberId(String playerId, String partyId) {
         this.playerId = playerId;
         this.partyId = partyId;
     }

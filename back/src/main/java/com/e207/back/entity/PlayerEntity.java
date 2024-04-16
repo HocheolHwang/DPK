@@ -33,12 +33,6 @@ public class PlayerEntity {
     private long playerGold = 0;
 
 
-    @Column(name = "player_level", nullable = false)
-    private int playerLevel = 1;
-
-    @Column(name = "player_exp", nullable = false)
-    private long playerExp = 0;
-
     @Column(name = "isFirst", nullable = false)
     private boolean isFirst = true;
 
@@ -49,11 +43,7 @@ public class PlayerEntity {
     @OneToMany(mappedBy = "player")
     private List<GoldLogEntity> goldLogs;
 
-    @OneToMany(mappedBy = "player")
-    private List<ExpLogEntity> expLogs;
 
-    @OneToMany(mappedBy = "player")
-    private List<LearnedSkillEntity> learnedSkills;
 
     @OneToMany(mappedBy = "player")
     private List<PartyMemberEntity> partyMembers;

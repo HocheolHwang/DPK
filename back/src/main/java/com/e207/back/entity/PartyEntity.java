@@ -20,8 +20,8 @@ import java.util.List;
 public class PartyEntity {
 
     @Id
-    @Column(name = "party_id", nullable = false)
-    private Integer partyId;
+    @Column(name = "party_id", nullable = false, length = 36)
+    private String partyId;
 
     @Column(name = "party_title", nullable = false)
     private String partyTitle = "None";
