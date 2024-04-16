@@ -1,9 +1,6 @@
 package com.e207.back.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +10,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,14 +30,14 @@ public class PlayerEntity {
     private String password;
 
     @Column(name = "player_gold", nullable = false)
-    private BigInteger playerGold = BigInteger.ZERO;
+    private long playerGold = 0;
 
 
     @Column(name = "player_level", nullable = false)
     private int playerLevel = 1;
 
     @Column(name = "player_exp", nullable = false)
-    private BigInteger playerExp = BigInteger.ZERO;
+    private long playerExp = 0;
 
     @Column(name = "isFirst", nullable = false)
     private boolean isFirst = true;
@@ -47,4 +45,10 @@ public class PlayerEntity {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "player")
+    private List<GoldLogEntity> goldLogs;
+
+    @OneToMany(mappedBy = "player")
+    private List<ExpLogEntity> expLogs;
 }
