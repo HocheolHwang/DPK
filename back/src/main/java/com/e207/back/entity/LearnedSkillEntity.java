@@ -39,6 +39,8 @@ public class LearnedSkillEntity {
 }
 
 @Embeddable
+@Getter
+@Setter
 class LearnedSkillId implements Serializable {
 
     private String playerId;

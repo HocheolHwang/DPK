@@ -54,4 +54,7 @@ public class PlayerEntity {
 
     @OneToMany(mappedBy = "player")
     private List<LearnedSkillEntity> learnedSkills;
+
+    @OneToMany(mappedBy = "player")
+    private List<PartyMemberEntity> partyMembers;
 }
