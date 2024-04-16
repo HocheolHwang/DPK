@@ -7,25 +7,26 @@ using System.Text;
 
 public class HTTPRequest : MonoBehaviour
 {
-    string url = "https://j10e107.p.ssafy.io/api/";
+    string url = "http://localhost:8080/";
     //string port = "443";
 
     // GET
-    // ∞Ê∑Œ∏∏ ¡ˆ¡§
+    // Í≤ΩÎ°úÎßå ÏßÄÏ†ï
     IEnumerator GET(string path)
     {
         UnityWebRequest request = UnityWebRequest.Get(url + path);
 
-        yield return request.SendWebRequest();
+        Debug.Log(request.uri);
 
-        if (request.result != UnityWebRequest.Result.Success) // Unity 2020.1 ¿Ã»ƒ∫Œ≈Õ¥¬ isNetworkErrorøÕ isHttpError ¥ÎΩ≈ result ªÁøÎ
+        yield return request.SendWebRequest();
+        Debug.Log(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.Success) // Unity 2020.1 Ïù¥ÌõÑÎ∂ÄÌÑ∞Îäî isNetworkErrorÏôÄ isHttpError ÎåÄÏã† result ÏÇ¨Ïö©
         {
             if (path.Equals("user/profile"))
             {
 
             }
 
-            //Debug.Log(request.error);
         }
         else
         {
@@ -44,27 +45,17 @@ public class HTTPRequest : MonoBehaviour
 
     // POST
     // url + path = uri
-    // dictionary∑Œ ∞™ ¿¸¥ﬁ
-    IEnumerator POST(string path, Dictionary<string, string> postParam)
+    // dictionaryÎ°ú Í∞í Ï†ÑÎã¨
+    IEnumerator POST(string path, string jsonfile)
     {
-        // Dictionary∏¶ ¡˜¡¢ JSON πÆ¿⁄ø≠∑Œ ∫Ø»Ø
-        StringBuilder jsonDataBuilder = new StringBuilder("{");
-        foreach (var item in postParam)
-        {
-            jsonDataBuilder.Append($"\"{item.Key}\":\"{item.Value}\",");
-        }
-        if (jsonDataBuilder.Length > 1) // ∏∂¡ˆ∏∑ Ω∞«•∏¶ ¡¶∞≈«œ±‚ ¿ß«‘
-        {
-            jsonDataBuilder.Remove(jsonDataBuilder.Length - 1, 1);
-        }
-        jsonDataBuilder.Append("}");
-        string jsonData = jsonDataBuilder.ToString();
+        //byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonfile);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonfile);
 
-        byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonData);
         UnityWebRequest postRequest = new UnityWebRequest(url + path, "POST");
         postRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         postRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        postRequest.SetRequestHeader("Content-Type", "application/json");
+        postRequest.SetRequestHeader("Content-Type", "application/json; charset=utf-8");
+        
 
         yield return postRequest.SendWebRequest();
 
@@ -72,24 +63,35 @@ public class HTTPRequest : MonoBehaviour
         {
             //Debug.LogError("error" + postRequest.error);
             //Debug.Log("result" + postRequest.result);
-            UserData data = JsonUtility.FromJson<UserData>(postRequest.downloadHandler.text);
-
         }
-        else // ≈ÎΩ≈ º∫∞¯
+        else // ÌÜµÏã† ÏÑ±Í≥µ
         {
+            TESTClass data = JsonUtility.FromJson<TESTClass>(postRequest.downloadHandler.text);
+            Debug.Log(data.name);
+        }
+    }
 
-            if (path.Equals("user")) // »∏ø¯∞°¿‘¿œ ∞ÊøÏ
+    IEnumerator Upload(string URL, string jsonfile)
+    {
+        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(URL, jsonfile))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonfile);
+            request.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
-                // ∑Œ±◊¿Œ »≠∏È¿∏∑Œ ¿Ãµø
+                Debug.Log(request.error);
             }
-            else if (path.Equals("auth/login")) // ∑Œ±◊¿Œ¿œ ∞ÊøÏ
+            else
             {
-                UserData data = JsonUtility.FromJson<UserData>(postRequest.downloadHandler.text);
-
-                GetCall("user/profile");
+                Debug.Log(request.downloadHandler.text);
             }
         }
     }
+
 
     [System.Serializable]
     class UserData
@@ -101,7 +103,15 @@ public class HTTPRequest : MonoBehaviour
         public string[] message;
     }
 
-    public void POSTCall(string path, Dictionary<string, string> postParam)
+    [System.Serializable]
+    class TESTClass
+    {
+        public string name;
+        public int data;
+        public float time;
+    }
+
+    public void PostCall(string path, string postParam)
     {
         StartCoroutine(POST(path, postParam));
     }
