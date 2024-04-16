@@ -8,17 +8,29 @@ using UnityEngine;
 /// </summary>
 public class StateMachine
 {
-    public State state; 
+    // SM이 가진 State
+    public State curState { get; protected set; }
 
-    // 현재 상태를 새로운 상태로 변경한다.
+    /// <summary>
+    /// 현재 상태를 새로운 상태로 변경한다.
+    /// </summary>
     public void ChangeState(State newState, bool forceReset)
     {
-        if (state != newState || forceReset)    // 현재 상태와 새로운 상태가 같지 않거나 강제로 상태를 변경하는 경우
+        Debug.Log($"ChangeState {newState.gameObject.name}");
+        if (curState != newState || forceReset)    // 현재 상태와 새로운 상태가 같지 않거나 강제로 상태를 변경하는 경우
         {
-            state?.Exit();
-            state = newState;
-            state.Initialize();
-            state.Enter();
+            curState?.Exit();
+            curState = newState;
+            curState.Initialize(this);
+            curState.Enter();
         }
+    }
+
+    /// <summary>
+    /// 현재 상태를 매 프레임마다 실행
+    /// </summary>
+    public void Execute()
+    {
+        curState?.Execute();
     }
 }

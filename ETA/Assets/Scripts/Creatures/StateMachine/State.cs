@@ -11,17 +11,24 @@ public abstract class State : MonoBehaviour
     protected float startTime;                      // 현재 상태의 시작 시간
     public float time => Time.time - startTime;     // 현재 상태가 된 시점으로부터 얼마나 지났는지
  
+    // SMCore
     protected StateMachineCore machineCore;
     protected Animator animator => machineCore.animator;
+    protected OneDetector detector => machineCore.detector;
 
-    // 현재 상태를 가진 SMCore를 초기화한다.
+
+    /// <summary>
+    /// Core에서 관리하는 Component와 GameObject를 가져오기 위함
+    /// </summary>
     public void SetCore(StateMachineCore _machineCore)
     {
         machineCore = _machineCore;
     }
 
-    // 현재 상태의 멤버 변수를 초기화한다.
-    public void Initialize()
+    /// <summary>
+    /// 현재 상태의 멤버 변수를 초기화한다.
+    /// </summary>
+    public void Initialize(StateMachine _parent)
     {
         isCompelete = false;
         startTime = Time.time;

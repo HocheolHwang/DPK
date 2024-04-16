@@ -4,22 +4,24 @@ using UnityEngine;
 
 /// <summary>
 /// State Machine을 사용하는 모든 Agent는 해당 SMCore를 가지거나 상속한다.
+/// 모든 Agent는 SM을 가진다.
+/// Agent가 State에서 사용하는 모든 Component를 가진다.
+/// Agent가 State에서 사용하는 모든 GameObject를 가진다.
 /// </summary>
 public class StateMachineCore : MonoBehaviour
 {
-    // Agent의 공통 Component
+    [Header("Common Component")]
     [SerializeField] public Animator animator;
 
+    //[Header("Common GameObject : MonoBehaviour")]
+    //[SerializeField] public DetectTarget deTectTarget;
+
     public StateMachine machine;
+    public OneDetector detector;
 
-    
-    // 개발 편의성을 위함
-    protected void ChangeState(State newState, bool forceReset = false)
-    {
-        machine.ChangeState(newState, forceReset);
-    }
-
-    // Agent의 Behaviour Object에 존재하는 모든 State를 가져와서 Instance화 한다. 
+    /// <summary>
+    /// Agent의 Behaviour Object에 존재하는 모든 State를 가져와서 Instance화 한다. 
+    /// </summary>
     public void InitInstance()
     {
         // Agent에 SM을 세팅한다.
@@ -29,7 +31,16 @@ public class StateMachineCore : MonoBehaviour
         State[] allChildStates = GetComponentsInChildren<State>();
         foreach (State state in allChildStates)
         {
+            Debug.Log($"{state.gameObject.name} SetCore");
             state.SetCore(this);
         }
+    }
+
+    /// <summary>
+    /// machine의 ChangeState를 호출
+    /// </summary>
+    protected void ChangeState(State newState, bool forceReset = false)
+    {
+        machine.ChangeState(newState, forceReset);
     }
 }
