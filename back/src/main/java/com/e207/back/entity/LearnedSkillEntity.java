@@ -32,15 +32,8 @@ public class LearnedSkillEntity {
     @MapsId("classCode")  // LearnedSkillId 내의 skillCode 필드를 매핑합니다
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_code")
-    private SkillEntity classEntity;
+    private ClassEntity classEntity;
 
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumns({
-//            @JoinColumn(name = "player_id", referencedColumnName = "player_id"),
-//            @JoinColumn(name = "class_code", referencedColumnName = "class_code")
-//    })
-//    private PlayerClassEntity playerClassEntity;
 
     @Column(name = "skill_slot", nullable = false)
     private int skillSlot;
@@ -48,7 +41,7 @@ public class LearnedSkillEntity {
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
 
-    // Constructors, getters, and setters
+
 }
 
 @Embeddable

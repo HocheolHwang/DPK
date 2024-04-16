@@ -23,11 +23,12 @@ public class ExpLogEntity {
     private Long expLogSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "player_id", referencedColumnName = "player_id"),
-            @JoinColumn(name = "class_code", referencedColumnName = "class_code")
-    })
-    private PlayerClassEntity playerClassEntity;
+    @JoinColumn(name = "player_id", referencedColumnName = "player_id")
+    private PlayerEntity player;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_code", referencedColumnName = "class_code")
+    private ClassEntity classEntity;
 
     @Column(name = "exp_delta", nullable = false)
     private int expDelta;
