@@ -16,8 +16,10 @@ public class IdleState : State
     public override void Execute()
     {
 
-        // 타겟이 null이 아닌 경우 -> Controller에서 관리
 
-        // isComplete = true;
+        if (machineCore.detector.target != null)
+        {
+            isComplete = true;
+        }
     }
 }

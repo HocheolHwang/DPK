@@ -9,7 +9,7 @@ using UnityEngine;
 public class StateMachine
 {
     // SM이 가진 State
-    public State curState { get; protected set; }
+    public State curState { get; set; }
 
     /// <summary>
     /// 현재 상태를 새로운 상태로 변경한다.

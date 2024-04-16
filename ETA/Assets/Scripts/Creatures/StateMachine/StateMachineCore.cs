@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// State Machine을 사용하는 모든 Agent는 해당 SMCore를 가지거나 상속한다.
@@ -12,12 +13,13 @@ public class StateMachineCore : MonoBehaviour
 {
     [Header("Common Component")]
     [SerializeField] public Animator animator;
+    [SerializeField] public NavMeshAgent agent;
 
     //[Header("Common GameObject : MonoBehaviour")]
     //[SerializeField] public DetectTarget deTectTarget;
 
-    public StateMachine machine;
-    public OneDetector detector;
+    public StateMachine machine;    // 하나의 Agent에 하나의 machine만 존재하기 때문에 singleton으로 선언할까?
+    public Detector detector;
 
     /// <summary>
     /// Agent의 Behaviour Object에 존재하는 모든 State를 가져와서 Instance화 한다. 
@@ -37,7 +39,8 @@ public class StateMachineCore : MonoBehaviour
     }
 
     /// <summary>
-    /// machine의 ChangeState를 호출
+    /// [ machine의 ChangeState를 호출 ]
+    /// 개발 편의성
     /// </summary>
     protected void ChangeState(State newState, bool forceReset = false)
     {

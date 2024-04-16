@@ -120,7 +120,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756024607613795816}
   m_Enabled: 1
-  m_AgentTypeID: -1372625422
+  m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
@@ -147,10 +147,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  agent: {fileID: 246150322890706319}
   detector: {fileID: 2053236287376420685}
   idleState: {fileID: 7074773535532984691}
-  moveState: {fileID: 5386935865619606097}
-  attackState: {fileID: 5349082165186794127}
+  chaseStrategy: {fileID: 2534106136246182624}
+  attackStrategy: {fileID: 1748501861590190157}
 --- !u!1 &1284501363244832973
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +208,7 @@ GameObject:
   - component: {fileID: 7721104690777619940}
   - component: {fileID: 5386935865619606097}
   m_Layer: 0
-  m_Name: MoveState
+  m_Name: RunState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  maxSpeed: 0
 --- !u!1 &4551122904895372918
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +275,8 @@ Transform:
   - {fileID: 6775292444986498354}
   - {fileID: 7721104690777619940}
   - {fileID: 6561491289603289052}
+  - {fileID: 3848393984927208037}
+  - {fileID: 2534994497374484641}
   m_Father: {fileID: 3635003501653020222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4679613144802527576
@@ -320,6 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectRange: 5
+  attackRange: 2
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -428,6 +433,98 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &5439849941238480164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2534994497374484641}
+  - component: {fileID: 2534106136246182624}
+  m_Layer: 0
+  m_Name: ChaseStrategy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2534994497374484641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439849941238480164}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 504510659553870608}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2534106136246182624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439849941238480164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ade6227dc9c0740bb1e5746ea7420a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animState: {fileID: 5386935865619606097}
+  speed: 0
+--- !u!1 &5563330242924010847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3848393984927208037}
+  - component: {fileID: 1748501861590190157}
+  m_Layer: 0
+  m_Name: MeleeAttackStrategy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3848393984927208037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5563330242924010847}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 504510659553870608}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1748501861590190157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5563330242924010847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8a07af295c1c442b5937b175bec7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleState: {fileID: 7074773535532984691}
+  meleeAttackState: {fileID: 5349082165186794127}
 --- !u!1 &7796671862287980273
 GameObject:
   m_ObjectHideFlags: 0

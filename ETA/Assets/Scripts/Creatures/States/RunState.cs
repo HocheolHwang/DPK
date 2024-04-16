@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveState : State
+/// <summary>
+/// animation만 재생한다.
+/// </summary>
+public class RunState : State
 {
     [SerializeField] public AnimationClip anim;
+    [SerializeField] public float maxSpeed;
+    [SerializeField] public float speed;        // animator  속도와 동일하게 세팅
 
     public override void Enter()
     {
@@ -14,8 +19,9 @@ public class MoveState : State
 
     public override void Execute()
     {
+        // animator speed와 agent speed를 맞춘다.
+        machineCore.agent.SetDestination(machineCore.detector.target.position);
 
-        // 사정거리에 플레이어 또는 몬스터가 있는 경우 멈춘다.
         // HP가 0인 경우 멈춘다.
         // isComplete = true;
     }

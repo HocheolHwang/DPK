@@ -8,13 +8,18 @@ using static UnityEngine.GraphicsBuffer;
 /// [ 한 명만 타겟팅 ]
 /// 1. 0.5초마다 인식 범위에 적이 있는지 판단한다.
 /// 2. 있으면 가장 가까운 적을 target으로 세팅한다.
+/// 
+/// [ 타겟팅한 적이 공격 범위에 있나?]
+/// 1. Distance를 계산
 /// </summary>
-public class OneDetector : MonoBehaviour
+public class Detector : MonoBehaviour
 {
+    [Header("Set Values from the Inspector")]
     [SerializeField] public float detectRange;
+    [SerializeField] public float attackRange;
     [SerializeField] public LayerMask targetLayerMask;
-    
-    public Transform target {  get; private set; }
+
+    [SerializeField] public Transform target {  get; private set; }
 
     private Ray ray;
 
@@ -22,20 +27,22 @@ public class OneDetector : MonoBehaviour
     {
         target = null;
 
-        UpdateTarget();       
+        StartCoroutine(UpdateTarget());
     }
 
     private void OnDrawGizmos()
     {
         ray.origin = transform.position;
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(ray.origin, detectRange);
+        if (target == null ) Gizmos.DrawWireSphere(ray.origin, detectRange);
+        else Gizmos.DrawWireSphere(ray.origin, attackRange);
     }
 
     IEnumerator UpdateTarget()
     {
         while (true)
         {
+            Debug.Log("Detector - UpdateTarget");
             yield return new WaitForSeconds(0.5f);
 
             target = null;
@@ -52,5 +59,14 @@ public class OneDetector : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 공격 범위에 적이 있는지 판단한다.
+    /// </summary>
+    public bool CheckWithinAttackRange()
+    {
+        if (target == null) return false;
+        return Vector3.Distance(transform.position, target.position) < attackRange;
     }
 }
