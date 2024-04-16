@@ -29,6 +29,19 @@ public class LearnedSkillEntity {
     @JoinColumn(name = "skill_code")
     private SkillEntity skill;
 
+    @MapsId("classCode")  // LearnedSkillId 내의 skillCode 필드를 매핑합니다
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_code")
+    private SkillEntity classEntity;
+
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumns({
+//            @JoinColumn(name = "player_id", referencedColumnName = "player_id"),
+//            @JoinColumn(name = "class_code", referencedColumnName = "class_code")
+//    })
+//    private PlayerClassEntity playerClassEntity;
+
     @Column(name = "skill_slot", nullable = false)
     private int skillSlot;
 
@@ -42,17 +55,21 @@ public class LearnedSkillEntity {
 @Getter
 @Setter
 class LearnedSkillId implements Serializable {
-
+    @Column(name = "player_id")
     private String playerId;
+    @Column(name = "skill_code")
     private String skillCode;
+    @Column(name = "class_code")
+    private String classCode;
 
     // 기본 생성자
     public LearnedSkillId() {}
 
     // 매개변수 있는 생성자
-    public LearnedSkillId(String playerId, String skillCode) {
+    public LearnedSkillId(String playerId, String skillCode, String classCode) {
         this.playerId = playerId;
         this.skillCode = skillCode;
+        this.classCode = classCode;
     }
 
     // getters, setters, hashCode, equals 구현
