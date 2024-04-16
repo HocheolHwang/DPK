@@ -16,10 +16,12 @@ public class HTTPRequest : MonoBehaviour
     {
         UnityWebRequest request = UnityWebRequest.Get(url + path);
 
-        Debug.Log(request.uri);
+        // Access Token
+        if (UserInfo.GetInstance().getToken()!= null)
+            request.SetRequestHeader("Authorization", "Bearer " + UserInfo.GetInstance().getToken());
 
         yield return request.SendWebRequest();
-        Debug.Log(request.downloadHandler.text);
+        //Debug.Log(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success) // Unity 2020.1 이후부터는 isNetworkError와 isHttpError 대신 result 사용
         {
             if (path.Equals("user/profile"))
@@ -55,7 +57,11 @@ public class HTTPRequest : MonoBehaviour
         postRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         postRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         postRequest.SetRequestHeader("Content-Type", "application/json; charset=utf-8");
-        
+
+
+        // Access Token
+        if (UserInfo.GetInstance().getToken() != null)
+            postRequest.SetRequestHeader("Authorization", "Bearer " + UserInfo.GetInstance().getToken());
 
         yield return postRequest.SendWebRequest();
 
@@ -68,27 +74,6 @@ public class HTTPRequest : MonoBehaviour
         {
             TESTClass data = JsonUtility.FromJson<TESTClass>(postRequest.downloadHandler.text);
             Debug.Log(data.name);
-        }
-    }
-
-    IEnumerator Upload(string URL, string jsonfile)
-    {
-        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(URL, jsonfile))
-        {
-            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonfile);
-            request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-
-            yield return request.SendWebRequest();
-            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.Log(request.error);
-            }
-            else
-            {
-                Debug.Log(request.downloadHandler.text);
-            }
         }
     }
 

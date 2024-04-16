@@ -9,7 +9,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 {
     #region private fields
     private string gameVersion = "1";
-    private byte maxplayersPerRoom = 4;
+    private byte maxplayersPerRoom = 3;
     private bool isConnecting;
     private string roomName;
 
@@ -52,7 +52,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region public Methods
+    // #region public Methods
     // 네트워크 연결을 위한 Connect 함수
     public void Connect()
     {
@@ -77,8 +77,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 
     // Make multy Rroom
-    public void MakeRoom(string roomName)
+    public void MakeRoom()
     {
+        // 나중에 수정할 것
         roomName = "RoomName";
         string captainName = "captain";
 
@@ -102,15 +103,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         // 시드 생성
         int seed = (int)System.DateTime.Now.Ticks;
-
         // 생성된 방 이름 + ` + 시드 값
         roomName = roomName + "`" + seed;
 
         // Register in lobby
         room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "seed", seed }, { "roomID", guidString } };
         room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed", "roomID" };
-
-        Debug.Log("asdsdadasdasd : " +guidString);
+                
         PhotonNetwork.CreateRoom(roomName, room);
     }
 
@@ -170,7 +169,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
 
     }
-    #endregion
+    // #endregion
 
     #region MonoBehaviourPunCallbacks callbacks
     public override void OnConnectedToMaster()
@@ -213,17 +212,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log(returnCode + " : " + message);
         // 파티 다 찼을 때 경고 줘야함
-        //JoiningWarning.SetActive(true);
     }
 
     public override void OnJoinedRoom()
     {
         // 로컬 플레이어의 캐릭터를 생성하고 Photon 네트워크에 등록
-        GameObject player = PhotonNetwork.Instantiate("Prefabs/Player/Player", Vector3.zero, Quaternion.identity);
+        //GameObject player = PhotonNetwork.Instantiate("Prefabs/Player/Player", Vector3.zero, Quaternion.identity);
     }
 
 
     #endregion
 
-    // 마스터 클라이언트가 변경되었을 때 호출되는 메소드
 }
