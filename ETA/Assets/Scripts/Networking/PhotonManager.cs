@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -76,9 +77,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 
     // Make multy Rroom
-    public void MakeRoom()
+    public void MakeRoom(string roomName)
     {
-        string roomName = "RoomName";
+        roomName = "RoomName";
         string captainName = "captain";
 
         if (roomName.Length == 0) return;
@@ -94,6 +95,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.IsOpen = true;
         room.CleanupCacheOnLeave = false;
 
+        // 방 ID 생성
+        // 새로운 유니크 아이디(UID)를 생성하고 이를 문자열로 변환
+        Guid newGuid = Guid.NewGuid();  // 새 GUID 생성
+        string guidString = newGuid.ToString();  // GUID를 문자열로 변환
+
         // 시드 생성
         int seed = (int)System.DateTime.Now.Ticks;
 
@@ -101,8 +107,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         roomName = roomName + "`" + seed;
 
         // Register in lobby
-        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "seed", seed } };
-        room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed" };
+        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "seed", seed }, { "roomID", guidString } };
+        room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed", "roomID" };
+
+        Debug.Log("asdsdadasdasd : " +guidString);
         PhotonNetwork.CreateRoom(roomName, room);
     }
 

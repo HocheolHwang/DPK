@@ -37,6 +37,13 @@ public class TestUI : MonoBehaviour
         public int data;
         public float time;
     }
+
+    public void MakeRoom()
+    {
+        PhotonManager photon = gameObject.GetComponent<PhotonManager>();
+
+        photon.MakeRoom("Rppppppm");
+    }
 }
 
 
