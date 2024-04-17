@@ -25,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
 
         PlayerEntity newPlayer = new PlayerEntity();
         newPlayer.setPlayerId(dto.getPlayerId());
-        newPlayer.setPassword(bCryptPasswordEncoder.encode(dto.getUserPassword()));
+        newPlayer.setPassword(bCryptPasswordEncoder.encode(dto.getPlayerPassword()));
         newPlayer.setPlayerNickname(dto.getNickname());
 
         if(playerRepository.findById(dto.getPlayerId()).isPresent()){
@@ -38,10 +38,10 @@ public class AuthServiceImpl implements AuthService {
         if(!ValidationUill.isValidNickname(dto.getNickname())){
             return SignUpResponseDto.playerNickNameValidationFail();
         }
-        if(!ValidationUill.isValidPassword(dto.getUserPassword())){
+        if(!ValidationUill.isValidPassword(dto.getPlayerPassword())){
             return SignUpResponseDto.playerPasswordValidationFail();
         }
-        if(!(dto.getUserPassword().equals(dto.getUserPasswordCheck()))){
+        if(!(dto.getPlayerPassword().equals(dto.getPlayerPasswordCheck()))){
             return SignUpResponseDto.playerPasswordCheckValidationFail();
         }
 

@@ -14,7 +14,7 @@ public class SignUpRequestDto {
     @NotBlank
     private String nickname;
     @NotBlank
-    private String userPassword;
+    private String playerPassword;
     @NotBlank
-    private String userPasswordCheck;
+    private String playerPasswordCheck;
 }
