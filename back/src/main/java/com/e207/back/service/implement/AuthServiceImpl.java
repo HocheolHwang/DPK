@@ -58,15 +58,17 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
         Optional<PlayerEntity> player = playerRepository.findById(dto.getPlayerId());
-
-        String encodedPassword = bCryptPasswordEncoder.encode(dto.getPlayerPassword());
+        boolean isFirst = player.get().isFirst();
         if(!bCryptPasswordEncoder.matches(dto.getPlayerPassword(), player.get().getPassword())){
             return SignInResponseDto.playerPasswordValidationFail();
         }
 
+        if(isFirst){
+            player.get().setFirst(false);
+            playerRepository.save(player.get());
+        }
 
         String accessToken = jwtProvider.createToken(player.get().getPlayerNickname(),player.get().getPlayerId(), 1, ChronoUnit.DAYS);
-
-        return SignInResponseDto.success(accessToken);
+        return SignInResponseDto.success(accessToken, isFirst);
     }
 }

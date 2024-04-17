@@ -12,18 +12,20 @@ import org.springframework.http.ResponseEntity;
 @Setter
 public class SignInResponseDto extends ResponseDto {
     String accessToken;
-    SignInResponseDto(String accessToken){
+    boolean isFirst;
+    SignInResponseDto(String accessToken, boolean isFirst){
         super();
         this.accessToken = accessToken;
+        this.isFirst = isFirst;
     }
 
-    public static ResponseEntity<? super SignInResponseDto> success(String accessToken) {
-        SignInResponseDto responseBody = new SignInResponseDto(accessToken);
+    public static ResponseEntity<? super SignInResponseDto> success(String accessToken, boolean isFirst) {
+        SignInResponseDto responseBody = new SignInResponseDto(accessToken, isFirst);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
     public static ResponseEntity<? super SignInResponseDto> playerPasswordValidationFail() {
-        SignInResponseDto responseBody = new SignInResponseDto("");
+        SignInResponseDto responseBody = new SignInResponseDto("", false);
         responseBody.setMessage("비밀번호가 틀렸습니다.");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
