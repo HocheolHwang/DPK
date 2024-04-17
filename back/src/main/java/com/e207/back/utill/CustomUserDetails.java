@@ -12,6 +12,6 @@ public class CustomUserDetails {
     private String nickname;
 //    private String sex;
 //    private int birth;
-    private String userId;
+    private String playerId;
 }
 

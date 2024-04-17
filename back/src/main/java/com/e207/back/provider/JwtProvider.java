@@ -23,7 +23,7 @@ public class JwtProvider {
 
     // 토큰 발급 공통 로직
     public String createToken(
-        String nickname, String userId,
+        String nickname, String playerId,
         long duration, ChronoUnit unit
     ){
         Date expiredDate = Date.from(Instant.now().plus(duration, unit));
@@ -31,8 +31,8 @@ public class JwtProvider {
 
         Map<String, Object> claims = new HashMap<>();
 
-        claims.put("userName", nickname);
-        claims.put("userId", userId);
+        claims.put("nickname", nickname);
+        claims.put("playerId", playerId);
 
         return Jwts.builder()
                 .signWith(key, SignatureAlgorithm.HS256)
