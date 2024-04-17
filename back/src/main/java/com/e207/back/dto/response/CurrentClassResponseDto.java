@@ -1,12 +1,13 @@
 package com.e207.back.dto.response;
 
+import com.e207.back.dto.ResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 
 @Getter
 @Setter
-public class CurrentClassResponseDto {
+public class CurrentClassResponseDto extends ResponseDto {
     private String classCode;
 
     CurrentClassResponseDto(String classCode){
