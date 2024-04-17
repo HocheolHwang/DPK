@@ -29,4 +29,10 @@ public class SignUpResponseDto extends ResponseDto {
         responseBody.setMessage("비밀번호 형식이 틀렸습니다.");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
+
+    public static ResponseEntity<? super SignUpResponseDto> playerPasswordCheckValidationFail() {
+        SignUpResponseDto responseBody = new SignUpResponseDto();
+        responseBody.setMessage("비밀번호가 일치하지 않습니다.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
 }
