@@ -9,17 +9,15 @@ public class IdleState : State
 
     public override void Enter()
     {
-        Debug.Log("Start IdleState");
-        //animator.Play(anim.name);
     }
 
     public override void Execute()
     {
-
-
-        if (machineCore.detector.target != null)
-        {
-            isComplete = true;
-        }
     }
+
+    public override void Exit()
+    {
+    }
+
+
 }

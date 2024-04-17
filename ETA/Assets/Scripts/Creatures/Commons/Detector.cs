@@ -60,13 +60,4 @@ public class Detector : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// 공격 범위에 적이 있는지 판단한다.
-    /// </summary>
-    public bool CheckWithinAttackRange()
-    {
-        if (target == null) return false;
-        return Vector3.Distance(transform.position, target.position) < attackRange;
-    }
 }
