@@ -27,48 +27,62 @@ public class AuthServiceImpl implements AuthService {
     private final JwtProvider jwtProvider;
     @Override
     public ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto) {
+        try{
 
-        PlayerEntity newPlayer = new PlayerEntity();
-        newPlayer.setPlayerId(dto.getPlayerId());
-        newPlayer.setPassword(bCryptPasswordEncoder.encode(dto.getPlayerPassword()));
-        newPlayer.setPlayerNickname(dto.getNickname());
+            PlayerEntity newPlayer = new PlayerEntity();
+            newPlayer.setPlayerId(dto.getPlayerId());
+            newPlayer.setPassword(bCryptPasswordEncoder.encode(dto.getPlayerPassword()));
+            newPlayer.setPlayerNickname(dto.getNickname());
 
-        if(playerRepository.findById(dto.getPlayerId()).isPresent()){
-            return SignUpResponseDto.duplicateId();
-        }
+            if(playerRepository.findById(dto.getPlayerId()).isPresent()){
+                return SignUpResponseDto.duplicateId();
+            }
 
-        if(!ValidationUill.isValidUsername(dto.getPlayerId())){
-            return SignUpResponseDto.playerIdValidationFail();
-        }
-        if(!ValidationUill.isValidNickname(dto.getNickname())){
-            return SignUpResponseDto.playerNickNameValidationFail();
-        }
-        if(!ValidationUill.isValidPassword(dto.getPlayerPassword())){
-            return SignUpResponseDto.playerPasswordValidationFail();
-        }
-        if(!(dto.getPlayerPassword().equals(dto.getPlayerPasswordCheck()))){
-            return SignUpResponseDto.playerPasswordCheckValidationFail();
-        }
+            if(!ValidationUill.isValidUsername(dto.getPlayerId())){
+                return SignUpResponseDto.playerIdValidationFail();
+            }
+            if(!ValidationUill.isValidNickname(dto.getNickname())){
+                return SignUpResponseDto.playerNickNameValidationFail();
+            }
+            if(!ValidationUill.isValidPassword(dto.getPlayerPassword())){
+                return SignUpResponseDto.playerPasswordValidationFail();
+            }
+            if(!(dto.getPlayerPassword().equals(dto.getPlayerPasswordCheck()))){
+                return SignUpResponseDto.playerPasswordCheckValidationFail();
+            }
 
-        playerRepository.save(newPlayer);
+            playerRepository.save(newPlayer);
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
 
         return SignUpResponseDto.success();
     }
 
     @Override
     public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
-        Optional<PlayerEntity> player = playerRepository.findById(dto.getPlayerId());
-        boolean isFirst = player.get().isFirst();
-        if(!bCryptPasswordEncoder.matches(dto.getPlayerPassword(), player.get().getPassword())){
-            return SignInResponseDto.playerPasswordValidationFail();
+        String accessToken = null;
+        boolean isFirst;
+        try{
+            Optional<PlayerEntity> player = playerRepository.findById(dto.getPlayerId());
+            isFirst = player.get().isFirst();
+            if(!bCryptPasswordEncoder.matches(dto.getPlayerPassword(), player.get().getPassword())){
+                return SignInResponseDto.playerPasswordValidationFail();
+            }
+
+            if(isFirst){
+                player.get().setFirst(false);
+                playerRepository.save(player.get());
+            }
+
+            accessToken = jwtProvider.createToken(player.get().getPlayerNickname(),player.get().getPlayerId(), 1, ChronoUnit.DAYS);
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
         }
 
-        if(isFirst){
-            player.get().setFirst(false);
-            playerRepository.save(player.get());
-        }
-
-        String accessToken = jwtProvider.createToken(player.get().getPlayerNickname(),player.get().getPlayerId(), 1, ChronoUnit.DAYS);
         return SignInResponseDto.success(accessToken, isFirst);
     }
 }
