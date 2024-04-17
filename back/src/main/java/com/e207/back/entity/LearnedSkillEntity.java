@@ -38,8 +38,8 @@ public class LearnedSkillEntity {
     @Column(name = "skill_slot", nullable = false)
     private int skillSlot;
 
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted;
+    @Column(name = "active", columnDefinition = "boolean default true")
+    private boolean active = true;
 
 
 }
