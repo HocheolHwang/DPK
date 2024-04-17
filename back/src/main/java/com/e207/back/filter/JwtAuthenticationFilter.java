@@ -45,14 +45,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             // 토큰 파싱
 //            int userSeq = parsedToken.getBody().get("userSeq", Integer.class);
-            String userName = parsedToken.getBody().get("nickname", String.class);
+            String nickname = parsedToken.getBody().get("nickname", String.class);
 //            String sex = parsedToken.getBody().get("sex", String.class);
 //            int birth = parsedToken.getBody().get("birth", Integer.class);
-            String userId = parsedToken.getBody().get("userId", String.class);
+            String playerId = parsedToken.getBody().get("playerId", String.class);
 
 
             // 파싱한것 저장
-            CustomUserDetails customUserDetails = new CustomUserDetails(userName,userId);
+            CustomUserDetails customUserDetails = new CustomUserDetails(nickname,playerId);
 
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
 
