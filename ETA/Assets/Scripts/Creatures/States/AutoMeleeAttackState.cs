@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-
-public class RunState : State
+/// <summary>
+/// 근접 자동 공격
+/// </summary>
+public class AutoMeleeAttackState : State
 {
     [SerializeField] public AnimationClip anim;
-    [SerializeField] public float maxSpeed;
-    [SerializeField] public float speed;        // animator  속도와 동일하게 세팅
 
     public override void Enter()
     {
