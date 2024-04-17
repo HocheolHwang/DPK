@@ -15,27 +15,27 @@ using static UnityEngine.GraphicsBuffer;
 public class Detector : MonoBehaviour
 {
     [Header("Set Values from the Inspector")]
-    [SerializeField] public float detectRange;
-    [SerializeField] public float attackRange;
-    [SerializeField] public LayerMask targetLayerMask;
+    [SerializeField] public float _detectRange;
+    [SerializeField] public float _attackRange;
+    [SerializeField] public LayerMask _targetLayerMask;
 
-    [SerializeField] public Transform target {  get; private set; }
+    [SerializeField] public Transform _target { get; private set; }
 
-    private Ray ray;
+    private Ray _ray;
 
     private void Start()
     {
-        target = null;
+        _target = null;
 
         StartCoroutine(UpdateTarget());
     }
 
     private void OnDrawGizmos()
     {
-        ray.origin = transform.position;
+        _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (target == null ) Gizmos.DrawWireSphere(ray.origin, detectRange);
-        else Gizmos.DrawWireSphere(ray.origin, attackRange);
+        if (_target == null ) Gizmos.DrawWireSphere(_ray.origin, _detectRange);
+        else Gizmos.DrawWireSphere(_ray.origin, _attackRange);
     }
 
     IEnumerator UpdateTarget()
@@ -45,9 +45,9 @@ public class Detector : MonoBehaviour
             Debug.Log("Detector - UpdateTarget");
             yield return new WaitForSeconds(0.5f);
 
-            target = null;
+            _target = null;
             float closeDist = Mathf.Infinity;
-            Collider[] enemies = Physics.OverlapSphere(transform.position, detectRange, targetLayerMask);
+            Collider[] enemies = Physics.OverlapSphere(transform.position, _detectRange, _targetLayerMask);
 
             foreach (Collider enemy in enemies)
             {
@@ -55,7 +55,7 @@ public class Detector : MonoBehaviour
                 if (distToEnemy < closeDist)
                 {
                     closeDist = distToEnemy;
-                    target = enemy.transform;
+                    _target = enemy.transform;
                 }
             }
         }
