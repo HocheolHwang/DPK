@@ -12,21 +12,21 @@ public abstract class State : IState
     public float _executeTime => Time.time - _startTime;         // 현재 상태가 된 시점으로부터 얼마나 지났는지
  
     // Base
-    protected BaseController _machineCore;
-    protected Animator _animator => _machineCore._animator;
-    protected NavMeshAgent _agent => _machineCore._agent;
+    protected BaseController _controller;
+    protected Animator _animator => _controller._animator;
+    protected NavMeshAgent _agent => _controller._agent;
 
 
 
     protected void ChangeState(State newState, bool forceReset = false)
     {
-        _machineCore._machine.ChangeState(newState, forceReset);
+        _controller._machine.ChangeState(newState, forceReset);
     }
 
 
     public void GetBaseMemberVariable(BaseController machineCore)
     {
-        _machineCore = machineCore;
+        _controller = machineCore;
     }
 
 
