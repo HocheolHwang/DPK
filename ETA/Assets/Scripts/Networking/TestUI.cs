@@ -21,7 +21,7 @@ public class TestUI : MonoBehaviour
 
         string testData = JsonUtility.ToJson(test);
 
-        req.PostCall("post", testData);
+        req.HTTPCall("POST", "post", testData);
     }
 
     public void Put()
@@ -34,12 +34,13 @@ public class TestUI : MonoBehaviour
 
         string testData = JsonUtility.ToJson(test);
 
-        req.PutCall("put", testData);
+        req.HTTPCall("PUT", "put", testData);
     }
 
     public void Get()
     {
-        req.GetCall("get");
+
+        req.HTTPCall("GET", "get");
     }
 
     [System.Serializable]
