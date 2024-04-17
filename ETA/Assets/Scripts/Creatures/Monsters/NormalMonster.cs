@@ -10,11 +10,10 @@ using static UnityEngine.GraphicsBuffer;
 public class NormalMonster : StateMachineCore
 {
     // Normal Monster만 가진 상태 또는 전략
-    // 원래 전략만 가지고 싶지만, 상태만 있어도 되는 전략이 있음
-    [Header("States possessed by the Child GameObject")]
-    public IdleState idleState;
-    public ChaseStrategy chaseStrategy;
-    public MeleeAttackStrategy attackStrategy;
+    [Header("set strategy")]
+    public State idleState;
+    public State chaseStrategy;
+    public State attackStrategy;
 
 
     private void Start()
@@ -28,6 +27,11 @@ public class NormalMonster : StateMachineCore
         StateSelector();
 
         machine.Execute();
+    }
+
+    private void FixedUpdate()
+    {
+        machine.FixedExecute();
     }
 
     private void StateSelector()
@@ -52,7 +56,7 @@ public class NormalMonster : StateMachineCore
         if (machine.curState == chaseStrategy)
         {
             // 공격 범위에 적이 있으면 공격한다.
-            if (detector.CheckWithinAttackRange())
+            if (/*detector.CheckWithinAttackRange()*/IsArriveAgent())
             {
                 ChangeState(attackStrategy);
             }

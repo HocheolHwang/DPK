@@ -13,7 +13,12 @@ public class MeleeAttackState : State
 
     public override void Enter()
     {
-        Debug.Log("Start MeleeState");
+        Debug.Log("Enter MeleeState");
+
+        agent.updateRotation = false;
+        Vector3 thisToTargetDist = detector.target.position - machineCore.transform.position;
+        machineCore.transform.rotation = Quaternion.LookRotation(thisToTargetDist.normalized, Vector3.up);
+
         //animator.Play(anim.name);
     }
 
@@ -26,5 +31,11 @@ public class MeleeAttackState : State
         }
         // 공격을 1회 수행한다. 
         // isComplete = true;
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Exit MeleeState");
+        agent.updateRotation = true;
     }
 }

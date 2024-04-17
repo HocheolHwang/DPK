@@ -26,6 +26,8 @@ public class StateMachineCore : MonoBehaviour
     /// </summary>
     public void InitInstance()
     {
+        agent.stoppingDistance = detector.attackRange;
+
         // Agent에 SM을 세팅한다.
         machine = new StateMachine();
 
@@ -39,11 +41,37 @@ public class StateMachineCore : MonoBehaviour
     }
 
     /// <summary>
+    /// agent가 도착했는지 판단
+    /// </summary>
+    public bool IsArriveAgent()
+    {
+        if (detector.target == null) return true;
+        //Debug.Log($"IsArriveAgent: {agent.remainingDistance}, {agent.stoppingDistance}, {agent.remainingDistance <= agent.stoppingDistance}");
+        return agent.remainingDistance <= agent.stoppingDistance;
+    }
+
+    /// <summary>
     /// [ machine의 ChangeState를 호출 ]
     /// 개발 편의성
     /// </summary>
     protected void ChangeState(State newState, bool forceReset = false)
     {
         machine.ChangeState(newState, forceReset);
+    }
+
+    /// <summary>
+    /// Debugging
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+        if (machine != null)
+        {
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.red;
+
+
+            string label = "Active State: " + machine.curState.name;
+            UnityEditor.Handles.Label(transform.position, label, style);
+        }
     }
 }

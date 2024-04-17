@@ -33,4 +33,9 @@ public class StateMachine
     {
         curState?.Execute();
     }
+
+    public void FixedExecute()
+    {
+        curState?.FixedExecute();
+    }
 }

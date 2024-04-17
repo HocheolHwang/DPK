@@ -20,16 +20,20 @@ public class ChaseStrategy : State
     public override void Enter()
     {
         Debug.Log("Enter ChaseStrategy");
+
+        // 이러면 ChaseStrategy를 유지하면서 state를 사용할 수 없다.
+        // animState가 되면서 ChaseStrategy 상태에서 나가기 때문이다.
         ChangeState(animState, true);
     }
 
     public override void Execute()
     {
-        if (machineCore.detector.CheckWithinAttackRange())
+        if (/*detector.CheckWithinAttackRange()*/machineCore.IsArriveAgent() || animState.isComplete)
         {
             isComplete = true;
         }
 
+        
         // 해당 전략을 가진 Agent가 죽으면 ChangeState(Die)
     }
 

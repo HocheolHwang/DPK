@@ -243,6 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   maxSpeed: 0
+  speed: 3
 --- !u!1 &4551122904895372918
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +479,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animState: {fileID: 5386935865619606097}
-  speed: 0
 --- !u!1 &5563330242924010847
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idleState: {fileID: 7074773535532984691}
-  meleeAttackState: {fileID: 5349082165186794127}
+  attackState: {fileID: 5349082165186794127}
 --- !u!1 &7796671862287980273
 GameObject:
   m_ObjectHideFlags: 0

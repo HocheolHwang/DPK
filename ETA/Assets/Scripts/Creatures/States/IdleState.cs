@@ -10,6 +10,10 @@ public class IdleState : State
     public override void Enter()
     {
         Debug.Log("Start IdleState");
+
+        agent.velocity = Vector3.zero;
+        agent.isStopped = true;
+
         //animator.Play(anim.name);
     }
 
@@ -17,9 +21,16 @@ public class IdleState : State
     {
 
 
-        if (machineCore.detector.target != null)
+        if (detector.target != null)
         {
             isComplete = true;
         }
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Exit IdleState");
+
+        agent.isStopped = false;
     }
 }

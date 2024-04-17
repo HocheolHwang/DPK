@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// animation만 재생한다.
@@ -13,16 +14,36 @@ public class RunState : State
 
     public override void Enter()
     {
-        Debug.Log("Start MoveState");
+        Debug.Log("Enter RunState");
+
+        agent.speed = speed;
+        
         //animator.Play(anim.name);
     }
 
     public override void Execute()
     {
-        // animator speed와 agent speed를 맞춘다.
-        machineCore.agent.SetDestination(machineCore.detector.target.position);
+        agent.SetDestination(detector.target.position);
+
+        if (machineCore.IsArriveAgent())
+        {
+            isComplete = true;
+            return;
+        }
 
         // HP가 0인 경우 멈춘다.
         // isComplete = true;
     }
+
+    public override void Exit()
+    {
+        Debug.Log("Exit RunState");
+    }
+
+    private void SetDestination()
+    {
+
+    }
+
+    
 }

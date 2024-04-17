@@ -16,7 +16,7 @@ public class MeleeAttackStrategy : State
 {
     [Header("States Script")]
     [SerializeField] public IdleState idleState;
-    [SerializeField] public MeleeAttackState meleeAttackState;
+    [SerializeField] public State attackState;
 
     public override void Enter()
     {
@@ -26,14 +26,14 @@ public class MeleeAttackStrategy : State
 
     public override void Execute()
     {
-        if (machineCore.machine.curState == meleeAttackState)
+        if (machineCore.machine.curState == attackState)
         {
             // 공격 범위에 적이 없으면 공격 전략을 종료한다.
             if ( !machineCore.detector.CheckWithinAttackRange() )
             {
                 isComplete = true;
             }
-            else if (meleeAttackState.isComplete)
+            else if (attackState.isComplete)
             {
                 ChangeState(idleState);
             }
@@ -42,7 +42,7 @@ public class MeleeAttackStrategy : State
         {
             if (machineCore.machine.curState.time > 1.0f)
             {
-                ChangeState(meleeAttackState, true);
+                ChangeState(attackState, true);
             }
         }
 
