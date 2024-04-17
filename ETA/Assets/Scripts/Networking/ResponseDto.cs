@@ -6,7 +6,7 @@ using UnityEngine;
 public class ResponseDto : MonoBehaviour
 {
     public string id;
-    public string nickname;
+    public string nickName;
     public string accessToken;
     public int gold;
 }

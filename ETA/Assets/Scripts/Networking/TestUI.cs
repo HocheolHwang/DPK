@@ -13,11 +13,11 @@ public class TestUI : MonoBehaviour
     }
     public void Post()
     {
-        TESTClass test = new TESTClass();
+        ResponseDto test = new ResponseDto();
 
-        test.data = 123;
-        test.time = Time.deltaTime;
-        test.name = "졸려";
+        test.gold = 124812048;
+        test.id = "Tkvl";
+        test.nickName = "이싸피";
 
         string testData = JsonUtility.ToJson(test);
 
@@ -26,11 +26,11 @@ public class TestUI : MonoBehaviour
 
     public void Put()
     {
-        TESTClass test = new TESTClass();
+        ResponseDto test = new ResponseDto();
 
-        test.data = 124812048;
-        test.time = Time.deltaTime;
-        test.name = "이것은 put입니다";
+        test.gold = 124812048;
+        test.id = "ssafy";
+        test.nickName = "김싸피";
 
         string testData = JsonUtility.ToJson(test);
 
@@ -41,14 +41,6 @@ public class TestUI : MonoBehaviour
     {
 
         req.HTTPCall("GET", "get");
-    }
-
-    [System.Serializable]
-    class TESTClass
-    {
-        public string name;
-        public int data;
-        public float time;
     }
 
     public void MakeRoom()

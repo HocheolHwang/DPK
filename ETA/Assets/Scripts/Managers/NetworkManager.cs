@@ -47,23 +47,3 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(SendWebRequest(CreateRequest(method, path, jsonfile)));
     }
 }
-
-
-
-[System.Serializable]
-class UserData
-{
-    public string accessToken;
-    public string id;
-    public string nickname;
-    public string error;
-    public string[] message;
-}
-
-[System.Serializable]
-class TESTClass
-{
-    public string name;
-    public int data;
-    public float time;
-}
