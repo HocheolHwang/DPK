@@ -24,9 +24,9 @@ public abstract class State : IState
     }
 
 
-    public void GetBaseMemberVariable(BaseController machineCore)
+    public void GetBaseMemberVariable(BaseController controller)
     {
-        _controller = machineCore;
+        _controller = controller;
     }
 
 
