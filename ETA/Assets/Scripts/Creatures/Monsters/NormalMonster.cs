@@ -34,7 +34,7 @@ public class NormalMonster : BaseController
 
     protected override void Init()
     {
-        base.Init();
+        _machine = new StateMachine();
         _states = new State[(int)MonsterState.MAX_LEN];
         _states[(int)MonsterState.IDLE] = new IdleState();
 

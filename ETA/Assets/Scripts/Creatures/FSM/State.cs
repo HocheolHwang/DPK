@@ -9,7 +9,7 @@ public abstract class State : IState
 {
     public bool _isComplete { get; protected set; }      // 현재 상태가 끝났나?
     protected float _startTime;                          // 현재 상태의 시작 시간
-    public float _executeTime => Time.time - _startTime;         // 현재 상태가 된 시점으로부터 얼마나 지났는지
+    public float _executeTime => Time.time - _startTime; // 현재 상태가 된 시점으로부터 얼마나 지났는지
  
     // Base
     protected BaseController _controller;

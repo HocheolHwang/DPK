@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 // start와 update 같은건 각 객체에서 사용
-public class BaseController : MonoBehaviour
+public abstract class BaseController : MonoBehaviour
 {
     [Header("Common Component")]
     [SerializeField] public Animator _animator;
@@ -15,10 +16,7 @@ public class BaseController : MonoBehaviour
     public State _curState => _machine._curState;
 
 
-    protected virtual void Init() 
-    {
-        _machine = new StateMachine();
-    }
+    protected abstract void Init();
 
     // 개발 편의성
     protected void ChangeState(State newState, bool forceReset = false)
@@ -34,9 +32,8 @@ public class BaseController : MonoBehaviour
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.red;
 
-
             string label = "Active State: " + _machine._curState.ToString();
-            UnityEditor.Handles.Label(transform.position, label, style);
+            Handles.Label(transform.position, label, style);
         }
     }
 }
