@@ -10,9 +10,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SignUpRequestDto {
     @NotBlank
-    private String userId;
+    private String playerId;
     @NotBlank
     private String nickname;
     @NotBlank
     private String userPassword;
+    @NotBlank
+    private String userPasswordCheck;
 }

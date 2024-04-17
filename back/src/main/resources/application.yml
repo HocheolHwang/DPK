@@ -8,6 +8,6 @@ spring:
     jpa:
         show-sql: true
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: update
 secret-key: ThisIsSSAFYEFiveIsJwtSecretKeyDoNotUseThisStatement
 ## .yml은 프로덕션 버전이 있을 것

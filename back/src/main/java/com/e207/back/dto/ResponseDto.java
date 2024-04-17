@@ -15,6 +15,7 @@ public class ResponseDto {
 	private String message;
 
 	public ResponseDto() {
+		this.message = "success";
 	}
 
 	public static ResponseEntity<ResponseDto> success() {
