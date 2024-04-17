@@ -41,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
         if(!ValidationUill.isValidPassword(dto.getUserPassword())){
             return SignUpResponseDto.playerPasswordValidationFail();
         }
-        if(dto.getUserPassword().equals(dto.getUserPasswordCheck())){
+        if(!(dto.getUserPassword().equals(dto.getUserPasswordCheck()))){
             return SignUpResponseDto.playerPasswordCheckValidationFail();
         }
 
