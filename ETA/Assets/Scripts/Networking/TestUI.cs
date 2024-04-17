@@ -5,11 +5,11 @@ using UnityEngine;
 public class TestUI : MonoBehaviour
 {
 
-    HTTPRequest req;
+    NetworkManager req;
 
     private void Start()
     {
-        req = gameObject.GetComponent<HTTPRequest>();
+        req = gameObject.GetComponent<NetworkManager>();
     }
     public void Post()
     {
@@ -17,16 +17,28 @@ public class TestUI : MonoBehaviour
 
         test.data = 123;
         test.time = Time.deltaTime;
-        test.name = "����";
+        test.name = "졸려";
 
         string testData = JsonUtility.ToJson(test);
 
         req.PostCall("post", testData);
     }
 
+    public void Put()
+    {
+        TESTClass test = new TESTClass();
+
+        test.data = 124812048;
+        test.time = Time.deltaTime;
+        test.name = "이것은 put입니다";
+
+        string testData = JsonUtility.ToJson(test);
+
+        req.PutCall("put", testData);
+    }
+
     public void Get()
     {
-
         req.GetCall("get");
     }
 
@@ -45,5 +57,3 @@ public class TestUI : MonoBehaviour
         photon.MakeRoom();
     }
 }
-
-

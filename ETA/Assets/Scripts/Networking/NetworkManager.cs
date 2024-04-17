@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using System.Text;
 
 
-public class HTTPRequest : MonoBehaviour
+public class NetworkManager : MonoBehaviour
 {
     string url = "http://localhost:8080/";
     //string port = "443";
@@ -17,32 +17,19 @@ public class HTTPRequest : MonoBehaviour
         UnityWebRequest request = UnityWebRequest.Get(url + path);
 
         // Access Token
-        if (UserInfo.GetInstance().getToken()!= null)
-            request.SetRequestHeader("Authorization", "Bearer " + UserInfo.GetInstance().getToken());
+        if (PlayerManager.GetInstance().getToken() != null)
+            request.SetRequestHeader("Authorization", "Bearer " + PlayerManager.GetInstance().getToken());
 
         yield return request.SendWebRequest();
         //Debug.Log(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success) // Unity 2020.1 이후부터는 isNetworkError와 isHttpError 대신 result 사용
         {
-            if (path.Equals("user/profile"))
-            {
-
-            }
 
         }
         else
         {
-            if (path.Equals("user/profile"))
-            {
-                UserData data = JsonUtility.FromJson<UserData>(request.downloadHandler.text);
 
-            }
         }
-
-    }
-    public void GetCall(string path)
-    {
-        StartCoroutine(GET(path));
     }
 
     // POST
@@ -60,8 +47,8 @@ public class HTTPRequest : MonoBehaviour
 
 
         // Access Token
-        if (UserInfo.GetInstance().getToken() != null)
-            postRequest.SetRequestHeader("Authorization", "Bearer " + UserInfo.GetInstance().getToken());
+        if (PlayerManager.GetInstance().getToken() != null)
+            postRequest.SetRequestHeader("Authorization", "Bearer " + PlayerManager.GetInstance().getToken());
 
         yield return postRequest.SendWebRequest();
 
@@ -76,6 +63,29 @@ public class HTTPRequest : MonoBehaviour
             Debug.Log(data.name);
         }
     }
+
+    // put
+    IEnumerator PUT(string path, string jsonfile)
+    {
+        //UnityWebRequest putRequest = new UnityWebRequest(url + path, "PUT");
+
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonfile);
+        UnityWebRequest putReq = UnityWebRequest.Put(url + path, jsonToSend);
+        putReq.SetRequestHeader("Content-Type", "application/json; charset=utf-8");
+
+        yield return putReq.SendWebRequest();
+
+        if (putReq.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("error" + putReq.error);
+            Debug.Log("result" + putReq.result);
+        }
+        else // 통신 성공
+        {
+            Debug.Log(putReq.downloadHandler.text);
+        }
+    }
+
 
 
     [System.Serializable]
@@ -96,8 +106,16 @@ public class HTTPRequest : MonoBehaviour
         public float time;
     }
 
+    public void GetCall(string path)
+    {
+        StartCoroutine(GET(path));
+    }
     public void PostCall(string path, string postParam)
     {
         StartCoroutine(POST(path, postParam));
+    }
+    public void PutCall(string path, string postParam)
+    {
+        StartCoroutine(PUT(path, postParam));
     }
 }
