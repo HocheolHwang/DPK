@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class IdleState : State
 {
-    [SerializeField] public AnimationClip anim;
+    [SerializeField] public AnimationClip _anim;
 
     public override void Enter()
     {

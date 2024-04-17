@@ -21,29 +21,29 @@ public enum MonsterState
 public class NormalMonster : BaseController
 {
     // Normal Monster만 가진 상태 또는 전략
-    private State[] states;
+    private State[] _states;
 
-    public Detector detector;
+    public Detector _detector;
 
 
     private void Start()
     {
         Init();
-        ChangeState(states[(int)MonsterState.IDLE]);
+        ChangeState(_states[(int)MonsterState.IDLE]);
     }
 
     protected override void Init()
     {
         base.Init();
-        states = new State[(int)MonsterState.MAX_LEN];
-        states[(int)MonsterState.IDLE] = new IdleState();
+        _states = new State[(int)MonsterState.MAX_LEN];
+        _states[(int)MonsterState.IDLE] = new IdleState();
 
-        foreach (State state in states)
+        foreach (State state in _states)
         {
             state.GetBaseMemberVariable(this);      // BaseController를 각 State로 넘기기 위해서 enum list 사용
             Debug.Log(state.ToString());
         }
-        agent.stoppingDistance = detector.attackRange;
+        _agent.stoppingDistance = _detector._attackRange;
     }
 
     private void Update()
@@ -89,7 +89,7 @@ public class NormalMonster : BaseController
 
     public bool IsArriveToTarget()
     {
-        if (detector.target == null) return true;
-        return agent.remainingDistance <= agent.stoppingDistance;
+        if (_detector._target == null) return true;
+        return _agent.remainingDistance <= _agent.stoppingDistance;
     }
 }
