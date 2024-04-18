@@ -9,7 +9,7 @@ import com.e207.back.entity.PlayerEntity;
 import com.e207.back.provider.JwtProvider;
 import com.e207.back.repository.PlayerRepository;
 import com.e207.back.service.AuthService;
-import com.e207.back.utill.ValidationUill;
+import com.e207.back.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,13 +46,13 @@ public class AuthServiceImpl implements AuthService {
                 return SignUpResponseDto.duplicateNickname();
             }
 
-            if(!ValidationUill.isValidPlayerId(dto.getPlayerId())){
+            if(!ValidationUtil.isValidPlayerId(dto.getPlayerId())){
                 return SignUpResponseDto.playerIdValidationFail();
             }
-            if(!ValidationUill.isValidNickname(dto.getNickname())){
+            if(!ValidationUtil.isValidNickname(dto.getNickname())){
                 return SignUpResponseDto.playerNickNameValidationFail();
             }
-            if(!ValidationUill.isValidPassword(dto.getPlayerPassword())){
+            if(!ValidationUtil.isValidPassword(dto.getPlayerPassword())){
                 return SignUpResponseDto.playerPasswordValidationFail();
             }
             if(!(dto.getPlayerPassword().equals(dto.getPlayerPasswordCheck()))){

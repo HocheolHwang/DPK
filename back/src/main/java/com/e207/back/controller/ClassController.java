@@ -1,24 +1,29 @@
 package com.e207.back.controller;
 
 import com.e207.back.dto.request.CurrentClassRequestDto;
+import com.e207.back.dto.request.SelectClassRequestDto;
 import com.e207.back.dto.response.CurrentClassResponseDto;
+import com.e207.back.dto.response.SelectClassResponseDto;
 import com.e207.back.service.ClassService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/class")
 @RequiredArgsConstructor
 public class ClassController {
 
 
     private final ClassService classService;
-    @GetMapping("/class/current")
+    @GetMapping("/current")
     public ResponseEntity<? super CurrentClassResponseDto> getCurrentClass(){
         CurrentClassRequestDto requestBody = new CurrentClassRequestDto();
         return classService.getCurrentClass(requestBody);
+    }
+
+    @PostMapping("/select")
+    public ResponseEntity<? super SelectClassResponseDto> selectClass(@RequestBody SelectClassRequestDto requestBody){
+        return classService.selectClass(requestBody);
     }
 }
