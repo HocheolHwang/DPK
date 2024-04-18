@@ -13,11 +13,14 @@ public class NormalMonsterController : BaseController
     public State IDLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
+    public State DIE_STATE;
     public State GLOBAL_STATE;
 
     [Header("Each Controller Property")]
     [SerializeField] public Detector detector;
-
+    // 테스트를 위함, 스탯 추가되면 변경될지도?
+    [SerializeField] public bool isDie;
+    [SerializeField] public bool isRevive;
 
     private void Start()
     {
@@ -27,20 +30,21 @@ public class NormalMonsterController : BaseController
 
     protected override void Init()
     {
-        _machine = new StateMachine();
+        _stateMachine = new StateMachine();
         IDLE_STATE = new NormalMonsterStates.IdleState(this);
         CHASE_STATE = new NormalMonsterStates.ChaseState(this);
         ATTACK_STATE = new NormalMonsterStates.AttackState(this);
+        DIE_STATE = new NormalMonsterStates.DieState(this);
         GLOBAL_STATE = new NormalMonsterStates.GlobalState(this);
 
-        _machine.SetGlobalState(GLOBAL_STATE);
+        _stateMachine.SetGlobalState(GLOBAL_STATE);
 
         agent.stoppingDistance = detector.attackRange;
     }
 
     private void Update()
     {
-        _machine.Execute();
+        _stateMachine.Execute();
     }
 
     public bool IsArriveToTarget()

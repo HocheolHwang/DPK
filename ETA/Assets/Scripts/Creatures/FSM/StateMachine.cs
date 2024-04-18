@@ -12,7 +12,8 @@ public class StateMachine
 
     public void ChangeState(State newState)
     {
-        if (CurState != newState)    // 현재 상태와 새로운 상태가 같지 않거나 강제로 상태를 변경하는 경우
+        // 현재 상태와 새로운 상태가 같지 않아야 한다.
+        if (CurState != newState)    
         {
             if (CurState != null)
             {
