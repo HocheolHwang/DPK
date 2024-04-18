@@ -19,9 +19,9 @@ public abstract class BaseController : MonoBehaviour
     protected abstract void Init();
 
     // 개발 편의성
-    protected void ChangeState(State newState, bool forceReset = false)
+    protected void ChangeState(State newState)
     {
-        _machine.ChangeState(newState, forceReset);
+        _machine.ChangeState(newState);
     }
     
     // Debugging STATE

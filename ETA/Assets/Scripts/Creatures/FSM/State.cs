@@ -18,9 +18,9 @@ public abstract class State : IState
 
 
 
-    protected void ChangeState(State newState, bool forceReset = false)
+    protected void ChangeState(State newState)
     {
-        _controller._machine.ChangeState(newState, forceReset);
+        _controller._machine.ChangeState(newState);
     }
 
 

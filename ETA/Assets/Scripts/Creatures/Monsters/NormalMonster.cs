@@ -53,6 +53,14 @@ public class NormalMonster : BaseController
 
     private void StateSelector()
     {
+        //if (_curState._isComplete)
+        //{
+        //    if (_curState == GlobalState)
+        //    {
+        //        GlobalState = null;
+        //        ChangeState(PrevState);
+        //    }
+        //}
         //// 현재 상태가 끝난 경우
         //// Idle은 target이 존재하면 isComplete
         //if (machine.curState.isComplete)
