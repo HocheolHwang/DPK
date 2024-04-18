@@ -49,8 +49,6 @@ public class NormalMonsterController : BaseController
 
     public bool IsArriveToTarget()
     {
-        // 이전 코드는 AttackRange 내부에 있던 플레이어가 범위 밖을 나가면 멈춰있어서 안 쓰는게 좋다.
         return Vector3.Distance(detector.Target.position, transform.position) < detector.attackRange;
     }
-
 }
