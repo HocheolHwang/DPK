@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace NormalMonster
 {
-    public class AutoMeleeAttackState : State
+    public class GlobalState : State
     {
-        [Header("해당 상태에서 사용할 속성")]
-        [SerializeField] public AnimationClip anim;
-
         public override void Enter()
         {
         }
 
         public override void Execute()
         {
+            // GLOBAL_STATE 상태인 경우 종료
+
+            // GLOBAL_STATE로 전환하는 로직
         }
 
         public override void Exit()

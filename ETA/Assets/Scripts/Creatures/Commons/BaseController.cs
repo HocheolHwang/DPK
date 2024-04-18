@@ -7,32 +7,32 @@ using UnityEngine.AI;
 // start와 update 같은건 각 객체에서 사용
 public abstract class BaseController : MonoBehaviour
 {
-    [Header("Common Component")]
-    [SerializeField] public Animator _animator;
-    [SerializeField] public NavMeshAgent _agent;
+    [Header("Common Property")]
+    [SerializeField] public Animator animator;
+    [SerializeField] public NavMeshAgent agent;
 
-
-    public StateMachine _machine;
-    public State _curState => _machine._curState;
+    
+    public StateMachine Machine { get; set; }
+    public State CurState { get => CurState; set => CurState = Machine.CurState; }
 
 
     protected abstract void Init();
 
     // 개발 편의성
-    protected void ChangeState(State newState, bool forceReset = false)
+    protected void ChangeState(State newState)
     {
-        _machine.ChangeState(newState, forceReset);
+        Machine.ChangeState(newState);
     }
     
     // Debugging STATE
     private void OnDrawGizmos()
     {
-        if (_machine != null)
+        if (Machine != null)
         {
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.red;
 
-            string label = "Active State: " + _machine._curState.ToString();
+            string label = "Active State: " + CurState.ToString();
             Handles.Label(transform.position, label, style);
         }
     }
