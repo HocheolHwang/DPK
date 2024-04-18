@@ -1,5 +1,6 @@
 package com.e207.back.entity;
 
+import com.e207.back.entity.id.PartyMemberId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,22 +38,3 @@ public class PartyMemberEntity {
     // Getters, setters, equals, and hashCode methods
 }
 
-@Embeddable
-@Getter
-@Setter
-class PartyMemberId implements Serializable {
-
-    private String playerId;
-    private String partyId;
-
-    // 기본 생성자
-    public PartyMemberId() {}
-
-    // 매개변수 있는 생성자
-    public PartyMemberId(String playerId, String partyId) {
-        this.playerId = playerId;
-        this.partyId = partyId;
-    }
-
-    // getters, setters, hashCode, equals 구현
-}

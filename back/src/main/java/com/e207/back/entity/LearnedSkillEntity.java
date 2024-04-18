@@ -1,5 +1,6 @@
 package com.e207.back.entity;
 
+import com.e207.back.entity.id.LearnedSkillId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,26 +45,26 @@ public class LearnedSkillEntity {
 
 }
 
-@Embeddable
-@Getter
-@Setter
-class LearnedSkillId implements Serializable {
-    @Column(name = "player_id")
-    private String playerId;
-    @Column(name = "skill_code")
-    private String skillCode;
-    @Column(name = "class_code")
-    private String classCode;
-
-    // 기본 생성자
-    public LearnedSkillId() {}
-
-    // 매개변수 있는 생성자
-    public LearnedSkillId(String playerId, String skillCode, String classCode) {
-        this.playerId = playerId;
-        this.skillCode = skillCode;
-        this.classCode = classCode;
-    }
-
-    // getters, setters, hashCode, equals 구현
-}
+//@Embeddable
+//@Getter
+//@Setter
+//class LearnedSkillId implements Serializable {
+//    @Column(name = "player_id")
+//    private String playerId;
+//    @Column(name = "skill_code")
+//    private String skillCode;
+//    @Column(name = "class_code")
+//    private String classCode;
+//
+//    // 기본 생성자
+//    public LearnedSkillId() {}
+//
+//    // 매개변수 있는 생성자
+//    public LearnedSkillId(String playerId, String skillCode, String classCode) {
+//        this.playerId = playerId;
+//        this.skillCode = skillCode;
+//        this.classCode = classCode;
+//    }
+//
+//    // getters, setters, hashCode, equals 구현
+//}

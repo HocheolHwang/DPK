@@ -1,5 +1,6 @@
 package com.e207.back.entity;
 
+import com.e207.back.entity.id.DungeonLogId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 @Entity
 @Getter
@@ -36,23 +36,4 @@ public class DungeonLogEntity {
 
     @Column(name = "is_cleared", nullable = false)
     private boolean isCleared;
-}
-@Embeddable
-@Getter
-@Setter
-class DungeonLogId implements Serializable {
-
-    private String dungeonCode;
-    private String partyId;
-
-    // 기본 생성자
-    public DungeonLogId() {}
-
-    // 매개변수 있는 생성자
-    public DungeonLogId(String dungeonCode, String partyId) {
-        this.dungeonCode = dungeonCode;
-        this.partyId = partyId;
-    }
-
-    // getters, setters, hashCode, equals 구현
 }
