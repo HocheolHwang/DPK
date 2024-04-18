@@ -1,6 +1,7 @@
 package com.e207.back.entity;
 
 
+import com.e207.back.entity.id.PlayerClassId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,19 +42,19 @@ public class PlayerClassEntity {
 
 }
 
-@Getter
-@Setter
-@Embeddable
-class PlayerClassId implements Serializable {
-    private String playerId;
-    private String classCode;
-
-    public PlayerClassId() {}
-
-    // 매개변수 있는 생성자
-    public PlayerClassId(String playerId, String classCode) {
-        this.playerId = playerId;
-        this.classCode = classCode;
-    }
-
-}
+//@Getter
+//@Setter
+//@Embeddable
+//class PlayerClassId implements Serializable {
+//    private String playerId;
+//    private String classCode;
+//
+//    public PlayerClassId() {}
+//
+//    // 매개변수 있는 생성자
+//    public PlayerClassId(String playerId, String classCode) {
+//        this.playerId = playerId;
+//        this.classCode = classCode;
+//    }
+//
+//}
