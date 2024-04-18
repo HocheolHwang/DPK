@@ -2,7 +2,7 @@ package com.e207.back.filter;
 
 import com.e207.back.exception.CustomJwtException;
 import com.e207.back.provider.JwtProvider;
-import com.e207.back.utill.CustomUserDetails;
+import com.e207.back.util.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import jakarta.servlet.FilterChain;

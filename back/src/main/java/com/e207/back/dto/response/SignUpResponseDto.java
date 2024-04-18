@@ -14,6 +14,11 @@ public class SignUpResponseDto extends ResponseDto {
         responseBody.setMessage("중복된 아이디 입니다.");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
+    public static ResponseEntity<? super SignUpResponseDto> duplicateNickname() {
+        SignUpResponseDto responseBody = new SignUpResponseDto();
+        responseBody.setMessage("중복된 닉네임 입니다.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
     public static ResponseEntity<? super SignUpResponseDto> playerIdValidationFail() {
         SignUpResponseDto responseBody = new SignUpResponseDto();
         responseBody.setMessage("아이디 형식이 틀렸습니다.");
