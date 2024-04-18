@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.Cockpit.Forms;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,23 +16,13 @@ public abstract class State : IState
     public float ExecuteTime { get => _executeTime; set => _executeTime = Time.time - StartTime; }
 
 
-    // Base
-    protected BaseController _controller;
-    protected Animator _animator => _controller.animator;
-    protected NavMeshAgent _agent => _controller.agent;
+    // Common Property From BaseController
+    protected Animator _animator;
+    protected NavMeshAgent _agent;
+    protected StateMachine _machine;
+    protected State _curState;
 
     
-    protected void ChangeState(State newState)
-    {
-        _controller.Machine.ChangeState(newState);
-    }
-
-
-    public void GetBaseMemberVariable(BaseController controller)
-    {
-        _controller = controller;
-    }
-
 
     public void Initialize()
     {

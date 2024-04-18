@@ -5,58 +5,38 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-/// <summary>
-/// 일반 몬스터 : 근거리 공격, 1인 타격, 가장 가까운 적을 타겟팅
-/// </summary>
-
-public enum MonsterState
-{
-    IDLE = 0,
-    //CHASE,
-    //ATTACK,
-    //GLOBAL_DIE,
-
-    GlOBAL,
-    MAX_LEN
-}
 
 public class NormalMonsterController : BaseController
 {
+    // Normal Monster Controller만 가지는 상태
+    public State IDLE_STATE;
+    public State CHASE_STATE;
+    public State GLOBAL_STATE;
+
     [Header("Each Controller Property")]
     [SerializeField] public Detector detector;
-
-    // Normal Monster만 가진 상태 또는 전략
-    private State[] _states;
 
 
     private void Start()
     {
         Init();
-        ChangeState(_states[(int)MonsterState.IDLE]);
+        ChangeState(IDLE_STATE);        // IDLE 상태가 되기 전에 this로 controller의 속성을 전달한다. -> curState가 null인 상황으로 전달
+                                        // new NormalMonsterStates.IdleState(this) 이렇게 사용해야 하나?
+                                        // State의 Initialize 또는 ChangeState()를 만들어서 여기서 계속 controller의 속성을 세팅할건가
     }
 
     protected override void Init()
     {
-        Machine = new StateMachine();
-        _states = new State[(int)MonsterState.MAX_LEN];
-        _states[(int)MonsterState.IDLE] = new NormalMonster.IdleState();
+        _machine = new StateMachine();
+        IDLE_STATE = new NormalMonsterStates.IdleState(this);
+        CHASE_STATE = new NormalMonsterStates.ChaseState(this);
+        GLOBAL_STATE = new NormalMonsterStates.GlobalState(this);
 
-        foreach (State state in _states)
-        {
-            state.GetBaseMemberVariable(this);      // BaseController를 각 State로 넘기기 위해서 enum list 사용
-            Debug.Log(state.ToString());
-        }
         agent.stoppingDistance = detector.attackRange;
     }
 
     private void Update()
     {
-        Machine.Execute();
-    }
-
-    public bool IsArriveToTarget()
-    {
-        if (detector.Target == null) return true;
-        return agent.remainingDistance <= agent.stoppingDistance;
+        _machine.Execute();
     }
 }
