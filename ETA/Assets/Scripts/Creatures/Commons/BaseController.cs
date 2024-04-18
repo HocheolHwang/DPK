@@ -20,9 +20,14 @@ public abstract class BaseController : MonoBehaviour
     protected abstract void Init();
 
     // 개발 편의성
-    protected void ChangeState(State newState)
+    public void ChangeState(State newState)
     {
+        _curState = newState;           // controller의 curState를 계속 갱신할 수 있다.
         Machine.ChangeState(newState);
+    }
+    public void RevertToPrevState()
+    {
+        Machine.RevertToPrevState();
     }
     
     // Debugging STATE

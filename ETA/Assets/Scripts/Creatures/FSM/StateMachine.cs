@@ -16,8 +16,8 @@ public class StateMachine
         {
             if (CurState != null)
             {
-                CurState.Exit();
                 PrevState = CurState;
+                CurState.Exit();
             }
             CurState = newState;
             CurState.Initialize();
@@ -30,7 +30,7 @@ public class StateMachine
         GlobalState = newState;
     }
 
-    public void ChangeToPrevState()
+    public void RevertToPrevState() // 뜻을 명확히 하기 위해 이름 수정
     {
         ChangeState(PrevState);
     }

@@ -17,7 +17,6 @@ namespace NormalMonsterStates
             _controller = controller;
             _agent = controller.agent;
             _animator = controller.animator;
-            _machine = controller.Machine;
 
             // Private
             _detector = controller.detector;
@@ -25,12 +24,6 @@ namespace NormalMonsterStates
 
         public override void Enter()
         {
-            Debug.Log($"controller name: {_controller.gameObject.name}");
-            Debug.Log($"agent null? {_agent.gameObject.name}");
-            Debug.Log($"animator null ? {_animator.gameObject.name}");
-            Debug.Log($"machine null ? {_controller.gameObject.name}");
-            Debug.Log($"curState null ? {_controller.CurState}");
-
             _agent.velocity = Vector3.zero;
 
             //_animator.CrossFade();
@@ -38,20 +31,14 @@ namespace NormalMonsterStates
 
         public override void Execute()
         {
-            // IsComplete가 필요할까?
             if (_detector.Target != null)
             {
-                _machine.ChangeState(_controller.CHASE_STATE);
+                _controller.ChangeState(_controller.CHASE_STATE);
             }
         }
 
         public override void Exit()
         {
-        }
-
-        public bool IsArriveToTarget()
-        {
-            return _agent.remainingDistance <= _agent.stoppingDistance;
         }
     }
     #endregion
@@ -60,17 +47,62 @@ namespace NormalMonsterStates
     #region CHASE
     public class ChaseState : State
     {
-        [Header("해당 상태에서 사용할 속성")]
-        [SerializeField] public AnimationClip anim;
-        [SerializeField] public float maxSpeed;
-        [SerializeField] public float speed;        // animator  속도와 동일하게 세팅
-
         private NormalMonsterController _controller;
+        private Detector _detector;
+
         public ChaseState(NormalMonsterController controller)
         {
+            // Common
             _controller = controller;
             _agent = controller.agent;
             _animator = controller.animator;
+
+            // Private
+            _detector = controller.detector;
+        }
+
+        public override void Enter()
+        {
+            _agent.speed = 3.0f;
+        }
+
+        public override void Execute()
+        {
+            if ( _detector.Target == null )
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
+                _agent.ResetPath();
+            }
+            else if (_controller.IsArriveToTarget())
+            {
+                _controller.ChangeState(_controller.ATTACK_STATE);
+            }
+
+            _agent.SetDestination(_detector.Target.position);
+        }
+
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- ATTACK ------------------------------------------------
+    #region ATTACK
+    public class AttackState : State
+    {
+        private NormalMonsterController _controller;
+        private Detector _detector;
+
+        public AttackState(NormalMonsterController controller)
+        {
+            // Common
+            _controller = controller;
+            _agent = controller.agent;
+            _animator = controller.animator;
+
+            // Private
+            _detector = controller.detector;
         }
 
         public override void Enter()
@@ -79,6 +111,14 @@ namespace NormalMonsterStates
 
         public override void Execute()
         {
+            if (_detector.Target == null )
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
+            else if ( !_controller.IsArriveToTarget() )
+            {
+                _controller.ChangeState(_controller.CHASE_STATE);
+            }
         }
 
         public override void Exit()
@@ -94,25 +134,21 @@ namespace NormalMonsterStates
         private NormalMonsterController _controller;
         public GlobalState(NormalMonsterController controller)
         {
+            // Common
             _controller = controller;
             _agent = controller.agent;
             _animator = controller.animator;
         }
 
-        public override void Enter()
-        {
-        }
+        public override void Enter() { }
 
         public override void Execute()
         {
-            // GLOBAL_STATE 상태인 경우 종료
+            // curState가 GLOBAL_STATE 상태인 경우 종료
 
             // GLOBAL_STATE로 전환하는 로직
         }
-
-        public override void Exit()
-        {
-        }
+        public override void Exit() { }
     }
     #endregion
 }

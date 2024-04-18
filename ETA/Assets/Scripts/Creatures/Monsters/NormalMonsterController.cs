@@ -5,12 +5,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
+using NormalMonsterStates;   // 이걸로 이름이 중복되도 상관 없으면 Init()에서 사용할 예정
 
 public class NormalMonsterController : BaseController
 {
     // Normal Monster Controller만 가지는 상태
     public State IDLE_STATE;
     public State CHASE_STATE;
+    public State ATTACK_STATE;
     public State GLOBAL_STATE;
 
     [Header("Each Controller Property")]
@@ -20,11 +22,7 @@ public class NormalMonsterController : BaseController
     private void Start()
     {
         Init();
-        ChangeState(IDLE_STATE);        // 각 상태에서 controller가 최신 상태로 유지되지 않는 문제를 해결해야함
-                                        // IDLE 상태가 되기 전에 this로 controller의 속성을 전달한다. -> curState가 null인 상황으로 전달
-                                        // new NormalMonsterStates.IdleState(this) 이렇게 사용해야 하나?
-                                        // State의 Initialize 또는 ChangeState()를 만들어서 여기서 계속 controller의 속성을 세팅할건가
-                                        // CurState를 new NormalMonsterStates.IdleState(this) 전에 세팅하고 시작할건가?
+        ChangeState(IDLE_STATE);
     }
 
     protected override void Init()
@@ -32,7 +30,10 @@ public class NormalMonsterController : BaseController
         _machine = new StateMachine();
         IDLE_STATE = new NormalMonsterStates.IdleState(this);
         CHASE_STATE = new NormalMonsterStates.ChaseState(this);
+        ATTACK_STATE = new NormalMonsterStates.AttackState(this);
         GLOBAL_STATE = new NormalMonsterStates.GlobalState(this);
+
+        _machine.SetGlobalState(GLOBAL_STATE);
 
         agent.stoppingDistance = detector.attackRange;
     }
@@ -41,4 +42,11 @@ public class NormalMonsterController : BaseController
     {
         _machine.Execute();
     }
+
+    public bool IsArriveToTarget()
+    {
+        // 이전 코드는 AttackRange 내부에 있던 플레이어가 범위 밖을 나가면 멈춰있어서 안 쓰는게 좋다.
+        return Vector3.Distance(detector.Target.position, transform.position) < detector.attackRange;
+    }
+
 }
