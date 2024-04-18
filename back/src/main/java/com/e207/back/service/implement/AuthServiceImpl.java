@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
                 return SignUpResponseDto.duplicateId();
             }
 
-            if(!ValidationUill.isValidUsername(dto.getPlayerId())){
+            if(!ValidationUill.isValidPlayerId(dto.getPlayerId())){
                 return SignUpResponseDto.playerIdValidationFail();
             }
             if(!ValidationUill.isValidNickname(dto.getNickname())){
