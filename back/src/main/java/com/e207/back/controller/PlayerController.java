@@ -1,11 +1,12 @@
 package com.e207.back.controller;
 
+import com.e207.back.dto.request.ChangeExpRequestDto;
 import com.e207.back.dto.request.ChangeGoldRequestDto;
 import com.e207.back.dto.request.PlayerRankingRequestDto;
+import com.e207.back.dto.response.ChangeExpResponseDto;
 import com.e207.back.dto.response.ChangeGoldResponseDto;
 import com.e207.back.dto.response.PlayerRankingResponseDto;
 import com.e207.back.service.PlayerService;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,11 @@ public class PlayerController {
 
     @PutMapping("/gold")
     public ResponseEntity<? super ChangeGoldResponseDto> changeGold(@RequestBody ChangeGoldRequestDto requestBody){
-        return playerService.changGold(requestBody);
+        return playerService.changeGold(requestBody);
+    }
+
+    @PutMapping("/exp")
+    public ResponseEntity<? super ChangeExpResponseDto> changeExp(@RequestBody ChangeExpRequestDto requestBody){
+        return playerService.changeExp(requestBody);
     }
 }

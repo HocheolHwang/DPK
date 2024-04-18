@@ -3,13 +3,18 @@ package com.e207.back.service.implement;
 
 import com.e207.back.dto.ResponseDto;
 import com.e207.back.dto.common.PlayerClassDto;
+import com.e207.back.dto.request.ChangeExpRequestDto;
 import com.e207.back.dto.request.ChangeGoldRequestDto;
 import com.e207.back.dto.request.PlayerRankingRequestDto;
+import com.e207.back.dto.response.ChangeExpResponseDto;
 import com.e207.back.dto.response.ChangeGoldResponseDto;
 import com.e207.back.dto.response.PlayerRankingResponseDto;
+import com.e207.back.entity.ExpLogEntity;
 import com.e207.back.entity.GoldLogEntity;
 import com.e207.back.entity.PlayerClassEntity;
 import com.e207.back.entity.PlayerEntity;
+import com.e207.back.entity.id.PlayerClassId;
+import com.e207.back.repository.ExpLogRepository;
 import com.e207.back.repository.GoldLogRepository;
 import com.e207.back.repository.PlayerClassRepository;
 import com.e207.back.repository.PlayerRepository;
@@ -32,6 +37,8 @@ public class PlayerServiceImpl implements PlayerService {
     private final PlayerRepository playerRepository;
     private final PlayerClassRepository playerClassRepository;
     private final GoldLogRepository goldLogRepository;
+    private final ExpLogRepository expLogRepository;
+
     @Override
     public ResponseEntity<? super PlayerRankingResponseDto> getPlayerRanking(PlayerRankingRequestDto dto) {
         List<PlayerClassDto> list = new ArrayList<>();
@@ -58,7 +65,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ResponseEntity<? super ChangeGoldResponseDto> changGold(ChangeGoldRequestDto dto) {
+    public ResponseEntity<? super ChangeGoldResponseDto> changeGold(ChangeGoldRequestDto dto) {
 
         long currentGold = -1;
         try{
@@ -83,5 +90,37 @@ public class PlayerServiceImpl implements PlayerService {
 
         }
         return ChangeGoldResponseDto.success(currentGold);
+    }
+
+    @Override
+    public ResponseEntity<? super ChangeExpResponseDto> changeExp(ChangeExpRequestDto dto) {
+
+        try{
+            CustomUserDetails customUserDetails = CustomUserDetails.LoadUserDetails();
+            String playerId = customUserDetails.getPlayerId();
+
+            Optional<PlayerClassEntity> playerClassEntity = playerClassRepository.findById(new PlayerClassId(playerId, dto.getClassCode()));
+
+            playerClassEntity.get().setPlayerExp(dto.getCurrentExp());
+            playerClassEntity.get().setPlayerLevel(dto.getPlayerLevel());
+
+            playerClassRepository.save(playerClassEntity.get());
+
+            ExpLogEntity log = new ExpLogEntity();
+            log.setPlayer(playerClassEntity.get().getPlayer());
+            log.setClassEntity(playerClassEntity.get().get_class());
+            log.setExpLogReason(dto.getReason());
+            log.setCurrentLevel(dto.getPlayerLevel());
+            log.setExpDelta(dto.getExpDelta());
+            expLogRepository.save(log);
+
+
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return ChangeExpResponseDto.success();
     }
 }
