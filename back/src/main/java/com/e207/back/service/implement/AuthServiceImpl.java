@@ -34,8 +34,16 @@ public class AuthServiceImpl implements AuthService {
             newPlayer.setPassword(bCryptPasswordEncoder.encode(dto.getPlayerPassword()));
             newPlayer.setPlayerNickname(dto.getNickname());
 
-            if(playerRepository.findById(dto.getPlayerId()).isPresent()){
+            Optional<PlayerEntity> oldPlayer = playerRepository.findById(dto.getPlayerId());
+
+            if(oldPlayer.isPresent()){
                 return SignUpResponseDto.duplicateId();
+            }
+
+            Optional<PlayerEntity> sameNicknamePlayer = playerRepository.findByPlayerNickname(newPlayer.getPlayerNickname());
+
+            if(sameNicknamePlayer.isPresent()){
+                return SignUpResponseDto.duplicateNickname();
             }
 
             if(!ValidationUill.isValidPlayerId(dto.getPlayerId())){
