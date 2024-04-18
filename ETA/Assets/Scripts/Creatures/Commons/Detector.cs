@@ -15,17 +15,17 @@ using static UnityEngine.GraphicsBuffer;
 public class Detector : MonoBehaviour
 {
     [Header("Set Values from the Inspector")]
-    [SerializeField] public float _detectRange;
-    [SerializeField] public float _attackRange;
-    [SerializeField] public LayerMask _targetLayerMask;
+    [SerializeField] public float detectRange;
+    [SerializeField] public float attackRange;
+    [SerializeField] public LayerMask targetLayerMask;
 
-    [SerializeField] public Transform _target { get; private set; }
+    public Transform Target { get; private set; }
 
     private Ray _ray;
 
     private void Start()
     {
-        _target = null;
+        Target = null;
 
         StartCoroutine(UpdateTarget());
     }
@@ -34,8 +34,8 @@ public class Detector : MonoBehaviour
     {
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (_target == null ) Gizmos.DrawWireSphere(_ray.origin, _detectRange);
-        else Gizmos.DrawWireSphere(_ray.origin, _attackRange);
+        if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, detectRange);
+        else Gizmos.DrawWireSphere(_ray.origin, attackRange);
     }
 
     IEnumerator UpdateTarget()
@@ -45,9 +45,9 @@ public class Detector : MonoBehaviour
             Debug.Log("Detector - UpdateTarget");
             yield return new WaitForSeconds(0.5f);
 
-            _target = null;
+            Target = null;
             float closeDist = Mathf.Infinity;
-            Collider[] enemies = Physics.OverlapSphere(transform.position, _detectRange, _targetLayerMask);
+            Collider[] enemies = Physics.OverlapSphere(transform.position, detectRange, targetLayerMask);
 
             foreach (Collider enemy in enemies)
             {
@@ -55,7 +55,7 @@ public class Detector : MonoBehaviour
                 if (distToEnemy < closeDist)
                 {
                     closeDist = distToEnemy;
-                    _target = enemy.transform;
+                    Target = enemy.transform;
                 }
             }
         }

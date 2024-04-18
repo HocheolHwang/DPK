@@ -6,9 +6,10 @@ using UnityEngine.AI;
 
 public class RunState : State
 {
-    [SerializeField] public AnimationClip _anim;
-    [SerializeField] public float _maxSpeed;
-    [SerializeField] public float _speed;        // animator  속도와 동일하게 세팅
+    [Header("해당 상태에서 사용할 속성")]
+    [SerializeField] public AnimationClip anim;
+    [SerializeField] public float maxSpeed;
+    [SerializeField] public float speed;        // animator  속도와 동일하게 세팅
 
     public override void Enter()
     {

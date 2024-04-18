@@ -34,7 +34,7 @@ public class NormalMonster : BaseController
 
     protected override void Init()
     {
-        _machine = new StateMachine();
+        Machine = new StateMachine();
         _states = new State[(int)MonsterState.MAX_LEN];
         _states[(int)MonsterState.IDLE] = new IdleState();
 
@@ -43,7 +43,7 @@ public class NormalMonster : BaseController
             state.GetBaseMemberVariable(this);      // BaseController를 각 State로 넘기기 위해서 enum list 사용
             Debug.Log(state.ToString());
         }
-        _agent.stoppingDistance = _detector._attackRange;
+        agent.stoppingDistance = _detector.attackRange;
     }
 
     private void Update()
@@ -53,6 +53,7 @@ public class NormalMonster : BaseController
 
     private void StateSelector()
     {
+        // Global State Class에서 Previous State로 전환한다.
         //if (_curState._isComplete)
         //{
         //    if (_curState == GlobalState)
@@ -61,6 +62,8 @@ public class NormalMonster : BaseController
         //        ChangeState(PrevState);
         //    }
         //}
+
+
         //// 현재 상태가 끝난 경우
         //// Idle은 target이 존재하면 isComplete
         //if (machine.curState.isComplete)
@@ -97,7 +100,7 @@ public class NormalMonster : BaseController
 
     public bool IsArriveToTarget()
     {
-        if (_detector._target == null) return true;
-        return _agent.remainingDistance <= _agent.stoppingDistance;
+        if (_detector.Target == null) return true;
+        return agent.remainingDistance <= agent.stoppingDistance;
     }
 }

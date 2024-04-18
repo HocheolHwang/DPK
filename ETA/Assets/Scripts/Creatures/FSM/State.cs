@@ -7,20 +7,23 @@ using UnityEngine.AI;
 
 public abstract class State : IState
 {
-    public bool _isComplete { get; protected set; }      // 현재 상태가 끝났나?
-    protected float _startTime;                          // 현재 상태의 시작 시간
-    public float _executeTime => Time.time - _startTime; // 현재 상태가 된 시점으로부터 얼마나 지났는지
- 
+    private bool _isComplete;   // 현재 상태가 끝났나?
+    private float _startTime;   // 현재 상태의 시작 시간
+    private float _executeTime; // 현재 상태가 된 시점으로부터 얼마나 지났는지
+    public bool IsComplete { get => _isComplete; set => _isComplete = value; }
+    public float StartTime { get => _startTime; set => _startTime = value; }
+    public float ExecuteTime { get => _executeTime; set => _executeTime = Time.time - StartTime; }
+
+
     // Base
     protected BaseController _controller;
-    protected Animator _animator => _controller._animator;
-    protected NavMeshAgent _agent => _controller._agent;
+    protected Animator _animator => _controller.animator;
+    protected NavMeshAgent _agent => _controller.agent;
 
-
-
+    
     protected void ChangeState(State newState)
     {
-        _controller._machine.ChangeState(newState);
+        _controller.Machine.ChangeState(newState);
     }
 
 

@@ -5,44 +5,45 @@ using UnityEngine.Assertions;
 
 public class StateMachine
 {
-    public State _curState { get; set; }
-    public State _globalState { get; set; }
-    public State _prevState { get; set; }
+    public State CurState { get; set; }
+    public State GlobalState { get; set; }
+    public State PrevState { get; set; }
 
 
     public void ChangeState(State newState)
     {
-        if (_curState != newState)    // 현재 상태와 새로운 상태가 같지 않거나 강제로 상태를 변경하는 경우
+        if (CurState != newState)    // 현재 상태와 새로운 상태가 같지 않거나 강제로 상태를 변경하는 경우
         {
-            if (_curState != null)
+            if (CurState != null)
             {
-                _curState.Exit();
-                _prevState = _curState;
+                CurState.Exit();
+                PrevState = CurState;
             }
-            _curState = newState;
-            _curState.Initialize();
-            _curState.Enter();
+            CurState = newState;
+            CurState.Initialize();
+            CurState.Enter();
         }
     }
 
     public void SetGlobalState(State newState)
     {
-        _globalState = newState;
+        GlobalState = newState;
     }
 
     public void ChangeToPrevState()
     {
-        ChangeState(_prevState);
+        ChangeState(PrevState);
     }
 
     public void Execute()
     {
-        _globalState?.Execute();
-        _curState?.Execute();
+        GlobalState?.Execute();
+        CurState?.Execute();
     }
 
     public void FixedExecute()
     {
-        _curState?.FixedExecute();
+        GlobalState?.FixedExecute();
+        CurState?.FixedExecute();
     }
 }
