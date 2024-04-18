@@ -1,15 +1,14 @@
 package com.e207.back.controller;
 
+import com.e207.back.dto.request.ChangeGoldRequestDto;
 import com.e207.back.dto.request.PlayerRankingRequestDto;
+import com.e207.back.dto.response.ChangeGoldResponseDto;
 import com.e207.back.dto.response.PlayerRankingResponseDto;
 import com.e207.back.service.PlayerService;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/player")
@@ -22,5 +21,10 @@ public class PlayerController {
         PlayerRankingRequestDto requestBody = new PlayerRankingRequestDto();
         requestBody.setLimit(limit);
         return playerService.getPlayerRanking(requestBody);
+    }
+
+    @PutMapping("/gold")
+    public ResponseEntity<? super ChangeGoldResponseDto> changeGold(@RequestBody ChangeGoldRequestDto requestBody){
+        return playerService.changGold(requestBody);
     }
 }
