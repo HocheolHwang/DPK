@@ -12,12 +12,13 @@ public class StateMachine
 
     public void ChangeState(State newState)
     {
-        if (CurState != newState)    // 현재 상태와 새로운 상태가 같지 않거나 강제로 상태를 변경하는 경우
+        // 현재 상태와 새로운 상태가 같지 않아야 한다.
+        if (CurState != newState)    
         {
             if (CurState != null)
             {
-                CurState.Exit();
                 PrevState = CurState;
+                CurState.Exit();
             }
             CurState = newState;
             CurState.Initialize();
@@ -30,7 +31,7 @@ public class StateMachine
         GlobalState = newState;
     }
 
-    public void ChangeToPrevState()
+    public void RevertToPrevState() // 뜻을 명확히 하기 위해 이름 수정
     {
         ChangeState(PrevState);
     }

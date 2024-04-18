@@ -5,58 +5,52 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-/// <summary>
-/// 일반 몬스터 : 근거리 공격, 1인 타격, 가장 가까운 적을 타겟팅
-/// </summary>
-
-public enum MonsterState
-{
-    IDLE = 0,
-    //CHASE,
-    //ATTACK,
-    //GLOBAL_DIE,
-
-    GlOBAL,
-    MAX_LEN
-}
+using NormalMonsterStates;   // 이걸로 이름이 중복되도 상관 없으면 Init()에서 사용할 예정
 
 public class NormalMonsterController : BaseController
 {
+    // Normal Monster Controller만 가지는 상태
+    public State IDLE_STATE;
+    public State CHASE_STATE;
+    public State ATTACK_STATE;
+    public State DIE_STATE;
+    public State GLOBAL_STATE;
+
     [Header("Each Controller Property")]
     [SerializeField] public Detector detector;
-
-    // Normal Monster만 가진 상태 또는 전략
-    private State[] _states;
-
+    // 테스트를 위함, 스탯 추가되면 변경될지도?
+    [SerializeField] public bool isDie;
+    [SerializeField] public bool isRevive;
 
     private void Start()
     {
         Init();
-        ChangeState(_states[(int)MonsterState.IDLE]);
+        ChangeState(IDLE_STATE);
     }
 
     protected override void Init()
     {
-        Machine = new StateMachine();
-        _states = new State[(int)MonsterState.MAX_LEN];
-        _states[(int)MonsterState.IDLE] = new NormalMonster.IdleState();
+        _stateMachine = new StateMachine();
+        IDLE_STATE = new NormalMonsterStates.IdleState(this);
+        CHASE_STATE = new NormalMonsterStates.ChaseState(this);
+        ATTACK_STATE = new NormalMonsterStates.AttackState(this);
+        DIE_STATE = new NormalMonsterStates.DieState(this);
+        GLOBAL_STATE = new NormalMonsterStates.GlobalState(this);
 
-        foreach (State state in _states)
-        {
-            state.GetBaseMemberVariable(this);      // BaseController를 각 State로 넘기기 위해서 enum list 사용
-            Debug.Log(state.ToString());
-        }
+        _stateMachine.SetGlobalState(GLOBAL_STATE);
+
         agent.stoppingDistance = detector.attackRange;
     }
 
     private void Update()
     {
-        Machine.Execute();
+        _stateMachine.Execute();
     }
 
     public bool IsArriveToTarget()
     {
-        if (detector.Target == null) return true;
-        return agent.remainingDistance <= agent.stoppingDistance;
+        // 이전 코드는 AttackRange 내부에 있던 플레이어가 범위 밖을 나가면 멈춰있어서 안 쓰는게 좋다.
+        return Vector3.Distance(detector.Target.position, transform.position) < detector.attackRange;
     }
+
 }
