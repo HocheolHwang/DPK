@@ -20,9 +20,11 @@ public class NormalMonsterController : BaseController
     private void Start()
     {
         Init();
-        ChangeState(IDLE_STATE);        // IDLE 상태가 되기 전에 this로 controller의 속성을 전달한다. -> curState가 null인 상황으로 전달
+        ChangeState(IDLE_STATE);        // 각 상태에서 controller가 최신 상태로 유지되지 않는 문제를 해결해야함
+                                        // IDLE 상태가 되기 전에 this로 controller의 속성을 전달한다. -> curState가 null인 상황으로 전달
                                         // new NormalMonsterStates.IdleState(this) 이렇게 사용해야 하나?
                                         // State의 Initialize 또는 ChangeState()를 만들어서 여기서 계속 controller의 속성을 세팅할건가
+                                        // CurState를 new NormalMonsterStates.IdleState(this) 전에 세팅하고 시작할건가?
     }
 
     protected override void Init()
