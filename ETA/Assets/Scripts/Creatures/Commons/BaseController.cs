@@ -7,7 +7,7 @@ using UnityEngine.AI;
 // start와 update 같은건 각 객체에서 사용
 public abstract class BaseController : MonoBehaviour
 {
-    [Header("Common Component")]
+    [Header("Common Property")]
     [SerializeField] public Animator animator;
     [SerializeField] public NavMeshAgent agent;
 
