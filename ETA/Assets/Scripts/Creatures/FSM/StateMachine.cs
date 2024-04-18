@@ -31,7 +31,7 @@ public class StateMachine
         GlobalState = newState;
     }
 
-    public void RevertToPrevState() // 뜻을 명확히 하기 위해 이름 수정
+    public void RevertToPrevState()
     {
         ChangeState(PrevState);
     }

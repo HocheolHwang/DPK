@@ -27,6 +27,7 @@ public abstract class BaseController : MonoBehaviour
     }
     public void RevertToPrevState()
     {
+        _curState = _stateMachine.PrevState;
         _stateMachine.RevertToPrevState();
     }
     
@@ -38,7 +39,7 @@ public abstract class BaseController : MonoBehaviour
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.red;
 
-            string label = "Active State: " + _stateMachine.CurState.ToString();
+            string label = "Active State: " + _curState.ToString();
             Handles.Label(transform.position, label, style);
         }
     }

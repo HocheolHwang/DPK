@@ -181,8 +181,6 @@ namespace NormalMonsterStates
             _animator = controller.animator;
         }
 
-        public override void Enter() { }
-
         public override void Execute()
         {
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
@@ -193,8 +191,9 @@ namespace NormalMonsterStates
             {
                 _controller.ChangeState(_controller.DIE_STATE);
             }
+            // 피격 상태도 여기에 넣을 수 있을 것 같다.
+            // Attack 또는 Chase 중에 피격 받았을 경우, Hit 상태로 전환했다가 PrevState를 통해 다시 Attack 또는 Chase로 돌아갈 수 있기 때문이다.
         }
-        public override void Exit() { }
     }
     #endregion
 }
