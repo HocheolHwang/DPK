@@ -11,14 +11,9 @@ namespace NormalMonsterStates
         private NormalMonsterController _controller;
         private Detector _detector;
 
-        public IdleState(NormalMonsterController controller)
+        public IdleState(NormalMonsterController controller) : base(controller)
         {
-            // Common
             _controller = controller;
-            _agent = controller.agent;
-            _animator = controller.animator;
-
-            // Private
             _detector = controller.detector;
         }
 
@@ -50,14 +45,9 @@ namespace NormalMonsterStates
         private NormalMonsterController _controller;
         private Detector _detector;
 
-        public ChaseState(NormalMonsterController controller)
+        public ChaseState(NormalMonsterController controller) : base(controller)
         {
-            // Common
             _controller = controller;
-            _agent = controller.agent;
-            _animator = controller.animator;
-
-            // Private
             _detector = controller.detector;
         }
 
@@ -97,14 +87,9 @@ namespace NormalMonsterStates
         private NormalMonsterController _controller;
         private Detector _detector;
 
-        public AttackState(NormalMonsterController controller)
+        public AttackState(NormalMonsterController controller) : base(controller)
         {
-            // Common
             _controller = controller;
-            _agent = controller.agent;
-            _animator = controller.animator;
-
-            // Private
             _detector = controller.detector;
         }
 
@@ -136,12 +121,9 @@ namespace NormalMonsterStates
     {
         private NormalMonsterController _controller;
 
-        public DieState(NormalMonsterController controller)
+        public DieState(NormalMonsterController controller) : base(controller)
         {
-            // Common
             _controller = controller;
-            _agent = controller.agent;
-            _animator = controller.animator;
         }
 
         public override void Enter() 
@@ -173,12 +155,10 @@ namespace NormalMonsterStates
     public class GlobalState : State
     {
         private NormalMonsterController _controller;
-        public GlobalState(NormalMonsterController controller)
+
+        public GlobalState(NormalMonsterController controller) : base(controller)
         {
-            // Common
             _controller = controller;
-            _agent = controller.agent;
-            _animator = controller.animator;
         }
 
         public override void Execute()
