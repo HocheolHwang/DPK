@@ -20,7 +20,11 @@ public abstract class State : IState
     protected Animator _animator;
     protected NavMeshAgent _agent;
 
-    
+    public State(BaseController controller)
+    {
+        _animator = controller.animator;
+        _agent = controller.agent;
+    }
 
     public void Initialize()
     {
