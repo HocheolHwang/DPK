@@ -5,37 +5,42 @@ using UnityEngine;
 public class TestUI : MonoBehaviour
 {
 
-    HTTPRequest req;
+    NetworkManager req;
 
     private void Start()
     {
-        req = gameObject.GetComponent<HTTPRequest>();
+        req = gameObject.GetComponent<NetworkManager>();
     }
     public void Post()
     {
-        TESTClass test = new TESTClass();
+        ResponseDto test = new ResponseDto();
 
-        test.data = 123;
-        test.time = Time.deltaTime;
-        test.name = "¡π∑¡";
+        test.gold = 124812048;
+        test.id = "Tkvl";
+        test.nickName = "Ïù¥Ïã∏Ìîº";
 
         string testData = JsonUtility.ToJson(test);
 
-        req.PostCall("post", testData);
+        req.HTTPCall("POST", "post", testData);
+    }
+
+    public void Put()
+    {
+        ResponseDto test = new ResponseDto();
+
+        test.gold = 124812048;
+        test.id = "ssafy";
+        test.nickName = "ÍπÄÏã∏Ìîº";
+
+        string testData = JsonUtility.ToJson(test);
+
+        req.HTTPCall("PUT", "put", testData);
     }
 
     public void Get()
     {
 
-        req.GetCall("get");
-    }
-
-    [System.Serializable]
-    class TESTClass
-    {
-        public string name;
-        public int data;
-        public float time;
+        req.HTTPCall("GET", "get");
     }
 
     public void MakeRoom()
@@ -45,5 +50,3 @@ public class TestUI : MonoBehaviour
         photon.MakeRoom();
     }
 }
-
-

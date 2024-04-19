@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UserInfo
+public class PlayerManager
 {
-    private static UserInfo instance;
+    private static PlayerManager instance;
     private string id;
     private string nickname;
     private string accessToken;
     private int gold;
 
-    UserInfo() { }
+    PlayerManager() { }
 
-    public static UserInfo GetInstance()
+    public static PlayerManager GetInstance()
     {
         if (instance == null)
         {
-            instance = new UserInfo();
+            instance = new PlayerManager();
         }
 
         return instance;
