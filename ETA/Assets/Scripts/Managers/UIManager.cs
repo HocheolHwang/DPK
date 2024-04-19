@@ -94,26 +94,26 @@ public class UIManager
 
         // 지정된 이름의 "Popup UI" 프리팹을 인스턴스화하고 루트 GameObject에 추가
         GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}");
-        T popup = Util.GetOrAddComponent<T>(go);
+        T popupUI = Util.GetOrAddComponent<T>(go);
 
         // 새로운 "Popup UI"가 추가될 때 팝업 스택에 푸시
-        _popupStack.Push(popup);
+        _popupStack.Push(popupUI);
 
         // go GameObject를 Root GameObject의 자식으로 설정
         go.transform.SetParent(Root.transform);
 
-        return popup;
+        return popupUI;
     }
 
     // 지정된 "Popup UI"를 닫는 메서드
-    public void ClosePopupUI(UI_Popup popup)
+    public void ClosePopupUI(UI_Popup _popupUI)
     {
         // 팝업 스택이 비어있으면 종료
         if (_popupStack.Count == 0)
             return;
 
         // 최상위 팝업이 입력된 팝업과 일치하지 않으면 종료
-        if (_popupStack.Peek() != popup)
+        if (_popupStack.Peek() != _popupUI)
         {
             Debug.Log("Close Popup Failed!");
             return;
@@ -130,9 +130,9 @@ public class UIManager
             return;
 
         // 최상위 "Popup UI"를 팝하고, 해당 GameObject를 파괴하고 정렬 순서를 감소
-        UI_Popup popup = _popupStack.Pop();
-        Managers.Resource.Destroy(popup.gameObject);
-        popup = null;
+        UI_Popup _popupUI = _popupStack.Pop();
+        Managers.Resource.Destroy(_popupUI.gameObject);
+        _popupUI = null;
         _order--;
     }
 
