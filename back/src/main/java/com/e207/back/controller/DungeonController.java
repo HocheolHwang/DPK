@@ -1,14 +1,14 @@
 package com.e207.back.controller;
 
 import com.e207.back.dto.request.DungeonEndRequestDto;
+import com.e207.back.dto.request.DungeonRankingRequestDto;
 import com.e207.back.dto.response.DungeonEndResponseDto;
+import com.e207.back.dto.response.DungeonRankingResponseDto;
 import com.e207.back.service.DungeonService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,5 +19,12 @@ public class DungeonController {
     @PostMapping("/end")
     public ResponseEntity<? super DungeonEndResponseDto> endDungeon(@RequestBody DungeonEndRequestDto requestBody){
         return dungeonService.endDungeon(requestBody);
+    }
+
+    @GetMapping("/ranking")
+    public ResponseEntity<? super DungeonRankingResponseDto> dungeonRanking(@RequestParam(required = true,name = "dungeon-code") String dungeonCode){
+        DungeonRankingRequestDto requestBody = new DungeonRankingRequestDto();
+        requestBody.setDungeonCode(dungeonCode);
+        return dungeonService.dungeonRanking(requestBody);
     }
 }
