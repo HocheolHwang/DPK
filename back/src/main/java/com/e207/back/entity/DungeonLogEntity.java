@@ -36,4 +36,9 @@ public class DungeonLogEntity {
 
     @Column(name = "is_cleared", nullable = false)
     private boolean isCleared;
+
+    @Column(name = "clear_time", nullable = true)
+    private Long clearTime;
+
+
 }
