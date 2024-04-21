@@ -16,7 +16,7 @@ public abstract class State : IState
     public float ExecuteTime { get => _executeTime; set => _executeTime = Time.time - StartTime; }
 
 
-    // Common Property From BaseController
+    //--------------------------- Common Property From BaseController -----------------------------------
     protected Animator _animator;
     protected NavMeshAgent _agent;
 
@@ -26,6 +26,7 @@ public abstract class State : IState
         _agent = controller.agent;
     }
 
+    //--------------------------- State Functions -----------------------------------
     public void Initialize()
     {
         _isComplete = false;

@@ -5,11 +5,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-using NormalMonsterStates;   // 이걸로 이름이 중복되도 상관 없으면 Init()에서 사용할 예정
+using BoarStateItem;   // Boar States
 
-public class NormalMonsterController : BaseController
+public class BoarController : BaseController
 {
-    // Normal Monster Controller만 가지는 상태
+    // Boar Controller 만 가지는 상태
     public State IDLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
@@ -18,35 +18,46 @@ public class NormalMonsterController : BaseController
 
     [Header("Each Controller Property")]
     [SerializeField] public Detector detector;
-    // 테스트를 위함, 스탯 추가되면 변경될지도?
     [SerializeField] public bool isDie;
-    [SerializeField] public bool isRevive;
+    [SerializeField] public bool isRevive;      // previous state 테스트용
+
+    [field: Header("Animations")]
+    [field: SerializeField] public BoarAnimationData animData;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Init();
+    }
 
     private void Start()
     {
-        Init();
         ChangeState(IDLE_STATE);
     }
 
     protected override void Init()
     {
+        animData.StringAnimToHash();
+
         _stateMachine = new StateMachine();
-        IDLE_STATE = new NormalMonsterStates.IdleState(this);
-        CHASE_STATE = new NormalMonsterStates.ChaseState(this);
-        ATTACK_STATE = new NormalMonsterStates.AttackState(this);
-        DIE_STATE = new NormalMonsterStates.DieState(this);
-        GLOBAL_STATE = new NormalMonsterStates.GlobalState(this);
+        IDLE_STATE = new IdleState(this);       // using namespace
+        CHASE_STATE = new ChaseState(this);
+        ATTACK_STATE = new AttackState(this);
+        DIE_STATE = new DieState(this);
+        GLOBAL_STATE = new GlobalState(this);
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
+        // 공격 사거리와 멈추는 거리를 같게 세팅
         agent.stoppingDistance = detector.attackRange;
     }
 
-    private void Update()
+    protected override void Update()
     {
-        _stateMachine.Execute();
+        base.Update();
     }
 
+    // AttackRange 내부에 Target이 있는지 확인
     public bool IsArriveToTarget()
     {
         return Vector3.Distance(detector.Target.position, transform.position) < detector.attackRange;

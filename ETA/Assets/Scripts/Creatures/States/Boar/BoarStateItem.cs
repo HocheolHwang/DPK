@@ -2,26 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NormalMonsterStates
+namespace BoarStateItem
 {
     // -------------------------------------- IDLE ------------------------------------------------
     #region IDLE
-    public class IdleState : State
+    public class IdleState : BoarState
     {
-        private NormalMonsterController _controller;
-        private Detector _detector;
-
-        public IdleState(NormalMonsterController controller) : base(controller)
+        public IdleState(BoarController controller) : base(controller)
         {
-            _controller = controller;
-            _detector = controller.detector;
         }
 
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-
-            //_animator.CrossFade();
+            _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
         public override void Execute()
@@ -40,21 +34,17 @@ namespace NormalMonsterStates
 
     // -------------------------------------- CHASE ------------------------------------------------
     #region CHASE
-    public class ChaseState : State
+    public class ChaseState : BoarState
     {
-        private NormalMonsterController _controller;
-        private Detector _detector;
-
-        public ChaseState(NormalMonsterController controller) : base(controller)
+        public ChaseState(BoarController controller) : base(controller)
         {
-            _controller = controller;
-            _detector = controller.detector;
         }
 
         public override void Enter()
         {
             Debug.Log("Enter CHASE");
             _agent.speed = 3.0f;
+            _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
         }
 
         public override void Execute()
@@ -82,19 +72,15 @@ namespace NormalMonsterStates
 
     // -------------------------------------- ATTACK ------------------------------------------------
     #region ATTACK
-    public class AttackState : State
+    public class AttackState : BoarState
     {
-        private NormalMonsterController _controller;
-        private Detector _detector;
-
-        public AttackState(NormalMonsterController controller) : base(controller)
+        public AttackState(BoarController controller) : base(controller)
         {
-            _controller = controller;
-            _detector = controller.detector;
         }
 
         public override void Enter()
         {
+            _animator.CrossFade(_animData.AttackParamHash, 0.1f);
         }
 
         public override void Execute()
@@ -117,18 +103,16 @@ namespace NormalMonsterStates
 
     // -------------------------------------- DIE ------------------------------------------------
     #region DIE
-    public class DieState : State
+    public class DieState : BoarState
     {
-        private NormalMonsterController _controller;
-
-        public DieState(NormalMonsterController controller) : base(controller)
+        public DieState(BoarController controller) : base(controller)
         {
-            _controller = controller;
         }
 
         public override void Enter() 
         {
             _agent.isStopped = true;
+            _animator.CrossFade(_animData.DieParamHash, 0.1f);
         }
 
         public override void Execute()
@@ -152,13 +136,10 @@ namespace NormalMonsterStates
 
     // -------------------------------------- GLOBAL ------------------------------------------------
     #region GLOBAL
-    public class GlobalState : State
+    public class GlobalState : BoarState
     {
-        private NormalMonsterController _controller;
-
-        public GlobalState(NormalMonsterController controller) : base(controller)
+        public GlobalState(BoarController controller) : base(controller)
         {
-            _controller = controller;
         }
 
         public override void Execute()
