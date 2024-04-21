@@ -44,7 +44,7 @@ public class PlayerEntity {
     private List<GoldLogEntity> goldLogs;
 
 
-
     @OneToMany(mappedBy = "player")
     private List<PartyMemberEntity> partyMembers;
+
 }
