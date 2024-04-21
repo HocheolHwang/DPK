@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,15 +9,12 @@ using static UnityEngine.GraphicsBuffer;
 /// [ 한 명만 타겟팅 ]
 /// 1. 0.5초마다 인식 범위에 적이 있는지 판단한다.
 /// 2. 있으면 가장 가까운 적을 target으로 세팅한다.
-/// 
-/// [ 타겟팅한 적이 공격 범위에 있나?]
-/// 1. Distance를 계산
 /// </summary>
 public class Detector : MonoBehaviour
 {
     [Header("Set Values from the Inspector")]
     [SerializeField] public float detectRange;
-    [SerializeField] public float attackRange;
+    [SerializeField] public float attackRange;              // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
     [SerializeField] public LayerMask targetLayerMask;
 
     public Transform Target { get; private set; }

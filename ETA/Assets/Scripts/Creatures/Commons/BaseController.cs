@@ -4,7 +4,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
-// start와 update 같은건 각 객체에서 사용
 public abstract class BaseController : MonoBehaviour
 {
     protected StateMachine _stateMachine;
@@ -17,12 +16,23 @@ public abstract class BaseController : MonoBehaviour
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
 
 
+    //-----------------------------------  Essential Functions --------------------------------------------
+    protected virtual void Awake()
+    {
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+    }
+    protected virtual void Update()
+    {
+        _stateMachine.Execute();
+    }
     protected abstract void Init();
 
-    // 개발 편의성
+    //----------------------------------- State Machine Functions --------------------------------------------
     public void ChangeState(State newState)
     {
-        _curState = newState;           // controller의 curState를 계속 갱신할 수 있다.
+        // controller의 curState를 계속 갱신할 수 있다.
+        _curState = newState;
         _stateMachine.ChangeState(newState);
     }
     public void RevertToPrevState()
@@ -31,7 +41,7 @@ public abstract class BaseController : MonoBehaviour
         _stateMachine.RevertToPrevState();
     }
     
-    // Debugging STATE
+    //----------------------------------- Debugging --------------------------------------------
     private void OnDrawGizmos()
     {
         if (_stateMachine != null && _curState != null)
