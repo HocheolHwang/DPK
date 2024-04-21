@@ -22,13 +22,13 @@ public abstract class UI_Base : MonoBehaviour
         for (int i = 0; i < names.Length; i++)
         {
             if (typeof(T) == typeof(GameObject)) objects[i] = Util.FindChild(gameObject, names[i], true);
-            // ¿©±â GameObject¸¸ »©ÁØ ÀÌÀ¯?
-            // GameObject´Â Component°¡ ¾Æ´Ï´Ù ±×·¡¼­ GameObject¿¡ ¹Ù·Î Á¢±ÙÇÒ ¼ø ¾ø´Ù.
-            // ±×·¡¼­ »õ·Î¿î ÇÔ¼ö¸¦ Á¤ÀÇ Çß´Ù.
+            // ì—¬ê¸° GameObjectë§Œ ë¹¼ì¤€ ì´ìœ ?
+            // GameObjectëŠ” Componentê°€ ì•„ë‹ˆë‹¤ ê·¸ë˜ì„œ GameObjectì— ë°”ë¡œ ì ‘ê·¼í•  ìˆœ ì—†ë‹¤.
+            // ê·¸ë˜ì„œ ìƒˆë¡œìš´ í•¨ìˆ˜ë¥¼ ì •ì˜ í–ˆë‹¤.
             else objects[i] = Util.FindChild<T>(gameObject, names[i], true);
 
-            // ¿©±â¼­ gameObject´Â UI_Button(Canvas)
-            // names[i]¸¦ Ã£À»°ÍÀÓ
+            // ì—¬ê¸°ì„œ gameObjectëŠ” UI_Button(Canvas)
+            // names[i]ë¥¼ ì°¾ì„ê²ƒì„
 
             if (objects[i] == null) Debug.Log($"Not found {names[i]}");
         }
@@ -53,6 +53,7 @@ public abstract class UI_Base : MonoBehaviour
     public static void AddUIEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
     {
         UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
+        
 
         switch (type)
         {
