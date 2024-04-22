@@ -36,6 +36,7 @@ public class StateMachine
         ChangeState(PrevState);
     }
 
+    // -------------------------- State 수행 ----------------------------------
     public void Execute()
     {
         GlobalState?.Execute();
