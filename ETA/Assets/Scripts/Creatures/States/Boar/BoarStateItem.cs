@@ -157,7 +157,7 @@ namespace BoarStateItem
         {
             Debug.Log("Exit DIE");
             _agent.isStopped = false;
-            _controller.isDie = false;
+            _controller.IsDie = false;
             _controller.isRevive = false;
         }
     }
@@ -177,7 +177,7 @@ namespace BoarStateItem
             if (_controller.CurState == _controller.DIE_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
-            if (_controller.isDie)
+            if (_controller.IsDie)
             {
                 _controller.ChangeState(_controller.DIE_STATE);
             }
