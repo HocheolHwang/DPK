@@ -832,6 +832,8 @@ MonoBehaviour:
     attackParamName: Attack
     hitParamName: Hit
     dieParamName: Die
+    attackAnim: {fileID: 1287499044497976130, guid: 4071d8ec7dc765c4197bf023caa03d39, type: 3}
+    hitAnim: {fileID: 8184316344386481818, guid: f29f4773065daa443b190492933ee732, type: 3}
 --- !u!114 &3504072409022027814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,7 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHp: 0
   _hp: 0
-  _moveSpeed: 0
+  _moveSpeed: 3
   _attackDamage: 0
   _attackRange: 0
 --- !u!114 &8404869885250220072
@@ -863,6 +865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectRange: 15
   attackRange: 3
+  _target: {fileID: 0}
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64

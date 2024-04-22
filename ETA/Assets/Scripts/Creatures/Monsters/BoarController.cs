@@ -19,12 +19,13 @@ public class BoarController : BaseController, IDamageable
 
     [Header("Each Controller Property")]
     [SerializeField] public bool _isDie;
-    [SerializeField] public bool isRevive;      // previous state 테스트용
+    [SerializeField] public bool _isDamaged;
     [SerializeField] public NormalMonsterStat monsterStat;
     [SerializeField] public BoarAnimationData animData;
     
 
     public bool IsDie { get => _isDie; set => _isDie = value; }
+    public bool IsDamaged { get => _isDamaged; set => _isDamaged = value; }
 
     protected override void Awake()
     {
@@ -68,6 +69,8 @@ public class BoarController : BaseController, IDamageable
     public void TakeDamage(int damage)
     {
         monsterStat.Hp -= damage;
+        _isDamaged = true;
+
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
         if (monsterStat.Hp < 0 && _isDie == false)
         {
@@ -80,6 +83,8 @@ public class BoarController : BaseController, IDamageable
     {
         _isDie = true;
         Debug.Log($"{gameObject.name} is Die.");
-        // 이펙트, 소리, UI 등 다양한 이벤트 추가
+        // 파괴, 이펙트, 소리, UI 등 다양한 이벤트 추가
+
+        // 애니메이션은 상태에서 관리 중
     }
 }
