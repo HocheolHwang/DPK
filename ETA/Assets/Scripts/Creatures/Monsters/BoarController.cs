@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 
 using BoarStateItem;   // Boar States
 
-public class BoarController : BaseController
+public class BoarController : BaseController, IDamageable
 {
     // Boar Controller 만 가지는 상태
     public State IDLE_STATE;
@@ -18,12 +18,14 @@ public class BoarController : BaseController
     public State GLOBAL_STATE;
 
     [Header("Each Controller Property")]
-    [SerializeField] public Detector detector;
-    [SerializeField] public bool isDie;
+    [SerializeField] public bool _isDie;
     [SerializeField] public bool isRevive;      // previous state 테스트용
+    [SerializeField] public Detector detector;
+    [SerializeField] public NormalMonsterStat monsterStat;
+    [SerializeField] public BoarAnimationData animData;
+    
 
-    [field: Header("Animations")]
-    [field: SerializeField] public BoarAnimationData animData;
+    public bool IsDie { get => _isDie; set => _isDie = value; }
 
     protected override void Awake()
     {
@@ -38,6 +40,11 @@ public class BoarController : BaseController
 
     protected override void Init()
     {
+        // ----------------------------- Component -------------------------------------
+        detector = GetComponent<Detector>();
+        monsterStat = GetComponent<NormalMonsterStat>();
+
+        // ----------------------------- Animation && State -------------------------------------
         animData.StringAnimToHash();
 
         _stateMachine = new StateMachine();
@@ -50,18 +57,31 @@ public class BoarController : BaseController
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
-        // 공격 사거리와 멈추는 거리를 같게 세팅
-        agent.stoppingDistance = detector.attackRange;
+        agent.stoppingDistance = detector.attackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
     }
 
-    //protected override void Update()
-    //{
-    //    base.Update();
-    //}
-
-    // AttackRange 내부에 Target이 있는지 확인
-    public bool IsArriveToTarget()
+    // ---------------------------------- Detector ------------------------------------------
+    public bool IsArriveToTarget()  // AttackRange 내부에 Target이 있는지 확인
     {
         return Vector3.Distance(detector.Target.position, transform.position) < detector.attackRange;
+    }
+
+    // ---------------------------------- IDamage ------------------------------------------
+    public void TakeDamage(int damage)
+    {
+        monsterStat.Hp -= damage;
+        Debug.Log($"{gameObject.name} has taken {damage} damage.");
+        if (monsterStat.Hp < 0 && _isDie == false)
+        {
+            monsterStat.Hp = 0;
+            DestroyEvent();
+        }
+    }
+
+    public void DestroyEvent()
+    {
+        _isDie = true;
+        Debug.Log($"{gameObject.name} is Die.");
+        // 이펙트, 소리, UI 등 다양한 이벤트 추가
     }
 }
