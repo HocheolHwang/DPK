@@ -19,11 +19,13 @@ public abstract class State : IState
     //--------------------------- Common Property From BaseController -----------------------------------
     protected Animator _animator;
     protected NavMeshAgent _agent;
+    protected Detector _detector;
 
     public State(BaseController controller)
     {
         _animator = controller.animator;
         _agent = controller.agent;
+        _detector = controller.detector;
     }
 
     //--------------------------- State Functions -----------------------------------
