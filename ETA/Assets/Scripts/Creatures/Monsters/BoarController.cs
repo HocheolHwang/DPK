@@ -20,7 +20,6 @@ public class BoarController : BaseController, IDamageable
     [Header("Each Controller Property")]
     [SerializeField] public bool _isDie;
     [SerializeField] public bool isRevive;      // previous state 테스트용
-    [SerializeField] public Detector detector;
     [SerializeField] public NormalMonsterStat monsterStat;
     [SerializeField] public BoarAnimationData animData;
     
@@ -41,7 +40,6 @@ public class BoarController : BaseController, IDamageable
     protected override void Init()
     {
         // ----------------------------- Component -------------------------------------
-        detector = GetComponent<Detector>();
         monsterStat = GetComponent<NormalMonsterStat>();
 
         // ----------------------------- Animation && State -------------------------------------

@@ -12,6 +12,7 @@ public abstract class BaseController : MonoBehaviour
     [Header("Common Property")]
     [SerializeField] public Animator animator;
     [SerializeField] public NavMeshAgent agent;
+    [SerializeField] public Detector detector;
 
 
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
@@ -23,6 +24,7 @@ public abstract class BaseController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        detector = GetComponent<Detector>();
     }
     protected virtual void Update()
     {
