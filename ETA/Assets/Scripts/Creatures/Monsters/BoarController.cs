@@ -13,6 +13,7 @@ public class BoarController : BaseController
     public State IDLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
+    public State HIT_STATE;
     public State DIE_STATE;
     public State GLOBAL_STATE;
 
@@ -43,6 +44,7 @@ public class BoarController : BaseController
         IDLE_STATE = new IdleState(this);       // using namespace
         CHASE_STATE = new ChaseState(this);
         ATTACK_STATE = new AttackState(this);
+        HIT_STATE = new HitState(this);
         DIE_STATE = new DieState(this);
         GLOBAL_STATE = new GlobalState(this);
 
@@ -52,10 +54,10 @@ public class BoarController : BaseController
         agent.stoppingDistance = detector.attackRange;
     }
 
-    protected override void Update()
-    {
-        base.Update();
-    }
+    //protected override void Update()
+    //{
+    //    base.Update();
+    //}
 
     // AttackRange 내부에 Target이 있는지 확인
     public bool IsArriveToTarget()

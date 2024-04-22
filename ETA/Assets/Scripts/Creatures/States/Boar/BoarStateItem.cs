@@ -93,8 +93,37 @@ namespace BoarStateItem
             {
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
+
+            // 한 번 공격한 뒤에 이전 상태 또는 idle 상태로 돌아가기
+            // int ATK_CNT로 관리? Time으로 관리? animator 끝났는지 확인?
         }
 
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- HIT ------------------------------------------------
+    #region Hit
+    public class HitState : BoarState
+    {
+        public HitState(BoarController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _animator.CrossFade(_animData.HitParamHash, 0.1f);
+            // 멈추는 동작
+        }
+
+        public override void Execute()
+        {
+
+            // 이전 상태로 돌아가는 로직
+            
+        }
         public override void Exit()
         {
         }
