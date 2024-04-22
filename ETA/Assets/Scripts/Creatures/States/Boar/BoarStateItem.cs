@@ -43,6 +43,8 @@ namespace BoarStateItem
     #region CHASE
     public class ChaseState : BoarState
     {
+        // 몬스터끼리 뭉쳐지지 말고 경로에 몬스터가 있으면 피해서 이동하도록 수정 - Enter에서 하는 경우 Detector가 계속 
+        // 몬스터가 Target을 향해 바로 회전하도록 수정
         public ChaseState(BoarController controller) : base(controller)
         {
         }

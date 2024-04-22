@@ -47,7 +47,7 @@ public class BoarController : BaseController, IDamageable
         animData.StringAnimToHash();
 
         _stateMachine = new StateMachine();
-        IDLE_STATE = new IdleState(this);       // using namespace
+        IDLE_STATE = new IdleState(this);
         CHASE_STATE = new ChaseState(this);
         ATTACK_STATE = new AttackState(this);
         HIT_STATE = new HitState(this);
@@ -60,7 +60,7 @@ public class BoarController : BaseController, IDamageable
     }
 
     // ---------------------------------- Detector ------------------------------------------
-    public bool IsArriveToTarget()  // AttackRange 내부에 Target이 있는지 확인
+    public bool IsArriveToTarget()
     {
         return Vector3.Distance(detector.Target.position, transform.position) < detector.attackRange;
     }
