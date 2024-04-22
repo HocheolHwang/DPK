@@ -46,4 +46,9 @@ public class NetworkManager : MonoBehaviour
     {
         StartCoroutine(SendWebRequest(CreateRequest(method, path, jsonfile)));
     }
+    public void SignInCall(string method, string path, UserInfoDto dto)
+    {
+        string loginData = JsonUtility.ToJson(dto);
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "api/v1/auth/sign-in", loginData)));
+    }
 }
