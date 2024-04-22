@@ -93,7 +93,8 @@ namespace PlayerStates
 
     public class SkillState : PlayerState
     {
-        int tmp = 0;
+        float tmp = 0;
+        
         public SkillState(PlayerController playerController) : base(playerController)
         {
 
@@ -109,8 +110,8 @@ namespace PlayerStates
 
         public override void Execute()
         {
-            tmp += 1;
-            if( tmp > 180)
+            tmp += Time.deltaTime;
+            if( tmp > 1.5f)
             {
                 _playerController.ChangeState(_playerController.MOVE_STATE);
             }
