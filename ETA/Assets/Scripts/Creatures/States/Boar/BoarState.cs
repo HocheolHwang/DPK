@@ -6,13 +6,11 @@ using UnityEngine;
 public class BoarState : State
 {
     protected BoarController _controller;
-    protected Detector _detector;
     protected BoarAnimationData _animData;
 
     public BoarState(BoarController controller) : base(controller)
     {
         _controller = controller;
-        _detector = controller.detector;
         _animData = controller.animData;
     }
 }
