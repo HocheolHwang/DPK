@@ -6,7 +6,7 @@ using System.Text;
 
 public class NetworkManager : MonoBehaviour
 {
-    string baseUrl = "http://localhost:8080/";
+    string baseUrl = "http://localhost:8080/api/v1/";
 
     IEnumerator SendWebRequest(UnityWebRequest request)
     {
@@ -19,6 +19,23 @@ public class NetworkManager : MonoBehaviour
         {
             Debug.Log(request.result);
             Debug.Log("Response: " + request.downloadHandler.text);
+        }
+    }
+
+    // 로그인
+    IEnumerator LoginRequest(UnityWebRequest request)
+    {
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Web Request Error] {request.error}");
+        }
+        else
+        {
+            Debug.Log(request.result);
+            Debug.Log("Response: " + request.downloadHandler.text);
+            ResponseDto data = JsonUtility.FromJson<ResponseDto>(request.downloadHandler.text);
+            PlayerManager.GetInstance().SetToken(data.accessToken);
         }
     }
 
@@ -46,9 +63,21 @@ public class NetworkManager : MonoBehaviour
     {
         StartCoroutine(SendWebRequest(CreateRequest(method, path, jsonfile)));
     }
-    public void SignInCall(string method, string path, UserInfoDto dto)
+
+    // 회원가입시 호출되는 함수
+    public void SignInCall(UserInfoDto dto)
     {
         string loginData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "api/v1/auth/sign-in", loginData)));
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "auth/sign-in", loginData)));
     }
+
+    // 로그인시 호출되는 함수
+    public void SignUpCall(UserInfoDto dto)
+    {
+        string loginData = JsonUtility.ToJson(dto);
+        StartCoroutine(LoginRequest(CreateRequest("POST", "auth/sign-up", loginData)));
+
+    }
+
+
 }
