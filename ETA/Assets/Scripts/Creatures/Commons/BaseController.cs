@@ -12,6 +12,8 @@ public abstract class BaseController : MonoBehaviour
     [Header("Common Property")]
     [SerializeField] public Animator animator;
     [SerializeField] public NavMeshAgent agent;
+
+
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
 
@@ -40,7 +42,7 @@ public abstract class BaseController : MonoBehaviour
         _curState = _stateMachine.PrevState;
         _stateMachine.RevertToPrevState();
     }
-    
+
     //----------------------------------- Debugging --------------------------------------------
     private void OnDrawGizmos()
     {
