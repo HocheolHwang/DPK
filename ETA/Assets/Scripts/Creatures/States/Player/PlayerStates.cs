@@ -59,7 +59,7 @@ namespace PlayerStates
             base.Execute();
 
             Vector3 dest = _playerController._destination.position;
-            float moveSpeed = 3.0f;
+            float moveSpeed = 6.0f;
             //_agent.Move(dir * Time.deltaTime * moveSpeed);
 
             //float dist = Vector3.Distance(_playerController.transform.position, dest);
@@ -106,6 +106,8 @@ namespace PlayerStates
             base.Enter();
             tmp = 0;
             _animator.CrossFade("NORMAL_ATTACK", 0.05f);
+            _detector.Target.GetComponent<BoarController>().TakeDamage(25);
+      
 
         }
 
@@ -139,6 +141,7 @@ namespace PlayerStates
             base.Enter();
             tmp = 0;
             _animator.CrossFade("SKILL1", 0.05f);
+            _detector.Target.GetComponent<BoarController>().TakeDamage(50);
 
         }
 
@@ -172,6 +175,13 @@ namespace PlayerStates
             base.Enter();
             tmp = 0;
             _animator.CrossFade("SKILL2", 0.05f);
+            Collider[] enemies = Physics.OverlapSphere(_playerController.transform.position, 6.0f, LayerMask.GetMask("Monster"));
+
+            foreach (Collider enemy in enemies)
+            {
+                enemy.GetComponent<BoarController>().TakeDamage(50);
+            }
+
 
         }
 
