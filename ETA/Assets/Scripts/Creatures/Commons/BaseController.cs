@@ -48,6 +48,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     //----------------------------------- Debugging --------------------------------------------
     private void OnDrawGizmos()
     {
+
         if (_stateMachine != null && _curState != null)
         {
             GUIStyle style = new GUIStyle();
