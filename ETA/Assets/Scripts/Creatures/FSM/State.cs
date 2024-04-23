@@ -19,12 +19,14 @@ public abstract class State : IState
     protected Animator _animator;
     protected NavMeshAgent _agent;
     protected Detector _detector;
+    protected StateMachine _stateMachine;
 
     public State(BaseController controller)
     {
         _animator = controller.animator;
         _agent = controller.agent;
         _detector = controller.detector;
+        _stateMachine = controller.StateMachine;
     }
 
     //--------------------------- State Functions -----------------------------------
