@@ -74,6 +74,26 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    // 골드 변화
+    IEnumerator GoldStatisticsRequest(UnityWebRequest request)
+    {
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Gold Request Error] {request.error}");
+        }
+        else
+        {
+            Debug.Log(request.result);
+            Debug.Log("Response: " + request.downloadHandler.text);
+            GoldStatisticsResDto data = JsonUtility.FromJson<GoldStatisticsResDto>(request.downloadHandler.text);
+
+            // 골드 변화
+            PlayerManager.GetInstance().SetGold(data.currendGold);
+        }
+    }
+
 
     UnityWebRequest CreateRequest(string method, string path, string json = null)
     {
@@ -149,5 +169,9 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(PlayerRankRequest(CreateRequest("GET", "player/ranking?limit=" + limit)));
     }
 
-    
+    public void GoldStatisticsCall(GoldStatisticsResDto dto)
+    {
+        string goldData = JsonUtility.ToJson(dto);
+        StartCoroutine(GoldStatisticsRequest(CreateRequest("PUT", "player/gold", goldData)));
+    }
 }
