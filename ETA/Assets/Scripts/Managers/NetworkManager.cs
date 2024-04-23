@@ -169,9 +169,18 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(PlayerRankRequest(CreateRequest("GET", "player/ranking?limit=" + limit)));
     }
 
+    // 플레이어 골드 변화량
+    // response로 현재 골드량 온다
     public void GoldStatisticsCall(GoldStatisticsResDto dto)
     {
         string goldData = JsonUtility.ToJson(dto);
         StartCoroutine(GoldStatisticsRequest(CreateRequest("PUT", "player/gold", goldData)));
+    }
+
+    // 플레이어 경험치 변화량 전송
+    public void EXPStatisticsCall(EXPStatisticsReqDto dto)
+    {
+        string expData = JsonUtility.ToJson(dto);
+        StartCoroutine(SendWebRequest(CreateRequest("PUT", "palyer/exp", expData)));
     }
 }
