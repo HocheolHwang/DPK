@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1655679046680820832}
   - component: {fileID: 3989918447928905314}
   - component: {fileID: 2023227794890545579}
-  - component: {fileID: 2328457770342912389}
+  - component: {fileID: 3744835737202302944}
   m_Layer: 5
   m_Name: Sign Up Button
   m_TagString: Untagged
@@ -35,9 +35,9 @@ RectTransform:
   - {fileID: 1002031016855962992}
   m_Father: {fileID: 6593736192163881670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 70, y: -115}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 140, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1655679046680820832
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2328457770342912389
+--- !u!114 &3744835737202302944
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,11 +131,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1151058991861697888}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Script: {fileID: 11500000, guid: 219137be47160fd47a11558f08bf8c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 0
+  handCursor: {fileID: 2800000, guid: 0ef8f564fde388e489bc0b52a5f56ccc, type: 3}
 --- !u!1 &1497264639093478386
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +314,7 @@ GameObject:
   - component: {fileID: 1270177321343975965}
   - component: {fileID: 2306234960998577373}
   - component: {fileID: 8593377987671776479}
-  - component: {fileID: 3530056953593576240}
+  - component: {fileID: 6601628951966558363}
   m_Layer: 5
   m_Name: Login Button
   m_TagString: Untagged
@@ -338,9 +337,9 @@ RectTransform:
   - {fileID: 8571665694187402797}
   m_Father: {fileID: 6593736192163881670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 55, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 110, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1270177321343975965
@@ -425,7 +424,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3530056953593576240
+--- !u!114 &6601628951966558363
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -434,11 +433,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2466572470395073839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Script: {fileID: 11500000, guid: 219137be47160fd47a11558f08bf8c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 0
+  handCursor: {fileID: 2800000, guid: 0ef8f564fde388e489bc0b52a5f56ccc, type: 3}
 --- !u!1 &3197497373524905313
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +598,7 @@ GameObject:
   - component: {fileID: 2326057394053745141}
   - component: {fileID: 22870227001872377}
   - component: {fileID: 3656652716022811846}
-  - component: {fileID: 4120415891558931010}
+  - component: {fileID: 2602613189594415232}
   m_Layer: 5
   m_Name: Game Exit Button
   m_TagString: Untagged
@@ -623,9 +621,9 @@ RectTransform:
   - {fileID: 1820890664407204475}
   m_Father: {fileID: 6593736192163881670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -205}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2326057394053745141
@@ -710,7 +708,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4120415891558931010
+--- !u!114 &2602613189594415232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -719,11 +717,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5251071258121973666}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Script: {fileID: 11500000, guid: 219137be47160fd47a11558f08bf8c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 0
+  handCursor: {fileID: 2800000, guid: 0ef8f564fde388e489bc0b52a5f56ccc, type: 3}
 --- !u!1 &8212407750762701461
 GameObject:
   m_ObjectHideFlags: 0
