@@ -11,9 +11,9 @@ namespace PlayerStates
         protected PlayerState(PlayerController playerController) : base(playerController)
         {
             this._playerController = playerController;
-            this._detector = playerController.detector;
         }
     }
+
 
     public class IdleState : PlayerState
     {
@@ -70,7 +70,7 @@ namespace PlayerStates
                 {
                     _agent.velocity = Vector3.zero;
                     _agent.isStopped = true;
-                    _playerController.ChangeState(_playerController.SKILL_STATE);
+                    _playerController.ChangeState(_playerController.ATTACK_STATE);
 
                 }
             }
@@ -91,11 +91,11 @@ namespace PlayerStates
         }
     }
 
-    public class SkillState : PlayerState
+    public class AttackState : PlayerState
     {
         float tmp = 0;
         
-        public SkillState(PlayerController playerController) : base(playerController)
+        public AttackState(PlayerController playerController) : base(playerController)
         {
 
         }
@@ -126,11 +126,11 @@ namespace PlayerStates
         }
     }
 
-    public class QSkillState : PlayerState
+    public class SkillState : PlayerState
     {
         float tmp = 0;
-
-        public QSkillState(PlayerController playerController) : base(playerController)
+        
+        public SkillState(PlayerController playerController) : base(playerController)
         {
 
         }
@@ -139,6 +139,8 @@ namespace PlayerStates
         {
             base.Enter();
             tmp = 0;
+
+            _playerController.SkillSlot.CastSkill(_playerController._usingSkill);
             _animator.CrossFade("SKILL1", 0.05f);
             _detector.Target.GetComponent<MonsterController>().TakeDamage(50);
 

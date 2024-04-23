@@ -10,15 +10,15 @@ public class PlayerController : BaseController
 
     public State IDLE_STATE;
     public State MOVE_STATE;
+    public State ATTACK_STATE;
     public State SKILL_STATE;
-    public State QSKILL_STATE;
     public State COLLAVO_STATE;
     [SerializeField]
     public Transform _destination;
+    public Define.SkillKey _usingSkill;
 
 
-    bool isCollavoration1 = false;
-    bool isCollavoration2 = false;
+    public SkillSlot SkillSlot { get; set;}
 
 
     private void Start()
@@ -29,21 +29,21 @@ public class PlayerController : BaseController
 
     protected override void Init()
     {
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
         _stateMachine = new StateMachine();
 
         IDLE_STATE = new IdleState(this);
         MOVE_STATE = new MoveState(this);
+        ATTACK_STATE = new AttackState(this);
         SKILL_STATE = new SkillState(this);
-        QSKILL_STATE = new QSkillState(this);
         COLLAVO_STATE = new CollavoState(this);
+
+        SkillSlot = gameObject.GetOrAddComponent<SkillSlot>();
 
         //_destination = GameObject.Find("FRONT_2").transform;
 
         ChangeState(IDLE_STATE);
-        //ChangeState(MOVE_STATE);
-        StartCoroutine(StartMove());
+        ChangeState(MOVE_STATE);
+        //StartCoroutine(StartMove());
         Managers.Input.KeyAction -= KeyEvent;
         Managers.Input.KeyAction += KeyEvent;
 
@@ -58,25 +58,29 @@ public class PlayerController : BaseController
 
     void KeyEvent()
     {
+        if (CurState is SkillState) return;
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            ChangeState(QSKILL_STATE);
+            _usingSkill = Define.SkillKey.Q;
+            ChangeState(SKILL_STATE);
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            _usingSkill = Define.SkillKey.W;
+            ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            isCollavoration1 = true;
+            _usingSkill = Define.SkillKey.E;
+            ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            isCollavoration2 = true;
+            _usingSkill = Define.SkillKey.R;
+            ChangeState(SKILL_STATE);
         }
 
-        if(isCollavoration1 && isCollavoration2)
-        {
-            ChangeState(COLLAVO_STATE);
-            isCollavoration1 = false;
-            isCollavoration2 = false;
-        }
     }
 
 
