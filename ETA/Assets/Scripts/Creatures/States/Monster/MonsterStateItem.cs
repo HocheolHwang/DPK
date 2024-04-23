@@ -44,7 +44,9 @@ namespace MonsterStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-            _controller.transform.LookAt(_detector.Target);
+            Vector3 dir = _detector.Target.position;
+            dir.y = _controller.transform.position.y;
+            _controller.transform.LookAt(dir);
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
@@ -187,7 +189,7 @@ namespace MonsterStateItem
             if (_controller.CurState == _controller.DIE_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
-            if (_controller.IsDie)
+            if (_monsterStat.Hp <= 0)
             {
                 _controller.ChangeState(_controller.DIE_STATE);
             }

@@ -9,20 +9,19 @@ public class MonsterState : State
     protected MonsterAnimationData _animData;
     protected MonsterStat _monsterStat;
 
-    private float _seconds = 0.5f;
-
     public MonsterState(MonsterController controller) : base(controller)
     {
         _controller = controller;
-        _animData = controller.animData;
-        _monsterStat = controller.monsterStat;
+        _animData = controller.AnimData;
+        _monsterStat = (MonsterStat) controller.Stat;
     }
 
-    // _seconds 만큼 기다림
+
+    // ----------------------------- Common Functions -------------------------------------
     public bool IsStayForSeconds()
     {
         // Debug.Log($"{StartTime} | {ExecuteTime}");
-        if (ExecuteTime < _seconds) return false;
+        if (ExecuteTime < 0.5f) return false;
         return true;
     }
 }
