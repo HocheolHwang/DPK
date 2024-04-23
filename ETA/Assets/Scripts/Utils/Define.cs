@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Define
 {
+    public enum SkillKey
+    {
+        Q,
+        W,
+        E,
+        R,
+        A,
+        S,
+        D,
+        F
+    }
 
     public enum Sound
     {
