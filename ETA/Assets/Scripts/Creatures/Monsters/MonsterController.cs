@@ -10,8 +10,8 @@ using MonsterStateItem;
 // 3. 각 몬스터마다 다른 스탯은?                               -> 각 몬스터 controller에서 관리
 // 4. 보스 몬스터의 상태 관리는 MonsterStateItem을 사용하나?
 //          -> 상태 중간에 코드가 필요하기 때문에 보스는 따로 상태를 가진다.
-//          -> 몬스터 상태 클래스( MonsterState )를 정의한 뒤, 이를 상속받는 보스 상태 클래스( BossState )를 만들어서 상태 분기 함수를 만든다.
-//          -> 상태 분기 함수로 다른 상태로 이동
+//          -> 몬스터 상태 클래스( MonsterState )는 일반 몬스터를 담당하고,
+//          -> 보스 몬스터 상태는 따로 각자의 클래스와 Item을 만든다.
 
 
 //          -> 그러면 MonsterController를 상속 받을 수 없다. 흠.. 아예 따로 BaseController를 상속받는 BOSS만의 Controller를 사용할까?
