@@ -8,7 +8,6 @@ namespace PlayerStates
     public class PlayerState : State
     {
         protected PlayerController _playerController;
-        protected Detector _detector;
         protected PlayerState(PlayerController playerController) : base(playerController)
         {
             this._playerController = playerController;

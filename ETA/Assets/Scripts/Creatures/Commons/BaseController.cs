@@ -10,7 +10,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     protected State _curState;
 
     [Header("Common Property")]
-    [SerializeField] public bool _isDie;
     [SerializeField] public Animator animator;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Detector detector;
@@ -18,7 +17,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
-    public bool IsDie { get => _isDie; set => _isDie = value; }
 
 
     //-----------------------------------  Essential Functions --------------------------------------------
@@ -68,7 +66,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     }
 
     // ---------------------------------- IDamage ------------------------------------------
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(int attackDamage)
     {
     }
 

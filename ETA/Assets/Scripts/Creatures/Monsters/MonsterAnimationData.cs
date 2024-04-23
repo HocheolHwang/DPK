@@ -6,10 +6,10 @@ using UnityEngine;
 [Serializable]
 public class MonsterAnimationData
 {
-    [SerializeField] protected string idleParamName = "Idle";
-    [SerializeField] protected string chaseParamName = "Chase";
-    [SerializeField] protected string attackParamName = "Attack";
-    [SerializeField] protected string dieParamName = "Die";
+    [SerializeField] protected string idleParamName = "IDLE";
+    [SerializeField] protected string chaseParamName = "CHASE";
+    [SerializeField] protected string attackParamName = "ATTACK";
+    [SerializeField] protected string dieParamName = "DIE";
 
     // 각 몬스터가 가지는 animation clip을 Inspector View에서 세팅
     [SerializeField] private AnimationClip attackAnim;

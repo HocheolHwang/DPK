@@ -187,7 +187,7 @@ namespace MonsterStateItem
             if (_controller.CurState == _controller.DIE_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
-            if (_controller.IsDie)
+            if (_controller.monsterStat.Hp <= 0)
             {
                 _controller.ChangeState(_controller.DIE_STATE);
             }
