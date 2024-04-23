@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Boar Monster의 애니메이션 최적화와 관리를 위한 클래스
 [Serializable]
-public class BoarAnimationData
+public class MonsterAnimationData
 {
-    [SerializeField] private string idleParamName = "Idle";
-    [SerializeField] private string chaseParamName = "Chase";
-    [SerializeField] private string attackParamName = "Attack";
-    [SerializeField] private string dieParamName = "Die";
+    [SerializeField] protected string idleParamName = "Idle";
+    [SerializeField] protected string chaseParamName = "Chase";
+    [SerializeField] protected string attackParamName = "Attack";
+    [SerializeField] protected string dieParamName = "Die";
 
+    // 각 몬스터가 가지는 animation clip을 Inspector View에서 세팅
     [SerializeField] private AnimationClip attackAnim;
-
+    
     public int IdleParamHash { get; private set; }
     public int ChaseParamHash { get; private set; }
     public int AttackParamHash { get; private set; }

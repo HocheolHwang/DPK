@@ -106,7 +106,7 @@ namespace PlayerStates
             base.Enter();
             tmp = 0;
             _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-            _detector.Target.GetComponent<BoarController>().TakeDamage(25);
+            _detector.Target.GetComponent<MonsterController>().TakeDamage(25);
       
 
         }
@@ -141,7 +141,7 @@ namespace PlayerStates
             base.Enter();
             tmp = 0;
             _animator.CrossFade("SKILL1", 0.05f);
-            _detector.Target.GetComponent<BoarController>().TakeDamage(50);
+            _detector.Target.GetComponent<MonsterController>().TakeDamage(50);
 
         }
 
@@ -179,7 +179,7 @@ namespace PlayerStates
 
             foreach (Collider enemy in enemies)
             {
-                enemy.GetComponent<BoarController>().TakeDamage(50);
+                enemy.GetComponent<MonsterController>().TakeDamage(50);
             }
 
 

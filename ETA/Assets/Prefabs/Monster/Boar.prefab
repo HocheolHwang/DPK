@@ -742,7 +742,7 @@ GameObject:
   - component: {fileID: 5187616605433706709}
   - component: {fileID: 1170981285359302102}
   - component: {fileID: 3504072409022027814}
-  - component: {fileID: 8404869885250220072}
+  - component: {fileID: 2190058818407168450}
   m_Layer: 7
   m_Name: Boar
   m_TagString: Monster
@@ -867,23 +867,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 4929261757231762885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f45473eed5037aa438b54af41a09aa1e, type: 3}
+  m_Script: {fileID: 11500000, guid: 86cc2e01477d23642b72d4eb2b4b9830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isDie: 0
   animator: {fileID: 0}
   agent: {fileID: 0}
   detector: {fileID: 0}
-  _isDie: 0
-  _isDamaged: 0
   monsterStat: {fileID: 0}
   animData:
     idleParamName: Idle
     chaseParamName: Chase
     attackParamName: Attack
-    hitParamName: Hit
     dieParamName: Die
     attackAnim: {fileID: 1287499044497976130, guid: 4071d8ec7dc765c4197bf023caa03d39, type: 3}
-    hitAnim: {fileID: 8184316344386481818, guid: f29f4773065daa443b190492933ee732, type: 3}
 --- !u!114 &3504072409022027814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -900,7 +897,7 @@ MonoBehaviour:
   _hp: 50
   _moveSpeed: 3
   _attackDamage: 3
---- !u!114 &8404869885250220072
+--- !u!114 &2190058818407168450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -909,7 +906,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4929261757231762885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96784a8acedcbf54ab1f2dcdb6fd096c, type: 3}
+  m_Script: {fileID: 11500000, guid: e30c26996bf6a204083429c9fe95ed58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   detectRange: 15

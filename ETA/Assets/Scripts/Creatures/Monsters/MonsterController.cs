@@ -1,15 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-using BoarStateItem;   // Boar States
+using MonsterStateItem;
 
-public class BoarController : BaseController
+// MosnterStateItem을 만들어서 공통으로 상태를 관리한다면 생기는 문제점이 있나?
+// 1. 각 몬스터마다 다른 공격 시스템은 어떻게 구현?             -> 각 몬스터 controller에서 공격 함수를 만든 뒤에 이를 상태에서 실행( IAttack )
+// 2. 각 몬스터마다 다른 애니메이션은 어떻게 재생?              -> animation data에 clip을 세팅한 뒤, 이를 실행하면 됨
+// 3. 각 몬스터마다 다른 스탯은?                               -> 각 몬스터 controller에서 관리
+// 4. 보스 몬스터의 상태 관리는 MonsterStateItem을 사용하나?
+//          -> 상태 중간에 코드가 필요하기 때문에 보스는 따로 상태를 가진다.
+//          -> 몬스터 상태 클래스( MonsterState )는 일반 몬스터를 담당하고,
+//          -> 보스 몬스터 상태는 따로 각자의 클래스와 Item을 만든다.
+
+
+//          -> 그러면 MonsterController를 상속 받을 수 없다. 흠.. 아예 따로 BaseController를 상속받는 BOSS만의 Controller를 사용할까?
+//          -> 위 방안을 채택할 경우 플레이어가 MonsterController를 이용해서 피해를 줄 수 없다.
+public class MonsterController : BaseController
 {
-    // Boar Controller 만 가지는 상태
+    // Monster가 공통으로 가지는 상태
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
@@ -18,12 +27,8 @@ public class BoarController : BaseController
     public State GLOBAL_STATE;
 
     [Header("Each Controller Property")]
-    [SerializeField] public bool _isDie;
-    [SerializeField] public NormalMonsterStat monsterStat;
-    [SerializeField] public BoarAnimationData animData;
-    
-
-    public bool IsDie { get => _isDie; set => _isDie = value; }
+    [SerializeField] public MonsterStat monsterStat;
+    [SerializeField] public MonsterAnimationData animData;
 
     protected override void Awake()
     {
@@ -31,7 +36,7 @@ public class BoarController : BaseController
         Init();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         ChangeState(IDLE_STATE);
     }
@@ -39,7 +44,7 @@ public class BoarController : BaseController
     protected override void Init()
     {
         // ----------------------------- Component -------------------------------------
-        monsterStat = GetComponent<NormalMonsterStat>();
+        monsterStat = GetComponent<MonsterStat>();
 
         // ----------------------------- Animation && State -------------------------------------
         animData.StringAnimToHash();
@@ -57,36 +62,20 @@ public class BoarController : BaseController
         agent.stoppingDistance = detector.attackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
     }
 
-    // ---------------------------------- Detector ------------------------------------------
-    public bool IsArriveToTarget()
-    {
-        return Vector3.Distance(detector.Target.position, transform.position) < detector.attackRange;
-    }
-
     // ---------------------------------- IDamage ------------------------------------------
     public override void TakeDamage(int damage)
     {
-        base.TakeDamage(damage);
-
         monsterStat.Hp -= damage;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
         if (monsterStat.Hp <= 0 && _isDie == false)
         {
             monsterStat.Hp = 0;
-            DestroyEvent();
+            DestroyObject();
         }
     }
 
     public override void DestroyEvent()
     {
-        base.DestroyEvent();
-
-        _isDie = true;
-        Debug.Log($"{gameObject.name} is Die.");
-        // 파괴, 이펙트, 소리, UI 등 다양한 이벤트 추가
-
-        // 애니메이션은 상태에서 관리 중
-        Destroy(gameObject, 0.5f);
     }
 }
