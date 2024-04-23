@@ -65,6 +65,7 @@ public abstract class UI_Base : MonoBehaviour
     {
         // UI_EventHandler 컴포넌트를 가져오거나, 없으면 추가한다.
         UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
+        
 
         // 이벤트 타입에 따라 적절한 이벤트 핸들러에 액션을 추가하거나 제거한다.
         switch (type)
