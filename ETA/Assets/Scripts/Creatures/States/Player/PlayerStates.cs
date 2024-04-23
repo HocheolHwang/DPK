@@ -77,6 +77,7 @@ namespace PlayerStates
             }
             else
             {
+                _agent.isStopped = false;
                 _agent.speed = moveSpeed + Vector3.Distance(_playerController.transform.position, dest);
                 _agent.SetDestination(dest);
 
@@ -123,4 +124,71 @@ namespace PlayerStates
             base.Exit();
         }
     }
+
+    public class QSkillState : PlayerState
+    {
+        float tmp = 0;
+
+        public QSkillState(PlayerController playerController) : base(playerController)
+        {
+
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+            tmp = 0;
+            _animator.CrossFade("SKILL1", 0.05f);
+
+        }
+
+        public override void Execute()
+        {
+            tmp += Time.deltaTime;
+            if (tmp > 1.5f)
+            {
+                _playerController.ChangeState(_playerController.MOVE_STATE);
+            }
+            base.Execute();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+        }
+    }
+
+    public class CollavoState : PlayerState
+    {
+        float tmp = 0;
+
+        public CollavoState(PlayerController playerController) : base(playerController)
+        {
+
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+            tmp = 0;
+            _animator.CrossFade("SKILL2", 0.05f);
+
+        }
+
+        public override void Execute()
+        {
+            tmp += Time.deltaTime;
+            if (tmp > 1.5f)
+            {
+                _playerController.ChangeState(_playerController.MOVE_STATE);
+            }
+            base.Execute();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+        }
+    }
+
 }
