@@ -9,7 +9,7 @@ public class BoarState : State
     protected BoarAnimationData _animData;
     protected NormalMonsterStat _monsterStat;
 
-    private float _seconds = 1.0f;
+    private float _seconds = 0.5f;
 
     public BoarState(BoarController controller) : base(controller)
     {

@@ -49,16 +49,19 @@ namespace BoarStateItem
 
         public override void Execute()
         {
-            if (IsStayForSeconds() && _detector.Target != null)
+            // Target이 없거나 공격 범위내에 플레이어가 없는 경우 CHASE로 이동
+            if (_detector.Target == null)
             {
-                if (_controller.IsArriveToTarget())
-                {
-                    _controller.ChangeState(_controller.ATTACK_STATE);
-                }
-                else
-                {
-                    _controller.ChangeState(_controller.CHASE_STATE);
-                }
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
+            if (!_controller.IsArriveToTarget())
+            {
+                _controller.ChangeState(_controller.CHASE_STATE);
+            }
+
+            if (IsStayForSeconds())
+            {
+                _controller.ChangeState(_controller.ATTACK_STATE);
             }
         }
 
@@ -86,11 +89,12 @@ namespace BoarStateItem
 
         public override void Execute()
         {
+            
             if ( _detector.Target != null)
             {
                 if (_controller.IsArriveToTarget())
                 {
-                    _controller.ChangeState(_controller.ATTACK_STATE);
+                    _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
                 }
                 _agent.SetDestination(_detector.Target.position);
             }

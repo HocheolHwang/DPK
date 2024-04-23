@@ -11,6 +11,7 @@ public class BoarController : BaseController, IDamageable
 {
     // Boar Controller 만 가지는 상태
     public State IDLE_STATE;
+    public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
     public State DIE_STATE;
@@ -45,6 +46,7 @@ public class BoarController : BaseController, IDamageable
 
         _stateMachine = new StateMachine();
         IDLE_STATE = new IdleState(this);
+        IDLE_BATTLE_STATE = new IdleBattleState(this);
         CHASE_STATE = new ChaseState(this);
         ATTACK_STATE = new AttackState(this);
         DIE_STATE = new DieState(this);
