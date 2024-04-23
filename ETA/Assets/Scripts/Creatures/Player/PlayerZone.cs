@@ -25,7 +25,7 @@ public class PlayerZone : MonoBehaviour
         
 
         //Collider[] enemies = Physics.OverlapBox(transform.position, detectRange, targetLayerMask);
-        Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(), new Quaternion(), targetLayerMask);
+        Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(2,1,6), new Quaternion(), targetLayerMask);
 
         if (enemies.Length > 0)
         {
@@ -33,7 +33,7 @@ public class PlayerZone : MonoBehaviour
         }
         else
         {
-            transform.position += transform.forward * Time.deltaTime * 3;
+            transform.position += transform.forward * Time.deltaTime * 6;
         }
         
 

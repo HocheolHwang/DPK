@@ -69,7 +69,7 @@ public class BoarController : BaseController, IDamageable
         monsterStat.Hp -= damage;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
-        if (monsterStat.Hp < 0 && _isDie == false)
+        if (monsterStat.Hp <= 0 && _isDie == false)
         {
             monsterStat.Hp = 0;
             DestroyEvent();
@@ -83,6 +83,6 @@ public class BoarController : BaseController, IDamageable
         // 파괴, 이펙트, 소리, UI 등 다양한 이벤트 추가
 
         // 애니메이션은 상태에서 관리 중
-        Destroy(this, 0.5f);
+        Destroy(gameObject, 0.5f);
     }
 }
