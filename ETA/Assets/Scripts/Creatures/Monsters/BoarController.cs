@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 
 using BoarStateItem;   // Boar States
 
-public class BoarController : BaseController, IDamageable
+public class BoarController : BaseController
 {
     // Boar Controller 만 가지는 상태
     public State IDLE_STATE;
@@ -64,8 +64,10 @@ public class BoarController : BaseController, IDamageable
     }
 
     // ---------------------------------- IDamage ------------------------------------------
-    public void TakeDamage(int damage)
+    public override void TakeDamage(int damage)
     {
+        base.TakeDamage(damage);
+
         monsterStat.Hp -= damage;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
@@ -76,8 +78,10 @@ public class BoarController : BaseController, IDamageable
         }
     }
 
-    public void DestroyEvent()
+    public override void DestroyEvent()
     {
+        base.DestroyEvent();
+
         _isDie = true;
         Debug.Log($"{gameObject.name} is Die.");
         // 파괴, 이펙트, 소리, UI 등 다양한 이벤트 추가

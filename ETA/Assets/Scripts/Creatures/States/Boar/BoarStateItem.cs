@@ -44,21 +44,12 @@ namespace BoarStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
+            _controller.transform.LookAt(_detector.Target);
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
         public override void Execute()
         {
-            // Target이 없거나 공격 범위내에 플레이어가 없는 경우 CHASE로 이동
-            if (_detector.Target == null)
-            {
-                _controller.ChangeState(_controller.IDLE_STATE);
-            }
-            if (!_controller.IsArriveToTarget())
-            {
-                _controller.ChangeState(_controller.CHASE_STATE);
-            }
-
             if (IsStayForSeconds())
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
@@ -89,19 +80,16 @@ namespace BoarStateItem
 
         public override void Execute()
         {
-            
-            if ( _detector.Target != null)
-            {
-                if (_controller.IsArriveToTarget())
-                {
-                    _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
-                }
-                _agent.SetDestination(_detector.Target.position);
-            }
-            else
+            if (_detector.Target == null)
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
+            if (_controller.IsArriveToTarget())
+            {
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+
+            _agent.SetDestination(_detector.Target.position);
         }
 
         public override void Exit()
@@ -115,6 +103,10 @@ namespace BoarStateItem
     #region ATTACK
     public class AttackState : BoarState
     {
+        // 한 번 재생한 뒤에 다른 상태로 전환
+        // 1. Target NULL -> IDLE
+        // 2. IsArriveToTarget() false -> CHASE
+        // 3. IsArriveToTarget() true -> IDLE_BATTLE
         float _attackCnt;
         float _threadHold;
 
@@ -127,8 +119,6 @@ namespace BoarStateItem
             _attackCnt = 0;
             _threadHold = _animData.AttackAnim.length;
 
-
-            _controller.transform.LookAt(_detector.Target);
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
             _animator.CrossFade(_animData.AttackParamHash, 0.2f);   // Idle과 Attack 애니메이션 모션 차이 때문에 들썩이는 모습을 막을 수 없는 것 같다.
         }
@@ -136,19 +126,21 @@ namespace BoarStateItem
         public override void Execute()
         {
             _attackCnt += Time.deltaTime;
-
-            if (_detector.Target == null )
-            {
-                _controller.ChangeState(_controller.IDLE_STATE);
-            }
-            else if ( !_controller.IsArriveToTarget() )
-            {
-                _controller.ChangeState(_controller.CHASE_STATE);
-            }
-
             if (_attackCnt > _threadHold * 2.0f)                    // 애니메이션 재생 시간이 2배 늘어난다.
             {
-                _controller.ChangeState(_controller.IDLE_STATE);
+                if (_detector.Target == null)
+                {
+                    _controller.ChangeState(_controller.IDLE_STATE);
+                }
+                
+                if (_controller.IsArriveToTarget())
+                {
+                    _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+                }
+                else
+                {
+                    _controller.ChangeState(_controller.CHASE_STATE);
+                }
             } 
         }
 
