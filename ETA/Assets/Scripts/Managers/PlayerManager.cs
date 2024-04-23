@@ -9,6 +9,7 @@ public class PlayerManager
     private string nickname;
     private string accessToken;
     private int gold;
+    private string playerId;
 
     PlayerManager() { }
 
@@ -38,21 +39,31 @@ public class PlayerManager
     {
         this.gold = gold;
     }
+    
+    public void SetPlayerId(string playerId)
+    {
+        this.playerId = playerId;
+    }
 
-    public string getId()
+    public string GetId()
     {
         return id;
     }
-    public string getNickName()
+    public string GetNickName()
     {
         return nickname;
     }
-    public string getToken()
+    public string GetToken()
     {
         return accessToken;
     }
-    public int getGold()
+    public int GetGold()
     {
         return gold;
+    }
+
+    public string GetPlayerId()
+    {
+        return playerId;
     }
 }
