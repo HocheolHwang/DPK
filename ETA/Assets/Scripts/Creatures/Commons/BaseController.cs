@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class BaseController : MonoBehaviour
+public abstract class BaseController : MonoBehaviour, IDamageable
 {
     protected StateMachine _stateMachine;
     protected State _curState;
@@ -56,5 +56,14 @@ public abstract class BaseController : MonoBehaviour
             string label = "Active State: " + _curState.ToString();
             Handles.Label(transform.position, label, style);
         }
+    }
+
+    // ---------------------------------- IDamage ------------------------------------------
+    public virtual void TakeDamage(int damage)
+    {
+    }
+
+    public virtual void DestroyEvent()
+    {
     }
 }
