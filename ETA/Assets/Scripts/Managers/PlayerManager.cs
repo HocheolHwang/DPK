@@ -10,6 +10,7 @@ public class PlayerManager
     private string accessToken;
     private int gold;
     private string playerId;
+    private string curClass;
 
     PlayerManager() { }
 
@@ -44,6 +45,10 @@ public class PlayerManager
     {
         this.playerId = playerId;
     }
+    public void SetClassCode(string curClass)
+    {
+        this.curClass = curClass;
+    }
 
     public string GetId()
     {
@@ -65,5 +70,9 @@ public class PlayerManager
     public string GetPlayerId()
     {
         return playerId;
+    }
+    public string GetClassCode()
+    {
+        return curClass;
     }
 }
