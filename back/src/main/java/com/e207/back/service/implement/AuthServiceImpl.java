@@ -72,6 +72,7 @@ public class AuthServiceImpl implements AuthService {
     public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
         String accessToken = null;
         boolean isFirst;
+        long playerGold;
         try{
             Optional<PlayerEntity> player = playerRepository.findById(dto.getPlayerId());
             isFirst = player.get().isFirst();
@@ -85,12 +86,12 @@ public class AuthServiceImpl implements AuthService {
             }
 
             accessToken = jwtProvider.createToken(player.get().getPlayerNickname(),player.get().getPlayerId(), 1, ChronoUnit.DAYS);
-
+            playerGold = player.get().getPlayerGold();
         }catch (Exception exception){
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
 
-        return SignInResponseDto.success(accessToken, isFirst);
+        return SignInResponseDto.success(accessToken, isFirst,playerGold);
     }
 }
