@@ -13,8 +13,8 @@ public class UIManager
     // "Popup UI"들을 관리하기 위한 스택
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
 
-    // 현재 활성화된 "Scene UI"
-    UI_Scene _sceneUI = null;
+    // 현재 활성화된 "Fixed UI"
+    UI_Fixed _fixedUI = null;
 
     // UI 요소들을 담을 최상위 루트 GameObject를 제공하는 프로퍼티
     public GameObject Root
@@ -45,7 +45,7 @@ public class UIManager
         }
         else
         {
-            // "Scene UI"의 정렬 순서를 0으로 고정
+            // "Fixed UI"의 정렬 순서를 0으로 고정
             canvas.sortingOrder = 0;
         }
     }
@@ -65,24 +65,24 @@ public class UIManager
         return go.GetOrAddComponent<T>();
     }
 
-    // "Scene UI"를 표시하고 관리하는 메서드
-    public T ShowSceneUI<T>(string name = null) where T : UI_Scene
+    // "Fixed UI"를 표시하고 관리하는 메서드
+    public T ShowFixedUI<T>(string name = null) where T : UI_Fixed
     {
         // 이름이 지정되지 않은 경우, T의 이름을 사용
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        // 지정된 이름의 "Scene UI" 프리팹을 인스턴스화하고 루트 GameObject에 추가
-        GameObject go = Managers.Resource.Instantiate($"UI/Scene/{name}");
-        T sceneUI = Util.GetOrAddComponent<T>(go);
+        // 지정된 이름의 "Fixed UI" 프리팹을 인스턴스화하고 루트 GameObject에 추가
+        GameObject go = Managers.Resource.Instantiate($"UI/Fixed/{name}");
+        T fixedUI = Util.GetOrAddComponent<T>(go);
 
-        // 새로운 "Scene UI"를 표시할 때마다 현재 활성화된 "Scene UI"를 새로운 "Scene UI"로 교체
-        _sceneUI = sceneUI;
+        // 새로운 "Fixed UI"를 표시할 때마다 현재 활성화된 "Fixed UI"를 새로운 "Fixed UI"로 교체
+        _fixedUI = fixedUI;
 
         // go GameObject를 Root GameObject의 자식으로 설정
         go.transform.SetParent(Root.transform);
 
-        return sceneUI;
+        return fixedUI;
     }
 
     // "Popup UI"를 표시하고 스택에 추가하는 메서드
@@ -147,8 +147,8 @@ public class UIManager
     // 모든 UI 요소를 초기화하는 메서드
     public void Clear()
     {
-        // 모든 "Popup UI"를 닫고, 현재 "Scene UI"를 null로 설정
+        // 모든 "Popup UI"를 닫고, 현재 "Fixed UI"를 null로 설정
         CloseAllPopupUI();
-        _sceneUI = null;
+        _fixedUI = null;
     }
 }
