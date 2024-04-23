@@ -11,21 +11,19 @@ public class BoarController : BaseController, IDamageable
 {
     // Boar Controller 만 가지는 상태
     public State IDLE_STATE;
+    public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
-    public State HIT_STATE;
     public State DIE_STATE;
     public State GLOBAL_STATE;
 
     [Header("Each Controller Property")]
     [SerializeField] public bool _isDie;
-    [SerializeField] public bool _isDamaged;
     [SerializeField] public NormalMonsterStat monsterStat;
     [SerializeField] public BoarAnimationData animData;
     
 
     public bool IsDie { get => _isDie; set => _isDie = value; }
-    public bool IsDamaged { get => _isDamaged; set => _isDamaged = value; }
 
     protected override void Awake()
     {
@@ -48,9 +46,9 @@ public class BoarController : BaseController, IDamageable
 
         _stateMachine = new StateMachine();
         IDLE_STATE = new IdleState(this);
+        IDLE_BATTLE_STATE = new IdleBattleState(this);
         CHASE_STATE = new ChaseState(this);
         ATTACK_STATE = new AttackState(this);
-        HIT_STATE = new HitState(this);
         DIE_STATE = new DieState(this);
         GLOBAL_STATE = new GlobalState(this);
 
@@ -69,7 +67,6 @@ public class BoarController : BaseController, IDamageable
     public void TakeDamage(int damage)
     {
         monsterStat.Hp -= damage;
-        _isDamaged = true;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
         if (monsterStat.Hp < 0 && _isDie == false)
@@ -86,5 +83,6 @@ public class BoarController : BaseController, IDamageable
         // 파괴, 이펙트, 소리, UI 등 다양한 이벤트 추가
 
         // 애니메이션은 상태에서 관리 중
+        Destroy(this, 0.5f);
     }
 }

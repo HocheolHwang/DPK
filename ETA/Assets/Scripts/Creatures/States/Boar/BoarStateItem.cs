@@ -20,16 +20,48 @@ namespace BoarStateItem
 
         public override void Execute()
         {
-            if ( IsStayForSeconds() && _detector.Target != null)
+            if ( _detector.Target != null)
             {
-                if (_controller.IsArriveToTarget())
-                {
-                    _controller.ChangeState(_controller.ATTACK_STATE);
-                }
-                else
-                {
-                    _controller.ChangeState(_controller.CHASE_STATE);
-                }
+                _controller.ChangeState(_controller.CHASE_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- IDLE BATTLE ------------------------------------------------
+    #region IDLE_BATTLE
+    public class IdleBattleState : BoarState
+    {
+        // CHASE -> IDLE BATTLE -> ATTACK
+        public IdleBattleState(BoarController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            _animator.CrossFade(_animData.IdleParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            // Target이 없거나 공격 범위내에 플레이어가 없는 경우 CHASE로 이동
+            if (_detector.Target == null)
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
+            if (!_controller.IsArriveToTarget())
+            {
+                _controller.ChangeState(_controller.CHASE_STATE);
+            }
+
+            if (IsStayForSeconds())
+            {
+                _controller.ChangeState(_controller.ATTACK_STATE);
             }
         }
 
@@ -57,11 +89,12 @@ namespace BoarStateItem
 
         public override void Execute()
         {
+            
             if ( _detector.Target != null)
             {
                 if (_controller.IsArriveToTarget())
                 {
-                    _controller.ChangeState(_controller.ATTACK_STATE);
+                    _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
                 }
                 _agent.SetDestination(_detector.Target.position);
             }
@@ -125,43 +158,6 @@ namespace BoarStateItem
     }
     #endregion
 
-    // -------------------------------------- HIT ------------------------------------------------
-    #region Hit
-    public class HitState : BoarState
-    {
-        float _hitCnt;
-        float _threadHold;
-
-        public HitState(BoarController controller) : base(controller)
-        {
-        }
-
-        public override void Enter()
-        {
-            _agent.velocity = Vector3.zero;
-
-            _hitCnt = 0;
-            _threadHold = _animData.HitAnim.length;
-
-            _animator.CrossFade(_animData.HitParamHash, 0.1f);
-        }
-
-        public override void Execute()
-        {
-            _hitCnt += Time.deltaTime;
-            
-            if (_hitCnt > _threadHold)
-            {
-                _controller.RevertToPrevState();
-            }
-        }
-        public override void Exit()
-        {
-            _controller.IsDamaged = false;
-        }
-    }
-    #endregion
-
     // -------------------------------------- DIE ------------------------------------------------
     #region DIE
     public class DieState : BoarState
@@ -197,16 +193,11 @@ namespace BoarStateItem
         {
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
-            if (_controller.CurState == _controller.HIT_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
             if (_controller.IsDie)
             {
                 _controller.ChangeState(_controller.DIE_STATE);
-            }
-            else if (_controller.IsDamaged) // 레퍼런스인 쿠키런 킹덤은 피격 모션이 없다.
-            {
-                _controller.ChangeState(_controller.HIT_STATE);
             }
         }
     }
