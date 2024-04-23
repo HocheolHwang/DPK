@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MonsterStateItem
+namespace KnightGStateItem
 {
     // -------------------------------------- IDLE ------------------------------------------------
     #region IDLE
-    public class IdleState : MonsterState
+    public class IdleState : KnightGState
     {
-        public IdleState(MonsterController controller) : base(controller)
+        public IdleState(KnightGController controller) : base(controller)
         {
         }
 
@@ -20,7 +20,7 @@ namespace MonsterStateItem
 
         public override void Execute()
         {
-            if ( _detector.Target != null)
+            if (_detector.Target != null)
             {
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
@@ -34,19 +34,17 @@ namespace MonsterStateItem
 
     // -------------------------------------- IDLE BATTLE ------------------------------------------------
     #region IDLE_BATTLE
-    public class IdleBattleState : MonsterState
+    public class IdleBattleState : KnightGState
     {
         // CHASE -> IDLE BATTLE -> ATTACK
-        public IdleBattleState(MonsterController controller) : base(controller)
+        public IdleBattleState(KnightGController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-            Vector3 dir = _detector.Target.position;
-            dir.y = _controller.transform.position.y;
-            _controller.transform.LookAt(dir);
+            _controller.transform.LookAt(_detector.Target);
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
@@ -66,11 +64,11 @@ namespace MonsterStateItem
 
     // -------------------------------------- CHASE ------------------------------------------------
     #region CHASE
-    public class ChaseState : MonsterState
+    public class ChaseState : KnightGState
     {
         // 몬스터끼리 뭉쳐지지 말고 경로에 몬스터가 있으면 피해서 이동하도록 수정 - Enter에서 하는 경우 Detector가 계속 
         // 몬스터가 Target을 향해 바로 회전하도록 수정
-        public ChaseState(MonsterController controller) : base(controller)
+        public ChaseState(KnightGController controller) : base(controller)
         {
         }
 
@@ -103,7 +101,7 @@ namespace MonsterStateItem
 
     // -------------------------------------- ATTACK ------------------------------------------------
     #region ATTACK
-    public class AttackState : MonsterState
+    public class AttackState : KnightGState
     {
         // 한 번 재생한 뒤에 다른 상태로 전환
         // 1. Target NULL -> IDLE
@@ -112,7 +110,7 @@ namespace MonsterStateItem
         float _attackCnt;
         float _threadHold;
 
-        public AttackState(MonsterController controller) : base(controller)
+        public AttackState(KnightGController controller) : base(controller)
         {
         }
 
@@ -134,7 +132,7 @@ namespace MonsterStateItem
                 {
                     _controller.ChangeState(_controller.IDLE_STATE);
                 }
-                
+
                 if (_controller.IsArriveToTarget())
                 {
                     _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
@@ -143,7 +141,7 @@ namespace MonsterStateItem
                 {
                     _controller.ChangeState(_controller.CHASE_STATE);
                 }
-            } 
+            }
         }
 
         public override void Exit()
@@ -154,13 +152,13 @@ namespace MonsterStateItem
 
     // -------------------------------------- DIE ------------------------------------------------
     #region DIE
-    public class DieState : MonsterState
+    public class DieState : KnightGState
     {
-        public DieState(MonsterController controller) : base(controller)
+        public DieState(KnightGController controller) : base(controller)
         {
         }
 
-        public override void Enter() 
+        public override void Enter()
         {
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
@@ -169,7 +167,7 @@ namespace MonsterStateItem
         public override void Execute()
         {
         }
-        public override void Exit() 
+        public override void Exit()
         {
         }
     }
@@ -177,9 +175,9 @@ namespace MonsterStateItem
 
     // -------------------------------------- GLOBAL ------------------------------------------------
     #region GLOBAL
-    public class GlobalState : MonsterState
+    public class GlobalState : KnightGState
     {
-        public GlobalState(MonsterController controller) : base(controller)
+        public GlobalState(KnightGController controller) : base(controller)
         {
         }
 

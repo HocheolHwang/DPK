@@ -743,6 +743,7 @@ GameObject:
   - component: {fileID: 1170981285359302102}
   - component: {fileID: 3504072409022027814}
   - component: {fileID: 2190058818407168450}
+  - component: {fileID: 7516381338963428569}
   m_Layer: 7
   m_Name: Boar
   m_TagString: Monster
@@ -870,17 +871,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86cc2e01477d23642b72d4eb2b4b9830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDie: 0
+  unitType: 1
   animator: {fileID: 0}
   agent: {fileID: 0}
   detector: {fileID: 0}
-  monsterStat: {fileID: 0}
-  animData:
-    idleParamName: IDLE
-    chaseParamName: CHASE
-    attackParamName: ATTACK
-    dieParamName: DIE
-    attackAnim: {fileID: 1287499044497976130, guid: 4071d8ec7dc765c4197bf023caa03d39, type: 3}
 --- !u!114 &3504072409022027814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -897,6 +891,7 @@ MonoBehaviour:
   _hp: 50
   _moveSpeed: 3
   _attackDamage: 3
+  _defense: 0
 --- !u!114 &2190058818407168450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,6 +910,23 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &7516381338963428569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929261757231762885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e5937bf42156c4c9b07b47e3cc956d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleParamName: IDLE
+  chaseParamName: CHASE
+  attackParamName: ATTACK
+  dieParamName: DIE
+  attackAnim: {fileID: 1287499044497976130, guid: 4071d8ec7dc765c4197bf023caa03d39, type: 3}
 --- !u!1 &5309143353402060251
 GameObject:
   m_ObjectHideFlags: 0

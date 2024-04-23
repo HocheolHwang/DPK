@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class MonsterAnimationData
+public class MonsterAnimationData : MonoBehaviour
 {
+    [Header("Monster Animation Data")]
     [SerializeField] protected string idleParamName = "IDLE";
     [SerializeField] protected string chaseParamName = "CHASE";
     [SerializeField] protected string attackParamName = "ATTACK";
@@ -20,7 +21,7 @@ public class MonsterAnimationData
     public int DieParamHash { get; private set; }
     public AnimationClip AttackAnim { get => attackAnim; }
 
-    public void StringAnimToHash()
+    public virtual void StringAnimToHash()
     {
         IdleParamHash = Animator.StringToHash(idleParamName);
         ChaseParamHash = Animator.StringToHash(chaseParamName);

@@ -32,7 +32,10 @@ using MonsterStateItem;
 //      3.1. 각 보스 몬스터마다 State 클래스와 StateItem을 만든다.
 // 4. 스탯 시스템
 //      4.1. 보스 몬스터만 가진 스탯은 어떻게 관리할까? 아니 특정 몬스터만 가지는 스탯이 존재하나?
-//      4.2. 만약 특정 보스만 가지는 스탯이 존재한다면, 
+//      4.2. 만약 특정 보스만 가지는 스탯이 존재한다면,
+//           일반 몬스터는 monster Stat을 사용하지만, 보스 몬스터는 boss Stat이라는 새로운 클래스를 사용하면 되겠다.
+//           그러면 생기는 문제가 MonsterController를 상속 받는 Boss Controller는 stat과 animation data가 2개를 가진다.
+//           Init을 통해 해결할 수 있다.
 public class MonsterController : BaseController
 {
     // Monster가 공통으로 가지는 상태
@@ -43,9 +46,11 @@ public class MonsterController : BaseController
     public State DIE_STATE;
     public State GLOBAL_STATE;
 
-    [Header("Each Controller Property")]
-    [SerializeField] public MonsterStat monsterStat;
-    [SerializeField] public MonsterAnimationData animData;
+    // ---------------------------- Inspector View에서 초기화 ----------------------------
+    [Header("Monster Controller Property")]
+    protected MonsterAnimationData _animData;
+
+    public MonsterAnimationData AnimData { get => _animData; }
 
     protected override void Awake()
     {
@@ -60,11 +65,11 @@ public class MonsterController : BaseController
 
     protected override void Init()
     {
-        // ----------------------------- Component -------------------------------------
-        monsterStat = GetComponent<MonsterStat>();
+        _stat = GetComponent<MonsterStat>();
+        _animData = GetComponent<MonsterAnimationData>();
 
         // ----------------------------- Animation && State -------------------------------------
-        animData.StringAnimToHash();
+        _animData.StringAnimToHash();
 
         _stateMachine = new StateMachine();
         IDLE_STATE = new IdleState(this);
@@ -80,24 +85,6 @@ public class MonsterController : BaseController
     }
 
     // ---------------------------------- IDamage ------------------------------------------
-    public override void TakeDamage(int attackDamage)
-    {
-        // 최소 데미지 = 1
-        int damage = Mathf.Abs(attackDamage - monsterStat.Defense);
-        if (damage <= 1)
-        {
-            damage = 1;
-        }
-        monsterStat.Hp -= damage;
-
-        Debug.Log($"{gameObject.name} has taken {damage} damage.");
-        if (monsterStat.Hp <= 0)
-        {
-            monsterStat.Hp = 0;
-            DestroyObject();
-        }
-    }
-
     public override void DestroyEvent()
     {
     }

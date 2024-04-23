@@ -403,6 +403,7 @@ GameObject:
   - component: {fileID: 5124365159700954334}
   - component: {fileID: 452731348794098034}
   - component: {fileID: -4592542451953495264}
+  - component: {fileID: 6766364674128847522}
   m_Layer: 7
   m_Name: Butterfly
   m_TagString: Monster
@@ -530,17 +531,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86cc2e01477d23642b72d4eb2b4b9830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDie: 0
+  unitType: 2
   animator: {fileID: 0}
   agent: {fileID: 0}
   detector: {fileID: 0}
-  monsterStat: {fileID: 0}
-  animData:
-    idleParamName: IDLE
-    chaseParamName: CHASE
-    attackParamName: ATTACK
-    dieParamName: DIE
-    attackAnim: {fileID: -3860031751415323757, guid: ed5a417dfb7260d4d9eef74294102b49, type: 3}
 --- !u!114 &452731348794098034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,6 +551,7 @@ MonoBehaviour:
   _hp: 50
   _moveSpeed: 3
   _attackDamage: 3
+  _defense: 0
 --- !u!114 &-4592542451953495264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +570,23 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &6766364674128847522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811888516200086630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e5937bf42156c4c9b07b47e3cc956d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleParamName: IDLE
+  chaseParamName: CHASE
+  attackParamName: ATTACK
+  dieParamName: DIE
+  attackAnim: {fileID: -3860031751415323757, guid: ed5a417dfb7260d4d9eef74294102b49, type: 3}
 --- !u!1 &5473436153560122614
 GameObject:
   m_ObjectHideFlags: 0
