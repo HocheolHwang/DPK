@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 각 상태 클래스의 중복 코드를 막기 위함
-public class BoarState : State
+public class MonsterState : State
 {
-    protected BoarController _controller;
-    protected BoarAnimationData _animData;
-    protected NormalMonsterStat _monsterStat;
+    protected MonsterController _controller;
+    protected MonsterAnimationData _animData;
+    protected MonsterStat _monsterStat;
 
     private float _seconds = 0.5f;
 
-    public BoarState(BoarController controller) : base(controller)
+    public MonsterState(MonsterController controller) : base(controller)
     {
         _controller = controller;
         _animData = controller.animData;

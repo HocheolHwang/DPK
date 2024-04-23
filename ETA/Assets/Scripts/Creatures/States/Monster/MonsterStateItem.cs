@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BoarStateItem
+namespace MonsterStateItem
 {
     // -------------------------------------- IDLE ------------------------------------------------
     #region IDLE
-    public class IdleState : BoarState
+    public class IdleState : MonsterState
     {
-        public IdleState(BoarController controller) : base(controller)
+        public IdleState(MonsterController controller) : base(controller)
         {
         }
 
@@ -34,10 +34,10 @@ namespace BoarStateItem
 
     // -------------------------------------- IDLE BATTLE ------------------------------------------------
     #region IDLE_BATTLE
-    public class IdleBattleState : BoarState
+    public class IdleBattleState : MonsterState
     {
         // CHASE -> IDLE BATTLE -> ATTACK
-        public IdleBattleState(BoarController controller) : base(controller)
+        public IdleBattleState(MonsterController controller) : base(controller)
         {
         }
 
@@ -64,11 +64,11 @@ namespace BoarStateItem
 
     // -------------------------------------- CHASE ------------------------------------------------
     #region CHASE
-    public class ChaseState : BoarState
+    public class ChaseState : MonsterState
     {
         // 몬스터끼리 뭉쳐지지 말고 경로에 몬스터가 있으면 피해서 이동하도록 수정 - Enter에서 하는 경우 Detector가 계속 
         // 몬스터가 Target을 향해 바로 회전하도록 수정
-        public ChaseState(BoarController controller) : base(controller)
+        public ChaseState(MonsterController controller) : base(controller)
         {
         }
 
@@ -101,7 +101,7 @@ namespace BoarStateItem
 
     // -------------------------------------- ATTACK ------------------------------------------------
     #region ATTACK
-    public class AttackState : BoarState
+    public class AttackState : MonsterState
     {
         // 한 번 재생한 뒤에 다른 상태로 전환
         // 1. Target NULL -> IDLE
@@ -110,7 +110,7 @@ namespace BoarStateItem
         float _attackCnt;
         float _threadHold;
 
-        public AttackState(BoarController controller) : base(controller)
+        public AttackState(MonsterController controller) : base(controller)
         {
         }
 
@@ -152,9 +152,9 @@ namespace BoarStateItem
 
     // -------------------------------------- DIE ------------------------------------------------
     #region DIE
-    public class DieState : BoarState
+    public class DieState : MonsterState
     {
-        public DieState(BoarController controller) : base(controller)
+        public DieState(MonsterController controller) : base(controller)
         {
         }
 
@@ -175,9 +175,9 @@ namespace BoarStateItem
 
     // -------------------------------------- GLOBAL ------------------------------------------------
     #region GLOBAL
-    public class GlobalState : BoarState
+    public class GlobalState : MonsterState
     {
-        public GlobalState(BoarController controller) : base(controller)
+        public GlobalState(MonsterController controller) : base(controller)
         {
         }
 

@@ -10,6 +10,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     protected State _curState;
 
     [Header("Common Property")]
+    [SerializeField] public bool _isDie;
     [SerializeField] public Animator animator;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Detector detector;
@@ -17,6 +18,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
+    public bool IsDie { get => _isDie; set => _isDie = value; }
 
 
     //-----------------------------------  Essential Functions --------------------------------------------
@@ -59,6 +61,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         }
     }
 
+    // ---------------------------------- Detector ------------------------------------------
+    public bool IsArriveToTarget()
+    {
+        return Vector3.Distance(detector.Target.position, transform.position) < detector.attackRange;
+    }
+
     // ---------------------------------- IDamage ------------------------------------------
     public virtual void TakeDamage(int damage)
     {
@@ -66,5 +74,15 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
     public virtual void DestroyEvent()
     {
+        // 파괴, 이펙트, 소리, UI 등 다양한 이벤트 추가
+        // 관련 Resource는 Component로 가져옴
+
+        // 애니메이션은 상태에서 관리 중
+    }
+
+    public virtual void DestroyObject()
+    {
+        DestroyEvent();
+        Destroy(gameObject, 0.5f);
     }
 }
