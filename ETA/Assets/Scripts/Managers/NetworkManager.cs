@@ -38,6 +38,7 @@ public class NetworkManager : MonoBehaviour
             PlayerManager.GetInstance().SetToken(data.accessToken);
         }
     }
+
     // 던전 클리어 랭크
     IEnumerator DungeonRankRequest(UnityWebRequest request)
     {
@@ -52,6 +53,24 @@ public class NetworkManager : MonoBehaviour
             Debug.Log("Response: " + request.downloadHandler.text);
             DungeonResDto data = JsonUtility.FromJson<DungeonResDto>(request.downloadHandler.text);
             //랭크 저장할 곳 필요함
+        }
+    }
+
+    // 플레이어 랭크
+    IEnumerator PlayerRankRequest(UnityWebRequest request)
+    {
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Web Request Error] {request.error}");
+        }
+        else
+        {
+            Debug.Log(request.result);
+            Debug.Log("Response: " + request.downloadHandler.text);
+            PlayerRankResDto data = JsonUtility.FromJson<PlayerRankResDto>(request.downloadHandler.text);
+            // 플레이어 랭크
         }
     }
 
@@ -121,4 +140,14 @@ public class NetworkManager : MonoBehaviour
     {
         StartCoroutine(DungeonRankRequest(CreateRequest("GET", "dungeon/rank?dungeon-code="+dungeonCode)));
     }
+
+    // 플레이어 랭킹
+    public void PlayerRankCall(int limit)
+    {
+        // 쿼리스트링으로 갯수 보내기
+        // 없으면 10개라고 함
+        StartCoroutine(PlayerRankRequest(CreateRequest("GET", "player/ranking?limit=" + limit)));
+    }
+
+    
 }

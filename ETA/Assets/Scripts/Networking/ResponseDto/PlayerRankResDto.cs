@@ -5,6 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerRankResDto 
 {
+    public string message;
+    public PlayerRank[] rankingList;
+}
+
+[System.Serializable]
+public class PlayerRank
+{
     public string className;
     public string nickname;
     public int playerLevel;
