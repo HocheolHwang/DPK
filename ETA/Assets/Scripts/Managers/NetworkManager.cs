@@ -38,9 +38,8 @@ public class NetworkManager : MonoBehaviour
             PlayerManager.GetInstance().SetToken(data.accessToken);
         }
     }
-
-    // 파티
-    IEnumerator PartyRequest(UnityWebRequest request)
+    // 던전 클리어 랭크
+    IEnumerator DungeonRankRequest(UnityWebRequest request)
     {
         yield return request.SendWebRequest();
         if (request.result != UnityWebRequest.Result.Success)
@@ -51,11 +50,11 @@ public class NetworkManager : MonoBehaviour
         {
             Debug.Log(request.result);
             Debug.Log("Response: " + request.downloadHandler.text);
-            PartyReqDto data = JsonUtility.FromJson<PartyReqDto>(request.downloadHandler.text);
-
-            PlayerManager.GetInstance().SetPlayerId(data.partyId);
+            DungeonResDto data = JsonUtility.FromJson<DungeonResDto>(request.downloadHandler.text);
+            //랭크 저장할 곳 필요함
         }
     }
+
 
     UnityWebRequest CreateRequest(string method, string path, string json = null)
     {
@@ -94,8 +93,32 @@ public class NetworkManager : MonoBehaviour
     {
         string loginData = JsonUtility.ToJson(dto);
         StartCoroutine(LoginRequest(CreateRequest("POST", "auth/sign-up", loginData)));
-
     }
 
+    // 파티 생성 요청
+    public void CreatePartyCall(PartyReqDto dto)
+    {
+        string partyData = JsonUtility.ToJson(dto);
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "party", partyData)));
+    }
 
+    // 파티 참가 요청
+    public void EnterPartyCall(PartyResDto dto)
+    {
+        string partyData = JsonUtility.ToJson(dto);
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "party/enter", partyData)));
+    }
+    
+    // 던전 결과 전송
+    public void EnterDungeonCall(DungeonReqDto dto)
+    {
+        string partyData = JsonUtility.ToJson(dto);
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "dungeon/end", partyData)));
+    }
+
+    // 던전 결과 랭크
+    public void EnterDungeonCall(string dungeonCode)
+    {
+        StartCoroutine(DungeonRankRequest(CreateRequest("GET", "dungeon/rank?dungeon-code="+dungeonCode)));
+    }
 }
