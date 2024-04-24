@@ -1889,7 +1889,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8653426056133495269}
   - component: {fileID: 7400126620992043962}
-  - component: {fileID: 3587445029349814268}
   m_Layer: 5
   m_Name: Signup_Popup_UI
   m_TagString: Untagged
@@ -1941,19 +1940,6 @@ MonoBehaviour:
   - {fileID: 2434362813321903018}
   - {fileID: 6148639528868248639}
   - {fileID: 9202722829992407048}
---- !u!114 &3587445029349814268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4362489337655765324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 185f83606ce2f914ab865014a386734f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  submitButton: {fileID: 4387135912184324078}
 --- !u!1 &4621902378669332595
 GameObject:
   m_ObjectHideFlags: 0

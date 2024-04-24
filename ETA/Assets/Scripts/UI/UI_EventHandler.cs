@@ -15,6 +15,9 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
     // 드래그 이벤트 발생 시 호출되는 액션
     public Action<PointerEventData> OnDragHandler = null;
 
+    // Enter 키 입력 이벤트 발생 시 호출되는 액션
+    public Action OnEnterPressHandler = null;
+
     public void OnDrag(PointerEventData eventData)
     {
         if (OnDragHandler == null) return;
@@ -25,5 +28,14 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
         if (OnClickHandler == null) return;
         OnClickHandler.Invoke(eventData);
+    }
+
+    private void Update()
+    {
+        // Enter 키가 눌렸는지 확인
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            OnEnterPressHandler?.Invoke();
+        }
     }
 }

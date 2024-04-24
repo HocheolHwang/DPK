@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -24,20 +22,21 @@ public class Signup_Popup_UI : UI_Popup
         // 회원가입 시도 버튼 이벤트 등록
         Button signupButton = GetButton((int)Buttons.Signup_Button);
         AddUIEvent(signupButton.gameObject, Signup);
+        AddEnterKeyEvent(signupButton.gameObject, () => Signup(null));
 
         // 로그인 전환 버튼 이벤트 등록
         Button switchLoginButton = GetButton((int)Buttons.Switch_Login_Button);
         AddUIEvent(switchLoginButton.gameObject, SwitchLogin);
     }
 
-    // 회원가입 시도 버튼 클릭 이벤트 핸들러
+    // 회원가입 시도
     private void Signup(PointerEventData data)
     {
         // 회원가입 처리...
         Debug.Log("회원가입 시도");
     }
 
-    // 로그인 전환 버튼 클릭 이벤트 핸들러
+    // 로그인 Popup UI로 전환
     private void SwitchLogin(PointerEventData data)
     {
         // 현재 Popup UI를 닫음
