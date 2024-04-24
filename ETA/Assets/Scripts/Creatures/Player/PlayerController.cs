@@ -53,6 +53,9 @@ public class PlayerController : BaseController
         Managers.Input.KeyAction -= KeyEvent;
         Managers.Input.KeyAction += KeyEvent;
 
+
+        
+
     }
 
     IEnumerator StartMove()
@@ -89,5 +92,7 @@ public class PlayerController : BaseController
 
     }
 
+
+    
 
 }
