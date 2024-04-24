@@ -75,7 +75,7 @@ namespace MonsterStateItem
 
         public override void Enter()
         {
-            _agent.speed = _monsterStat.MoveSpeed;
+            _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
         }
 
@@ -108,7 +108,7 @@ namespace MonsterStateItem
         // 1. Target NULL -> IDLE
         // 2. IsArriveToTarget() false -> CHASE
         // 3. IsArriveToTarget() true -> IDLE_BATTLE
-        float _attackCnt;
+        float _attackTime;
         float _threadHold;
 
         public AttackState(MonsterController controller) : base(controller)
@@ -117,7 +117,7 @@ namespace MonsterStateItem
 
         public override void Enter()
         {
-            _attackCnt = 0;
+            _attackTime = 0;
             _threadHold = _animData.AttackAnim.length;
 
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
@@ -126,8 +126,8 @@ namespace MonsterStateItem
 
         public override void Execute()
         {
-            _attackCnt += Time.deltaTime;
-            if (_attackCnt > _threadHold * 2.0f)                    // 애니메이션 재생 시간이 2배 늘어난다.
+            _attackTime += Time.deltaTime;
+            if (_attackTime > _threadHold * 2.0f)                    // 애니메이션 재생 시간이 2배 늘어난다.
             {
                 if (_detector.Target == null)
                 {
@@ -151,7 +151,7 @@ namespace MonsterStateItem
     }
     #endregion
 
-    // -------------------------------------- DIE ------------------------------------------------
+    // -------------------------------------- GLOBAL_DIE ------------------------------------------------
     #region DIE
     public class DieState : MonsterState
     {
@@ -188,7 +188,7 @@ namespace MonsterStateItem
             if (_controller.CurState == _controller.DIE_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
-            if (_monsterStat.Hp <= 0)
+            if (_stat.Hp <= 0)
             {
                 _controller.ChangeState(_controller.DIE_STATE);
             }

@@ -14,8 +14,7 @@ public class MonsterController : BaseController
     public State DIE_STATE;
     public State GLOBAL_STATE;
 
-    [Header("Monster Controller Property")]
-    protected MonsterAnimationData _animData;
+    private MonsterAnimationData _animData;
 
     public MonsterAnimationData AnimData { get => _animData; }
 
@@ -25,20 +24,21 @@ public class MonsterController : BaseController
         Init();
     }
 
-    protected virtual void Start()
+    private void Start()
     {
         ChangeState(IDLE_STATE);
     }
 
+    // ---------------------------------- Init ------------------------------------------
     protected override void Init()
     {
-        _stat = GetComponent<MonsterStat>();
         _animData = GetComponent<MonsterAnimationData>();
-
-        // ----------------------------- Animation && State -------------------------------------
         _animData.StringAnimToHash();
 
+        // ----------------------------- Animation && State -------------------------------------
+
         _stateMachine = new StateMachine();
+
         IDLE_STATE = new IdleState(this);
         IDLE_BATTLE_STATE = new IdleBattleState(this);
         CHASE_STATE = new ChaseState(this);
@@ -54,5 +54,6 @@ public class MonsterController : BaseController
     // ---------------------------------- IDamage ------------------------------------------
     public override void DestroyEvent()
     {
+        // ENUM이 아니라 네이밍 컨벤션을 통해서 Resource Manager를 잘 다루기
     }
 }

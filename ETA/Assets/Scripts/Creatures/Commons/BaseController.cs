@@ -8,18 +8,17 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 {
     protected StateMachine _stateMachine;
     protected State _curState;
-    protected Stat _stat;
 
     [Header("Common Property")]
     [SerializeField] public Define.UnitType unitType;
     [SerializeField] public Animator animator;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Detector detector;
+    [SerializeField] public Stat stat;
 
 
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
-    public Stat Stat { get => _stat; set => _stat = value; }
 
 
     //-----------------------------------  Essential Functions --------------------------------------------
@@ -28,6 +27,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         detector = GetComponent<Detector>();
+        stat = GetComponent<Stat>();
     }
     protected virtual void Update()
     {
@@ -72,17 +72,17 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public virtual void TakeDamage(int attackDamage)
     {
         // 최소 데미지 = 1
-        int damage = Mathf.Abs(attackDamage - _stat.Defense);
+        int damage = Mathf.Abs(attackDamage - stat.Defense);
         if (damage <= 1)
         {
             damage = 1;
         }
-        _stat.Hp -= damage;
+        stat.Hp -= damage;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
-        if (_stat.Hp <= 0)
+        if (stat.Hp <= 0)
         {
-            _stat.Hp = 0;
+            stat.Hp = 0;
             DestroyObject();
         }
     }
