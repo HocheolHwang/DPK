@@ -409,8 +409,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8653426056133495269}
-  - component: {fileID: 7400126620992043962}
-  - component: {fileID: 3587445029349814268}
   m_Layer: 5
   m_Name: Login_Loading_Fixed_UI
   m_TagString: Untagged
@@ -439,33 +437,3 @@ RectTransform:
   m_AnchoredPosition: {x: -540, y: -340}
   m_SizeDelta: {x: -1080, y: 680}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &7400126620992043962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4362489337655765324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ae6e01ea0461a94590971c514f52060, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &3587445029349814268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4362489337655765324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 185f83606ce2f914ab865014a386734f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  submitButton: {fileID: 0}
