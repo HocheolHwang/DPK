@@ -20,7 +20,7 @@ public class Login_Popup_UI : UI_Popup
     }
     
     // 클래스 멤버 변수로 선언
-    private TextMeshProUGUI userId;
+    private TextMeshProUGUI userID;
     private TextMeshProUGUI userPW;
 
     // 로그인 UI 초기화
@@ -33,7 +33,7 @@ public class Login_Popup_UI : UI_Popup
         Bind<Button>(typeof(Buttons));
 
         // 로그인 입력 정보
-        userId = GetText((int)Texts.User_ID_Text);
+        userID = GetText((int)Texts.User_ID_Text);
         userPW = GetText((int)Texts.User_PW_Text);
 
         // 로그인 시도 버튼 이벤트 등록
@@ -52,12 +52,13 @@ public class Login_Popup_UI : UI_Popup
         // PlayerSignInReqDto 객체 생성
         PlayerSignInReqDto signInDto = new PlayerSignInReqDto
         {
-            playerId = userId.text,
+            playerId = userID.text,
             playerPassword = userPW.text,
         };
 
         // NetworkManager 인스턴스에 접근
         NetworkManager networkManager = FindObjectOfType<NetworkManager>();
+        //Managers.Network.SignInCall(signInDto);
         if (networkManager != null)
         {
             // 로그인 요청 호출

@@ -30,6 +30,8 @@ public class NetworkManager : MonoBehaviour
         yield return request.SendWebRequest();
         if (request.result != UnityWebRequest.Result.Success)
         {
+            Debug.Log(request.downloadHandler.text);
+
             Debug.LogError($"[Web Request Error] {request.error}");
         }
         else
