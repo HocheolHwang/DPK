@@ -8,6 +8,7 @@ public class Login_Popup_UI : UI_Popup
     // 텍스트 인덱스
     enum Texts
     {
+        Warning_Text,
         User_ID_Text,
         User_PW_Text
     }
@@ -18,8 +19,9 @@ public class Login_Popup_UI : UI_Popup
         Login_Button,
         Switch_Signup_Button
     }
-    
+
     // 클래스 멤버 변수로 선언
+    private TextMeshProUGUI warning;
     private TextMeshProUGUI userID;
     private TextMeshProUGUI userPW;
 
@@ -31,6 +33,9 @@ public class Login_Popup_UI : UI_Popup
         // 바인딩
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
+
+        // 경고 문구
+        warning = GetText((int)Texts.Warning_Text);
 
         // 로그인 입력 정보
         userID = GetText((int)Texts.User_ID_Text);
@@ -56,18 +61,27 @@ public class Login_Popup_UI : UI_Popup
         };
 
         NetworkManager networkManager = FindObjectOfType<NetworkManager>();
-        //Managers.Network.SignInCall(signInDto);
         if (networkManager != null)
         {
-            // 로그인 요청 호출
-            networkManager.SignInCall(signInDto);
-            Debug.Log("로그인 요청 호출~");
-            Debug.Log($"아이디: {signInDto.playerId}");
-            Debug.Log($"비번: {signInDto.playerPassword}");
+            // 로그인 요청 호출 및 콜백 함수 전달
+            networkManager.SignInCall(signInDto, UpdateWarningText);
         }
         else
         {
             Debug.LogError("NetworkManager 인스턴스를 찾을 수 없습니다.");
+        }
+    }
+
+    // 로그인 시도 후 콜백 함수로 경고 텍스트 업데이트
+    private void UpdateWarningText(string message)
+    {
+        if (message == "Database error.")
+        {
+            warning.text = "아이디를 확인해주세요.";
+        }
+        else
+        {
+            warning.text = message;
         }
     }
 

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 
 public class Signup_Popup_UI : UI_Popup
 {
@@ -68,30 +69,25 @@ public class Signup_Popup_UI : UI_Popup
             playerPassword = userPW.text,
             playerPasswordCheck = userPWCheck.text,
         };
-
-        // 비밀번호와 비밀번호 확인 미일치 시 경고 문구 출력 및 회원가입 종료
-        if (signUpDto.playerPassword != signUpDto.playerPasswordCheck)
-        {
-            warning.text = "비밀번호가 일치하지 않습니다.";
-            return;
-        }
-
+        Debug.Log("123");
         NetworkManager networkManager = FindObjectOfType<NetworkManager>();
+
         //Managers.Network.SignInCall(signInDto);
         if (networkManager != null)
         {
-            // 로그인 요청 호출
-            networkManager.SignUpCall(signUpDto);
-            Debug.Log("회원가입 요청 호출~");
-            Debug.Log($"아이디: {signUpDto.playerId}");
-            Debug.Log($"닉네임: {signUpDto.nickname}");
-            Debug.Log($"비번: {signUpDto.playerPassword}");
-            Debug.Log($"비번체크: {signUpDto.playerPasswordCheck}");
+            // 회원가입 요청 호출
+            networkManager.SignUpCall(signUpDto, UpdateWarningText);
         }
         else
         {
             Debug.LogError("NetworkManager 인스턴스를 찾을 수 없습니다.");
         }
+    }
+
+    // 회원가입 시도 후 콜백 함수로 경고 텍스트 업데이트
+    private void UpdateWarningText(string message)
+    {
+        warning.text = message;
     }
 
     // 로그인 Popup UI로 전환

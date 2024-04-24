@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
+using System;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -26,29 +27,45 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    // 회원가입
+    IEnumerator SignUpRequest(UnityWebRequest request, Action<string> callback)
+    {
+        yield return request.SendWebRequest();
+        Debug.Log(request.downloadHandler.text);
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Web Request Error] {request.error}");
+            callback?.Invoke(message.message); // 에러 메시지를 콜백으로 전달
+        }
+        else
+        {
+            Debug.Log(request.result);
+            Debug.Log("@@@@@@@@@@@@@@@@@@@@@@@");
+            Debug.Log("Response: " + request.downloadHandler.text);
+        }
+    }
+
     // 로그인
-    IEnumerator LoginRequest(UnityWebRequest request)
+    IEnumerator LoginRequest(UnityWebRequest request, Action<string> callback)
     {
         yield return request.SendWebRequest();
 
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
-        Debug.Log("메세지 출력" + message.message);
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log(request.downloadHandler.text);
-
             Debug.LogError($"[Web Request Error] {request.error}");
+            callback?.Invoke(message.message); // 에러 메시지를 콜백으로 전달
         }
         else
         {
-            
             Debug.Log("Response: " + request.downloadHandler.text);
             PlayerResDto data = JsonUtility.FromJson<PlayerResDto>(request.downloadHandler.text);
             PlayerManager.GetInstance().SetToken(data.accessToken);
             PlayerManager.GetInstance().SetGold(data.playerGold);
 
-            // 토큰에서 닉네임 파싱
             JWTDecord.DecodeJWT(data.accessToken);
+            callback?.Invoke(""); // 성공 시 빈 문자열 또는 성공 메시지 전달
         }
     }
 
@@ -134,6 +151,7 @@ public class NetworkManager : MonoBehaviour
         UnityWebRequest request = new UnityWebRequest(baseUrl + path, method);
 
         Debug.Log(baseUrl + path);
+        Debug.Log(json);
         request.downloadHandler = new DownloadHandlerBuffer();
         if (json != null)
         {
@@ -157,18 +175,17 @@ public class NetworkManager : MonoBehaviour
     }
 
     // 로그인시 호출되는 함수
-    public void SignInCall(PlayerSignInReqDto dto)
+    public void SignInCall(PlayerSignInReqDto dto, Action<string> callback)
     {
         string loginData = JsonUtility.ToJson(dto);
-        StartCoroutine(LoginRequest(CreateRequest("POST", "auth/sign-in", loginData)));
+        StartCoroutine(LoginRequest(CreateRequest("POST", "auth/sign-in", loginData), callback));
     }
 
     // 회원가입시 호출되는 함수
-    public void SignUpCall(PlayerSignUpReqDto dto)
+    public void SignUpCall(PlayerSignUpReqDto dto, Action<string> callback)
     {
         string registData = JsonUtility.ToJson(dto);
-        Debug.Log("json : " + registData);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "auth/sign-up", registData)));
+        StartCoroutine(SignUpRequest(CreateRequest("POST", "auth/sign-up", registData), callback));
     }
 
     // 파티 생성 요청
