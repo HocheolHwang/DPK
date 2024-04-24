@@ -2,6 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 일반 공격 2가지( 0 )
+
+// 카운터 실패시 그로기 상태
+// 페이즈 실패시 그로기 상태
+
+// 패턴 공격 발생 기준?
+// 체력이 일정 기준 이하일 때 패턴 공격
+// 카운터는 내부 쿨타임을 기준으로 수행
+
+
+// 카운터 패턴 공격 1가지
+
+// 일반 패턴 1가지
+// 숨겨진 기믹이 있는 패턴 1가지
+
+// 페이즈
+
+// 페이즈를 끊지 못하면 발생하는 패턴 1가지
 namespace KnightGStateItem
 {
     // -------------------------------------- IDLE ------------------------------------------------
@@ -44,7 +62,7 @@ namespace KnightGStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-            _controller.transform.LookAt(_detector.Target);
+            LookAtEnemy();
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
@@ -101,10 +119,6 @@ namespace KnightGStateItem
     #region ATTACK
     public class AttackState : KnightGState
     {
-        // 한 번 재생한 뒤에 다른 상태로 전환
-        // 1. Target NULL -> IDLE
-        // 2. IsArriveToTarget() false -> CHASE
-        // 3. IsArriveToTarget() true -> IDLE_BATTLE
         float _attackTime;
         float _threadHold;
 
@@ -114,13 +128,24 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            attackCnt++;
+            
             _attackTime = 0;
-            _threadHold = _animData.AttackAnim.length;
-
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
 
             // 2가지 자동 공격 모션이 존재한다.
-            _animator.CrossFade(_animData.AttackParamHash, 0.2f);
+            if (attackCnt % 2 == 0)
+            {
+                _threadHold = _animData.AttackAnim.length;
+                _animator.CrossFade(_animData.AttackParamHash, 0.4f);
+
+            }
+            else if (attackCnt % 2 == 1)
+            {
+                _threadHold = _animData.AttackUpAnim.length;
+                _animator.CrossFade(_animData.AttackUpParamHash, 0.4f);
+            }
+            
         }
 
         public override void Execute()
@@ -144,6 +169,111 @@ namespace KnightGStateItem
             }
         }
 
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- COUNTER_ENABLE ------------------------------------------------
+    #region COUNTER_ENABLE
+    public class CounterEnableState : KnightGState
+    {
+        public CounterEnableState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+        }
+
+        public override void Execute()
+        {
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- COUNTER_ATTACK ------------------------------------------------
+    #region COUNTER_ATTACK
+    public class CounterAttackState : KnightGState
+    {
+        public CounterAttackState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+        }
+
+        public override void Execute()
+        {
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- PHASE_TRANSITION ------------------------------------------------
+    #region PHASE_TRANSITION
+    public class PhaseTransitionState : KnightGState
+    {
+        public PhaseTransitionState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+        }
+
+        public override void Execute()
+        {
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- PHASE_ATTACK ------------------------------------------------
+    #region PHASE_ATTACK
+    public class PhaseAttackState : KnightGState
+    {
+        public PhaseAttackState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+        }
+
+        public override void Execute()
+        {
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- PHASE_ATTACK_ING ------------------------------------------------
+    #region PHASE_ATTACK_ING
+    public class PhaseAttackingState : KnightGState
+    {
+        public PhaseAttackingState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+        }
+
+        public override void Execute()
+        {
+        }
         public override void Exit()
         {
         }
@@ -211,6 +341,10 @@ namespace KnightGStateItem
 
         public override void Execute()
         {
+            // 카운터 패턴 공격 시간만 여기서 관리
+            // 수행하는 코드는 IDLE, IDLE_BATTLE, CHASE 중에서 하나
+            counterTime += Time.deltaTime;
+
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
             if (_controller.CurState == _controller.GROGGY_STATE) return;
@@ -222,7 +356,6 @@ namespace KnightGStateItem
             }
             if (_controller.IsStun)
             {
-                Debug.Log($"{_controller.IsStun}");
                 _controller.ChangeState(_controller.GROGGY_STATE);
             }
         }

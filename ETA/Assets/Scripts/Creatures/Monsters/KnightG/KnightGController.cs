@@ -6,6 +6,7 @@ using UnityEngine;
 using KnightGStateItem;
 // Monster Controller에서 상속 받는 경우
 // 1. StateItem을 따로 사용하기 때문에 namespace가 일치하지 않아서 monster가 가지는 IDLE, IDLE_BATTLE, CHASE, ... 등의 상태를 초기화 할 수 없다.
+//    또한 StateItem은 일반 몬스터를 제외하면 각 보스 몬스터에 종속되기 때문에 초기화 할 수도 없다.
 // 2. Monster와 KnightG의 초기화가 다르기 때문에 발생하는 문제
 // 결론: BaseController에서 상속 받는다.
 public class KnightGController : BaseController
@@ -15,6 +16,11 @@ public class KnightGController : BaseController
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
+    public State COUNTER_ENABLE_STATE;
+    public State COUNTER_ATTACK_STATE;
+    public State PHASE_TRANSITION_STATE;
+    public State PHASE_ATTACK_STATE;
+    public State PHASE_ATTACK_ING_STATE;
     public State DIE_STATE;
     public State GROGGY_STATE;
     public State GLOBAL_STATE;
@@ -50,6 +56,11 @@ public class KnightGController : BaseController
         IDLE_BATTLE_STATE = new IdleBattleState(this);
         CHASE_STATE = new ChaseState(this);
         ATTACK_STATE = new AttackState(this);
+        COUNTER_ENABLE_STATE = new CounterEnableState(this);
+        COUNTER_ATTACK_STATE = new CounterAttackState(this);
+        PHASE_TRANSITION_STATE = new PhaseTransitionState(this);
+        PHASE_ATTACK_STATE = new PhaseAttackState(this);
+        PHASE_ATTACK_ING_STATE = new PhaseAttackingState(this);
         DIE_STATE = new DieState(this);
         GROGGY_STATE = new GroggyState(this);
         GLOBAL_STATE = new GlobalState(this);
