@@ -9,8 +9,8 @@ public class TestUI : MonoBehaviour
 
     private void Start()
     {
-        req = gameObject.GetComponent<NetworkManager>();
-        //req = Managers.Network;
+        //req = gameObject.GetComponent<NetworkManager>();
+        req = Managers.Network;
     }
     public void Post()
     {
@@ -59,7 +59,8 @@ public class TestUI : MonoBehaviour
         player.playerId = "helloworld";
         player.playerPassword = "qwe123123";
 
-        req.SignInCall(player);
+        //req.SignInCall(player);
+        Managers.Network.SignInCall(player);
 
         //PartyReqDto party = new PartyReqDto();
         //party.partyId = "123445678";

@@ -12,6 +12,8 @@ public class NetworkManager : MonoBehaviour
     IEnumerator SendWebRequest(UnityWebRequest request)
     {
         yield return request.SendWebRequest();
+
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(request.downloadHandler.text);
@@ -28,6 +30,9 @@ public class NetworkManager : MonoBehaviour
     IEnumerator LoginRequest(UnityWebRequest request)
     {
         yield return request.SendWebRequest();
+
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
+        Debug.Log("메세지 출력" + message.message);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"[Web Request Error] {request.error}");
@@ -49,6 +54,7 @@ public class NetworkManager : MonoBehaviour
     IEnumerator DungeonRankRequest(UnityWebRequest request)
     {
         yield return request.SendWebRequest();
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"[Web Request Error] {request.error}");
@@ -66,7 +72,7 @@ public class NetworkManager : MonoBehaviour
     IEnumerator PlayerRankRequest(UnityWebRequest request)
     {
         yield return request.SendWebRequest();
-
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"[Web Request Error] {request.error}");
@@ -84,7 +90,7 @@ public class NetworkManager : MonoBehaviour
     IEnumerator GoldStatisticsRequest(UnityWebRequest request)
     {
         yield return request.SendWebRequest();
-
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"[Gold Request Error] {request.error}");
@@ -104,7 +110,7 @@ public class NetworkManager : MonoBehaviour
     IEnumerator CurrentClassRequest(UnityWebRequest request)
     {
         yield return request.SendWebRequest();
-
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"[Gold Request Error] {request.error}");
@@ -138,7 +144,6 @@ public class NetworkManager : MonoBehaviour
         string token = PlayerManager.GetInstance().GetToken();
         if (token != null)
         {
-            Debug.Log("혹시설마 이건가?");
             request.SetRequestHeader("Authorization", "Bearer " + token);
         }
         return request;
@@ -226,4 +231,10 @@ public class NetworkManager : MonoBehaviour
         string classData = JsonUtility.ToJson(dto);
         StartCoroutine(SendWebRequest(CreateRequest("POST", "class/select", classData)));
     }
+}
+
+[System.Serializable]
+class ResponseMessage
+{
+    public string message;
 }
