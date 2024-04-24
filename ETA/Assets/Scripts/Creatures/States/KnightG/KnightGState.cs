@@ -6,9 +6,10 @@ using UnityEngine;
 // KnightG 상태
 public class KnightGState : State
 {
+    protected static int attackCnt = 0;
+
     protected KnightGController _controller;
     protected KnightGAnimationData _animData;
-
 
     public KnightGState(KnightGController controller) : base(controller)
     {
@@ -22,4 +23,6 @@ public class KnightGState : State
         if (ExecuteTime < 0.5f) return false;
         return true;
     }
+
+    // ----------------------------- Attack Functions -------------------------------------
 }

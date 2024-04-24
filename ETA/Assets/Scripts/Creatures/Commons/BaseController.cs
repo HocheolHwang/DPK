@@ -93,6 +93,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
     public virtual void HitEvent()
     {
+        // Resource를 사용해서 네이밍 컨벤션을 맞춤
     }
 
     public virtual void DestroyEvent()

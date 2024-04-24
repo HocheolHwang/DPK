@@ -20,7 +20,11 @@ public class KnightGAnimationData : MonsterAnimationData
     public override void StringAnimToHash()
     {
         base.StringAnimToHash();
+        
         AttackUpParamHash = Animator.StringToHash(attackUpParamName);
         GroggyParamHash = Animator.StringToHash(groggyParamName);
+
+        Debug.Log($"공격 해시값 확인 {AttackParamHash}");
+        Debug.Log($"공격 해시값 확인 {AttackUpParamHash}");
     }
 }
