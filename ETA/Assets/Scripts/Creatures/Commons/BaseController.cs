@@ -38,6 +38,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         SetOriginColor();
 
         stat = GetComponent<Stat>();
+        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
     }
     protected virtual void Update()
     {

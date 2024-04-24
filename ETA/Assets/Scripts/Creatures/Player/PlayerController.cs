@@ -54,7 +54,7 @@ public class PlayerController : BaseController
         Managers.Input.KeyAction += KeyEvent;
 
 
-        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+        
 
     }
 
