@@ -58,7 +58,7 @@ namespace PlayerStates
             base.Execute();
 
             Vector3 dest = _playerController._destination.position;
-            float moveSpeed = _playerController.Stat.MoveSpeed;
+            float moveSpeed = _playerController.stat.MoveSpeed;
             //_agent.Move(dir * Time.deltaTime * moveSpeed);
 
             //float dist = Vector3.Distance(_playerController.transform.position, dest);
@@ -105,7 +105,7 @@ namespace PlayerStates
             base.Enter();
             tmp = 0;
             _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-            _detector.Target.GetComponent<MonsterController>().TakeDamage(_playerController.Stat.AttackDamage);
+            _detector.Target.GetComponent<MonsterController>().TakeDamage(_playerController.stat.AttackDamage);
       
 
         }
@@ -237,7 +237,7 @@ namespace PlayerStates
         {
             if (_playerController.CurState is DieState) return;
 
-            if(_playerController.Stat.Hp <= 0)
+            if(_playerController.stat.Hp <= 0)
             {
                 _playerController.ChangeState(_playerController.DIE_STATE);
             }

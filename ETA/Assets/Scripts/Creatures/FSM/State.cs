@@ -20,6 +20,7 @@ public abstract class State : IState
     protected NavMeshAgent _agent;
     protected Detector _detector;
     protected StateMachine _stateMachine;
+    protected Stat _stat;
 
     public State(BaseController controller)
     {
@@ -27,6 +28,7 @@ public abstract class State : IState
         _agent = controller.agent;
         _detector = controller.detector;
         _stateMachine = controller.StateMachine;
+        _stat = controller.stat;
     }
 
     //--------------------------- State Functions -----------------------------------

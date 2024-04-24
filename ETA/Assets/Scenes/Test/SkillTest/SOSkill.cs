@@ -7,6 +7,7 @@ public class SOSkill : ScriptableObject
 {
     public float damage;
     public float cool;
+    public float effectDuration;
 
     public string animationName;
     public GameObject effectName;

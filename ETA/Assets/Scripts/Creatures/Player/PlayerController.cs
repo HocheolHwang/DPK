@@ -32,7 +32,6 @@ public class PlayerController : BaseController
     protected override void Init()
     {
         _stateMachine = new StateMachine();
-        Stat = GetComponent<PlayerStat>();
 
         IDLE_STATE = new IdleState(this);
         MOVE_STATE = new MoveState(this);
@@ -65,7 +64,7 @@ public class PlayerController : BaseController
 
     void KeyEvent()
     {
-        if (CurState is SkillState) return;
+        if (CurState is SkillState || CurState is DieState) return;
 
         if (Input.GetKeyDown(KeyCode.Q))
         {

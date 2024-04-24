@@ -12,6 +12,7 @@ public class Managers : MonoBehaviour
     UIManager _ui = new UIManager();
     SceneManagerEx _scene = new SceneManagerEx();
     SoundManager _sound = new SoundManager();
+    PhotonManager _photon = new PhotonManager();
     PoolManager _pool = new PoolManager();
     CoroutineManager _coroutine = new CoroutineManager();
     
@@ -20,13 +21,13 @@ public class Managers : MonoBehaviour
     public static UIManager UI { get { return Instance._ui; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
+    public static PhotonManager Photon { get { return Instance._photon;  } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static CoroutineManager Coroutine { get { return Instance._coroutine; } }
 
     void Start()
     {
         Init();
-
     }
 
     // Update is called once per frame
@@ -53,8 +54,6 @@ public class Managers : MonoBehaviour
             s_instance._pool.Init();
             s_instance._sound.Init();
         }
-
-        
     }
 
     public static void Clear()
@@ -63,7 +62,6 @@ public class Managers : MonoBehaviour
         Input.Clear();
         Scene.Clear();
         UI.Clear();
-
-        Pool.Clear();//
+        Pool.Clear();
     }
 }
