@@ -18,6 +18,11 @@ public abstract class UI_Base : MonoBehaviour
     // 초기화 메서드. 상속받는 클래스에서 구현해야 함
     public abstract void Init();
 
+    private void Start()
+    {
+        Init();
+    }
+
     // UI 요소를 찾아서 _objects 딕셔너리에 바인딩하는 메서드
     protected void Bind<T>(Type type) where T : UnityEngine.Object
     {

@@ -5,28 +5,36 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// InputManager í´ë˜ìŠ¤ëŠ” í‚¤ë³´ë“œ ë° ë§ˆìš°ìŠ¤ ì…ë ¥ì„ ê´€ë¦¬í•˜ëŠ” ê¸°ëŠ¥ì„ ì œê³µí•©ë‹ˆë‹¤.
+/// </summary>
 public class InputManager
 {
-
+    // í‚¤ë³´ë“œ ë° ë§ˆìš°ìŠ¤ ì…ë ¥ ì´ë²¤íŠ¸ ì•¡ì…˜
     public Action KeyAction = null;
+    public Action EnterKeyAction = null;
     public Action<Define.MouseEvent> MouseAction = null;
 
+    // ë§ˆìš°ìŠ¤ ë²„íŠ¼ ëˆŒë¦¼ ìƒíƒœë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜
     bool _pressed = false;
 
     
     public void OnUpdate()
     {
-        // Àá½Ã ÁÖ¼®Ã³¸®
+        // Enter í‚¤ ì…ë ¥ ì´ë²¤íŠ¸ ì²˜ë¦¬
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            EnterKeyAction?.Invoke();
 
-        if(!IsPointerOverIgnoredUI()) return;
+        // UIë¥¼ ë¬´ì‹œí•´ì•¼ í•  ê²½ìš° ì…ë ¥ ì²˜ë¦¬ë¥¼ í•˜ì§€ ì•ŠìŒ
+        if (!IsPointerOverIgnoredUI()) return;
 
-
-
+        // í‚¤ ì…ë ¥ ì´ë²¤íŠ¸ ì²˜ë¦¬
         if (Input.anyKey && KeyAction != null)
             KeyAction.Invoke();
         //if (KeyAction != null)
         //    KeyAction.Invoke();
 
+        // ë§ˆìš°ìŠ¤ ì…ë ¥ ì´ë²¤íŠ¸ ì²˜ë¦¬
         if (MouseAction != null)
         {
             if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
@@ -40,24 +48,20 @@ public class InputManager
                 {
                     MouseAction.Invoke(Define.MouseEvent.Click);
                 }
-
                 _pressed = false;
-
-
-
             }
         }
     }
 
     private bool IsPointerOverIgnoredUI()
     {
-        // ÇöÀç Æ÷ÀÎÅÍÀÇ À§Ä¡¸¦ ±â¹İÀ¸·Î »õ PointerEventData °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+        // í˜„ì¬ í¬ì¸í„°ì˜ ìœ„ì¹˜ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ìƒˆ PointerEventData ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
         PointerEventData pointerData = new PointerEventData(EventSystem.current)
         {
             position = Input.mousePosition
         };
 
-        // ·¹ÀÌÄ³½ºÆ® °á°ú¸¦ ´ãÀ» ¸®½ºÆ®¸¦ »ı¼ºÇÕ´Ï´Ù.
+        // ë ˆì´ìºìŠ¤íŠ¸ ê²°ê³¼ë¥¼ ë‹´ì„ ë¦¬ìŠ¤íŠ¸ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
         List<RaycastResult> results = new List<RaycastResult>();
         GraphicRaycaster raycaster = UnityEngine.Object.FindObjectOfType<GraphicRaycaster>();
         if (raycaster == null)
@@ -65,7 +69,7 @@ public class InputManager
             Debug.LogError("GraphicRaycaster not found in the current scene.");
             return false;
         }
-        // ·¹ÀÌÄ³½ºÆ®¸¦ ¼öÇàÇÕ´Ï´Ù.
+        // ë ˆì´ìºìŠ¤íŠ¸ë¥¼ ìˆ˜í–‰í•©ë‹ˆë‹¤.
         raycaster.Raycast(pointerData, results);
         //EventSystem.current.RaycastAll(pointerData, results);
         if (results.Count == 0) return true;
@@ -73,12 +77,11 @@ public class InputManager
         foreach (var result in results)
         {
             //Debug.Log($"{result.gameObject.layer} == {LayerMask.GetMask("Ignored UI")}");
-            if (1 << result.gameObject.layer == LayerMask.GetMask("Ignored UI")) // Æ¯Á¤ ÅÂ±×¸¦ °¡Áø UI¸¦ ¹«½ÃÇÕ´Ï´Ù.
+            if (1 << result.gameObject.layer == LayerMask.GetMask("Ignored UI")) // íŠ¹ì • íƒœê·¸ë¥¼ ê°€ì§„ UIë¥¼ ë¬´ì‹œí•©ë‹ˆë‹¤.
             {
                 return true;
             }
         }
-
 
         return false;
     }
@@ -86,6 +89,7 @@ public class InputManager
     public void Clear()
     {
         KeyAction = null;
+        EnterKeyAction = null;
         MouseAction = null;
     }
 }

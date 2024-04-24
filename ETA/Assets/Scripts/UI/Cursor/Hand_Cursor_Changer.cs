@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// Button UI 오브젝트에 마우스 커서가 들어오거나 나갈 때, 또는 클릭했을 때 커서 모양을 변경하는 컴포넌트입니다.
 /// </summary>
-public class HandCursorChanger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class Hand_Cursor_Changer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     // 손가락 커서 이미지를 저장하는 변수
     private static Texture2D handCursor;
