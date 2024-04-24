@@ -18,6 +18,9 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
     // Enter 키 입력 이벤트 발생 시 호출되는 액션
     public Action OnEnterPressHandler = null;
 
+    // Tab 키 입력 이벤트 발생시 호출
+    public Action OnTabPressHandler = null;
+
     public void OnDrag(PointerEventData eventData)
     {
         if (OnDragHandler == null) return;
@@ -36,6 +39,11 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             OnEnterPressHandler?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            OnTabPressHandler?.Invoke();
         }
     }
 }

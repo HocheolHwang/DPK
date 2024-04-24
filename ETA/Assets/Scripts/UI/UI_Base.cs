@@ -86,10 +86,24 @@ public abstract class UI_Base : MonoBehaviour
     }
 
     // Enter 키 이벤트를 추가하는 메서드
-    public static void AddEnterKeyEvent(GameObject go, Action action)
+    public static void AddUIKeyEvent(GameObject go, Action action, KeyCode key)
     {
         UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
-        evt.OnEnterPressHandler -= action;
-        evt.OnEnterPressHandler += action;
+
+        // 필요한 핸들러를 UI_EventHandler에 추가해서 넣을 것
+        switch (key)
+        {
+            case KeyCode.KeypadEnter:
+            case KeyCode.Return:
+                evt.OnEnterPressHandler -= action;
+                evt.OnEnterPressHandler += action;
+                break;
+            case KeyCode.Tab:
+                evt.OnTabPressHandler -= action;
+                evt.OnTabPressHandler += action;
+                break;
+
+        }
+
     }
 }
