@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class UserInfoDto
+public class PlayerSignUpReqDto
 {
     public string playerId;
     public string nickname;

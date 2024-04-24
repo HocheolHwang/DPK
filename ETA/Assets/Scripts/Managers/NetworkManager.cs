@@ -6,13 +6,15 @@ using System.Text;
 
 public class NetworkManager : MonoBehaviour
 {
-    string baseUrl = "http://localhost:8080/api/v1/";
+    //string baseUrl = "https://localhost:8080/api/v1/";
+    string baseUrl = "https://k10e207.p.ssafy.io/api/v1/";
 
     IEnumerator SendWebRequest(UnityWebRequest request)
     {
         yield return request.SendWebRequest();
         if (request.result != UnityWebRequest.Result.Success)
         {
+            Debug.Log(request.downloadHandler.text);
             Debug.LogError($"[Web Request Error] {request.error}");
         }
         else
@@ -32,10 +34,14 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(request.result);
+            
             Debug.Log("Response: " + request.downloadHandler.text);
-            ResponseDto data = JsonUtility.FromJson<ResponseDto>(request.downloadHandler.text);
+            PlayerResDto data = JsonUtility.FromJson<PlayerResDto>(request.downloadHandler.text);
             PlayerManager.GetInstance().SetToken(data.accessToken);
+            PlayerManager.GetInstance().SetGold(data.playerGold);
+
+            // 토큰에서 닉네임 파싱
+            JWTDecord.DecodeJWT(data.accessToken);
         }
     }
 
@@ -118,6 +124,8 @@ public class NetworkManager : MonoBehaviour
     UnityWebRequest CreateRequest(string method, string path, string json = null)
     {
         UnityWebRequest request = new UnityWebRequest(baseUrl + path, method);
+
+        Debug.Log(baseUrl + path);
         request.downloadHandler = new DownloadHandlerBuffer();
         if (json != null)
         {
@@ -130,6 +138,7 @@ public class NetworkManager : MonoBehaviour
         string token = PlayerManager.GetInstance().GetToken();
         if (token != null)
         {
+            Debug.Log("혹시설마 이건가?");
             request.SetRequestHeader("Authorization", "Bearer " + token);
         }
         return request;
@@ -140,18 +149,19 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(SendWebRequest(CreateRequest(method, path, jsonfile)));
     }
 
-    // 회원가입시 호출되는 함수
-    public void SignInCall(UserInfoDto dto)
+    // 로그인시 호출되는 함수
+    public void SignInCall(PlayerSignInReqDto dto)
     {
         string loginData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "auth/sign-in", loginData)));
+        StartCoroutine(LoginRequest(CreateRequest("POST", "auth/sign-in", loginData)));
     }
 
-    // 로그인시 호출되는 함수
-    public void SignUpCall(UserInfoDto dto)
+    // 회원가입시 호출되는 함수
+    public void SignUpCall(PlayerSignUpReqDto dto)
     {
-        string loginData = JsonUtility.ToJson(dto);
-        StartCoroutine(LoginRequest(CreateRequest("POST", "auth/sign-up", loginData)));
+        string registData = JsonUtility.ToJson(dto);
+        Debug.Log("json : " + registData);
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "auth/sign-up", registData)));
     }
 
     // 파티 생성 요청
