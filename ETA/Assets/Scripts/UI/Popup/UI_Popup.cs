@@ -18,4 +18,10 @@ public class UI_Popup : UI_Base
     {
         Managers.UI.ClosePopupUI(this);
     }
+
+    // 모든 "Popup UI"를 닫는 메서드
+    public virtual void CloseAllPopupUI()
+    {
+        Managers.UI.CloseAllPopupUI();
+    }
 }
