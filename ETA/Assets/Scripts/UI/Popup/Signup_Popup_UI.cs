@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SignupPopupUI : UI_Popup
+public class Signup_Popup_UI : UI_Popup
 {
     // 버튼 인덱스
     enum Buttons
     {
-        SignupButton,
-        SwitchLoginButton
+        Signup_Button,
+        Switch_Login_Button
     }
 
     // 회원가입 UI 초기화
@@ -22,30 +22,28 @@ public class SignupPopupUI : UI_Popup
         Bind<Button>(typeof(Buttons));
 
         // 회원가입 시도 버튼 이벤트 등록
-        GameObject signupButton = GetObject((int)Buttons.SignupButton);
-        UI_Base.AddUIEvent(signupButton, OnSignupClicked);
+        Button signupButton = GetButton((int)Buttons.Signup_Button);
+        AddUIEvent(signupButton.gameObject, Signup);
 
         // 로그인 전환 버튼 이벤트 등록
-        GameObject switchLoginButton = GetObject((int)Buttons.SwitchLoginButton);
-        UI_Base.AddUIEvent(switchLoginButton, OnSwitchLoginClicked);
+        Button switchLoginButton = GetButton((int)Buttons.Switch_Login_Button);
+        AddUIEvent(switchLoginButton.gameObject, SwitchLogin);
     }
 
     // 회원가입 시도 버튼 클릭 이벤트 핸들러
-    private void OnSignupClicked(PointerEventData data)
+    private void Signup(PointerEventData data)
     {
         // 회원가입 처리...
         Debug.Log("회원가입 시도");
     }
 
     // 로그인 전환 버튼 클릭 이벤트 핸들러
-    private void OnSwitchLoginClicked(PointerEventData data)
+    private void SwitchLogin(PointerEventData data)
     {
         // 현재 Popup UI를 닫음
         ClosePopupUI();
 
-        Debug.Log("로그인 창으로 변경!");
-
         // 로그인 Popup UI를 띄움
-        Managers.UI.ShowPopupUI<LoginPopupUI>("[Login] Login Popup UI");
+        Managers.UI.ShowPopupUI<Login_Popup_UI>("[Login]_Login_Popup_UI");
     }
 }

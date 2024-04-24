@@ -1,9 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 using KnightGStateItem;
-
 // Monster Controller에서 상속 받는 경우
 // 1. StateItem을 따로 사용하기 때문에 namespace가 일치하지 않아서 monster가 가지는 IDLE, IDLE_BATTLE, CHASE, ... 등의 상태를 초기화 할 수 없다.
 // 2. Monster와 KnightG의 초기화가 다르기 때문에 발생하는 문제
@@ -23,6 +23,7 @@ public class KnightGController : BaseController
     public KnightGAnimationData KnightGAnimData { get => _animData; }
 
     public bool IsStun;
+    public static event Action OnBossDestroyed;
 
     protected override void Awake()
     {
@@ -61,5 +62,7 @@ public class KnightGController : BaseController
     // ---------------------------------- IDamage ------------------------------------------
     public override void DestroyEvent()
     {
+        // 보스몬스터 죽었을때 이벤트 발생
+        OnBossDestroyed?.Invoke();
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// 사용자는 Tab 키를 눌러 지정된 입력 필드 배열(inputs) 내의 다음 필드로 포커스를 이동시킬 수 있음.
 /// 배열의 마지막 입력 필드에서 Tab을 누르면, 배열의 첫 번째 입력 필드로 포커스가 이동함.
 /// </summary>
-public class TabNavigation : MonoBehaviour
+public class Tab_Navigation : MonoBehaviour
 {
     // 입력 필드 배열
     [Header("[ 입력 필드 배열 ]")]

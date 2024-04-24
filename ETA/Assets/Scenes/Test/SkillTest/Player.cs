@@ -22,5 +22,8 @@ public class Player : MonoBehaviour
         GameObject effectInstance = Instantiate(skill.effectName, transform.position, Quaternion.identity);
         effectInstance.transform.position = transform.position + new Vector3(0, 0.5f, 0);
         effectInstance.transform.localScale *= 1f; // 현재 scale에 상대적인 scale 값으로 설정
+
+        // 일정 시간이 지난 후에 스킬 이펙트를 파괴합니다.
+        Destroy(effectInstance, skill.effectDuration);
     }
 }
