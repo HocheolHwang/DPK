@@ -58,7 +58,7 @@ namespace PlayerStates
             base.Execute();
 
             Vector3 dest = _playerController._destination.position;
-            float moveSpeed = 6.0f;
+            float moveSpeed = _playerController.stat.MoveSpeed;
             //_agent.Move(dir * Time.deltaTime * moveSpeed);
 
             //float dist = Vector3.Distance(_playerController.transform.position, dest);
@@ -105,7 +105,7 @@ namespace PlayerStates
             base.Enter();
             tmp = 0;
             _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-            _detector.Target.GetComponent<MonsterController>().TakeDamage(25);
+            _detector.Target.GetComponent<MonsterController>().TakeDamage(_playerController.stat.AttackDamage);
       
 
         }
@@ -200,6 +200,50 @@ namespace PlayerStates
         {
             base.Exit();
         }
+    }
+
+    public class DieState : PlayerState
+    {
+
+        public DieState(PlayerController playerController) : base(playerController)
+        {
+
+        }
+
+        public override void Enter()
+        {
+
+
+            _animator.CrossFade("DIE", 0.05f);
+        }
+
+        public override void Execute()
+        {
+        }
+
+        public override void Exit()
+        {
+        }
+    }
+
+    public class GlobalState : PlayerState
+    {
+        public GlobalState(PlayerController playerController) : base(playerController)
+        {
+
+        }
+
+        public override void Execute()
+        {
+            if (_playerController.CurState is DieState) return;
+
+            if(_playerController.stat.Hp <= 0)
+            {
+                _playerController.ChangeState(_playerController.DIE_STATE);
+            }
+        }
+
+
     }
 
 }
