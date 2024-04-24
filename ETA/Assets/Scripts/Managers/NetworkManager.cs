@@ -31,17 +31,24 @@ public class NetworkManager : MonoBehaviour
     IEnumerator SignUpRequest(UnityWebRequest request, Action<string> callback)
     {
         yield return request.SendWebRequest();
-        Debug.Log(request.downloadHandler.text);
+        
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
+            // 회원가입 실패
             Debug.LogError($"[Web Request Error] {request.error}");
-            callback?.Invoke(message.message); // 에러 메시지를 콜백으로 전달
+
+            // 에러 메세지 전달
+            callback?.Invoke(message.message);
         }
         else
         {
+            // 회원가입 성공
             Debug.Log(request.result);
             Debug.Log("Response: " + request.downloadHandler.text);
+
+            // 성공 메세지 전달
+            callback?.Invoke(message.message);
         }
     }
 
@@ -53,16 +60,23 @@ public class NetworkManager : MonoBehaviour
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
+            // 로그인 실패
             Debug.LogError($"[Web Request Error] {request.error}");
-            callback?.Invoke(message.message); // 에러 메시지를 콜백으로 전달
+
+            // 에러 메세지 전달
+            callback?.Invoke(message.message);
         }
         else
         {
+            // 로그인 성공
             Debug.Log("Response: " + request.downloadHandler.text);
             PlayerResDto data = JsonUtility.FromJson<PlayerResDto>(request.downloadHandler.text);
             PlayerManager.GetInstance().SetToken(data.accessToken);
             PlayerManager.GetInstance().SetGold(data.playerGold);
             JWTDecord.DecodeJWT(data.accessToken);
+
+            // 성공 메세지 전달
+            callback?.Invoke(message.message);
         }
     }
 
