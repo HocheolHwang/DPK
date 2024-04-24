@@ -13,6 +13,8 @@ public class PlayerController : BaseController
     public State ATTACK_STATE;
     public State SKILL_STATE;
     public State COLLAVO_STATE;
+    public State DIE_STATE;
+    public State GLOBAL_STATE;
     [SerializeField]
     public Transform _destination;
     public Define.SkillKey _usingSkill;
@@ -36,8 +38,12 @@ public class PlayerController : BaseController
         ATTACK_STATE = new AttackState(this);
         SKILL_STATE = new SkillState(this);
         COLLAVO_STATE = new CollavoState(this);
+        DIE_STATE = new DieState(this);
+        GLOBAL_STATE = new GlobalState(this);
 
         SkillSlot = gameObject.GetOrAddComponent<SkillSlot>();
+
+        _stateMachine.SetGlobalState(GLOBAL_STATE);
 
         //_destination = GameObject.Find("FRONT_2").transform;
 
@@ -58,7 +64,7 @@ public class PlayerController : BaseController
 
     void KeyEvent()
     {
-        if (CurState is SkillState) return;
+        if (CurState is SkillState || CurState is DieState) return;
 
         if (Input.GetKeyDown(KeyCode.Q))
         {

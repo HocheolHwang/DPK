@@ -20,6 +20,13 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
 
+    private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
+    private Color[] _originalColors; // 원래의 머티리얼 색상 저장용 배열
+
+
+    Color _damagedColor = Color.gray;
+
+
 
     //-----------------------------------  Essential Functions --------------------------------------------
     protected virtual void Awake()
@@ -27,6 +34,9 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         detector = GetComponent<Detector>();
+
+        SetOriginColor();
+
         stat = GetComponent<Stat>();
     }
     protected virtual void Update()
@@ -77,6 +87,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         {
             damage = 1;
         }
+        StartCoroutine(ChangeDamagedColorTemporarily());
         stat.Hp -= damage;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
@@ -93,11 +104,41 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         // 관련 Resource는 Component나 Manager로 가져옴
 
         // 애니메이션은 상태에서 관리 중
+        GetComponent<Collider>().enabled = false;
     }
 
     public virtual void DestroyObject()
     {
         DestroyEvent();
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, 3f);
+    }
+
+    void SetOriginColor()
+    {
+        _allRenderers = GetComponentsInChildren<Renderer>();
+        _originalColors = new Color[_allRenderers.Length];
+
+        // 각 Renderer의 원래 머티리얼 색상 저장
+        for (int i = 0; i < _allRenderers.Length; i++)
+        {
+            _originalColors[i] = _allRenderers[i].material.color;
+        }
+    }
+
+    IEnumerator ChangeDamagedColorTemporarily()
+    {
+        foreach (Renderer renderer in _allRenderers)
+        {
+            renderer.material.color = _damagedColor;
+        }
+
+        // 지정된 시간만큼 기다림
+        yield return new WaitForSeconds(0.1f);
+
+        // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
+        for (int i = 0; i < _allRenderers.Length; i++)
+        {
+            _allRenderers[i].material.color = _originalColors[i];
+        }
     }
 }
