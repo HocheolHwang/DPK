@@ -7,13 +7,11 @@ public class MonsterState : State
 {
     protected MonsterController _controller;
     protected MonsterAnimationData _animData;
-    protected MonsterStat _monsterStat;
 
     public MonsterState(MonsterController controller) : base(controller)
     {
         _controller = controller;
         _animData = controller.AnimData;
-        _monsterStat = (MonsterStat) controller.Stat;
     }
 
 
