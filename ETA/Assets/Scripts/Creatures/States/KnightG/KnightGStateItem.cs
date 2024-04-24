@@ -66,8 +66,6 @@ namespace KnightGStateItem
     #region CHASE
     public class ChaseState : KnightGState
     {
-        // 몬스터끼리 뭉쳐지지 말고 경로에 몬스터가 있으면 피해서 이동하도록 수정 - Enter에서 하는 경우 Detector가 계속 
-        // 몬스터가 Target을 향해 바로 회전하도록 수정
         public ChaseState(KnightGController controller) : base(controller)
         {
         }
@@ -120,7 +118,7 @@ namespace KnightGStateItem
             _threadHold = _animData.AttackAnim.length;
 
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
-            _animator.CrossFade(_animData.AttackParamHash, 0.2f);   // Idle과 Attack 애니메이션 모션 차이 때문에 들썩이는 모습을 막을 수 없는 것 같다.
+            _animator.CrossFade(_animData.AttackParamHash, 0.2f);
         }
 
         public override void Execute()

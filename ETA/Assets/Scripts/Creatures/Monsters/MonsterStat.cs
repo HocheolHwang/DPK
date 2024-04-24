@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 일반 몬스터 스탯
 public class MonsterStat : Stat
 {
 
