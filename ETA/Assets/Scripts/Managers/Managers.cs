@@ -28,7 +28,6 @@ public class Managers : MonoBehaviour
     void Start()
     {
         Init();
-
     }
 
     // Update is called once per frame
@@ -55,8 +54,6 @@ public class Managers : MonoBehaviour
             s_instance._pool.Init();
             s_instance._sound.Init();
         }
-
-        
     }
 
     public static void Clear()
@@ -65,7 +62,6 @@ public class Managers : MonoBehaviour
         Input.Clear();
         Scene.Clear();
         UI.Clear();
-        
-        Pool.Clear();//
+        Pool.Clear();
     }
 }

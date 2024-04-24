@@ -10,20 +10,23 @@ public abstract class State : IState
 {
     private bool _isComplete;   // 현재 상태가 끝났나?
     private float _startTime;   // 현재 상태의 시작 시간
-    private float _executeTime; // 현재 상태가 된 시점으로부터 얼마나 지났는지
     public bool IsComplete { get => _isComplete; set => _isComplete = value; }
     public float StartTime { get => _startTime; set => _startTime = value; }
-    public float ExecuteTime { get => _executeTime; set => _executeTime = Time.time - StartTime; }
+    public float ExecuteTime { get => Time.time - StartTime; }  // 현재 상태가 된 시점으로부터 얼마나 지났는지
 
 
     //--------------------------- Common Property From BaseController -----------------------------------
     protected Animator _animator;
     protected NavMeshAgent _agent;
+    protected Detector _detector;
+    protected StateMachine _stateMachine;
 
     public State(BaseController controller)
     {
         _animator = controller.animator;
         _agent = controller.agent;
+        _detector = controller.detector;
+        _stateMachine = controller.StateMachine;
     }
 
     //--------------------------- State Functions -----------------------------------

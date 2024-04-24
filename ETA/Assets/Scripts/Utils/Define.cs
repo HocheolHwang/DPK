@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Define
 {
+    public enum SkillKey
+    {
+        Q,
+        W,
+        E,
+        R,
+        A,
+        S,
+        D,
+        F
+    }
 
     public enum Sound
     {
@@ -37,21 +48,13 @@ public class Define
 
     public enum  UnitType
     {
+        // ------------------- 플레이어 -----------------------
         Player = 0,
-        Mushroom,
-        DrillDuck,
-        TurtleSlime,
-        ToxicFlower,
-        Crab,
-        Fishman,
-        NagaWizard,
-        Demon,
-        Salamander,
-        Specter,
-        Skeleton,
-        Crocodile,
-        IceKing,
-        MonsterKing,
+        // ------------------- 일반 몬스터 -----------------------
+        Boar,
+        Butterfly,
+        // ------------------- 보스 몬스터 -----------------------
+        KnightG,
     }
 
     public enum Effect
