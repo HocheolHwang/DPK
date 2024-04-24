@@ -1,5 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine;
 
 public class Signup_Success_Popup_UI : UI_Popup
 {
@@ -20,7 +21,7 @@ public class Signup_Success_Popup_UI : UI_Popup
         // 로그인 시도 버튼 이벤트 등록
         Button signupSuccessButton = GetButton((int)Buttons.Signup_Success_Button);
         AddUIEvent(signupSuccessButton.gameObject, SignupSuccess);
-        AddEnterKeyEvent(signupSuccessButton.gameObject, () => SignupSuccess(null));
+        AddUIKeyEvent(signupSuccessButton.gameObject, () => SignupSuccess(null), KeyCode.Return);
     }
 
     // 회원가입 Popup UI로 전환
