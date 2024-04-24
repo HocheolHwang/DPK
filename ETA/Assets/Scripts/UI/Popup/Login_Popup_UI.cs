@@ -50,7 +50,7 @@ public class Login_Popup_UI : UI_Popup
         // 로그인 시도 버튼 이벤트 등록
         Button loginButton = GetButton((int)Buttons.Login_Button);
         AddUIEvent(loginButton.gameObject, Login);
-        AddEnterKeyEvent(loginButton.gameObject, () => Login(null));
+        AddUIKeyEvent(loginButton.gameObject, () => Login(null), KeyCode.Return);
 
         // 회원가입 전환 버튼 이벤트 등록
         Button switchSignupButton = GetButton((int)Buttons.Switch_Signup_Button);
