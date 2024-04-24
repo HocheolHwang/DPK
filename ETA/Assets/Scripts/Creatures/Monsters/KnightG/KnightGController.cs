@@ -26,7 +26,9 @@ public class KnightGController : BaseController
     public State GLOBAL_STATE;
 
     private KnightGAnimationData _animData;
+    private bool _isEnterPhaseTwo;                 // Phase 진입 여부
     public KnightGAnimationData KnightGAnimData { get => _animData; }
+    public bool IsEnterPhaseTwo { get => _isEnterPhaseTwo; set => _isEnterPhaseTwo = value; }
 
     public bool IsStun;
     public static event Action OnBossDestroyed;

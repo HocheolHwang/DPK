@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 일반 공격 2가지( 0 )
-
 // 카운터 실패시 그로기 상태
 // 페이즈 실패시 그로기 상태
 
@@ -54,7 +52,9 @@ namespace KnightGStateItem
     #region IDLE_BATTLE
     public class IdleBattleState : KnightGState
     {
-        // CHASE -> IDLE BATTLE -> ATTACK
+        // IDLE BATTLE -> ATTACK
+        // IDLE BATTLE -> COUNTER ENABLE( counterTime >= threadHoldCounter )
+        // 
         public IdleBattleState(KnightGController controller) : base(controller)
         {
         }
@@ -68,6 +68,11 @@ namespace KnightGStateItem
 
         public override void Execute()
         {
+            if (counterTime >= threadHoldCounter)
+            {
+                _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
+            }
+
             if (IsStayForSeconds())
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
@@ -100,9 +105,17 @@ namespace KnightGStateItem
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
+
             if (_controller.IsArriveToTarget())
             {
-                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+                if (_controller.IsEnterPhaseTwo)
+                {
+                    _controller.ChangeState(_controller.PHASE_ATTACK_STATE);
+                }
+                else
+                {
+                    _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+                }
             }
 
             _agent.SetDestination(_detector.Target.position);
@@ -119,9 +132,6 @@ namespace KnightGStateItem
     #region ATTACK
     public class AttackState : KnightGState
     {
-        float _attackTime;
-        float _threadHold;
-
         public AttackState(KnightGController controller) : base(controller)
         {
         }
@@ -129,20 +139,18 @@ namespace KnightGStateItem
         public override void Enter()
         {
             attackCnt++;
-            
-            _attackTime = 0;
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
 
             // 2가지 자동 공격 모션이 존재한다.
             if (attackCnt % 2 == 0)
             {
-                _threadHold = _animData.AttackAnim.length;
+                InitTime(_animData.AttackAnim.length);
                 _animator.CrossFade(_animData.AttackParamHash, 0.4f);
 
             }
             else if (attackCnt % 2 == 1)
             {
-                _threadHold = _animData.AttackUpAnim.length;
+                InitTime(_animData.AttackUpAnim.length);
                 _animator.CrossFade(_animData.AttackUpParamHash, 0.4f);
             }
             
@@ -150,8 +158,8 @@ namespace KnightGStateItem
 
         public override void Execute()
         {
-            _attackTime += Time.deltaTime;
-            if (_attackTime > _threadHold * 2.0f)                    // 애니메이션 재생 시간이 2배 늘어난다.
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold * 2.0f)                    // 애니메이션 재생 시간이 2배 늘어난다.
             {
                 if (_detector.Target == null)
                 {
@@ -185,13 +193,25 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            InitTime(_animData.CounterEnableAnim.length);
+
+            _animator.SetFloat("CounterEnableSpeed", 0.5f);
+            _animator.CrossFade(_animData.CounterEnableParamHash, 0.1f);
         }
 
         public override void Execute()
         {
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold * 2.0f)
+            {
+                _controller.ChangeState(_controller.COUNTER_ATTACK_STATE);
+            }
+
+            // 여기서 카운터 스킬에 맞았을 경우 그로기 상태로 전환
         }
         public override void Exit()
         {
+            counterTime = 0;
         }
     }
     #endregion
@@ -206,10 +226,17 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            InitTime(_animData.CounterAttackAnim.length);
+            _animator.CrossFade(_animData.CounterAttackParamHash, 0.1f);
         }
 
         public override void Execute()
         {
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold)
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
         }
         public override void Exit()
         {
@@ -227,10 +254,20 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            InitTime(_animData.PhaseTransitionAnim.length);
+            _animator.CrossFade(_animData.PhaseTransitionParamHash, 0.1f);
         }
 
         public override void Execute()
         {
+            _animTime += Time.deltaTime;
+            if ( _animTime >= _threadHold)
+            {
+                _controller.ChangeState(_controller.PHASE_ATTACK_STATE);
+            }
+
+            // Phase 진입을 끊는 스킬에 맞으면 그로기 상태로 전환
+            // 2페이즈 진입 실패로 인해 1페이즈 스킬로만 공격할 수 있음
         }
         public override void Exit()
         {
@@ -248,10 +285,20 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            _controller.IsEnterPhaseTwo = true;
+
+            LookAtEnemy();
+            InitTime(_animData.PhaseAttackAnim.length);
+            _animator.CrossFade(_animData.PhaseAttackParamHash, 0.1f);
         }
 
         public override void Execute()
         {
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold)
+            {
+                _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE);
+            }
         }
         public override void Exit()
         {
@@ -269,10 +316,17 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            _animator.CrossFade(_animData.PhaseAttackingParamHash, 0.1f, -1, 0.0f);
         }
 
         public override void Execute()
         {
+            LookAtEnemy();
+            // 타겟팅한 한 명의 적만 계속 공격하는 패턴
+            if (_detector.Target == null || !_controller.IsArriveToTarget())
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
         }
         public override void Exit()
         {
@@ -313,8 +367,7 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
-            Debug.Log("KnightG Groggy");
-            _agent.isStopped = true;
+            _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
         }
 
@@ -353,6 +406,10 @@ namespace KnightGStateItem
             if (_stat.Hp <= 0)
             {
                 _controller.ChangeState(_controller.DIE_STATE);
+            }
+            if ( !_controller.IsEnterPhaseTwo && _stat.Hp <= (_stat.MaxHp * 0.3))
+            {
+                _controller.ChangeState(_controller.PHASE_TRANSITION_STATE);
             }
             if (_controller.IsStun)
             {
