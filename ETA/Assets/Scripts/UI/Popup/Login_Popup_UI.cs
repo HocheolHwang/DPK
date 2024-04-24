@@ -93,7 +93,16 @@ public class Login_Popup_UI : UI_Popup
     // 로그인 시도 후 콜백 함수로 경고 텍스트 업데이트
     private void UpdateWarningText(string message)
     {
-        if (message == "Database error.")
+        // 메시지가 "success"인 경우 After Login Popup UI 띄움
+        if (message == "success")
+        {
+            // 모든 Popup UI를 닫음
+            CloseAllPopupUI();
+
+            // 회원가입 완료 Popup UI를 띄움
+            Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
+        }
+        else if (message == "Database error.")
         {
             warning.text = "아이디를 확인해주세요.";
         }
