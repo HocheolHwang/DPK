@@ -8,13 +8,23 @@ public class DungeonProgress : MonoBehaviour
     
     public Slider progressBar;
     public Transform[] checkpoints;
+    public GameObject resultPanel;
+
     private int totalCheckpoints;
     private int currentCheckpointIndex = 0;
+
 
     void Start()
     {
         totalCheckpoints = checkpoints.Length;  // 씬에 있는 모든 체크포인트 개수 계산
         progressBar.value = 0;
+        resultPanel.SetActive(false);
+        KnightGController.OnBossDestroyed += HandleBossDestroyed;
+    }
+
+    void OnDestroy()
+    {
+        KnightGController.OnBossDestroyed -= HandleBossDestroyed;
     }
 
     public void UpdateProgress()
@@ -27,4 +37,10 @@ public class DungeonProgress : MonoBehaviour
             Debug.Log("Progress Updated: " + progressBar.value * 100 + "%");
         }
     }
+
+    private void HandleBossDestroyed()
+    {
+        resultPanel.SetActive(true);
+    }
+
 }
