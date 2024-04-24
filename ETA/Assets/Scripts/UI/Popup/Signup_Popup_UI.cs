@@ -111,7 +111,24 @@ public class Signup_Popup_UI : UI_Popup
     // 회원가입 시도 후 콜백 함수로 경고 텍스트 업데이트
     private void UpdateWarningText(string message)
     {
-        warning.text = message;
+        // 메시지가 "success"인 경우 회원가입 완료 Popup UI 띄움
+        if (message == "success")
+        {
+            // 회원가입 Popup UI를 닫음
+            ClosePopupUI();
+
+            // 회원가입 Popup UI를 다시 띄움
+            // 입력 필드를 비우기 위함
+            Managers.UI.ShowPopupUI<Signup_Popup_UI>("[Login]_Signup_Popup_UI");
+
+            // 회원가입 완료 Popup UI를 띄움
+            Managers.UI.ShowPopupUI<Signup_Success_Popup_UI>("[Login]_Signup_Success_Popup_UI");
+        }
+        else
+        {
+            // 회원가입 실패 시 경고 메세지를 업데이트
+            warning.text = message;
+        }
     }
 
     // 로그인 Popup UI로 전환
