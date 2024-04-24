@@ -10,6 +10,7 @@ public class TestUI : MonoBehaviour
     private void Start()
     {
         req = gameObject.GetComponent<NetworkManager>();
+        //req = Managers.Network;
     }
     public void Post()
     {
