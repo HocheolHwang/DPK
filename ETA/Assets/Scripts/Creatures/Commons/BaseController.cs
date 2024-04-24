@@ -38,6 +38,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         SetOriginColor();
 
         stat = GetComponent<Stat>();
+        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
     }
     protected virtual void Update()
     {
@@ -87,7 +88,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         {
             damage = 1;
         }
+
         StartCoroutine(ChangeDamagedColorTemporarily());
+
+        UI_AttackedDamage attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
+        attackedDamage_ui.AttackedDamage = damage;
+
         stat.Hp -= damage;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
