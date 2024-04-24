@@ -12,19 +12,13 @@ public class InputManager
 {
     // 키보드 및 마우스 입력 이벤트 액션
     public Action KeyAction = null;
-    public Action EnterKeyAction = null;
     public Action<Define.MouseEvent> MouseAction = null;
 
     // 마우스 버튼 눌림 상태를 나타내는 변수
     bool _pressed = false;
 
-    
     public void OnUpdate()
     {
-        // Enter 키 입력 이벤트 처리
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-            EnterKeyAction?.Invoke();
-
         // UI를 무시해야 할 경우 입력 처리를 하지 않음
         if (!IsPointerOverIgnoredUI()) return;
 
@@ -89,7 +83,6 @@ public class InputManager
     public void Clear()
     {
         KeyAction = null;
-        EnterKeyAction = null;
         MouseAction = null;
     }
 }
