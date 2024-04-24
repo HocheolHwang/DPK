@@ -102,8 +102,6 @@ public abstract class UI_Base : MonoBehaviour
                 evt.OnTabPressHandler -= action;
                 evt.OnTabPressHandler += action;
                 break;
-
         }
-
     }
 }
