@@ -85,7 +85,7 @@ namespace MonsterStateItem
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-            if (_controller.IsArriveToTarget())
+            if (_detector.IsArriveToTarget())
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
@@ -136,7 +136,7 @@ namespace MonsterStateItem
                     _controller.ChangeState(_controller.IDLE_STATE);
                 }
                 
-                if (_controller.IsArriveToTarget())
+                if (_detector.IsArriveToTarget())
                 {
                     _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
                 }
