@@ -41,7 +41,6 @@ public class NetworkManager : MonoBehaviour
         else
         {
             Debug.Log(request.result);
-            Debug.Log("@@@@@@@@@@@@@@@@@@@@@@@");
             Debug.Log("Response: " + request.downloadHandler.text);
         }
     }
@@ -63,9 +62,7 @@ public class NetworkManager : MonoBehaviour
             PlayerResDto data = JsonUtility.FromJson<PlayerResDto>(request.downloadHandler.text);
             PlayerManager.GetInstance().SetToken(data.accessToken);
             PlayerManager.GetInstance().SetGold(data.playerGold);
-
             JWTDecord.DecodeJWT(data.accessToken);
-            callback?.Invoke(""); // 성공 시 빈 문자열 또는 성공 메시지 전달
         }
     }
 

@@ -8,9 +8,14 @@ public class Login_Popup_UI : UI_Popup
     // 텍스트 인덱스
     enum Texts
     {
-        Warning_Text,
-        User_ID_Text,
-        User_PW_Text
+        Warning_Text
+    }
+
+    // 입력 필드 인덱스
+    enum InputFields
+    {
+        ID_InputField,
+        PW_InputField
     }
 
     // 버튼 인덱스
@@ -22,8 +27,8 @@ public class Login_Popup_UI : UI_Popup
 
     // 클래스 멤버 변수로 선언
     private TextMeshProUGUI warning;
-    private TextMeshProUGUI userID;
-    private TextMeshProUGUI userPW;
+    private TMP_InputField userID;
+    private TMP_InputField userPW;
 
     // 로그인 UI 초기화
     public override void Init()
@@ -32,14 +37,15 @@ public class Login_Popup_UI : UI_Popup
 
         // 바인딩
         Bind<TextMeshProUGUI>(typeof(Texts));
+        Bind<TMP_InputField>(typeof(InputFields));
         Bind<Button>(typeof(Buttons));
 
         // 경고 문구
         warning = GetText((int)Texts.Warning_Text);
 
         // 로그인 입력 정보
-        userID = GetText((int)Texts.User_ID_Text);
-        userPW = GetText((int)Texts.User_PW_Text);
+        userID = Get<TMP_InputField>((int)InputFields.ID_InputField);
+        userPW = Get<TMP_InputField>((int)InputFields.PW_InputField);
 
         // 로그인 시도 버튼 이벤트 등록
         Button loginButton = GetButton((int)Buttons.Login_Button);
@@ -54,6 +60,18 @@ public class Login_Popup_UI : UI_Popup
     // 로그인 시도
     private void Login(PointerEventData data)
     {
+        // 입력 필드 검증
+        if (string.IsNullOrEmpty(userID.text))
+        {
+            UpdateWarningText("아이디를 입력해주세요.");
+            return;
+        }
+        if (string.IsNullOrEmpty(userPW.text))
+        {
+            UpdateWarningText("비밀번호를 입력해주세요.");
+            return;
+        }
+
         PlayerSignInReqDto signInDto = new PlayerSignInReqDto
         {
             playerId = userID.text,
