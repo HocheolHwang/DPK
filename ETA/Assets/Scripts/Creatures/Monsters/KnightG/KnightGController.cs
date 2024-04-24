@@ -16,6 +16,11 @@ public class KnightGController : BaseController
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
+    public State COUNTER_ENABLE_STATE;
+    public State COUNTER_ATTACK_STATE;
+    public State PHASE_TRANSITION_STATE;
+    public State PHASE_ATTACK_STATE;
+    public State PHASE_ATTACK_ING_STATE;
     public State DIE_STATE;
     public State GROGGY_STATE;
     public State GLOBAL_STATE;
@@ -51,6 +56,11 @@ public class KnightGController : BaseController
         IDLE_BATTLE_STATE = new IdleBattleState(this);
         CHASE_STATE = new ChaseState(this);
         ATTACK_STATE = new AttackState(this);
+        COUNTER_ENABLE_STATE = new CounterEnableState(this);
+        COUNTER_ATTACK_STATE = new CounterAttackState(this);
+        PHASE_TRANSITION_STATE = new PhaseTransitionState(this);
+        PHASE_ATTACK_STATE = new PhaseAttackState(this);
+        PHASE_ATTACK_ING_STATE = new PhaseAttackingState(this);
         DIE_STATE = new DieState(this);
         GROGGY_STATE = new GroggyState(this);
         GLOBAL_STATE = new GlobalState(this);
