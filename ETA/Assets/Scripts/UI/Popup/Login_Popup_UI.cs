@@ -49,14 +49,12 @@ public class Login_Popup_UI : UI_Popup
     // 로그인 시도
     private void Login(PointerEventData data)
     {
-        // PlayerSignInReqDto 객체 생성
         PlayerSignInReqDto signInDto = new PlayerSignInReqDto
         {
             playerId = userID.text,
             playerPassword = userPW.text,
         };
 
-        // NetworkManager 인스턴스에 접근
         NetworkManager networkManager = FindObjectOfType<NetworkManager>();
         //Managers.Network.SignInCall(signInDto);
         if (networkManager != null)

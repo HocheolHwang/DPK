@@ -2,12 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using Unity.VisualScripting;
 
 public class Signup_Popup_UI : UI_Popup
 {
     // 텍스트 인덱스
     enum Texts
     {
+        Warning_Text,
         User_ID_Text,
         User_Nickname_Text,
         User_PW_Text,
@@ -22,6 +24,7 @@ public class Signup_Popup_UI : UI_Popup
     }
 
     // 클래스 멤버 변수로 선언
+    private TextMeshProUGUI warning;
     private TextMeshProUGUI userID;
     private TextMeshProUGUI userNickname;
     private TextMeshProUGUI userPW;
@@ -35,6 +38,9 @@ public class Signup_Popup_UI : UI_Popup
         // 바인딩
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
+
+        // 경고 문구
+        warning = GetText((int)Texts.Warning_Text);
 
         // 회원가입 입력 정보
         userID = GetText((int)Texts.User_ID_Text);
@@ -55,7 +61,6 @@ public class Signup_Popup_UI : UI_Popup
     // 회원가입 시도
     private void Signup(PointerEventData data)
     {
-        // PlayerSignInReqDto 객체 생성
         PlayerSignUpReqDto signUpDto = new PlayerSignUpReqDto
         {
             playerId = userID.text,
@@ -64,7 +69,13 @@ public class Signup_Popup_UI : UI_Popup
             playerPasswordCheck = userPWCheck.text,
         };
 
-        // NetworkManager 인스턴스에 접근
+        // 비밀번호와 비밀번호 확인 미일치 시 경고 문구 출력 및 회원가입 종료
+        if (signUpDto.playerPassword != signUpDto.playerPasswordCheck)
+        {
+            warning.text = "비밀번호가 일치하지 않습니다.";
+            return;
+        }
+
         NetworkManager networkManager = FindObjectOfType<NetworkManager>();
         //Managers.Network.SignInCall(signInDto);
         if (networkManager != null)
