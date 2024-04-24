@@ -40,6 +40,7 @@ public class KnightGState : State
 
     public void LookAtEnemy()
     {
+        if (_detector.Target == null) return;
         Vector3 dir = _detector.Target.position;
         dir.y = _controller.transform.position.y;
         _controller.transform.LookAt(dir);

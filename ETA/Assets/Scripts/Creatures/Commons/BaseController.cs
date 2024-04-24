@@ -47,11 +47,11 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     protected abstract void Init();
 
     //----------------------------------- State Machine Functions --------------------------------------------
-    public void ChangeState(State newState)
+    public void ChangeState(State newState, bool forceReset = false)
     {
         // controller의 curState를 계속 갱신할 수 있다.
         _curState = newState;
-        _stateMachine.ChangeState(newState);
+        _stateMachine.ChangeState(newState, forceReset);
     }
     public void RevertToPrevState()
     {

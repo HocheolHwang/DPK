@@ -34,12 +34,14 @@ public class KnightGAnimationData : MonsterAnimationData
     // Phase
     [SerializeField] private AnimationClip phaseTransitionAnim;
     [SerializeField] private AnimationClip phaseAttackAnim;
+    [SerializeField] private AnimationClip phaseAttackingAnim;
 
     public AnimationClip AttackUpAnim { get => attackUpAnim; }
     public AnimationClip CounterEnableAnim { get => counterEnableAnim; }
     public AnimationClip CounterAttackAnim { get => counterAttackAnim; }
     public AnimationClip PhaseTransitionAnim { get => phaseTransitionAnim; }
     public AnimationClip PhaseAttackAnim { get => phaseAttackAnim; }
+    public AnimationClip PhaseAttackingAnim { get => phaseAttackingAnim; }
 
 
     public override void StringAnimToHash()

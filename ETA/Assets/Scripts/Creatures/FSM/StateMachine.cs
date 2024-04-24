@@ -10,10 +10,10 @@ public class StateMachine
     public State PrevState { get; set; }
 
 
-    public void ChangeState(State newState)
+    public void ChangeState(State newState, bool forceReset = false)
     {
         // 현재 상태와 새로운 상태가 같지 않아야 한다.
-        if (CurState != newState)    
+        if (CurState != newState || forceReset)
         {
             if (CurState != null)
             {

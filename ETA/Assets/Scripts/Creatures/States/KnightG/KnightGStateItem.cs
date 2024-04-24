@@ -316,16 +316,23 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            LookAtEnemy();                                  // 동기화 편의성 + 공격하기 직전에만 목표물을 보고 싶기 때문
+            InitTime(_animData.PhaseAttackingAnim.length);
             _animator.CrossFade(_animData.PhaseAttackingParamHash, 0.1f, -1, 0.0f);
         }
 
         public override void Execute()
-        {
-            LookAtEnemy();
+        {   
+            _animTime += Time.deltaTime;
             // 타겟팅한 한 명의 적만 계속 공격하는 패턴
             if (_detector.Target == null || !_detector.IsArriveToTarget())
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
+            }
+
+            if (_animTime >= _threadHold)
+            {
+                _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE, true);
             }
         }
         public override void Exit()
