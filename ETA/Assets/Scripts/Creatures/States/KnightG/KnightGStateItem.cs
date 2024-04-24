@@ -106,7 +106,7 @@ namespace KnightGStateItem
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
 
-            if (_controller.IsArriveToTarget())
+            if (_detector.IsArriveToTarget())
             {
                 if (_controller.IsEnterPhaseTwo)
                 {
@@ -166,7 +166,7 @@ namespace KnightGStateItem
                     _controller.ChangeState(_controller.IDLE_STATE);
                 }
 
-                if (_controller.IsArriveToTarget())
+                if (_detector.IsArriveToTarget())
                 {
                     _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
                 }
@@ -323,7 +323,7 @@ namespace KnightGStateItem
         {
             LookAtEnemy();
             // 타겟팅한 한 명의 적만 계속 공격하는 패턴
-            if (_detector.Target == null || !_controller.IsArriveToTarget())
+            if (_detector.Target == null || !_detector.IsArriveToTarget())
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }

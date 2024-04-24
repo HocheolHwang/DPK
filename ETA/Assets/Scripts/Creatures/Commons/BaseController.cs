@@ -73,12 +73,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         }
     }
 
-    // ---------------------------------- Detector ------------------------------------------
-    public bool IsArriveToTarget()
-    {
-        return Vector3.Distance(detector.Target.position, transform.position) < detector.attackRange;
-    }
-
     // ---------------------------------- IDamage ------------------------------------------
     public virtual void TakeDamage(int attackDamage)
     {

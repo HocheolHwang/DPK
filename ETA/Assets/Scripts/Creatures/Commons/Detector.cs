@@ -59,4 +59,9 @@ public class Detector : MonoBehaviour
             }
         }
     }
+
+    public bool IsArriveToTarget()
+    {
+        return Vector3.Distance(_target.position, transform.position) < attackRange;
+    }
 }
