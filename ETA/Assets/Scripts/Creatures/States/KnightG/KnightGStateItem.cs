@@ -131,20 +131,18 @@ namespace KnightGStateItem
         public override void Enter()
         {
             attackCnt++;
-
-            _animTime = 0;
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
 
             // 2가지 자동 공격 모션이 존재한다.
             if (attackCnt % 2 == 0)
             {
-                _threadHold = _animData.AttackAnim.length;
+                InitTime(_animData.AttackAnim.length);
                 _animator.CrossFade(_animData.AttackParamHash, 0.4f);
 
             }
             else if (attackCnt % 2 == 1)
             {
-                _threadHold = _animData.AttackUpAnim.length;
+                InitTime(_animData.AttackUpAnim.length);
                 _animator.CrossFade(_animData.AttackUpParamHash, 0.4f);
             }
             
@@ -187,8 +185,7 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
-            _animTime = 0;
-            _threadHold = _animData.CounterEnableAnim.length;
+            InitTime(_animData.CounterEnableAnim.length);
 
             _animator.SetFloat("CounterEnableSpeed", 0.5f);
             _animator.CrossFade(_animData.CounterEnableParamHash, 0.1f);
@@ -201,6 +198,8 @@ namespace KnightGStateItem
             {
                 _controller.ChangeState(_controller.COUNTER_ATTACK_STATE);
             }
+
+            // 여기서 카운터 스킬에 맞았을 경우 그로기 상태로 전환
         }
         public override void Exit()
         {
@@ -219,8 +218,7 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
-            _animTime = 0;
-            _threadHold = _animData.CounterAttackAnim.length;
+            InitTime(_animData.CounterAttackAnim.length);
             _animator.CrossFade(_animData.CounterAttackParamHash, 0.1f);
         }
 

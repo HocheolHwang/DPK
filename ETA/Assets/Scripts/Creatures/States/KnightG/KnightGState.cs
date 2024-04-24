@@ -32,6 +32,12 @@ public class KnightGState : State
         return true;
     }
 
+    public void InitTime(float animLength)
+    {
+        _animTime = 0;
+        _threadHold = animLength;
+    }
+
     public void LookAtEnemy()
     {
         Vector3 dir = _detector.Target.position;
