@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -31,6 +28,7 @@ public class After_Login_Popup_UI : UI_Popup
         AddUIEvent(gameExitButton.gameObject, GameExit);
     }
 
+    // 로비로 이동
     private void LoadLobbyScene(PointerEventData data)
     {
         SceneManager.LoadScene("Lobby");

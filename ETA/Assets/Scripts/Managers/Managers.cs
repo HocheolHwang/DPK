@@ -12,16 +12,20 @@ public class Managers : MonoBehaviour
     UIManager _ui = new UIManager();
     SceneManagerEx _scene = new SceneManagerEx();
     SoundManager _sound = new SoundManager();
+    PhotonManager _photon = new PhotonManager();
+    NetworkManager _network = new NetworkManager();
     PoolManager _pool = new PoolManager();
-    CoroutineManager _coroutine = new CoroutineManager();
+    CoroutineManager _coroutine;
     
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
+    public static PhotonManager Photon { get; private set; }
+    public static NetworkManager Network { get; private set; }
     public static PoolManager Pool { get { return Instance._pool; } }
-    public static CoroutineManager Coroutine { get { return Instance._coroutine; } }
+    public static CoroutineManager Coroutine { get; private set;}
 
     void Start()
     {
@@ -43,7 +47,9 @@ public class Managers : MonoBehaviour
             {
                 go = new GameObject { name = "@Managers" };
                 go.AddComponent<Managers>();
-                go.AddComponent<CoroutineManager>();
+                Coroutine = go.AddComponent<CoroutineManager>();
+                Photon = go.AddComponent<PhotonManager>();
+                Network = go.AddComponent<NetworkManager>();
             }
 
             DontDestroyOnLoad(go);
