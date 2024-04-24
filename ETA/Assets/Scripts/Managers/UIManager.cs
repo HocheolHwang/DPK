@@ -168,4 +168,10 @@ public class UIManager
         CloseAllPopupUI();
         _fixedUI = null;
     }
+
+    public UI_Popup GetTopPopupUI()
+    {
+        if (_popupStack.Count <= 0) return null;
+        return _popupStack.Peek();
+    }
 }

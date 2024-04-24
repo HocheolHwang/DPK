@@ -35,6 +35,14 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
 
     private void Update()
     {
+        // PopUp이 띄워저 있는지 확인
+        if (Managers.UI.GetTopPopupUI() != null)
+        {
+            // PopUp이 띄워져있다면 가장 위에 띄워져있는 Popup인지 확인
+            if (Managers.UI.GetTopPopupUI() != transform.GetComponentInParent<UI_Popup>()) return;
+        }
+        // Popup이 띄워저 있지 않으면 FixedUI만 있는거니까 그냥 실행하면 될거 같다.
+
         // Enter 키가 눌렸는지 확인
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
@@ -46,4 +54,6 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
             OnTabPressHandler?.Invoke();
         }
     }
+
+   
 }
