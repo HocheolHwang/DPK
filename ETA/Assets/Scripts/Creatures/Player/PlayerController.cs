@@ -13,6 +13,8 @@ public class PlayerController : BaseController
     public State ATTACK_STATE;
     public State SKILL_STATE;
     public State COLLAVO_STATE;
+    public State DIE_STATE;
+    public State GLOBAL_STATE;
     [SerializeField]
     public Transform _destination;
     public Define.SkillKey _usingSkill;
@@ -30,14 +32,19 @@ public class PlayerController : BaseController
     protected override void Init()
     {
         _stateMachine = new StateMachine();
+        Stat = GetComponent<PlayerStat>();
 
         IDLE_STATE = new IdleState(this);
         MOVE_STATE = new MoveState(this);
         ATTACK_STATE = new AttackState(this);
         SKILL_STATE = new SkillState(this);
         COLLAVO_STATE = new CollavoState(this);
+        DIE_STATE = new DieState(this);
+        GLOBAL_STATE = new GlobalState(this);
 
         SkillSlot = gameObject.GetOrAddComponent<SkillSlot>();
+
+        _stateMachine.SetGlobalState(GLOBAL_STATE);
 
         //_destination = GameObject.Find("FRONT_2").transform;
 

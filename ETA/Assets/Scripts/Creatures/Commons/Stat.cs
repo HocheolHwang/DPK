@@ -18,4 +18,5 @@ public class Stat : MonoBehaviour
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
     public int AttackDamage { get => _attackDamage; set => _attackDamage = value; }
     public int Defense { get => _defense; set => _defense = value; }
+
 }
