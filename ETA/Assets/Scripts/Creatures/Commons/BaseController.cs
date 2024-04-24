@@ -85,6 +85,14 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             stat.Hp = 0;
             DestroyObject();
         }
+        else
+        {
+            HitEvent();
+        }
+    }
+
+    public virtual void HitEvent()
+    {
     }
 
     public virtual void DestroyEvent()

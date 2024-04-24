@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.Cockpit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 public interface IDamageable
 {
     void TakeDamage(int attackDamage);
-    // 피격 이벤트 추가
+    void HitEvent();
     void DestroyEvent();
     void DestroyObject();
 }
