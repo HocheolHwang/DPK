@@ -63,6 +63,19 @@ public class Login_Popup_UI : UI_Popup
         AddUIKeyEvent(gameExitButton.gameObject, () => OpenGameExit(null), KeyCode.Escape);
     }
 
+    // 비밀번호에 한글 입력시 자동으로 영어로 변환
+    void Update()
+    {
+        if (userPW.isFocused)
+        {
+            Input.imeCompositionMode = IMECompositionMode.Off;
+        }
+        else
+        {
+            Input.imeCompositionMode = IMECompositionMode.On;
+        }
+    }
+
     // 로그인 시도
     private void Login(PointerEventData data)
     {
