@@ -83,7 +83,7 @@ public class NetworkManager : MonoBehaviour
     }
 
     // 던전 클리어 랭크
-    IEnumerator DungeonRankRequest(UnityWebRequest request)
+    IEnumerator DungeonRankRequest(UnityWebRequest request, Action<DungeonRankListResDto> callback)
     {
         yield return request.SendWebRequest();
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
@@ -95,13 +95,14 @@ public class NetworkManager : MonoBehaviour
         {
             Debug.Log(request.result);
             Debug.Log("Response: " + request.downloadHandler.text);
-            DungeonResDto data = JsonUtility.FromJson<DungeonResDto>(request.downloadHandler.text);
+            DungeonRankListResDto data = JsonUtility.FromJson<DungeonRankListResDto>(request.downloadHandler.text);
             //랭크 저장할 곳 필요함
+            callback?.Invoke(data);
         }
     }
 
     // 플레이어 랭크
-    IEnumerator PlayerRankRequest(UnityWebRequest request)
+    IEnumerator PlayerRankRequest(UnityWebRequest request, Action<PlayerRankResDto> callback)
     {
         yield return request.SendWebRequest();
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
@@ -114,12 +115,14 @@ public class NetworkManager : MonoBehaviour
             Debug.Log(request.result);
             Debug.Log("Response: " + request.downloadHandler.text);
             PlayerRankResDto data = JsonUtility.FromJson<PlayerRankResDto>(request.downloadHandler.text);
+
             // 플레이어 랭크
+            callback?.Invoke(data);
         }
     }
 
     // 골드 변화
-    IEnumerator GoldStatisticsRequest(UnityWebRequest request)
+    IEnumerator GoldStatisticsRequest(UnityWebRequest request, Action<GoldStatisticsResDto> callback)
     {
         yield return request.SendWebRequest();
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
@@ -134,15 +137,15 @@ public class NetworkManager : MonoBehaviour
             GoldStatisticsResDto data = JsonUtility.FromJson<GoldStatisticsResDto>(request.downloadHandler.text);
 
             // 골드 변화
-            PlayerManager.GetInstance().SetGold(data.currendGold);
+            //PlayerManager.GetInstance().SetGold(data.currendGold);
+            callback?.Invoke(data);
         }
     }
 
     // 현재 직업 불러오기
-    IEnumerator CurrentClassRequest(UnityWebRequest request)
+    IEnumerator CurrentClassRequest(UnityWebRequest request, Action<ClassReqDto> callback)
     {
         yield return request.SendWebRequest();
-        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"[Gold Request Error] {request.error}");
@@ -155,6 +158,7 @@ public class NetworkManager : MonoBehaviour
 
             // 직업 변화
             PlayerManager.GetInstance().SetClassCode(data.classCode);
+            callback?.Invoke(data);
         }
     }
 
@@ -223,45 +227,45 @@ public class NetworkManager : MonoBehaviour
     }
 
     // 던전 결과 랭크
-    public void EnterDungeonCall(string dungeonCode)
+    public void EnterDungeonCall(string dungeonCode, Action<DungeonRankListResDto> callback)
     {
-        StartCoroutine(DungeonRankRequest(CreateRequest("GET", "dungeon/rank?dungeon-code="+dungeonCode)));
+        StartCoroutine(DungeonRankRequest(CreateRequest("GET", "dungeon/rank?dungeon-code="+dungeonCode), callback));
     }
 
     // 플레이어 랭킹
-    public void PlayerRankCall(int limit)
+    public void PlayerRankCall(int limit, Action<PlayerRankResDto> callback)
     {
         // 쿼리스트링으로 갯수 보내기
         // 없으면 10개라고 함
-        StartCoroutine(PlayerRankRequest(CreateRequest("GET", "player/ranking?limit=" + limit)));
+        StartCoroutine(PlayerRankRequest(CreateRequest("GET", "player/ranking?limit=" + limit), callback));
     }
 
     // 플레이어 골드 변화량
     // response로 현재 골드량 온다
-    public void GoldStatisticsCall(GoldStatisticsResDto dto)
+    public void GoldStatisticsCall(GoldStatisticsResDto dto, Action<GoldStatisticsResDto> callback)
     {
         string goldData = JsonUtility.ToJson(dto);
-        StartCoroutine(GoldStatisticsRequest(CreateRequest("PUT", "player/gold", goldData)));
+        StartCoroutine(GoldStatisticsRequest(CreateRequest("PUT", "player/gold", goldData), callback));
     }
 
     // 플레이어 경험치 변화량 전송
     public void EXPStatisticsCall(EXPStatisticsReqDto dto)
     {
         string expData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("PUT", "palyer/exp", expData)));
+        StartCoroutine(SendWebRequest(CreateRequest("PUT", "palyer/exp")));
     }
 
     // 직업 불러오기
-    public void CurrentClassCall()
+    public void CurrentClassCall(Action<ClassReqDto> callback)
     {
-        StartCoroutine(CurrentClassRequest(CreateRequest("PUT", "class/current")));
+        StartCoroutine(CurrentClassRequest(CreateRequest("PUT", "class/current"), callback));
     }
 
     // 직업 불러오기
     public void SelectClassCall(ClassReqDto dto)
     {
         string classData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "class/select", classData)));
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "class/select")));
     }
 }
 

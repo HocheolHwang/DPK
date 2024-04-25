@@ -37,6 +37,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
+    
+
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -76,7 +78,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
 
 
-    // Make multy Rroom
+    // Make multy Room
     public void MakeRoom()
     {
         // 나중에 수정할 것
@@ -175,6 +177,29 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
 
     }
+
+    // 던전 들어갈 때 부르기
+    // 방장만
+    public void SendRoomLog()
+    {
+        PartyReqDto dto = new PartyReqDto();
+
+        dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
+        dto.partyTitle = PhotonNetwork.CurrentRoom.Name;
+
+        Managers.Network.CreatePartyCall(dto);
+    }
+
+    // 던전 들어갈 때 부르기
+    public void SendRoomMemberLog()
+    {
+        PartyReqDto dto = new PartyReqDto();
+
+        dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
+
+        Managers.Network.EnterPartyCall(dto);
+    }
+
     // #endregion
 
     #region MonoBehaviourPunCallbacks callbacks
@@ -224,11 +249,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         // 로컬 플레이어의 캐릭터를 생성하고 Photon 네트워크에 등록
         //GameObject player = PhotonNetwork.Instantiate("Prefabs/Player/Player", Vector3.zero, Quaternion.identity);
-        PartyReqDto party = new PartyReqDto();
-        party.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
-        Managers.Network.EnterPartyCall(party);
+
     }
 
+    
 
     #endregion
 

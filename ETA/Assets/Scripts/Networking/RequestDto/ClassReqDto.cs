@@ -6,4 +6,5 @@ using UnityEngine;
 public class ClassReqDto
 {
     public string classCode;
+    public string message;
 }
