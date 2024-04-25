@@ -52,9 +52,6 @@ namespace KnightGStateItem
     #region IDLE_BATTLE
     public class IdleBattleState : KnightGState
     {
-        // IDLE BATTLE -> ATTACK
-        // IDLE BATTLE -> COUNTER ENABLE( counterTime >= threadHoldCounter )
-        // 
         public IdleBattleState(KnightGController controller) : base(controller)
         {
         }
@@ -71,6 +68,11 @@ namespace KnightGStateItem
             if (counterTime >= threadHoldCounter)
             {
                 _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
+            }
+
+            if (twoSkillTrigger == 1 && _stat.Hp <= (_stat.MaxHp * 0.6))
+            {
+                _controller.ChangeState(_controller.TWO_SKILL_TRANSITION_STATE);
             }
 
             if (IsStayForSeconds())
@@ -174,6 +176,98 @@ namespace KnightGStateItem
                 {
                     _controller.ChangeState(_controller.CHASE_STATE);
                 }
+            }
+        }
+
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- TWO_SKILL_TRANSITION ------------------------------------------------
+    #region TWO_SKILL_TRANSITION
+    public class TwoSkillTransitionState : KnightGState
+    {
+        public TwoSkillTransitionState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            InitTime(_animData.TwoSkillTransitionAnim.length);
+            _animator.CrossFade(_animData.TwoSkillTransitionParamHash, 0.2f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold)
+            {
+                _controller.ChangeState(_controller.TWO_SKILL_ENERGY_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- TWO_SKILL_ENERGY ------------------------------------------------
+    #region TWO_SKILL_ENERGY
+    public class TwoSkillEnergyState : KnightGState
+    {
+        public TwoSkillEnergyState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _animator.SetFloat("SkillEnergySpeed", 0.5f);
+            InitTime(_animData.TwoSkillEnergyAnim.length);
+            _animator.CrossFade(_animData.TwoSkillEnergyParamHash, 0.2f);
+        }
+
+        public override void Execute()
+        {
+            if (IsStayForSeconds(2.0f))
+            {
+                _controller.ChangeState(_controller.TWO_SKILL_ATTACK_STATE);
+            }
+
+            // 특정 스킬에 맞으면 끊기거나 데미지가 줄어든다.
+            // 데미지가 줄어드는 경우, 변수를 이용해서 _controller의 Stat에 접근하는 함수가 필요하다.
+        }
+
+        public override void Exit()
+        {
+            twoSkillTrigger = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- TWO_SKILL_ATTACK ------------------------------------------------
+    #region TWO_SKILL_ATTACK
+    public class TwoSkillAttackState : KnightGState
+    {
+        public TwoSkillAttackState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _animator.SetFloat("SkillAttackSpeed", 0.5f);
+            InitTime(_animData.TwoSkillAttackAnim.length);
+            _animator.CrossFade(_animData.TwoSkillAttackParamHash, 0.2f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold * 2.0f)
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
             }
         }
 
@@ -318,7 +412,7 @@ namespace KnightGStateItem
         {
             LookAtEnemy();                                  // 동기화 편의성 + 공격하기 직전에만 목표물을 보고 싶기 때문
             InitTime(_animData.PhaseAttackingAnim.length);
-            _animator.CrossFade(_animData.PhaseAttackingParamHash, 0.1f, -1, 0.0f);
+            _animator.CrossFade(_animData.PhaseAttackingParamHash, 0.1f);
         }
 
         public override void Execute()
@@ -417,10 +511,6 @@ namespace KnightGStateItem
             if ( !_controller.IsEnterPhaseTwo && _stat.Hp <= (_stat.MaxHp * 0.3))
             {
                 _controller.ChangeState(_controller.PHASE_TRANSITION_STATE);
-            }
-            if (_controller.IsStun)
-            {
-                _controller.ChangeState(_controller.GROGGY_STATE);
             }
         }
     }

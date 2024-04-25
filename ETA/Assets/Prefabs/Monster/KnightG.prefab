@@ -390,7 +390,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
-  m_Height: 3
+  m_Height: 3.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!114 &256559268049659310
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectRange: 15
-  attackRange: 4
+  attackRange: 5
   _target: {fileID: 0}
   targetLayerMask:
     serializedVersion: 2
@@ -464,6 +464,9 @@ MonoBehaviour:
   dieParamName: DIE
   attackAnim: {fileID: 1827226128182048838, guid: 4983599f104ee1c489b47542521963b4, type: 3}
   attackUpParamName: ATTACK_UP
+  twoSkillTransitionParamName: TWO_SKILL_TRANSITION
+  twoSkillEnergyParamName: TWO_SKILL_ENERGY
+  twoSkillAttackParamName: TWO_SKILL_ATTACK
   groggyParamName: GROGGY
   counterEnableParamName: COUNTER_ENABLE
   counterAttackParamName: COUNTER_ATTACK
@@ -471,6 +474,9 @@ MonoBehaviour:
   phaseAttackParamName: PHASE_ATTACK
   phaseAttackingkParamName: PHASE_ATTACK_ING
   attackUpAnim: {fileID: 1827226128182048838, guid: a3c7236065acd134ab7923a02101288c, type: 3}
+  twoSkillTransitionAnim: {fileID: 1827226128182048838, guid: b310e86cd6951c3458e80e36c1da54df, type: 3}
+  twoSkillEnergyAnim: {fileID: 1827226128182048838, guid: d400992bc11039745a7d585269578873, type: 3}
+  twoSkillAttackAnim: {fileID: 1827226128182048838, guid: 099ebf83e7979e442b46615710387066, type: 3}
   counterEnableAnim: {fileID: 1827226128182048838, guid: eddb46c4221cc874dba6c65f856e71ea, type: 3}
   counterAttackAnim: {fileID: 1827226128182048838, guid: 1e2a898687adfa645be22df5746bf8ee, type: 3}
   phaseTransitionAnim: {fileID: 1827226128182048838, guid: 8412eb76a4fed1947827b40deb17873b, type: 3}
