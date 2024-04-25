@@ -21,6 +21,15 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
     // Tab 키 입력 이벤트 발생시 호출
     public Action OnTabPressHandler = null;
 
+    // Esc 키 입력 이벤트 발생시 호출
+    public Action OnEscapePressHandler = null;
+
+    //// Q 키 입력 이벤트 발생시 호출
+    //public Action OnQPressHandler = null;
+
+    //// E 키 입력 이벤트 발생시 호출
+    //public Action OnEPressHandler = null;
+
     public void OnDrag(PointerEventData eventData)
     {
         if (OnDragHandler == null) return;
@@ -49,10 +58,29 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
             OnEnterPressHandler?.Invoke();
         }
 
+        // Tab 키가 눌렸는지 확인
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             OnTabPressHandler?.Invoke();
         }
+
+        // Esc 키가 눌렸는지 확인
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnEscapePressHandler?.Invoke();
+        }
+
+        //// Q 키가 눌렸는지 확인
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    OnQPressHandler?.Invoke();
+        //}
+
+        //// E 키가 눌렸는지 확인
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    OnEPressHandler?.Invoke();
+        //}
     }
 
    
