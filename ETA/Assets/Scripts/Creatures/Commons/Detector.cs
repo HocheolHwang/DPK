@@ -41,7 +41,6 @@ public class Detector : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("Detector - UpdateTarget");
             yield return new WaitForSeconds(0.1f);
 
             Target = null;

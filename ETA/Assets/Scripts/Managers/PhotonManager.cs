@@ -114,7 +114,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "seed", seed }, { "roomID", guidString } };
         room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed", "roomID" };
         
-        //Managers.Network.CreatePartyCall(partyData);
+        Managers.Network.CreatePartyCall(partyData);
 
         PhotonNetwork.CreateRoom(roomName, room);
     }
@@ -224,6 +224,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         // 로컬 플레이어의 캐릭터를 생성하고 Photon 네트워크에 등록
         //GameObject player = PhotonNetwork.Instantiate("Prefabs/Player/Player", Vector3.zero, Quaternion.identity);
+        PartyReqDto party = new PartyReqDto();
+        party.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
+        Managers.Network.EnterPartyCall(party);
     }
 
 

@@ -9,6 +9,10 @@ public class KnightGAnimationData : MonsterAnimationData
     // ---------------------------- Animation Clip Name -----------------------------------
     [Header("KnightG Animation Data")]
     [SerializeField] protected string attackUpParamName = "ATTACK_UP";
+    // Skill
+    [SerializeField] protected string twoSkillTransitionParamName = "TWO_SKILL_TRANSITION";
+    [SerializeField] protected string twoSkillEnergyParamName = "TWO_SKILL_ENERGY";
+    [SerializeField] protected string twoSkillAttackParamName = "TWO_SKILL_ATTACK";
     // Counter
     [SerializeField] protected string groggyParamName = "GROGGY";
     [SerializeField] protected string counterEnableParamName = "COUNTER_ENABLE";
@@ -19,6 +23,9 @@ public class KnightGAnimationData : MonsterAnimationData
     [SerializeField] protected string phaseAttackingkParamName = "PHASE_ATTACK_ING";
 
     public int AttackUpParamHash { get; private set; }
+    public int TwoSkillTransitionParamHash { get; private set; }
+    public int TwoSkillEnergyParamHash { get; private set; }
+    public int TwoSkillAttackParamHash { get; private set; }
     public int GroggyParamHash { get; private set; }
     public int CounterEnableParamHash { get; private set; }
     public int CounterAttackParamHash { get; private set; }
@@ -28,6 +35,11 @@ public class KnightGAnimationData : MonsterAnimationData
 
     // ---------------------------- Animation Clip -----------------------------------
     [SerializeField] private AnimationClip attackUpAnim;
+    //Skill
+    [SerializeField] private AnimationClip twoSkillTransitionAnim;
+    [SerializeField] private AnimationClip twoSkillEnergyAnim;
+    [SerializeField] private AnimationClip twoSkillAttackAnim;
+
     // Counter
     [SerializeField] private AnimationClip counterEnableAnim;
     [SerializeField] private AnimationClip counterAttackAnim;
@@ -37,6 +49,9 @@ public class KnightGAnimationData : MonsterAnimationData
     [SerializeField] private AnimationClip phaseAttackingAnim;
 
     public AnimationClip AttackUpAnim { get => attackUpAnim; }
+    public AnimationClip TwoSkillTransitionAnim { get => twoSkillTransitionAnim; }
+    public AnimationClip TwoSkillEnergyAnim { get => twoSkillEnergyAnim; }
+    public AnimationClip TwoSkillAttackAnim { get => twoSkillAttackAnim; }
     public AnimationClip CounterEnableAnim { get => counterEnableAnim; }
     public AnimationClip CounterAttackAnim { get => counterAttackAnim; }
     public AnimationClip PhaseTransitionAnim { get => phaseTransitionAnim; }
@@ -49,6 +64,10 @@ public class KnightGAnimationData : MonsterAnimationData
         base.StringAnimToHash();
         
         AttackUpParamHash = Animator.StringToHash(attackUpParamName);
+        // Skill
+        TwoSkillTransitionParamHash = Animator.StringToHash(twoSkillTransitionParamName);
+        TwoSkillEnergyParamHash = Animator.StringToHash(twoSkillEnergyParamName);
+        TwoSkillAttackParamHash = Animator.StringToHash(twoSkillAttackParamName);
         // Counter
         GroggyParamHash = Animator.StringToHash(groggyParamName);
         CounterEnableParamHash = Animator.StringToHash(counterEnableParamName);
