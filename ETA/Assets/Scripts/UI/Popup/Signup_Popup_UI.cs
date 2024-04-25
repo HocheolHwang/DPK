@@ -69,6 +69,18 @@ public class Signup_Popup_UI : UI_Popup
         AddUIKeyEvent(gameExitButton.gameObject, () => OpenGameExit(null), KeyCode.Escape);
     }
 
+    void Update()
+    {
+        if (userPW.isFocused || userPWCheck.isFocused)
+        {
+            Input.imeCompositionMode = IMECompositionMode.Off;
+        }
+        else
+        {
+            Input.imeCompositionMode = IMECompositionMode.On;
+        }
+    }
+
     // 회원가입 시도
     private void Signup(PointerEventData data)
     {
