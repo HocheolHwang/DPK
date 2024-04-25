@@ -24,6 +24,9 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
     // Esc 키 입력 이벤트 발생시 호출
     public Action OnEscapePressHandler = null;
 
+    // C 키 입력 이벤트 발생시 호출
+    public Action OnCPressHandler = null;
+
     //// Q 키 입력 이벤트 발생시 호출
     //public Action OnQPressHandler = null;
 
@@ -70,6 +73,12 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
             OnEscapePressHandler?.Invoke();
         }
 
+        // C 키가 눌렸는지 확인
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            OnCPressHandler?.Invoke();
+        }
+
         //// Q 키가 눌렸는지 확인
         //if (Input.GetKeyDown(KeyCode.Q))
         //{
@@ -83,5 +92,5 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
         //}
     }
 
-   
+
 }
