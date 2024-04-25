@@ -102,6 +102,18 @@ public abstract class UI_Base : MonoBehaviour
                 evt.OnTabPressHandler -= action;
                 evt.OnTabPressHandler += action;
                 break;
+            case KeyCode.Escape:
+                evt.OnEscapePressHandler -= action;
+                evt.OnEscapePressHandler += action;
+                break;
+            //case KeyCode.Q:
+            //    evt.OnQPressHandler -= action;
+            //    evt.OnQPressHandler += action;
+            //    break;
+            //case KeyCode.E:
+            //    evt.OnEPressHandler -= action;
+            //    evt.OnEPressHandler += action;
+            //    break;
         }
     }
 }

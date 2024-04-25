@@ -1,6 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class After_Login_Popup_UI : UI_Popup
 {
@@ -22,10 +23,12 @@ public class After_Login_Popup_UI : UI_Popup
         // 게임 시작 버튼 이벤트 등록
         Button gameStartButton = GetButton((int)Buttons.Game_Start_Button);
         AddUIEvent(gameStartButton.gameObject, LoadLobbyScene);
+        AddUIKeyEvent(gameStartButton.gameObject, () => LoadLobbyScene(null), KeyCode.Return);
 
         // 게임 종료 버튼 이벤트 등록
         Button gameExitButton = GetButton((int)Buttons.Game_Exit_Button);
-        AddUIEvent(gameExitButton.gameObject, GameExit);
+        AddUIEvent(gameExitButton.gameObject, OpenGameExit);
+        AddUIKeyEvent(gameExitButton.gameObject, () => OpenGameExit(null), KeyCode.Escape);
     }
 
     // 로비로 이동
@@ -35,12 +38,9 @@ public class After_Login_Popup_UI : UI_Popup
     }
 
     // 게임 종료
-    private void GameExit(PointerEventData data)
+    private void OpenGameExit(PointerEventData data)
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit(); // 어플리케이션 종료
-#endif
+        // 게임 종료 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Game_Exit_Popup_UI>("[Common]_Game_Exit_Popup_UI");
     }
 }
