@@ -8,7 +8,7 @@ public class Chat_Popup_UI : UI_Popup
     enum Buttons
     {
         Cancel_Button,
-        Game_Exit_Button
+        Chat_Enter_Button
     }
 
     // 로그인 UI 초기화
@@ -19,15 +19,16 @@ public class Chat_Popup_UI : UI_Popup
         // 버튼 바인딩
         Bind<Button>(typeof(Buttons));
 
-        // 남아 있기 버튼 이벤트 등록
+        // 뒤로가기 버튼 이벤트 등록
         Button cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
+        AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.C);
 
-        // 게임 종료 버튼 이벤트 등록
-        Button gameExitButton = GetButton((int)Buttons.Game_Exit_Button);
-        AddUIEvent(gameExitButton.gameObject, GameExit);
-        AddUIKeyEvent(gameExitButton.gameObject, () => GameExit(null), KeyCode.Return);
+        // 입력하기 버튼 이벤트 등록
+        Button chatEnterButton = GetButton((int)Buttons.Chat_Enter_Button);
+        AddUIEvent(chatEnterButton.gameObject, ChatEnter);
+        AddUIKeyEvent(chatEnterButton.gameObject, () => ChatEnter(null), KeyCode.Return);
     }
 
     // 남아 있기
@@ -38,12 +39,8 @@ public class Chat_Popup_UI : UI_Popup
     }
 
     // 게임 종료
-    private void GameExit(PointerEventData data)
+    private void ChatEnter(PointerEventData data)
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit(); // 어플리케이션 종료
-#endif
+        // TODO: 채팅을 보내는 코드 작성 필요
     }
 }

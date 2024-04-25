@@ -6,6 +6,6 @@ public class Lobby_Scene : MonoBehaviour
 {
     void Start()
     {
-        Managers.UI.ShowPopupUI<Lobby_Dungeon_Popup_UI>("[Common]_Lobby_Dungeon_Popup_UI");
+        Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
     }
 }
