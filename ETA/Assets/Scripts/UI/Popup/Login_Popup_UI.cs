@@ -66,15 +66,18 @@ public class Login_Popup_UI : UI_Popup
     // 로그인 시도
     private void Login(PointerEventData data)
     {
+        PlayerResDto dto = new PlayerResDto();
         // 입력 필드 검증
         if (string.IsNullOrEmpty(userID.text))
         {
-            UpdateWarningText("아이디를 입력해주세요.");
+            dto.message = "아이디를 입력해주세요.";
+            UpdateWarningText(dto);
             return;
         }
         if (string.IsNullOrEmpty(userPW.text))
         {
-            UpdateWarningText("비밀번호를 입력해주세요.");
+            dto.message = "비밀번호를 입력해주세요.";
+            UpdateWarningText(dto);
             return;
         }
 
@@ -96,15 +99,21 @@ public class Login_Popup_UI : UI_Popup
         }
     }
 
+
     // 로그인 시도 후 콜백 함수로 경고 텍스트 업데이트
-    private void UpdateWarningText(string message)
+    private void UpdateWarningText(PlayerResDto dto)
     {
+        string message = dto.message;
         // 메시지가 "success"인 경우 After Login Popup UI 띄움
         if (message == "success")
-        {
+        {            
+            PlayerManager.GetInstance().SetToken(dto.accessToken);
+            PlayerManager.GetInstance().SetGold(dto.playerGold);
+            
+            PlayerManager.GetInstance().SetNickName(JWTDecord.DecodeJWT(dto.accessToken));
+
             // 모든 Popup UI를 닫음
             CloseAllPopupUI();
-
             // 회원가입 완료 Popup UI를 띄움
             Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
         }
@@ -114,7 +123,8 @@ public class Login_Popup_UI : UI_Popup
         }
         else
         {
-            warning.text = message;
+            //warning.text = message;            
+            warning.text = "아이디와 비밀번호를 확인해주세요.";
         }
     }
 
