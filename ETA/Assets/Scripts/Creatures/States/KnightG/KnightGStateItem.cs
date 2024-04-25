@@ -2,22 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 카운터 실패시 그로기 상태
-// 페이즈 실패시 그로기 상태
-
-// 패턴 공격 발생 기준?
-// 체력이 일정 기준 이하일 때 패턴 공격
-// 카운터는 내부 쿨타임을 기준으로 수행
-
-
-// 카운터 패턴 공격 1가지
-
-// 일반 패턴 1가지
-// 숨겨진 기믹이 있는 패턴 1가지
-
-// 페이즈
-
-// 페이즈를 끊지 못하면 발생하는 패턴 1가지
 namespace KnightGStateItem
 {
     // -------------------------------------- IDLE ------------------------------------------------
@@ -97,6 +81,8 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            counterTimeTrigger = 0;
+
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
         }
@@ -495,9 +481,10 @@ namespace KnightGStateItem
 
         public override void Execute()
         {
-            // 카운터 패턴 공격 시간만 여기서 관리
-            // 수행하는 코드는 IDLE, IDLE_BATTLE, CHASE 중에서 하나
-            counterTime += Time.deltaTime;
+            if (counterTimeTrigger <= 0)
+            {
+                counterTime += Time.deltaTime;
+            }            
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
