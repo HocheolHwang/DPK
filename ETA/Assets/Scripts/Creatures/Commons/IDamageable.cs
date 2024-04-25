@@ -7,7 +7,6 @@ using UnityEngine;
 public interface IDamageable
 {
     void TakeDamage(int attackDamage);
-    void HitEvent();
     void DestroyEvent();
     void DestroyObject();
 }

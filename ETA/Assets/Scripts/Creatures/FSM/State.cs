@@ -18,7 +18,7 @@ public abstract class State : IState
     //--------------------------- Common Property From BaseController -----------------------------------
     protected Animator _animator;
     protected NavMeshAgent _agent;
-    protected Detector _detector;
+    protected IDetector _detector;
     protected StateMachine _stateMachine;
     protected Stat _stat;
 

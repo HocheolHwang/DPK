@@ -44,9 +44,7 @@ namespace MonsterStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-            Vector3 dir = _detector.Target.position;
-            dir.y = _controller.transform.position.y;
-            _controller.transform.LookAt(dir);
+            LookAtEnemy();
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
@@ -104,22 +102,13 @@ namespace MonsterStateItem
     #region ATTACK
     public class AttackState : MonsterState
     {
-        // 한 번 재생한 뒤에 다른 상태로 전환
-        // 1. Target NULL -> IDLE
-        // 2. IsArriveToTarget() false -> CHASE
-        // 3. IsArriveToTarget() true -> IDLE_BATTLE
-        float _attackTime;
-        float _threadHold;
-
         public AttackState(MonsterController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
-            _attackTime = 0;
-            _threadHold = _animData.AttackAnim.length;
-
+            InitTime(_animData.AttackAnim.length);
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
             _animator.CrossFade(_animData.AttackParamHash, 0.2f);
 
@@ -128,8 +117,8 @@ namespace MonsterStateItem
 
         public override void Execute()
         {
-            _attackTime += Time.deltaTime;
-            if (_attackTime > _threadHold * 2.0f)                    // 애니메이션 재생 시간이 2배 늘어난다.
+            _animTime += Time.deltaTime;
+            if (_animTime > _threadHold * 2.0f)                    // 애니메이션 재생 시간이 2배 늘어난다.
             {
                 if (_detector.Target == null)
                 {

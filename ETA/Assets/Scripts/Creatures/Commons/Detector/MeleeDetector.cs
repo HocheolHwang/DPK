@@ -10,14 +10,15 @@ using static UnityEngine.GraphicsBuffer;
 /// 1. 0.1초마다 인식 범위에 적이 있는지 판단한다.
 /// 2. 있으면 가장 가까운 적을 target으로 세팅한다.
 /// </summary>
-public class Detector : MonoBehaviour
+public class MeleeDetector : MonoBehaviour, IDetector
 {
     [Header("Set Values from the Inspector")]
     [SerializeField] public float detectRange;
-    [SerializeField] public float attackRange;              // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
+    [SerializeField] private float _attackRange;              // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask targetLayerMask;
 
+    public float AttackRange { get => _attackRange; private set => _attackRange = value; }
     public Transform Target { get => _target; private set => _target = value; }
 
     private Ray _ray;
@@ -34,8 +35,10 @@ public class Detector : MonoBehaviour
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
         if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, detectRange);
-        else Gizmos.DrawWireSphere(_ray.origin, attackRange);
+        else Gizmos.DrawWireSphere(_ray.origin, _attackRange);
     }
+
+    // ---------------------------------- IDetector Functions -----------------------------------------------
 
     public IEnumerator UpdateTarget()
     {
@@ -61,6 +64,6 @@ public class Detector : MonoBehaviour
 
     public bool IsArriveToTarget()
     {
-        return Vector3.Distance(_target.position, transform.position) < attackRange;
+        return Vector3.Distance(_target.position, transform.position) < _attackRange;
     }
 }

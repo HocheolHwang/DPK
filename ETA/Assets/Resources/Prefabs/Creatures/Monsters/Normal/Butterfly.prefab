@@ -534,7 +534,6 @@ MonoBehaviour:
   unitType: 5
   animator: {fileID: 0}
   agent: {fileID: 0}
-  detector: {fileID: 0}
   stat: {fileID: 0}
 --- !u!114 &452731348794098034
 MonoBehaviour:
@@ -562,11 +561,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4811888516200086630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e30c26996bf6a204083429c9fe95ed58, type: 3}
+  m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   detectRange: 15
-  attackRange: 8
+  _attackRange: 8
   _target: {fileID: 0}
   targetLayerMask:
     serializedVersion: 2

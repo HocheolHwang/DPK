@@ -44,6 +44,4 @@ public class KnightGState : State
         _controller.transform.LookAt(dir);
     }
 
-    // ----------------------------- Global Functions -------------------------------------
-    
 }
