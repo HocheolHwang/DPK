@@ -139,7 +139,9 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     {
         foreach (Renderer renderer in _allRenderers)
         {
-            renderer.material.color = _damagedColor;
+            renderer.material.SetColor("_Color", Color.gray);
+            renderer.material.SetColor("_BaseColor", Color.gray);
+
         }
 
         // 지정된 시간만큼 기다림
@@ -148,7 +150,9 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
         for (int i = 0; i < _allRenderers.Length; i++)
         {
-            _allRenderers[i].material.color = _originalColors[i];
+            Renderer renderer = _allRenderers[i];
+            renderer.material.SetColor("_BaseColor", Color.white);
+            renderer.material.color = _originalColors[i];
         }
     }
 }
