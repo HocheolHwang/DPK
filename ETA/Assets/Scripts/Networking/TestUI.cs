@@ -46,9 +46,9 @@ public class TestUI : MonoBehaviour
 
     public void MakeRoom()
     {
-        PhotonManager photon = gameObject.GetComponent<PhotonManager>();
+        //PhotonManager photon = gameObject.GetComponent<PhotonManager>();
 
-        photon.MakeRoom();
+        Managers.Photon.MakeRoom();
     }
 
 
