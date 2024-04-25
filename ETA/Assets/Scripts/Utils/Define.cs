@@ -52,9 +52,14 @@ public class Define
         Player = 0,
         // ------------------- 일반 몬스터 -----------------------
         Boar,
+        Tree,
+        Porin,
+        Shaga,
         Butterfly,
         // ------------------- 보스 몬스터 -----------------------
+        FlowerDryad,
         KnightG,
+        MummyMan
     }
 
     public enum Effect
