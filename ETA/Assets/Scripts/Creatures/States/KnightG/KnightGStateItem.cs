@@ -410,6 +410,7 @@ namespace KnightGStateItem
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
 
+            // Loop 활성화 필수
             if (_animTime >= _threadHold)
             {
                 _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE, true);
@@ -489,6 +490,7 @@ namespace KnightGStateItem
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
             if (_controller.CurState == _controller.GROGGY_STATE) return;
+            if (_controller.CurState == _controller.PHASE_TRANSITION_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
             if (_stat.Hp <= 0)
