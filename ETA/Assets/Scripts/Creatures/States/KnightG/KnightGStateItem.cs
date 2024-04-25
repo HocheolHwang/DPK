@@ -2,22 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 카운터 실패시 그로기 상태
-// 페이즈 실패시 그로기 상태
-
-// 패턴 공격 발생 기준?
-// 체력이 일정 기준 이하일 때 패턴 공격
-// 카운터는 내부 쿨타임을 기준으로 수행
-
-
-// 카운터 패턴 공격 1가지
-
-// 일반 패턴 1가지
-// 숨겨진 기믹이 있는 패턴 1가지
-
-// 페이즈
-
-// 페이즈를 끊지 못하면 발생하는 패턴 1가지
 namespace KnightGStateItem
 {
     // -------------------------------------- IDLE ------------------------------------------------
@@ -52,9 +36,6 @@ namespace KnightGStateItem
     #region IDLE_BATTLE
     public class IdleBattleState : KnightGState
     {
-        // IDLE BATTLE -> ATTACK
-        // IDLE BATTLE -> COUNTER ENABLE( counterTime >= threadHoldCounter )
-        // 
         public IdleBattleState(KnightGController controller) : base(controller)
         {
         }
@@ -71,6 +52,11 @@ namespace KnightGStateItem
             if (counterTime >= threadHoldCounter)
             {
                 _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
+            }
+
+            if (twoSkillTrigger == 1 && _stat.Hp <= (_stat.MaxHp * 0.6))
+            {
+                _controller.ChangeState(_controller.TWO_SKILL_TRANSITION_STATE);
             }
 
             if (IsStayForSeconds())
@@ -95,6 +81,8 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            counterTimeTrigger = 0;
+
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
         }
@@ -174,6 +162,98 @@ namespace KnightGStateItem
                 {
                     _controller.ChangeState(_controller.CHASE_STATE);
                 }
+            }
+        }
+
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- TWO_SKILL_TRANSITION ------------------------------------------------
+    #region TWO_SKILL_TRANSITION
+    public class TwoSkillTransitionState : KnightGState
+    {
+        public TwoSkillTransitionState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            InitTime(_animData.TwoSkillTransitionAnim.length);
+            _animator.CrossFade(_animData.TwoSkillTransitionParamHash, 0.2f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold)
+            {
+                _controller.ChangeState(_controller.TWO_SKILL_ENERGY_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- TWO_SKILL_ENERGY ------------------------------------------------
+    #region TWO_SKILL_ENERGY
+    public class TwoSkillEnergyState : KnightGState
+    {
+        public TwoSkillEnergyState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _animator.SetFloat("SkillEnergySpeed", 0.5f);
+            InitTime(_animData.TwoSkillEnergyAnim.length);
+            _animator.CrossFade(_animData.TwoSkillEnergyParamHash, 0.2f);
+        }
+
+        public override void Execute()
+        {
+            if (IsStayForSeconds(2.0f))
+            {
+                _controller.ChangeState(_controller.TWO_SKILL_ATTACK_STATE);
+            }
+
+            // 특정 스킬에 맞으면 끊기거나 데미지가 줄어든다.
+            // 데미지가 줄어드는 경우, 변수를 이용해서 _controller의 Stat에 접근하는 함수가 필요하다.
+        }
+
+        public override void Exit()
+        {
+            twoSkillTrigger = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- TWO_SKILL_ATTACK ------------------------------------------------
+    #region TWO_SKILL_ATTACK
+    public class TwoSkillAttackState : KnightGState
+    {
+        public TwoSkillAttackState(KnightGController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _animator.SetFloat("SkillAttackSpeed", 0.5f);
+            InitTime(_animData.TwoSkillAttackAnim.length);
+            _animator.CrossFade(_animData.TwoSkillAttackParamHash, 0.2f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold * 2.0f)
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
             }
         }
 
@@ -318,7 +398,7 @@ namespace KnightGStateItem
         {
             LookAtEnemy();                                  // 동기화 편의성 + 공격하기 직전에만 목표물을 보고 싶기 때문
             InitTime(_animData.PhaseAttackingAnim.length);
-            _animator.CrossFade(_animData.PhaseAttackingParamHash, 0.1f, -1, 0.0f);
+            _animator.CrossFade(_animData.PhaseAttackingParamHash, 0.1f);
         }
 
         public override void Execute()
@@ -330,6 +410,7 @@ namespace KnightGStateItem
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
 
+            // Loop 활성화 필수
             if (_animTime >= _threadHold)
             {
                 _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE, true);
@@ -401,13 +482,15 @@ namespace KnightGStateItem
 
         public override void Execute()
         {
-            // 카운터 패턴 공격 시간만 여기서 관리
-            // 수행하는 코드는 IDLE, IDLE_BATTLE, CHASE 중에서 하나
-            counterTime += Time.deltaTime;
+            if (counterTimeTrigger <= 0)
+            {
+                counterTime += Time.deltaTime;
+            }            
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
             if (_controller.CurState == _controller.GROGGY_STATE) return;
+            if (_controller.CurState == _controller.PHASE_TRANSITION_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
             if (_stat.Hp <= 0)
@@ -417,10 +500,6 @@ namespace KnightGStateItem
             if ( !_controller.IsEnterPhaseTwo && _stat.Hp <= (_stat.MaxHp * 0.3))
             {
                 _controller.ChangeState(_controller.PHASE_TRANSITION_STATE);
-            }
-            if (_controller.IsStun)
-            {
-                _controller.ChangeState(_controller.GROGGY_STATE);
             }
         }
     }
