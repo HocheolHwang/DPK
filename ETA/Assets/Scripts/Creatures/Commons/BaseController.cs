@@ -13,7 +13,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     [SerializeField] public Define.UnitType unitType;
     [SerializeField] public Animator animator;
     [SerializeField] public NavMeshAgent agent;
-    [SerializeField] public Detector detector;
+    [SerializeField] public IDetector detector;
     [SerializeField] public Stat stat;
 
 
@@ -33,7 +33,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        detector = GetComponent<Detector>();
+        detector = GetComponent<IDetector>();
 
         SetOriginColor();
 
@@ -62,7 +62,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     //----------------------------------- Debugging --------------------------------------------
     private void OnDrawGizmos()
     {
-
+#if UNITY_EDITOR
         if (_stateMachine != null && _curState != null)
         {
             GUIStyle style = new GUIStyle();
@@ -71,6 +71,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             string label = "Active State: " + _curState.ToString();
             Handles.Label(transform.position, label, style);
         }
+
+#endif
     }
 
     // ---------------------------------- IDamage ------------------------------------------
@@ -87,7 +89,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
         UI_AttackedDamage attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
         attackedDamage_ui.AttackedDamage = damage;
-
+        
         stat.Hp -= damage;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
@@ -96,16 +98,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             stat.Hp = 0;
             DestroyObject();
         }
-        else
-        {
-            HitEvent();
-        }
-    }
-
-    public virtual void HitEvent()
-    {
-        // Resource를 사용해서 네이밍 컨벤션을 맞춤
-        //GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.red);
     }
 
     public virtual void DestroyEvent()

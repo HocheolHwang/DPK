@@ -48,12 +48,13 @@ public class MonsterController : BaseController
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
-        agent.stoppingDistance = detector.attackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
+        agent.stoppingDistance = detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
     }
 
     // ---------------------------------- IDamage ------------------------------------------
     public override void DestroyEvent()
     {
+        base.DestroyEvent();
         // ENUM이 아니라 네이밍 컨벤션을 통해서 Resource Manager를 잘 다루기
     }
 }

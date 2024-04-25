@@ -66,7 +66,7 @@ namespace PlayerStates
             if(_detector.Target != null)
             {
                 float dist = Vector3.Distance(_detector.Target.transform.position, _playerController.transform.position);
-                if (dist <= _detector.attackRange)
+                if (dist <= _detector.AttackRange)
                 {
                     _agent.velocity = Vector3.zero;
                     _agent.isStopped = true;
