@@ -22,7 +22,8 @@ public class Login_Popup_UI : UI_Popup
     enum Buttons
     {
         Login_Button,
-        Switch_Signup_Button
+        Switch_Signup_Button,
+        Game_Exit_Button
     }
 
     // 클래스 멤버 변수로 선언
@@ -55,6 +56,11 @@ public class Login_Popup_UI : UI_Popup
         // 회원가입 전환 버튼 이벤트 등록
         Button switchSignupButton = GetButton((int)Buttons.Switch_Signup_Button);
         AddUIEvent(switchSignupButton.gameObject, SwitchSignup);
+
+        // 게임 종료 버튼 이벤트 등록
+        Button gameExitButton = GetButton((int)Buttons.Game_Exit_Button);
+        AddUIEvent(gameExitButton.gameObject, OpenGameExit);
+        AddUIKeyEvent(gameExitButton.gameObject, () => OpenGameExit(null), KeyCode.Escape);
     }
 
     // 로그인 시도
@@ -120,5 +126,12 @@ public class Login_Popup_UI : UI_Popup
 
         // 회원가입 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Signup_Popup_UI>("[Login]_Signup_Popup_UI");
+    }
+
+    // 게임 종료
+    private void OpenGameExit(PointerEventData data)
+    {
+        // 게임 종료 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Game_Exit_Popup_UI>("[Common]_Game_Exit_Popup_UI");
     }
 }
