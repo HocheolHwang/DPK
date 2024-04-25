@@ -207,7 +207,7 @@ public class NetworkManager : MonoBehaviour
     }
 
     // 파티 참가 요청
-    public void EnterPartyCall(PartyResDto dto)
+    public void EnterPartyCall(PartyReqDto dto)
     {
         string partyData = JsonUtility.ToJson(dto);
         StartCoroutine(SendWebRequest(CreateRequest("POST", "party/enter", partyData)));
