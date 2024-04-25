@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class SOSkill : ScriptableObject
 {
-    public float damage;
+    public int damage;
     public float cool;
     public float effectDuration;
 
