@@ -8,7 +8,8 @@ public class Define
     {
         None,
         Target,
-        Range
+        Range,
+        Holding
     }
     public enum SkillKey
     {

@@ -9,6 +9,8 @@ public class SkillSystem : MonoBehaviour
     {
         None,
         Target,
+        Range,
+        Holding
     }
 
     [SerializeField]
@@ -22,14 +24,14 @@ public class SkillSystem : MonoBehaviour
     float originOutlineWidth = -1;
     GameObject origin;
 
-    private Texture2D handCursor;
+    private Texture2D skillCursor;
     ParticleSystem targetingGo;
     GameObject rangeObject;
 
     // Start is called before the first frame update
     void Start()
     {
-        handCursor = Resources.Load<Texture2D>("Sprites/7. Common Sprites/Cursor Sprites/Enemy Cursor"); // 커서는 나중에 바꾸기
+        skillCursor = Resources.Load<Texture2D>("Sprites/7. Common Sprites/Cursor Sprites/Enemy Cursor"); // 커서는 나중에 바꾸기
         targetingGo = Managers.Resource.Instantiate("Targeting").GetComponent<ParticleSystem>();
         targetingGo.Play();
         rangeObject = Managers.Resource.Instantiate("RangeObject");
@@ -50,6 +52,9 @@ public class SkillSystem : MonoBehaviour
             case Define.SkillType.Range:
                 SelectRange();
                 break;
+            case Define.SkillType.Holding:
+                StartHolding();
+                break;
             default:
                 targetingGo.gameObject.SetActive(false);
                 rangeObject.SetActive(false);
@@ -66,6 +71,7 @@ public class SkillSystem : MonoBehaviour
 
     void FindTarget()
     {
+
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool raycastHit = Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("Monster"));
@@ -77,9 +83,10 @@ public class SkillSystem : MonoBehaviour
             
             if (currentCursor != CursorType.Target)
             {
-                Cursor.SetCursor(handCursor, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(skillCursor, Vector2.zero, CursorMode.Auto);
                 currentCursor = CursorType.Target;
                 targetingGo.gameObject.SetActive(true);
+                rangeObject.SetActive(false);
             }
 
 
@@ -123,8 +130,15 @@ public class SkillSystem : MonoBehaviour
 
         if (raycastHit)
         {
-            rangeObject.gameObject.SetActive(true);
-            rangeObject.gameObject.transform.localScale = new Vector3(4, 0.05f, 4);
+            if (currentCursor != CursorType.Range)
+            {
+                Cursor.SetCursor(skillCursor, Vector2.zero, CursorMode.Auto);
+                currentCursor = CursorType.Range;
+                rangeObject.gameObject.SetActive(true);
+                rangeObject.gameObject.transform.localScale = new Vector3(4, 0.01f, 4);
+                targetingGo.gameObject.SetActive(false);
+            }
+
             Debug.Log($"범위 스킬 지정 중 {hit.point}");
             
             rangeObject.transform.position = hit.point + Vector3.up * 0.05f;
@@ -143,6 +157,13 @@ public class SkillSystem : MonoBehaviour
         {
 
         }
+
+    }
+
+    public void StartHolding()
+    {
+        currentType = Define.SkillType.None;
+        myController.ChangeState(myController.HOLD_STATE);
 
     }
 

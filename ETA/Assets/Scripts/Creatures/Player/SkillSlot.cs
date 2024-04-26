@@ -40,8 +40,17 @@ public class SkillSlot : MonoBehaviour
             case Define.SkillKey.W:
                 SkillSystem.currentType = Define.SkillType.Range;
                 break;
+            case Define.SkillKey.E:
+                SkillSystem.currentType = Define.SkillType.Holding;
+                break;
         }
         
+
+    }
+
+    public void CancleSkill()
+    {
+        SkillSystem.currentType = Define.SkillType.None;
 
     }
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 namespace PlayerStates
 {
@@ -51,6 +51,7 @@ namespace PlayerStates
         {
             base.Enter();
             _animator.CrossFade("MOVE", 0.05f);
+            _agent.isStopped = false;
         }
 
         public override void Execute()
@@ -64,24 +65,22 @@ namespace PlayerStates
 
             if (_detector.Target != null)
             {
-                _agent.isStopped = false;
+                //_agent.isStopped = false;
                 _agent.speed = moveSpeed;
                 //_agent.SetDestination(_detector.Target.transform.position);
 
-                Debug.Log($"{_detector.Target.gameObject.name}");
+                //Debug.Log($"{_detector.Target.gameObject.name}");
                 //float dist = Vector3.Distance(_detector.Target.transform.position, _playerController.transform.position);
                 if (_detector.IsArriveToTarget())
                 {
-                    _agent.velocity = Vector3.zero;
-                    _agent.isStopped = true;
+
                     _playerController.ChangeState(_playerController.ATTACK_STATE);
                 }
             }
             else
             {
-                _agent.isStopped = false;
+                //_agent.isStopped = false;
                 _agent.speed = moveSpeed + Vector3.Distance(_playerController.transform.position, dest);
-                Debug.Log(_agent.speed);
                 _agent.SetDestination(dest);
 
             }
@@ -107,6 +106,8 @@ namespace PlayerStates
         public override void Enter()
         {
             base.Enter();
+            _agent.velocity = Vector3.zero;
+            _agent.isStopped = true;
             tmp = 0;
             _animator.CrossFade("NORMAL_ATTACK", 0.05f);
             _detector.Target.GetComponent<BaseController>().TakeDamage(_playerController.stat.AttackDamage);
@@ -144,6 +145,9 @@ namespace PlayerStates
         {
             base.Enter();
             tmp = 0;
+
+            _agent.velocity = Vector3.zero;
+            _agent.isStopped = true;
 
             _playerController.SkillSlot.CastSkill(_playerController._usingSkill);
             _animator.CrossFade("SKILL1", 0.05f);
@@ -228,6 +232,60 @@ namespace PlayerStates
 
         public override void Exit()
         {
+        }
+    }
+
+    public class HoldState : PlayerState
+    {
+        Define.SkillKey currentSkill;
+        float startTime;
+        public HoldState(PlayerController playerController) : base(playerController)
+        {
+
+        }
+
+        public override void Enter()
+        {
+            startTime = Time.time;
+            currentSkill = _playerController._usingSkill;
+            _agent.velocity = Vector3.zero;
+            _agent.isStopped = true;
+            // 콜라보 스킬 정보를 시스템에 저장 해야함
+            _animator.CrossFade("HOLD", 0.2f);
+        }
+
+        public override void Execute()
+        {
+            // 홀딩 중에는 다른 스킬 못쓰게 막아야한다.
+            //if (currentSkill != _playerController._usingSkill)
+            //{
+            //    // 다른 키 누름
+            //    return;
+            //}
+            // 3초뒤 풀림
+            GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = (Time.time - startTime) / 3.0f;
+            if (Time.time - startTime >= 3.0f)
+            {
+                _playerController.ChangeState(_playerController.MOVE_STATE);
+            }
+
+            if (Input.anyKey)
+            {
+                Debug.Log("홀딩 중입니다.");
+                
+                // UI 조정
+            }
+            else // 키를 떄면?
+            {
+                
+                _playerController.ChangeState(_playerController.MOVE_STATE);
+                
+            }
+        }
+
+        public override void Exit()
+        {
+            GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = 0;
         }
     }
 
