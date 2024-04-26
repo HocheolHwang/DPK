@@ -11,6 +11,8 @@ public class PlayerManager
     private int gold;
     private string playerId;
     private string curClass;
+    private int index;
+    private bool partyLeader;
 
     PlayerManager() { }
 
@@ -22,6 +24,12 @@ public class PlayerManager
         }
 
         return instance;
+    }
+
+    public void init()
+    {
+        partyLeader = false;
+        index = 0;
     }
 
     public void SetId(string id)
@@ -49,6 +57,16 @@ public class PlayerManager
     {
         this.curClass = curClass;
     }
+    
+    public void SetIndex(int index)
+    {
+        this.index = index;
+    }
+    
+    public void SetPartyLeader(bool partyLeader)
+    {
+        this.partyLeader = partyLeader;
+    }
 
     public string GetId()
     {
@@ -74,5 +92,13 @@ public class PlayerManager
     public string GetClassCode()
     {
         return curClass;
+    }
+    public int GetIndex()
+    {
+        return index;
+    }
+    public bool GetPartyLeader()
+    {
+        return partyLeader;
     }
 }
