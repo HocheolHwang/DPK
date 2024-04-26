@@ -2,7 +2,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class Lobby_Popup_UI : UI_Popup
+public class Party_Join_Popup_UI : UI_Popup
 {
     // 버튼 인덱스
     enum Buttons
@@ -10,8 +10,8 @@ public class Lobby_Popup_UI : UI_Popup
         Open_Party_Join_Button,
         Open_Dungeon_Select_Button,
         Open_Dungeon_Enter_Button,
-        Open_Chat_Button,
-        Open_Menu_Button
+        Cancel_Button,
+        Open_Party_Join_Confirm_Button
     }
 
     // 로그인 UI 초기화
@@ -34,21 +34,21 @@ public class Lobby_Popup_UI : UI_Popup
         Button openDungeonEnterButton = GetButton((int)Buttons.Open_Dungeon_Enter_Button);
         AddUIEvent(openDungeonEnterButton.gameObject, OpenDungeonEnter);
 
-        // 채팅 Popup UI 열기 버튼 이벤트 등록
-        Button openChatButton = GetButton((int)Buttons.Open_Chat_Button);
-        AddUIEvent(openChatButton.gameObject, OpenChat);
-        AddUIKeyEvent(openChatButton.gameObject, () => OpenChat(null), KeyCode.C);
+        // 돌아가기 버튼 이벤트 등록
+        Button cancelButton = GetButton((int)Buttons.Cancel_Button);
+        AddUIEvent(cancelButton.gameObject, Cancel);
+        AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
 
-        // 메뉴 Popup UI 열기 버튼 이벤트 등록
-        Button openMenuButton = GetButton((int)Buttons.Open_Menu_Button);
-        AddUIEvent(openMenuButton.gameObject, OpenMenu);
-        AddUIKeyEvent(openMenuButton.gameObject, () => OpenMenu(null), KeyCode.Escape);
+        // 파티 참가 확인 Popup UI 열기 버튼 이벤트 등록
+        Button openPartyJoinConfirmButton = GetButton((int)Buttons.Open_Party_Join_Confirm_Button);
+        AddUIEvent(openPartyJoinConfirmButton.gameObject, OpenPartyJoinConfirm);
+        AddUIKeyEvent(openPartyJoinConfirmButton.gameObject, () => OpenPartyJoinConfirm(null), KeyCode.Return);
     }
 
     // 파티 참가 Popup UI 열기
     private void OpenPartyJoin(PointerEventData data)
     {
-        // 모든 Popup UI를 닫고 파티 참가 Popup UI를 띄움
+        // 창을 닫고 다시 여므로 새로고침 하게 됨
         CloseAllPopupUI();
         Managers.UI.ShowPopupUI<Party_Join_Popup_UI>("[Lobby]_Party_Join_Popup_UI");
     }
@@ -56,7 +56,7 @@ public class Lobby_Popup_UI : UI_Popup
     // 던전 선택 Popup UI 열기
     private void OpenDungeonSelect(PointerEventData data)
     {
-        // 모든 Popup UI를 닫고 던전 선택 Popup UI를 띄움
+        // 창을 모두 닫은 뒤에 던전 선택 Popup UI를 띄움
         // CloseAllPopupUI();
         // Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
     }
@@ -64,18 +64,23 @@ public class Lobby_Popup_UI : UI_Popup
     // 던전 입장 Popup UI 열기
     private void OpenDungeonEnter(PointerEventData data)
     {
+        // 창을 모두 닫고 로비 Popup UI를 띄운 뒤에 던전 입장 Popup UI를 띄움
+        CloseAllPopupUI();
+        Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
         Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
     }
 
-    // 채팅 Popup UI 열기
-    private void OpenChat(PointerEventData data)
+    // 돌아가기
+    private void Cancel(PointerEventData data)
     {
-        Managers.UI.ShowPopupUI<Chat_Popup_UI>("[Common]_Chat_Popup_UI");
+        // 파티 참가 Popup UI를 닫은 뒤 로비 Popup UI를 띄움
+        ClosePopupUI();
+        Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
     }
 
-    // 메뉴 Popup UI 열기
-    private void OpenMenu(PointerEventData data)
+    // 파티 참가 확인 Popup UI 열기
+    private void OpenPartyJoinConfirm(PointerEventData data)
     {
-        Managers.UI.ShowPopupUI<Menu_Popup_UI>("[Common]_Menu_Popup_UI");
+        Managers.UI.ShowPopupUI<Party_Join_Confirm_Popup_UI>("[Lobby]_Party_Join_Confirm_Popup_UI");
     }
 }

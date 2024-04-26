@@ -34,6 +34,10 @@ public class After_Login_Popup_UI : UI_Popup
     // 로비로 이동
     private void LoadLobbyScene(PointerEventData data)
     {
+        // 씬 이동하기 전에 모든 스택을 비움
+        CloseAllPopupUI();
+
+        // 로비 씬으로 이동
         SceneManager.LoadScene("Lobby");
     }
 

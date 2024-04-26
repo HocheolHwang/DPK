@@ -33,7 +33,6 @@ public class Game_Exit_Popup_UI : UI_Popup
     // 남아 있기
     private void Cancel(PointerEventData data)
     {
-        // 현재 Popup UI를 닫음
         ClosePopupUI();
     }
 

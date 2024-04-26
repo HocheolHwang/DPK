@@ -40,6 +40,9 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
     // 던전 입장하기
     private void DungeonEnter(PointerEventData data)
     {
+        // 씬 이동하기 전에 모든 스택을 비움
+        CloseAllPopupUI();
+
         // TODO: 선택한 던전에 따라 다른 곳으로 이동하도록 하는 코드 필요
         // 현재는 DeepForest로 가도록 임시 구성
         SceneManager.LoadScene("DeepForest");
