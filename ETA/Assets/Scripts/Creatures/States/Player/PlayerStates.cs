@@ -61,23 +61,27 @@ namespace PlayerStates
             float moveSpeed = _playerController.stat.MoveSpeed;
             //_agent.Move(dir * Time.deltaTime * moveSpeed);
 
-            //float dist = Vector3.Distance(_playerController.transform.position, dest);
 
-            if(_detector.Target != null)
+            if (_detector.Target != null)
             {
-                float dist = Vector3.Distance(_detector.Target.transform.position, _playerController.transform.position);
-                if (dist <= _detector.AttackRange)
+                _agent.isStopped = false;
+                _agent.speed = moveSpeed;
+                //_agent.SetDestination(_detector.Target.transform.position);
+
+                Debug.Log($"{_detector.Target.gameObject.name}");
+                //float dist = Vector3.Distance(_detector.Target.transform.position, _playerController.transform.position);
+                if (_detector.IsArriveToTarget())
                 {
                     _agent.velocity = Vector3.zero;
                     _agent.isStopped = true;
                     _playerController.ChangeState(_playerController.ATTACK_STATE);
-
                 }
             }
             else
             {
                 _agent.isStopped = false;
                 _agent.speed = moveSpeed + Vector3.Distance(_playerController.transform.position, dest);
+                Debug.Log(_agent.speed);
                 _agent.SetDestination(dest);
 
             }
@@ -106,6 +110,7 @@ namespace PlayerStates
             tmp = 0;
             _animator.CrossFade("NORMAL_ATTACK", 0.05f);
             _detector.Target.GetComponent<MonsterController>().TakeDamage(_playerController.stat.AttackDamage);
+            
       
 
         }
