@@ -22,6 +22,14 @@ public class Lobby_Popup_UI : UI_Popup
         // 버튼 바인딩
         Bind<Button>(typeof(Buttons));
 
+        // 파티 참가 Popup UI 열기 버튼 이벤트 등록
+        Button openPartyJoinButton = GetButton((int)Buttons.Open_Party_Join_Button);
+        AddUIEvent(openPartyJoinButton.gameObject, OpenPartyJoin);
+
+        // 던전 선택 Popup UI 열기 버튼 이벤트 등록
+        Button openDungeonSelectButton = GetButton((int)Buttons.Open_Dungeon_Select_Button);
+        AddUIEvent(openDungeonSelectButton.gameObject, OpenDungeonSelect);
+
         // 던전 입장 Popup UI 열기 버튼 이벤트 등록
         Button openDungeonEnterButton = GetButton((int)Buttons.Open_Dungeon_Enter_Button);
         AddUIEvent(openDungeonEnterButton.gameObject, OpenDungeonEnter);
@@ -35,6 +43,22 @@ public class Lobby_Popup_UI : UI_Popup
         Button openMenuButton = GetButton((int)Buttons.Open_Menu_Button);
         AddUIEvent(openMenuButton.gameObject, OpenMenu);
         AddUIKeyEvent(openMenuButton.gameObject, () => OpenMenu(null), KeyCode.Escape);
+    }
+
+    // 파티 참가 Popup UI 열기
+    private void OpenPartyJoin(PointerEventData data)
+    {
+        // 모든 Popup UI를 닫고 파티 참가 Popup UI를 띄움
+        CloseAllPopupUI();
+        Managers.UI.ShowPopupUI<Party_Join_Popup_UI>("[Lobby]_Party_Join_Popup_UI");
+    }
+
+    // 던전 선택 Popup UI 열기
+    private void OpenDungeonSelect(PointerEventData data)
+    {
+        // 모든 Popup UI를 닫고 던전 선택 Popup UI를 띄움
+        // CloseAllPopupUI();
+        // Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
     }
 
     // 던전 입장 Popup UI 열기
