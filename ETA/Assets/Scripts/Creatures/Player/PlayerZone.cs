@@ -7,6 +7,7 @@ public class PlayerZone : MonoBehaviour
     [SerializeField] public float detectRange;          // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask targetLayerMask;
+    public float speed = 6;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,7 @@ public class PlayerZone : MonoBehaviour
         }
         else
         {
-            transform.position += transform.forward * Time.deltaTime * 6;
+            transform.position += transform.forward * Time.deltaTime * speed;
         }
         
 
