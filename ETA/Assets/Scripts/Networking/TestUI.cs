@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class TestUI : MonoBehaviour
 {
-
+    public GameObject ShowObj;
+    public GameObject partyLeader;
     NetworkManager req;
 
     private void Start()
     {
         //req = gameObject.GetComponent<NetworkManager>();
         req = Managers.Network;
+    }
+
+    private void Update()
+    {
+        Show();
+        ShowPartyLeader();
     }
     public void Post()
     {
@@ -50,7 +59,22 @@ public class TestUI : MonoBehaviour
 
         Managers.Photon.MakeRoom();
     }
+    public void JoinRoom()
+    {
+        Managers.Photon.JoinRandomRoom();
+    }
 
+    public void Show() {
+        ShowObj.SetActive(PhotonNetwork.InRoom);
+    }
+    public void ExitRoom() {
+        Managers.Photon.ExitRoom();
+    }
+
+    public void ShowPartyLeader()
+    {
+        partyLeader.SetActive(Managers.PlayerInfo.GetPartyLeader());
+    }
 
     //// 테스트 로그인
     //public void signIn()

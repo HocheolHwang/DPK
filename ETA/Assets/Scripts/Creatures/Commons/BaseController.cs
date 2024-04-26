@@ -68,8 +68,11 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.red;
 
+#if UNITY_EDITOR
+
             string label = "Active State: " + _curState.ToString();
             Handles.Label(transform.position, label, style);
+#endif
         }
     }
 
