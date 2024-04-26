@@ -21,7 +21,7 @@ public class RangedDetector : MonoBehaviour, IDetector
     [SerializeField] private float _attackRange;
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask targetLayerMask;
-    [SerializeField] private PlayerController[] _players;
+    //[SerializeField] private PlayerController[] _players;
 
     private bool _hasMetTargetOne;          // 타겟과 첫 조우 여부
     private float _waitSeconds;             // 기다린 시간
