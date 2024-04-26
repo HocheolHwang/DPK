@@ -110,7 +110,7 @@ namespace PlayerStates
             tmp = 0;
             _animator.CrossFade("NORMAL_ATTACK", 0.05f);
             _detector.Target.GetComponent<MonsterController>().TakeDamage(_playerController.stat.AttackDamage);
-            
+            LookAtEnemy();
       
 
         }
