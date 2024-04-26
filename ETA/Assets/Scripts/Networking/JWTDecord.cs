@@ -5,7 +5,7 @@ using System;
 using System.Text;
 public class JWTDecord : MonoBehaviour
 {
-    public static void DecodeJWT(string token)
+    public static string DecodeJWT(string token)
     {
         string[] parts = token.Split('.');
         if (parts.Length != 3)
@@ -18,14 +18,13 @@ public class JWTDecord : MonoBehaviour
 
         string decodedHeader = DecodeBase64(header);
         string decodedPayload = DecodeBase64(payload);
-        Debug.Log("Header: " + decodedHeader);
-        Debug.Log("Payload: " + decodedPayload);
-        Console.WriteLine("Header: " + decodedHeader);
-        Console.WriteLine("Payload: " + decodedPayload);
+        //Debug.Log("Header: " + decodedHeader);
+        //Debug.Log("Payload: " + decodedPayload);
+        //Console.WriteLine("Header: " + decodedHeader);
+        //Console.WriteLine("Payload: " + decodedPayload);
 
         PlayerSignUpReqDto data = JsonUtility.FromJson<PlayerSignUpReqDto>(decodedPayload);
-        Debug.Log(data.nickname);
-        PlayerManager.GetInstance().SetNickName(data.nickname);
+        return data.nickname;
     }
 
     private static string DecodeBase64(string input)

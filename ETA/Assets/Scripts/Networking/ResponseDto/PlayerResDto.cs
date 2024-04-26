@@ -8,4 +8,5 @@ public class PlayerResDto
     public string accessToken;
     public int playerGold;
     public bool first;
+    public string message;
 }

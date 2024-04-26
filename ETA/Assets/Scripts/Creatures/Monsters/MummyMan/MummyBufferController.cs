@@ -1,0 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+using MummyBufferStateItem;
+using System;
+
+public class MummyBufferController : BaseController
+{
+    public State IDLE_STATE;
+    public State IDLE_BATTLE_STATE;
+    public State CHASE_STATE;
+    public State ATTACK_STATE;
+    public State BUFF_STATE;
+    public State DIE_STATE;
+    public State GLOBAL_STATE;
+
+    private MummyBufferAnimationData _animData;
+    public MummyBufferAnimationData AnimData { get => _animData; }
+
+    public static event Action<MummyBufferController> OnDeath;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Init();
+    }
+
+    private void Start()
+    {
+        ChangeState(IDLE_STATE);
+    }
+
+    // ---------------------------------- Init ------------------------------------------
+    protected override void Init()
+    {
+        _animData = GetComponent<MummyBufferAnimationData>();
+        _animData.StringAnimToHash();
+
+        // ----------------------------- Animation && State -------------------------------------
+
+        _stateMachine = new StateMachine();
+
+        IDLE_STATE = new IdleState(this);
+        IDLE_BATTLE_STATE = new IdleBattleState(this);
+        CHASE_STATE = new ChaseState(this);
+        ATTACK_STATE = new AttackState(this);
+        BUFF_STATE = new BuffState(this);
+        DIE_STATE = new DieState(this);
+        GLOBAL_STATE = new GlobalState(this);
+
+        _stateMachine.SetGlobalState(GLOBAL_STATE);
+
+        agent.stoppingDistance = detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
+    }
+
+    // ---------------------------------- IDamage ------------------------------------------
+    public override void DestroyEvent()
+    {
+        base.DestroyEvent();
+
+        // Mummy Man 한테 죽었음을 알려주기
+        OnDeath?.Invoke(this);
+    }
+}
