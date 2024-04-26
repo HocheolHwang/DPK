@@ -822,7 +822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mode: 0
   _delta: {x: -9, y: 11, z: -9}
-  _player: {fileID: 0}
+  _player: {fileID: 481735832}
 --- !u!81 &310531894
 AudioListener:
   m_ObjectHideFlags: 0
@@ -995,6 +995,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 583083986557089090, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      propertyPath: _destination
+      value: 
+      objectReference: {fileID: 845442764}
+    - target: {fileID: 4957167276760604118, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 5722285683226651515, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: _destination
       value: 
@@ -1043,8 +1051,43 @@ PrefabInstance:
     - {fileID: 492581052268715822, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4957167276760604118, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 481735840}
   m_SourcePrefab: {fileID: 100100000, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+--- !u!1 &481735832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4957167276760604118, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+  m_PrefabInstance: {fileID: 481735831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &481735840
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481735832}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &655862280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2258,7 +2301,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 256
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -2269,7 +2312,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 8f9a8bd3de0ed3345b52c97a6b0b670e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 0f0f9032fd574a749a361c9838f6b5b2, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1739064841
 Transform:
