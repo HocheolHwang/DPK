@@ -23,7 +23,6 @@ public class Chat_Popup_UI : UI_Popup
         Button cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
-        AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.C);
 
         // 입력하기 버튼 이벤트 등록
         Button chatEnterButton = GetButton((int)Buttons.Chat_Enter_Button);
