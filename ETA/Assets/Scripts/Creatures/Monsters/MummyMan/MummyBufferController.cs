@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using MummyWarriorStateItem;
+using MummyBufferStateItem;
 using System;
 
-public class MummyWarriorController : BaseController
+public class MummyBufferController : BaseController
 {
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
-    public State WIND_MILL_STATE;
+    public State BUFF_STATE;
     public State DIE_STATE;
     public State GLOBAL_STATE;
 
-    private MummyWarriorAnimationData _animData;
-    public MummyWarriorAnimationData AnimData { get => _animData; }
+    private MummyBufferAnimationData _animData;
+    public MummyBufferAnimationData AnimData { get => _animData; }
 
-    public static event Action<MummyWarriorController> OnDeath;
+    public static event Action<MummyBufferController> OnDeath;
 
     protected override void Awake()
     {
@@ -34,7 +34,7 @@ public class MummyWarriorController : BaseController
     // ---------------------------------- Init ------------------------------------------
     protected override void Init()
     {
-        _animData = GetComponent<MummyWarriorAnimationData>();
+        _animData = GetComponent<MummyBufferAnimationData>();
         _animData.StringAnimToHash();
 
         // ----------------------------- Animation && State -------------------------------------
@@ -45,7 +45,7 @@ public class MummyWarriorController : BaseController
         IDLE_BATTLE_STATE = new IdleBattleState(this);
         CHASE_STATE = new ChaseState(this);
         ATTACK_STATE = new AttackState(this);
-        WIND_MILL_STATE = new WindMillState(this);
+        BUFF_STATE = new BuffState(this);
         DIE_STATE = new DieState(this);
         GLOBAL_STATE = new GlobalState(this);
 
@@ -61,6 +61,5 @@ public class MummyWarriorController : BaseController
 
         // Mummy Man 한테 죽었음을 알려주기
         OnDeath?.Invoke(this);
-        // MummyWarriorController.OnDeath -= OnDeath;
     }
 }
