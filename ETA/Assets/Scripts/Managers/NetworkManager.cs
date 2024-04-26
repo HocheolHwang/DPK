@@ -157,7 +157,7 @@ public class NetworkManager : MonoBehaviour
             ClassReqDto data = JsonUtility.FromJson<ClassReqDto>(request.downloadHandler.text);
 
             // 직업 변화
-            PlayerManager.GetInstance().SetClassCode(data.classCode);
+            //PlayerManager.GetInstance().SetClassCode(data.classCode);
             callback?.Invoke(data);
         }
     }
@@ -178,7 +178,7 @@ public class NetworkManager : MonoBehaviour
         }
 
         //토큰이 있으면 access token 실어보내기
-        string token = PlayerManager.GetInstance().GetToken();
+        string token = Managers.PlayerInfo.GetToken();
         if (token != null)
         {
             request.SetRequestHeader("Authorization", "Bearer " + token);

@@ -191,7 +191,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
 
     // 던전 들어갈 때 부르기
-    public void SendRoomMemberLog()
+    public void SendRoomEnterLog()
     {
         PartyReqDto dto = new PartyReqDto();
 
