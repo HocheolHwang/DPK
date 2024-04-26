@@ -59,7 +59,9 @@ public class Define
         // ------------------- 보스 몬스터 -----------------------
         FlowerDryad,
         KnightG,
-        MummyMan
+        MummyMan,
+        MummyManWarrior,
+        MummyManBuffer,
     }
 
     public enum Effect
