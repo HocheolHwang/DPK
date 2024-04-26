@@ -11,28 +11,32 @@ public class SkillSlot : MonoBehaviour
     public void Start()
     {
         SkillSystem = GameObject.Find("@Scene").GetComponent<SkillSystem>();
-        //skill[0] = new SkillWarrior.TestSkill1();
-        //skill[1] = new SkillWarrior.TestSkill1();
-        //skill[2] = new SkillWarrior.TestSkill1();
-        //skill[3] = new SkillWarrior.TestSkill1();
-        //skill[4] = new SkillWarrior.TestSkill1();
-        //skill[5] = new SkillWarrior.TestSkill1();
-        //skill[6] = new SkillWarrior.TestSkill1();
-        //skill[7] = new SkillWarrior.TestSkill1();
-        // for(int i = 0; i < skill.Length; i++)
-        // {
-        //     skill[i] = new SkillWarrior.TestSkill1();
-        // }
+        // 테스트용 하드 코딩
+        /*
+        skill[0] = new SkillWarrior.TestSkill1();
+        skill[1] = new SkillWarrior.TestSkill2();
+        skill[2] = new SkillWarrior.TestSkill1();
+        skill[3] = new SkillWarrior.TestSkill2();
+        skill[4] = new SkillWarrior.TestSkill1();
+        skill[5] = new SkillWarrior.TestSkill1();
+        skill[6] = new SkillWarrior.TestSkill1();
+        skill[7] = new SkillWarrior.TestSkill1();
+        _animator = GetComponent<Animator>(); // 애니메이터 컴포넌트 할당
+        for(int i = 0; i < skill.Length; i++)
+        {
+            skill[i].InitSetting();
+        }
+        */
     }
 
     public void SelectSkill(Define.SkillKey key)
     {
-        // string s = skill[(int)key].animationName;
-        //Debug.Log($"Skill Key = {key}");
-        //Debug.Log($"Skill Key = {(int)key}");
-        //skill[(int)key].InitSetting();
-        //Debug.Log($"{skill[(int)key]}");
-        //skill[(int)key].Using();
+        // 테스트용 하드 코딩
+        /*
+        Debug.Log($"{skill[(int)key].data.animator}");
+        _animator.CrossFade(skill[(int)key].data.animator, 0.05f);
+        skill[(int)key].Using();
+        */
         switch (key)
         {
             case Define.SkillKey.Q:
@@ -45,7 +49,7 @@ public class SkillSlot : MonoBehaviour
                 SkillSystem.currentType = Define.SkillType.Holding;
                 break;
         }
-        
+
 
     }
 
