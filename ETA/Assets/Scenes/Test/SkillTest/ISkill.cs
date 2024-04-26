@@ -4,13 +4,24 @@ using UnityEngine;
 
 public struct Data
 {
+    [SerializeField]    // 이름
     public string name;
-    public float castTime;
+    [SerializeField]    // 시전 시간(콜라보 스킬 아니면 즉발 발동)
+    public float casting;
+    [SerializeField]    // 쿨타임
     public float cooldown;
+    [SerializeField]
     public int damage;
+    [SerializeField]    // 아이콘
     public Sprite icon;
+    [SerializeField]    // 이펙트
     public GameObject effect;
+    [SerializeField]    // 애니메이션
     public string animator;
+    public string description;
+
+    public float lastCastTime { get; set; }
+    public Transform root { get; set; }
 }
 
 public abstract class ISkill : MonoBehaviour

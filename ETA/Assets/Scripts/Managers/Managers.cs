@@ -14,6 +14,7 @@ public class Managers : MonoBehaviour
     SoundManager _sound = new SoundManager();
     PhotonManager _photon = new PhotonManager();
     NetworkManager _network = new NetworkManager();
+    PlayerManager _playerInfo = PlayerManager.GetInstance();
     PoolManager _pool = new PoolManager();
     CoroutineManager _coroutine;
     
@@ -24,6 +25,7 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PhotonManager Photon { get; private set; }
     public static NetworkManager Network { get; private set; }
+    public static PlayerManager PlayerInfo { get { return Instance._playerInfo; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static CoroutineManager Coroutine { get; private set;}
 
