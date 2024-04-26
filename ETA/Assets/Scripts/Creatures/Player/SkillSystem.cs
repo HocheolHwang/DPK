@@ -18,12 +18,6 @@ public class SkillSystem : MonoBehaviour
     CursorType currentCursor;
     PlayerController myController;
 
-
-    //public SkillType CurrentSkillType { get { return currentType; } set { currentType = value; } };
-
-    float originOutlineWidth = -1;
-    GameObject origin;
-
     private Texture2D skillCursor;
     ParticleSystem targetingGo;
     GameObject rangeObject;
@@ -37,7 +31,7 @@ public class SkillSystem : MonoBehaviour
         rangeObject = Managers.Resource.Instantiate("RangeObject");
         rangeObject.SetActive(false);
 
-        myController = GameObject.Find("Warrior").GetComponent<PlayerController>();
+        myController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -75,8 +69,8 @@ public class SkillSystem : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool raycastHit = Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("Monster"));
-        
-        
+        rangeObject.SetActive(false);
+
 
         if (raycastHit)
         {
@@ -86,7 +80,7 @@ public class SkillSystem : MonoBehaviour
                 Cursor.SetCursor(skillCursor, Vector2.zero, CursorMode.Auto);
                 currentCursor = CursorType.Target;
                 targetingGo.gameObject.SetActive(true);
-                rangeObject.SetActive(false);
+                
             }
 
 
@@ -163,6 +157,7 @@ public class SkillSystem : MonoBehaviour
     public void StartHolding()
     {
         currentType = Define.SkillType.None;
+        Debug.Log(myController);
         myController.ChangeState(myController.HOLD_STATE);
 
     }
