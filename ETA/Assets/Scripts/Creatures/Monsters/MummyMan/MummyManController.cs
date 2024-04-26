@@ -5,29 +5,30 @@ using UnityEngine;
 
 using KnightGStateItem;
 
-public class KnightGController : BaseController
+public class MummyManController : BaseController
 {
-    // KnightG가 가지는 상태
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
-    public State TWO_SKILL_TRANSITION_STATE;
-    public State TWO_SKILL_ENERGY_STATE;
-    public State TWO_SKILL_ATTACK_STATE;
-    public State COUNTER_ENABLE_STATE;
-    public State COUNTER_ATTACK_STATE;
-    public State PHASE_TRANSITION_STATE;
-    public State PHASE_ATTACK_STATE;
-    public State PHASE_ATTACK_ING_STATE;
+    public State THROW_STATE;
+
+    public State CLAP_STATE;
+
+    public State SHOUTING_STATE;
+    public State JUMP_STATE;
+
+    public State FORE_SHADOWING_STATE;
+    public State RUSH_STATE;
+                                            // 돌아오는 상태 추가 -> 원래 자리를 저장하는 변수 필요, 멀리가는 패턴임을 bool 값으로 관리해서 true가 되면 현재 자리를 저장
+    public State WIND_MILL_STATE;
+    
     public State DIE_STATE;
     public State GROGGY_STATE;
     public State GLOBAL_STATE;
 
     private KnightGAnimationData _animData;
-    private bool _isEnterPhaseTwo;                 // Phase 진입 여부
     public KnightGAnimationData KnightGAnimData { get => _animData; }
-    public bool IsEnterPhaseTwo { get => _isEnterPhaseTwo; set => _isEnterPhaseTwo = value; }
 
     public static event Action OnBossDestroyed;
 
@@ -52,25 +53,25 @@ public class KnightGController : BaseController
 
         _stateMachine = new StateMachine();
 
-        IDLE_STATE = new IdleState(this);
-        IDLE_BATTLE_STATE = new IdleBattleState(this);
-        CHASE_STATE = new ChaseState(this);
-        ATTACK_STATE = new AttackState(this);
-        // Skill
-        TWO_SKILL_TRANSITION_STATE = new TwoSkillTransitionState(this);
-        TWO_SKILL_ENERGY_STATE = new TwoSkillEnergyState(this);
-        TWO_SKILL_ATTACK_STATE = new TwoSkillAttackState(this);
-        // Counter
-        COUNTER_ENABLE_STATE = new CounterEnableState(this);
-        COUNTER_ATTACK_STATE = new CounterAttackState(this);
-        // Phase
-        PHASE_TRANSITION_STATE = new PhaseTransitionState(this);
-        PHASE_ATTACK_STATE = new PhaseAttackState(this);
-        PHASE_ATTACK_ING_STATE = new PhaseAttackingState(this);
-        // Global
-        DIE_STATE = new DieState(this);
-        GROGGY_STATE = new GroggyState(this);
-        GLOBAL_STATE = new GlobalState(this);
+        //IDLE_STATE = new IdleState(this);
+        //IDLE_BATTLE_STATE = new IdleBattleState(this);
+        //CHASE_STATE = new ChaseState(this);
+        //ATTACK_STATE = new AttackState(this);
+        //// Skill
+        //TWO_SKILL_TRANSITION_STATE = new TwoSkillTransitionState(this);
+        //TWO_SKILL_ENERGY_STATE = new TwoSkillEnergyState(this);
+        //TWO_SKILL_ATTACK_STATE = new TwoSkillAttackState(this);
+        //// Counter
+        //COUNTER_ENABLE_STATE = new CounterEnableState(this);
+        //COUNTER_ATTACK_STATE = new CounterAttackState(this);
+        //// Phase
+        //PHASE_TRANSITION_STATE = new PhaseTransitionState(this);
+        //PHASE_ATTACK_STATE = new PhaseAttackState(this);
+        //PHASE_ATTACK_ING_STATE = new PhaseAttackingState(this);
+        //// Global
+        //DIE_STATE = new DieState(this);
+        //GROGGY_STATE = new GroggyState(this);
+        //GLOBAL_STATE = new GlobalState(this);
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 

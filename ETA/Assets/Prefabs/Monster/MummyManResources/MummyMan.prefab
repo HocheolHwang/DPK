@@ -143,10 +143,11 @@ GameObject:
   - component: {fileID: 8649013800104198911}
   - component: {fileID: 6645983222205432521}
   - component: {fileID: 8031710197592955291}
-  - component: {fileID: 8118150198658308657}
-  - component: {fileID: 8385588327638070179}
   - component: {fileID: 145847567029744693}
   - component: {fileID: 4061189257114539398}
+  - component: {fileID: 2045859972520013980}
+  - component: {fileID: -7887648138693454644}
+  - component: {fileID: 1770780272972965906}
   m_Layer: 7
   m_Name: MummyMan
   m_TagString: Monster
@@ -264,39 +265,6 @@ CapsuleCollider:
   m_Height: 2.4
   m_Direction: 1
   m_Center: {x: 0, y: 1.2, z: 0}
---- !u!114 &8118150198658308657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 640021385561637830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86cc2e01477d23642b72d4eb2b4b9830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitType: 8
-  animator: {fileID: 0}
-  agent: {fileID: 0}
-  stat: {fileID: 0}
---- !u!114 &8385588327638070179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 640021385561637830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82e5937bf42156c4c9b07b47e3cc956d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idleParamName: IDLE
-  chaseParamName: CHASE
-  attackParamName: ATTACK
-  dieParamName: DIE
-  attackAnim: {fileID: 1827226128182048838, guid: 6fd391e0aa3b6ec49bc553c9b8019f40, type: 3}
 --- !u!114 &145847567029744693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +289,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640021385561637830}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
@@ -332,6 +300,72 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &2045859972520013980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640021385561637830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectRange: 15
+  _attackRange: 8
+  _target: {fileID: 0}
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &-7887648138693454644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640021385561637830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f2427021a2fce4db462a73fdcae943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleParamName: IDLE
+  chaseParamName: CHASE
+  attackParamName: ATTACK
+  dieParamName: DIE
+  attackAnim: {fileID: 1827226128182048838, guid: 6fd391e0aa3b6ec49bc553c9b8019f40, type: 3}
+  groggyParamName: GROGGY
+  throwParamName: THROW
+  shoutingParamName: SHOUTING
+  jumpParamName: JUMP
+  windMillParamName: WIND_MILL
+  foreShadowingParamName: FORE_SHADOWING
+  rushParamName: RUSH
+  clapParamName: CLAP
+  clapAnim: {fileID: 1827226128182048838, guid: eedf0c13cf540bc4c9110071cb1ccfd6, type: 3}
+  jumpAnim: {fileID: 1827226128182048838, guid: 4e731a58c77f3254a957fc0b98a334eb, type: 3}
+  rushAnim: {fileID: 1827226128182048838, guid: 5c1f7244cefbb0c4b8dfcf19ca3482b2, type: 3}
+  shoutingAnim: {fileID: 1827226128182048838, guid: 459f17531b3ab884d955eaa98dec903a, type: 3}
+  throwAnim: {fileID: 1827226128182048838, guid: 12124898df2e81a489f89bafa4cc67ef, type: 3}
+  windMillAnim: {fileID: 1827226128182048838, guid: 9098903525e73f34588681f79386b01b, type: 3}
+  foreShadowingAnim: {fileID: 1827226128182048838, guid: 0bfbb8b150d6c754db09cdd046f759f1, type: 3}
+--- !u!114 &1770780272972965906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640021385561637830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd5f0e5c9be13f4d99c3539caea0a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 8
+  animator: {fileID: 0}
+  agent: {fileID: 0}
+  stat: {fileID: 0}
 --- !u!1 &703396583548552387
 GameObject:
   m_ObjectHideFlags: 0
