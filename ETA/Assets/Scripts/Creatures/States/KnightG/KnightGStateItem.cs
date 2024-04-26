@@ -490,7 +490,6 @@ namespace KnightGStateItem
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
             if (_controller.CurState == _controller.GROGGY_STATE) return;               // 그로기 상태는 특정 상태에서 분기
-            if (_controller.CurState == _controller.PHASE_TRANSITION_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
             if (_stat.Hp <= 0)

@@ -21,7 +21,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
-    private Color[] _originalColors; // 원래의 머티리얼 색상 저장용 배열
+    private Color[] _originalColors;  // 원래의 머티리얼 색상 저장용 배열
 
 
     Color _damagedColor = Color.gray;
