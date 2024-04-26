@@ -14,6 +14,7 @@ public class SkillSystem : MonoBehaviour
     [SerializeField]
     public Define.SkillType currentType;
     CursorType currentCursor;
+    PlayerController myController;
 
 
     //public SkillType CurrentSkillType { get { return currentType; } set { currentType = value; } };
@@ -33,6 +34,8 @@ public class SkillSystem : MonoBehaviour
         targetingGo.Play();
         rangeObject = Managers.Resource.Instantiate("RangeObject");
         rangeObject.SetActive(false);
+
+        myController = GameObject.Find("Warrior").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -94,6 +97,7 @@ public class SkillSystem : MonoBehaviour
                 currentType = Define.SkillType.None;
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                 targetingGo.gameObject.SetActive(false);
+                myController.ChangeState(myController.SKILL_STATE);
             }
         }
         else
@@ -130,6 +134,7 @@ public class SkillSystem : MonoBehaviour
                 currentType = Define.SkillType.None;
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                 rangeObject.gameObject.SetActive(false);
+                myController.ChangeState(myController.SKILL_STATE);
                 Debug.Log("범위 스킬 사용");
             }
 

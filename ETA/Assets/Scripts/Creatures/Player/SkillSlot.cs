@@ -24,7 +24,7 @@ public class SkillSlot : MonoBehaviour
         // }
     }
 
-    public void CastSkill(Define.SkillKey key)
+    public void SelectSkill(Define.SkillKey key)
     {
         // string s = skill[(int)key].animationName;
         //Debug.Log($"Skill Key = {key}");
@@ -44,6 +44,14 @@ public class SkillSlot : MonoBehaviour
         
 
     }
+
+    public void CastSkill(Define.SkillKey key)
+    {
+        //string s = skill[(int)key].animationName;
+        Debug.Log($"Skill Key = {key}");
+    }
+
+
 
     public void Clear()
     {

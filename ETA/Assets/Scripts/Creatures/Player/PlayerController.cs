@@ -74,13 +74,13 @@ public class PlayerController : BaseController
         if (Input.GetKeyDown(KeyCode.Q))
         {
             _usingSkill = Define.SkillKey.Q;
-            SkillSlot.CastSkill(Define.SkillKey.Q);
+            SkillSlot.SelectSkill(Define.SkillKey.Q);
             //ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
             _usingSkill = Define.SkillKey.W;
-            SkillSlot.CastSkill(Define.SkillKey.W);
+            SkillSlot.SelectSkill(Define.SkillKey.W);
             //ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.E))

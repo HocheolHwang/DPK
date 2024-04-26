@@ -109,7 +109,7 @@ namespace PlayerStates
             base.Enter();
             tmp = 0;
             _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-            _detector.Target.GetComponent<MonsterController>().TakeDamage(_playerController.stat.AttackDamage);
+            _detector.Target.GetComponent<BaseController>().TakeDamage(_playerController.stat.AttackDamage);
             LookAtEnemy();
       
 
@@ -147,7 +147,7 @@ namespace PlayerStates
 
             _playerController.SkillSlot.CastSkill(_playerController._usingSkill);
             _animator.CrossFade("SKILL1", 0.05f);
-            _detector.Target.GetComponent<MonsterController>().TakeDamage(50);
+            _detector.Target.GetComponent<BaseController>().TakeDamage(50);
 
         }
 
