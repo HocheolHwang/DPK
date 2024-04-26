@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Define
 {
+    public enum SkillType
+    {
+        None,
+        Target,
+        Range
+    }
     public enum SkillKey
     {
         Q,
@@ -144,13 +150,6 @@ public class Define
         Manual,
     }
 
-    public enum SkillType
-    {
-        None,
-        LeftSkill,
-        RightSkill,
-        ClassSkill
-    }
 
     public enum ClassType
     {

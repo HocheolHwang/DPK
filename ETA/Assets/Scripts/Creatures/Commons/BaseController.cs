@@ -104,9 +104,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     {
         // 파괴, 이펙트, 소리, UI 등 다양한 이벤트 추가
         // 관련 Resource는 Component나 Manager로 가져옴
+        Debug.Log("Destory Event Start");
 
         // 애니메이션은 상태에서 관리 중
         GetComponent<Collider>().enabled = false;
+
+
     }
 
     public virtual void DestroyObject()

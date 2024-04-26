@@ -23,6 +23,7 @@ public class PlayerController : BaseController
     public SkillSlot SkillSlot { get; set;}
 
 
+
     private void Start()
     {
         Init();
@@ -42,6 +43,7 @@ public class PlayerController : BaseController
         GLOBAL_STATE = new GlobalState(this);
 
         SkillSlot = gameObject.GetOrAddComponent<SkillSlot>();
+        
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
@@ -72,27 +74,35 @@ public class PlayerController : BaseController
         if (Input.GetKeyDown(KeyCode.Q))
         {
             _usingSkill = Define.SkillKey.Q;
-            ChangeState(SKILL_STATE);
+            SkillSlot.CastSkill(Define.SkillKey.Q);
+            //ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
             _usingSkill = Define.SkillKey.W;
-            ChangeState(SKILL_STATE);
+            SkillSlot.CastSkill(Define.SkillKey.W);
+            //ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             _usingSkill = Define.SkillKey.E;
-            ChangeState(SKILL_STATE);
+            //ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             _usingSkill = Define.SkillKey.R;
-            ChangeState(SKILL_STATE);
+            //ChangeState(SKILL_STATE);
         }
 
     }
 
+    public override void DestroyEvent()
+    {
+        base.DestroyEvent();
+        SkillSlot.Clear();
+    }
 
-    
+
+
 
 }
