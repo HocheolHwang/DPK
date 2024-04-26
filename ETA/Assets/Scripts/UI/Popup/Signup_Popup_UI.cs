@@ -152,7 +152,7 @@ public class Signup_Popup_UI : UI_Popup
         Managers.UI.ShowPopupUI<Login_Popup_UI>("[Login]_Login_Popup_UI");
     }
 
-    // 게임 종료
+    // 게임 종료 Popup UI 열기
     private void OpenGameExit(PointerEventData data)
     {
         // 게임 종료 Popup UI를 띄움

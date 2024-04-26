@@ -118,7 +118,7 @@ public class Login_Popup_UI : UI_Popup
             // 모든 Popup UI를 닫음
             CloseAllPopupUI();
 
-            // 회원가입 완료 Popup UI를 띄움
+            // 로그인 완료 Popup UI를 띄움
             Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
         }
         else if (message == "Database error.")
