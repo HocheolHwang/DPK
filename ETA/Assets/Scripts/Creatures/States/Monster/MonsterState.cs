@@ -13,13 +13,4 @@ public class MonsterState : State
         _controller = controller;
         _animData = controller.AnimData;
     }
-
-
-    // ----------------------------- Common Functions -------------------------------------
-    public bool IsStayForSeconds()
-    {
-        // Debug.Log($"{StartTime} | {ExecuteTime}");
-        if (ExecuteTime < 0.5f) return false;
-        return true;
-    }
 }

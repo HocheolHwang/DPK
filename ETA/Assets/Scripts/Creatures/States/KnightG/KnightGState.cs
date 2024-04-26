@@ -6,8 +6,6 @@ using UnityEngine;
 // KnightG 상태
 public class KnightGState : State
 {
-    protected float _animTime;                          // 각 상태의 animation 수행 시간
-    protected float _threadHold;                        // 각 상태의 animation 끝나는 시간
     protected static int attackCnt = 0;                 // 평타를 번갈아가면서 공격할 수 있음
     protected static int twoSkillTrigger = 1;           // 1번 사용할 수 있다.
     protected static int counterTimeTrigger = 1;        // 처음 플레이어를 직면한 후에 counterTime을 계산하기 시작한다.
@@ -22,28 +20,4 @@ public class KnightGState : State
         _controller = controller;
         _animData = controller.KnightGAnimData;
     }
-
-    // ----------------------------- Common Functions -------------------------------------
-    public bool IsStayForSeconds(float seconds = 0.5f)
-    {
-        if (ExecuteTime < seconds) return false;
-        return true;
-    }
-
-    public void InitTime(float animLength)
-    {
-        _animTime = 0;
-        _threadHold = animLength;
-    }
-
-    public void LookAtEnemy()
-    {
-        if (_detector.Target == null) return;
-        Vector3 dir = _detector.Target.position;
-        dir.y = _controller.transform.position.y;
-        _controller.transform.LookAt(dir);
-    }
-
-    // ----------------------------- Global Functions -------------------------------------
-    
 }

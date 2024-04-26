@@ -13,7 +13,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     [SerializeField] public Define.UnitType unitType;
     [SerializeField] public Animator animator;
     [SerializeField] public NavMeshAgent agent;
-    [SerializeField] public Detector detector;
+    [SerializeField] public IDetector detector;
     [SerializeField] public Stat stat;
 
 
@@ -33,7 +33,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        detector = GetComponent<Detector>();
+        detector = GetComponent<IDetector>();
 
         SetOriginColor();
 
@@ -62,7 +62,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     //----------------------------------- Debugging --------------------------------------------
     private void OnDrawGizmos()
     {
-
+#if UNITY_EDITOR
         if (_stateMachine != null && _curState != null)
         {
             GUIStyle style = new GUIStyle();
@@ -74,6 +74,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             Handles.Label(transform.position, label, style);
 #endif
         }
+
+#endif
     }
 
     // ---------------------------------- IDamage ------------------------------------------
@@ -90,7 +92,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
         UI_AttackedDamage attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
         attackedDamage_ui.AttackedDamage = damage;
-
+        
         stat.Hp -= damage;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
@@ -99,15 +101,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             stat.Hp = 0;
             DestroyObject();
         }
-        else
-        {
-            HitEvent();
-        }
-    }
-
-    public virtual void HitEvent()
-    {
-        // Resource를 사용해서 네이밍 컨벤션을 맞춤
     }
 
     public virtual void DestroyEvent()
@@ -141,7 +134,9 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     {
         foreach (Renderer renderer in _allRenderers)
         {
-            renderer.material.color = _damagedColor;
+            renderer.material.SetColor("_Color", Color.gray);
+            renderer.material.SetColor("_BaseColor", Color.gray);
+
         }
 
         // 지정된 시간만큼 기다림
@@ -150,7 +145,9 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
         for (int i = 0; i < _allRenderers.Length; i++)
         {
-            _allRenderers[i].material.color = _originalColors[i];
+            Renderer renderer = _allRenderers[i];
+            renderer.material.SetColor("_BaseColor", Color.white);
+            renderer.material.color = _originalColors[i];
         }
     }
 }
