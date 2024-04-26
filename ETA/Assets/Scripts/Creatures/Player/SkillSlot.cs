@@ -7,6 +7,7 @@ public class SkillSlot : MonoBehaviour
     public SkillSystem SkillSystem { get; set; }
     // Start is called before the first frame update
     ISkill[] skill = new ISkill[8];
+    private Animator _animator;
     public void Start()
     {
         SkillSystem = GameObject.Find("@Scene").GetComponent<SkillSystem>();
