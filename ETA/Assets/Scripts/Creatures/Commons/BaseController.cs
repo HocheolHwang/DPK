@@ -21,7 +21,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
-    private Color[] _originalColors; // 원래의 머티리얼 색상 저장용 배열
+    private Color[] _originalColors;  // 원래의 머티리얼 색상 저장용 배열
 
 
     Color _damagedColor = Color.gray;
@@ -68,6 +68,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.red;
 
+
             string label = "Active State: " + _curState.ToString();
             Handles.Label(transform.position, label, style);
         }
@@ -104,9 +105,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     {
         // 파괴, 이펙트, 소리, UI 등 다양한 이벤트 추가
         // 관련 Resource는 Component나 Manager로 가져옴
+        Debug.Log("Destory Event Start");
 
         // 애니메이션은 상태에서 관리 중
         GetComponent<Collider>().enabled = false;
+
+
     }
 
     public virtual void DestroyObject()

@@ -29,7 +29,6 @@ public class KnightGController : BaseController
     public KnightGAnimationData KnightGAnimData { get => _animData; }
     public bool IsEnterPhaseTwo { get => _isEnterPhaseTwo; set => _isEnterPhaseTwo = value; }
 
-    public bool IsStun;
     public static event Action OnBossDestroyed;
 
     protected override void Awake()

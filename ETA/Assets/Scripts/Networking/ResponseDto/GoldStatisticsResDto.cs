@@ -6,4 +6,5 @@ using UnityEngine;
 public class GoldStatisticsResDto 
 {
     public int currendGold;
+    public string message;
 }

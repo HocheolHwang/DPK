@@ -82,11 +82,13 @@ namespace MonsterStateItem
             if (_detector.Target == null)
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
+                return;
             }
             if (_detector.IsArriveToTarget())
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
+
 
             _agent.SetDestination(_detector.Target.position);
         }
@@ -112,7 +114,8 @@ namespace MonsterStateItem
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
             _animator.CrossFade(_animData.AttackParamHash, 0.2f);
 
-            _detector.Target.GetComponent<PlayerController>().TakeDamage(20);
+            if(_detector.Target != null) _detector.Target.GetComponent<PlayerController>().TakeDamage(20);
+
         }
 
         public override void Execute()
