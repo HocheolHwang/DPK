@@ -87,14 +87,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         // 나중에 수정할 것
         roomName = "RoomName";
-        string captainName = "captain";
+        string partyLeader = Managers.PlayerInfo.GetNickName();
 
         if (roomName.Length == 0) return;
 
-        if (captainName == null)
-            captainName = "player";
+        if (partyLeader == null)
+            partyLeader = "초이";
 
-        if (captainName == null || roomName == null) return;
+        if (partyLeader == null || roomName == null) return;
 
         RoomOptions room = new RoomOptions();
         room.MaxPlayers = maxplayersPerRoom;
@@ -117,7 +117,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         roomName = roomName + "`" + seed;
 
         // Register in lobby
-        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "seed", seed }, { "roomID", guidString } };
+        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "partyLeader", partyLeader }, { "seed", seed }, { "roomID", guidString } };
         room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed", "roomID" };
         
         //Managers.Network.CreatePartyCall(partyData);
@@ -175,8 +175,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 printRoomName = printRoomName.Substring(0, lastIndex);
             idx++;
 
-            //string roomInfo = "room : " + room.Value.Name + " \n" + room.Value.PlayerCount + " / " + room.Value.MaxPlayers + "\n" + "isvisible : " + room.Value.IsVisible + "\n" + "isopen : " + room.Value.IsOpen
-            //    + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
+            string roomInfo = "room : " + room.Name + " \n" + room.PlayerCount + " / " + room.MaxPlayers + "\n" + "isvisible : " + room.IsVisible + "\n" + "isopen : " + room.IsOpen
+                + "\n partyLeader : " + has["partyLeader"] + "\n" + has["ispassword"] + " / " + has["password"];
+
+            Debug.Log(roomInfo);
         }
 
         return roomlist;
@@ -296,8 +298,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         if(PhotonNetwork.IsMasterClient)
         {
+            ExitGames.Client.Photon.Hashtable curProperties = PhotonNetwork.CurrentRoom.CustomProperties;
             // 방장처리
             Managers.PlayerInfo.SetPartyLeader(true);
+            curProperties["partyLeader"] = Managers.PlayerInfo.GetNickName();
+            PhotonNetwork.CurrentRoom.SetCustomProperties(curProperties);
+
+            RoomInfo room = PhotonNetwork.CurrentRoom;
+
+            string roomInfo = "room : " + room.Name + " \n" + room.PlayerCount + " / " + room.MaxPlayers + "\n" + "isvisible : " + room.IsVisible + "\n" + "isopen : " + room.IsOpen
+                + "\n partyLeader : " + PhotonNetwork.CurrentRoom.CustomProperties["partyLeader"] + "\n" + PhotonNetwork.CurrentRoom.CustomProperties["ispassword"] + " / " + PhotonNetwork.CurrentRoom.CustomProperties["password"];
+
+            Debug.Log(roomInfo);
         }
     }
 
