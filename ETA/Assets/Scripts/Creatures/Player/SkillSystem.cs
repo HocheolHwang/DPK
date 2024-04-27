@@ -73,15 +73,16 @@ public class SkillSystem : MonoBehaviour
         bool raycastHit = Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("Monster"));
 
         rangeObject.SetActive(false);
+        if (currentCursor != CursorType.Target)
+        {
+            Cursor.SetCursor(skillCursor, Vector2.zero, CursorMode.Auto);
+            currentCursor = CursorType.Target;
+        }
 
         if (raycastHit)
         {
-            if (currentCursor != CursorType.Target)
-            {
-                Cursor.SetCursor(skillCursor, Vector2.zero, CursorMode.Auto);
-                currentCursor = CursorType.Target;
-                targetingGo.gameObject.SetActive(true);
-            }
+
+            targetingGo.gameObject.SetActive(true);
 
             GameObject monster = hit.collider.gameObject;
             TargetOn(monster);
@@ -97,12 +98,7 @@ public class SkillSystem : MonoBehaviour
         }
         else
         {
-            if (currentCursor != CursorType.None)
-            {
-                targetingGo.gameObject.SetActive(false);
-                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-                currentCursor = CursorType.None;
-            }
+            targetingGo.gameObject.SetActive(false);
         }
 
 
