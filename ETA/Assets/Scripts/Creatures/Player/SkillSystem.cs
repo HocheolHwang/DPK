@@ -34,7 +34,7 @@ public class SkillSystem : MonoBehaviour
         rangeObject = Managers.Resource.Instantiate("RangeObject");
         rangeObject.SetActive(false);
 
-        myController = GameObject.Find("Warrior").GetComponent<PlayerController>();
+        myController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame

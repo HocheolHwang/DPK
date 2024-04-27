@@ -179,6 +179,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: DetectRange
+      value: 10.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: TargetLayerMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 2212607914567969912, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -381,6 +389,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: DetectRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: TargetLayerMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 2212607914567969912, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -582,6 +598,14 @@ PrefabInstance:
     - target: {fileID: 1960929990741252368, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: DetectRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: TargetLayerMask.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 2212607914567969912, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
@@ -818,6 +842,14 @@ PrefabInstance:
     - target: {fileID: 1960929990741252368, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: DetectRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: TargetLayerMask.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 2212607914567969912, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
@@ -1078,6 +1110,14 @@ PrefabInstance:
     - target: {fileID: 6268509727253025285, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279640478072988589, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
+      propertyPath: DetectRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279640478072988589, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
+      propertyPath: TargetLayerMask.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1765,6 +1805,14 @@ PrefabInstance:
     - target: {fileID: 1960929990741252368, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: DetectRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: TargetLayerMask.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 2212607914567969912, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
@@ -2491,12 +2539,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4312293048030923749, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      propertyPath: DetectRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312293048030923749, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: detectRange
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4312293048030923749, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      propertyPath: TargetLayerMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 4957167276760604118, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: m_Name
-      value: Warrior
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7290405898905307331, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: _hp

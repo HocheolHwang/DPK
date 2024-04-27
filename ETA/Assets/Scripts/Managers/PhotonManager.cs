@@ -85,6 +85,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
          
         Managers.PlayerInfo.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
         Debug.Log(Managers.PlayerInfo.GetNickName());
+
         if (isConnecting)
         {
             // 이미 연결된 경우
