@@ -17,10 +17,10 @@ using static UnityEngine.GraphicsBuffer;
 public class RangedDetector : MonoBehaviour, IDetector
 {
     [Header("Set Values from the Inspector")]
-    [SerializeField] public float detectRange;
+    [SerializeField] public float DetectRange;
     [SerializeField] private float _attackRange;
     [SerializeField] private Transform _target;
-    [SerializeField] public LayerMask targetLayerMask;
+    [SerializeField] public LayerMask TargetLayerMask;
     //[SerializeField] private PlayerController[] _players;
 
     private bool _hasMetTargetOne;          // 타겟과 첫 조우 여부
@@ -62,7 +62,7 @@ public class RangedDetector : MonoBehaviour, IDetector
     {
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, detectRange);
+        if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, DetectRange);
         else Gizmos.DrawWireSphere(_ray.origin, _attackRange);
     }
 
@@ -80,7 +80,7 @@ public class RangedDetector : MonoBehaviour, IDetector
                 // detectRange 안쪽과 attackRange 바깥쪽에 플레이어가 존재하도록 값을 세팅한다.
                 // 그래야 모든 플레이어를 감지할 수 있기 때문이다.
                 float farthestDist = 0;
-                Collider[] enemies = Physics.OverlapSphere(transform.position, detectRange, targetLayerMask);
+                Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);
                 foreach (Collider player in enemies)
                 {
                     if (player.GetComponent<Stat>().Hp > 0)
@@ -109,7 +109,7 @@ public class RangedDetector : MonoBehaviour, IDetector
             else
             {
                 float closeDist = Mathf.Infinity;
-                Collider[] enemies = Physics.OverlapSphere(transform.position, detectRange, targetLayerMask);
+                Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);
                 foreach (Collider enemy in enemies)
                 {
                     _hasMetTargetOne = true;    // 한 번 Target을 만남

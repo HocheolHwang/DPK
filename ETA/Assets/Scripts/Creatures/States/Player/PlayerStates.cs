@@ -59,7 +59,7 @@ namespace PlayerStates
             base.Execute();
 
             Vector3 dest = _playerController._destination.position;
-            float moveSpeed = _playerController.stat.MoveSpeed;
+            float moveSpeed = _playerController.Stat.MoveSpeed;
             //_agent.Move(dir * Time.deltaTime * moveSpeed);
 
 
@@ -110,7 +110,7 @@ namespace PlayerStates
             _agent.isStopped = true;
             tmp = 0;
             _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-            _detector.Target.GetComponent<BaseController>().TakeDamage(_playerController.stat.AttackDamage);
+            _detector.Target.GetComponent<BaseController>().TakeDamage(_playerController.Stat.AttackDamage);
             LookAtEnemy();
       
 
@@ -300,7 +300,7 @@ namespace PlayerStates
         {
             if (_playerController.CurState is DieState) return;
 
-            if(_playerController.stat.Hp <= 0)
+            if(_playerController.Stat.Hp <= 0)
             {
                 _playerController.ChangeState(_playerController.DIE_STATE);
             }

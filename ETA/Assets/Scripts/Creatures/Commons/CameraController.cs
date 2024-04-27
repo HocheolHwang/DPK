@@ -29,8 +29,6 @@ public class CameraController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(_player.transform.position, _delta, out hit, _delta.magnitude, LayerMask.GetMask("Wall")))
             {
-                //Debug.Log($"??? : {hit.point}");
-
                 float dist = (hit.point - _player.transform.position).magnitude * 0.8f;
                 transform.position = _player.transform.position + _delta.normalized * dist;
             }
@@ -38,9 +36,7 @@ public class CameraController : MonoBehaviour
             {
                 transform.position = _player.transform.position + _delta;
                 transform.LookAt(_player.transform);
-
             }
-
         }
 
     }

@@ -48,7 +48,7 @@ public class MonsterController : BaseController
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
-        agent.stoppingDistance = detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
+        Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
     }
 
     // ---------------------------------- IDamage ------------------------------------------

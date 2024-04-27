@@ -16,19 +16,17 @@ public class PlayerController : BaseController
     public State DIE_STATE;
     public State HOLD_STATE;
     public State GLOBAL_STATE;
+
+
     [SerializeField]
     public Transform _destination;
     public Define.SkillKey _usingSkill;
 
-
     public SkillSlot SkillSlot { get; set;}
-
-
 
     private void Start()
     {
         Init();
-
     }
 
     protected override void Init()
@@ -46,22 +44,19 @@ public class PlayerController : BaseController
 
         SkillSlot = gameObject.GetOrAddComponent<SkillSlot>();
         
-
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
         //_destination = GameObject.Find("FRONT_2").transform;
 
         ChangeState(IDLE_STATE);
         ChangeState(MOVE_STATE);
-        //StartCoroutine(StartMove());
+        
+
         Managers.Input.KeyAction -= KeyEvent;
         Managers.Input.KeyAction += KeyEvent;
 
         Managers.Input.MouseAction -= MouseEvent;
         Managers.Input.MouseAction += MouseEvent;
-
-
-
 
     }
 
@@ -80,24 +75,20 @@ public class PlayerController : BaseController
         {
             _usingSkill = Define.SkillKey.Q;
             SkillSlot.SelectSkill(Define.SkillKey.Q);
-            //ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
             _usingSkill = Define.SkillKey.W;
             SkillSlot.SelectSkill(Define.SkillKey.W);
-            //ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             _usingSkill = Define.SkillKey.E;
             SkillSlot.SelectSkill(Define.SkillKey.E);
-            //ChangeState(SKILL_STATE);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             _usingSkill = Define.SkillKey.R;
-            //ChangeState(SKILL_STATE);
         }
 
     }

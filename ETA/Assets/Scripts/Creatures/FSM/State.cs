@@ -27,11 +27,11 @@ public abstract class State : IState
 
     public State(BaseController controller)
     {
-        _animator = controller.animator;
-        _agent = controller.agent;
-        _detector = controller.detector;
+        _animator = controller.Animator;
+        _agent = controller.Agent;
+        _detector = controller.Detector;
         _stateMachine = controller.StateMachine;
-        _stat = controller.stat;
+        _stat = controller.Stat;
     }
 
     //--------------------------- State Functions -----------------------------------
