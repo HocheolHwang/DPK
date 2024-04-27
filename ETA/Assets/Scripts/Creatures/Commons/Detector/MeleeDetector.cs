@@ -47,7 +47,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
 
             Target = null;
             float closeDist = Mathf.Infinity;
-            Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, targetLayerMask);
+            Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);
 
             foreach (Collider enemy in enemies)
             {
