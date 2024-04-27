@@ -13,10 +13,10 @@ using static UnityEngine.GraphicsBuffer;
 public class MeleeDetector : MonoBehaviour, IDetector
 {
     [Header("Set Values from the Inspector")]
-    [SerializeField] public float detectRange;
+    [SerializeField] public float DetectRange;
     [SerializeField] private float _attackRange;              // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
     [SerializeField] private Transform _target;
-    [SerializeField] public LayerMask targetLayerMask;
+    [SerializeField] public LayerMask TargetLayerMask;
 
     public float AttackRange { get => _attackRange; private set => _attackRange = value; }
     public Transform Target { get => _target; private set => _target = value; }
@@ -26,7 +26,6 @@ public class MeleeDetector : MonoBehaviour, IDetector
     private void Start()
     {
         _target = null;
-
         StartCoroutine(UpdateTarget());
     }
 
@@ -34,7 +33,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
     {
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, detectRange);
+        if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, DetectRange);
         else Gizmos.DrawWireSphere(_ray.origin, _attackRange);
     }
 
@@ -48,7 +47,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
 
             Target = null;
             float closeDist = Mathf.Infinity;
-            Collider[] enemies = Physics.OverlapSphere(transform.position, detectRange, targetLayerMask);
+            Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, targetLayerMask);
 
             foreach (Collider enemy in enemies)
             {

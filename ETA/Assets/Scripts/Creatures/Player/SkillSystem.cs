@@ -26,18 +26,20 @@ public class SkillSystem : MonoBehaviour
     void Start()
     {
         skillCursor = Resources.Load<Texture2D>("Sprites/7. Common Sprites/Cursor Sprites/Enemy Cursor"); // 커서는 나중에 바꾸기
+
         targetingGo = Managers.Resource.Instantiate("Targeting").GetComponent<ParticleSystem>();
         targetingGo.Play();
+        targetingGo.gameObject.SetActive(false);
+
         rangeObject = Managers.Resource.Instantiate("RangeObject");
         rangeObject.SetActive(false);
 
-        myController = GameObject.Find("Player").GetComponent<PlayerController>();
+        myController = GameObject.Find("Warrior").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         switch (currentType)
         {
             case Define.SkillType.Target:
@@ -56,41 +58,33 @@ public class SkillSystem : MonoBehaviour
                 {
                     Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                     currentCursor = CursorType.None;
-
                 }
                 break;
         }
     }
 
+    
+
 
     void FindTarget()
     {
-
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool raycastHit = Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("Monster"));
-        rangeObject.SetActive(false);
 
+        rangeObject.SetActive(false);
 
         if (raycastHit)
         {
-            
             if (currentCursor != CursorType.Target)
             {
                 Cursor.SetCursor(skillCursor, Vector2.zero, CursorMode.Auto);
                 currentCursor = CursorType.Target;
                 targetingGo.gameObject.SetActive(true);
-                
             }
 
-
             GameObject monster = hit.collider.gameObject;
-            
-            //monster.GetComponentInChildren<Renderer>().material.SetFloat("_Outline_Width", 40);
-            targetingGo.transform.parent = monster.transform;
-            targetingGo.transform.localPosition = Vector3.zero;
-            targetingGo.transform.localScale = Vector3.one;
-            targetingGo.transform.parent = null;
+            TargetOn(monster);
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -103,17 +97,23 @@ public class SkillSystem : MonoBehaviour
         }
         else
         {
-           
             if (currentCursor != CursorType.None)
             {
                 targetingGo.gameObject.SetActive(false);
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                 currentCursor = CursorType.None;
-                
             }
         }
 
 
+    }
+
+    void TargetOn(GameObject target)
+    {
+        targetingGo.transform.parent = target.transform;
+        targetingGo.transform.localPosition = Vector3.zero;
+        targetingGo.transform.localScale = Vector3.one;
+        targetingGo.transform.parent = null;
     }
 
     void SelectRange()
@@ -147,11 +147,6 @@ public class SkillSystem : MonoBehaviour
             }
 
         }
-        else
-        {
-
-        }
-
     }
 
     public void StartHolding()
@@ -159,7 +154,6 @@ public class SkillSystem : MonoBehaviour
         currentType = Define.SkillType.None;
         Debug.Log(myController);
         myController.ChangeState(myController.HOLD_STATE);
-
     }
 
     public void Clear()

@@ -10,11 +10,11 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     protected State _curState;
 
     [Header("Common Property")]
-    [SerializeField] public Define.UnitType unitType;
-    [SerializeField] public Animator animator;
-    [SerializeField] public NavMeshAgent agent;
-    [SerializeField] public IDetector detector;
-    [SerializeField] public Stat stat;
+    [SerializeField] public Define.UnitType UnitType;
+    [SerializeField] public Animator Animator;
+    [SerializeField] public NavMeshAgent Agent;
+    [SerializeField] public IDetector Detector;
+    [SerializeField] public Stat Stat;
 
 
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
@@ -26,18 +26,18 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     private Color[] _originalColors;  // 원래의 머티리얼 색상 저장용 배열
     Color _damagedColor = Color.gray;
 
-
+    float _destroyedTime = 3.0f;
 
     //-----------------------------------  Essential Functions --------------------------------------------
     protected virtual void Awake()
     {
-        animator = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
-        detector = GetComponent<IDetector>();
+        Animator = GetComponent<Animator>();
+        Agent = GetComponent<NavMeshAgent>();
+        Detector = GetComponent<IDetector>();
+        Stat = GetComponent<Stat>();
 
         SetOriginColor();
 
-        stat = GetComponent<Stat>();
         Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
     }
     protected virtual void Update()
@@ -72,7 +72,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             string label = "Active State: " + _curState.ToString();
             Handles.Label(transform.position, label, style);
         }
-
 #endif
     }
 
@@ -80,7 +79,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public virtual void TakeDamage(int attackDamage)
     {
         // 최소 데미지 = 1
-        int damage = Mathf.Abs(attackDamage - stat.Defense);
+        int damage = Mathf.Abs(attackDamage - Stat.Defense);
         if (damage <= 1)
         {
             damage = 1;
@@ -91,12 +90,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         UI_AttackedDamage attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
         attackedDamage_ui.AttackedDamage = damage;
         
-        stat.Hp -= damage;
+        Stat.Hp -= damage;
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
-        if (stat.Hp <= 0)
+        if (Stat.Hp <= 0)
         {
-            stat.Hp = 0;
+            Stat.Hp = 0;
             DestroyObject();
         }
     }
@@ -116,7 +115,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public virtual void DestroyObject()
     {
         DestroyEvent();
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, _destroyedTime);
     }
 
 
