@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerZone : MonoBehaviour
 {
-    [SerializeField] public float DetectRange;          // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
+    // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask TargetLayerMask;
     [SerializeField] public float Speed = 6;
@@ -23,6 +23,7 @@ public class PlayerZone : MonoBehaviour
 
     void moveFront()
     {
+
         Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(2,1,6), new Quaternion(), TargetLayerMask);
         if (enemies.Length <= 0)
         {
