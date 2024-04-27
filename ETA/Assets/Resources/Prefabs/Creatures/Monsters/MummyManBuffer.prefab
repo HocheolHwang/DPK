@@ -1599,10 +1599,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84755aacce3ff56428a2da4b44de73ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 10
-  animator: {fileID: 0}
-  agent: {fileID: 0}
-  stat: {fileID: 0}
+  UnitType: 10
+  Animator: {fileID: 0}
+  Agent: {fileID: 0}
+  Stat: {fileID: 0}
 --- !u!114 &-5362759381566863542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,12 +1632,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 15
+  DetectRange: 0
   _attackRange: 8
   _target: {fileID: 0}
-  targetLayerMask:
+  TargetLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!1 &6589530502777961267
 GameObject:
   m_ObjectHideFlags: 0
