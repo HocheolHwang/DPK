@@ -20,10 +20,10 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
 
+
+    float _changedColorTime = 0.1f;
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
     private Color[] _originalColors;  // 원래의 머티리얼 색상 저장용 배열
-
-
     Color _damagedColor = Color.gray;
 
 
@@ -119,6 +119,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         Destroy(gameObject, 3f);
     }
 
+
     void SetOriginColor()
     {
         _allRenderers = GetComponentsInChildren<Renderer>();
@@ -135,13 +136,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     {
         foreach (Renderer renderer in _allRenderers)
         {
-            renderer.material.SetColor("_Color", Color.gray);
-            renderer.material.SetColor("_BaseColor", Color.gray);
+            renderer.material.SetColor("_Color", _damagedColor);
+            renderer.material.SetColor("_BaseColor", _damagedColor);
 
         }
-
         // 지정된 시간만큼 기다림
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(_changedColorTime);
 
         // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
         for (int i = 0; i < _allRenderers.Length; i++)
