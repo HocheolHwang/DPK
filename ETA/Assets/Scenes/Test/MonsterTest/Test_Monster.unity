@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -285,10 +285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc78a9e555d3b941991385ee941d921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 0
-  animator: {fileID: 0}
-  agent: {fileID: 0}
-  stat: {fileID: 0}
+  UnitType: 0
+  Animator: {fileID: 0}
+  Agent: {fileID: 0}
+  Stat: {fileID: 0}
   _destination: {fileID: 0}
   _usingSkill: 0
 --- !u!95 &278165789
@@ -581,6 +581,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2769729963233724090, guid: 3d60d40720e7a9e4fa5298d34c40a3c6, type: 3}
+      propertyPath: DetectRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2769729963233724090, guid: 3d60d40720e7a9e4fa5298d34c40a3c6, type: 3}
+      propertyPath: TargetLayerMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 5844054662557378188, guid: 3d60d40720e7a9e4fa5298d34c40a3c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

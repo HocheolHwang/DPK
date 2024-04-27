@@ -1233,10 +1233,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 15
+  DetectRange: 15
   _attackRange: 4
   _target: {fileID: 0}
-  targetLayerMask:
+  TargetLayerMask:
     serializedVersion: 2
     m_Bits: 64
 --- !u!114 &-872932245970546950
@@ -1268,10 +1268,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fd8e83f21afdd4bbbae3e51a15de8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 9
-  animator: {fileID: 0}
-  agent: {fileID: 0}
-  stat: {fileID: 0}
+  UnitType: 9
+  Animator: {fileID: 0}
+  Agent: {fileID: 0}
+  Stat: {fileID: 0}
 --- !u!114 &2969820035003128348
 MonoBehaviour:
   m_ObjectHideFlags: 0
