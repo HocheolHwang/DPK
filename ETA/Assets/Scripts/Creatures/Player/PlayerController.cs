@@ -89,6 +89,12 @@ public class PlayerController : BaseController
         if (Input.GetKeyDown(KeyCode.R))
         {
             _usingSkill = Define.SkillKey.R;
+            SkillSlot.SelectSkill(Define.SkillKey.R);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            _usingSkill = Define.SkillKey.A;
+            SkillSlot.SelectSkill(Define.SkillKey.A);
         }
 
     }
