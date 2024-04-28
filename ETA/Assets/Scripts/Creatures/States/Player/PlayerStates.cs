@@ -264,9 +264,10 @@ namespace PlayerStates
             //}
             // 3초뒤 풀림
             GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = (Time.time - startTime) / 3.0f;
+
             if (Time.time - startTime >= 3.0f)
             {
-                _playerController.ChangeState(_playerController.MOVE_STATE);
+                _playerController.ChangeState(_playerController.SKILL_STATE);
             }
 
             if (Input.anyKey)
@@ -278,7 +279,7 @@ namespace PlayerStates
             else // 키를 떄면?
             {
                 
-                _playerController.ChangeState(_playerController.MOVE_STATE);
+                _playerController.ChangeState(_playerController.SKILL_STATE);
                 
             }
         }

@@ -14,7 +14,7 @@ public class SkillSlot : MonoBehaviour
     {
         SkillSystem = GetComponent<SkillSystem>();
 
-        string[] loadedSkills = { "TargetSkill", "RangeSkill" };
+        string[] loadedSkills = { "TargetSkill", "RangeSkill", "HoldSkill" };
         for(int i = 0; i < loadedSkills.Length; i++)
         {
             string skillName = loadedSkills[i];
@@ -74,12 +74,10 @@ public class SkillSlot : MonoBehaviour
                 SkillSystem.currentType = Define.SkillType.Range;
                 SkillSystem.SkillRange = current.skillRange;
                 break;
-                //case Define.SkillKey.W:
-                //    SkillSystem.currentType = Define.SkillType.Range;
-                //    break;
-                //case Define.SkillKey.E:
-                //    SkillSystem.currentType = Define.SkillType.Holding;
-                //    break;
+            case Define.SkillType.Holding:
+                SkillSystem.currentType = Define.SkillType.Holding;
+                SkillSystem.SkillRange = current.skillRange;
+                break;
         }
 
 

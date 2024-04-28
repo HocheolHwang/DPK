@@ -157,6 +157,7 @@ public class SkillSystem : MonoBehaviour
         currentType = Define.SkillType.None;
         Debug.Log(myController);
         myController.ChangeState(myController.HOLD_STATE);
+        TargetPosition = transform.position + gameObject.transform.forward * 3;
     }
 
     public void Clear()
