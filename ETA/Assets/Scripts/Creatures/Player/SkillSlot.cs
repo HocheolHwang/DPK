@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,31 @@ public class SkillSlot : MonoBehaviour
 {
     public SkillSystem SkillSystem { get; set; }
     // Start is called before the first frame update
-    ISkill[] skill = new ISkill[8];
+    //ISkill[] skill = new ISkill[8];
+    TmpSkill[] skill = new TmpSkill[8];
     private Animator _animator;
     public void Start()
     {
-        SkillSystem = GameObject.Find("@Scene").GetComponent<SkillSystem>();
+        SkillSystem = GetComponent<SkillSystem>();
+
+        string[] loadedSkills = { "TargetSkill", "RangeSkill" };
+        for(int i = 0; i < loadedSkills.Length; i++)
+        {
+            string skillName = loadedSkills[i];
+            Type type = Type.GetType(skillName);
+
+            // Type이 유효하면 컴포넌트를 추가합니다.
+            // 후에 as를 이용한 타입캐스트 해주기
+            if (type != null && type.IsSubclassOf(typeof(Component)))
+            {
+                skill[i] = (TmpSkill)gameObject.AddComponent(type);
+                skill[i].SetCoolDownTime(4);
+            }
+        }
+
+
+        //skill[0] = gameObject.GetOrAddComponent<TargetSkill>();
+        
         // 테스트용 하드 코딩
         /*
         skill[0] = new SkillWarrior.TestSkill1();
@@ -37,17 +58,28 @@ public class SkillSlot : MonoBehaviour
         _animator.CrossFade(skill[(int)key].data.animator, 0.05f);
         skill[(int)key].Using();
         */
-        switch (key)
+
+        TmpSkill current = skill[(int)key];
+
+        // 여기서 쿨타임 관리
+        if (current.CanCastSkill() == false) return;
+
+        switch (current.SkillType)
         {
-            case Define.SkillKey.Q:
+            case Define.SkillType.Target:
                 SkillSystem.currentType = Define.SkillType.Target;
+                SkillSystem.SkillRange = current.skillRange;
                 break;
-            case Define.SkillKey.W:
+            case Define.SkillType.Range:
                 SkillSystem.currentType = Define.SkillType.Range;
+                SkillSystem.SkillRange = current.skillRange;
                 break;
-            case Define.SkillKey.E:
-                SkillSystem.currentType = Define.SkillType.Holding;
-                break;
+                //case Define.SkillKey.W:
+                //    SkillSystem.currentType = Define.SkillType.Range;
+                //    break;
+                //case Define.SkillKey.E:
+                //    SkillSystem.currentType = Define.SkillType.Holding;
+                //    break;
         }
 
 
@@ -59,9 +91,11 @@ public class SkillSlot : MonoBehaviour
 
     }
 
+    // 실제로 스테이트에서 발생하는 함수
     public void CastSkill(Define.SkillKey key)
     {
         //string s = skill[(int)key].animationName;
+        skill[(int)key].Cast();
         Debug.Log($"Skill Key = {key}");
     }
 
