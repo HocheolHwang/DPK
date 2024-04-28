@@ -30,9 +30,11 @@ public class MummyManController : BaseController
     public State GLOBAL_STATE;
 
     private MummyManAnimationData _animData;
+    private SummonSkill _summonSkill;
     public MummyManAnimationData AnimData { get => _animData; }
+    public SummonSkill SummonSkill { get => _summonSkill; }
 
-    public static event Action OnBossDestroyed;
+    public Action OnBossDestroyed;
 
     protected override void Awake()
     {
@@ -50,6 +52,7 @@ public class MummyManController : BaseController
     {
         _animData = GetComponent<MummyManAnimationData>();
         _animData.StringAnimToHash();
+        _summonSkill = GetComponent<SummonSkill>();
 
         // ----------------------------- Animation && State -------------------------------------
 
@@ -72,8 +75,7 @@ public class MummyManController : BaseController
         GLOBAL_STATE = new GlobalState(this);
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
-
-        Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
+        // 공격 사거리와 멈추는 거리를 같게 세팅 -> StateItem의 SetDetector에서 세팅
     }
 
     // ---------------------------------- IDamage ------------------------------------------

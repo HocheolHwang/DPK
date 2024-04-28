@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -20,7 +21,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
 
-
     float _changedColorTime = 0.15f;
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
     private Color[] _originalColors;  // 원래의 머티리얼 색상 저장용 배열
@@ -41,11 +41,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
         Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
 
+        //StartCoroutine(TestDie());
     }
     protected virtual void Update()
     {
         _stateMachine.Execute();
-        
+
         if (Stat.Shield > 0 && _shieldEffect == null)
         {
             _shieldEffect = Managers.Resource.Instantiate("Effect/Shield", transform).GetComponent<ParticleSystem>();
@@ -192,5 +193,26 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     {
         Stat.Shield -= amount;
         if (Stat.Shield < 0) Stat.Shield = 0;
+    }
+
+
+    // TakeDamage를 통해서만 DestoryObject를 수행할 수 있기 때문에 TEST를 위한 함수 추가
+    IEnumerator TestDie()
+    {
+        Debug.Log($"------------- TEST DIE --------------");
+        Debug.Log($"------------- TEST SUMMON SKILL - DespawnAll --------------");
+
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            if (Stat.Hp <= 0)
+            {
+                TakeDamage(Stat.MaxHp + Stat.Defense);
+                yield break;
+            }
+        }
+        
+        
     }
 }
