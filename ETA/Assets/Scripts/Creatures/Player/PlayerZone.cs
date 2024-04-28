@@ -8,11 +8,14 @@ public class PlayerZone : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask TargetLayerMask;
     [SerializeField] public float Speed = 6;
+    private float currentSpeed;  // 현재 이동 속도
 
-    // Start is called before the first frame update
+    [SerializeField] private PlayerController playerController;
+
+
     void Start()
     {
-        
+        currentSpeed = Speed;  // 시작할 때 현재 속도를 초기 속도로 설정
     }
 
     // Update is called once per frame
@@ -27,8 +30,26 @@ public class PlayerZone : MonoBehaviour
         Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(2,1,6), new Quaternion(), TargetLayerMask);
         if (enemies.Length <= 0)
         {
-            transform.position += transform.forward * Time.deltaTime * Speed;
+            transform.position += transform.forward * Time.deltaTime * currentSpeed;
         }
 
+    }
+
+    public void StopMovement()
+    {
+        currentSpeed = 0;
+        if (playerController != null)
+        {
+            playerController.ChangeState(playerController.IDLE_STATE);  // 상태를 IDLE로 변경
+        }
+    }
+
+    public void StartMovement()
+    {
+        currentSpeed = Speed;
+        if (playerController != null)
+        {
+            playerController.ChangeState(playerController.MOVE_STATE);  // 상태를 MOVE로 변경
+        }
     }
 }
