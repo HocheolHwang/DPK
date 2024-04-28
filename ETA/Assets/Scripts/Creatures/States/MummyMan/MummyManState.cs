@@ -19,34 +19,6 @@ public class MummyManState : State
         _controller = controller;
         _animData = controller.AnimData;
         _summonSkill = controller.SummonSkill;
-        SetDetector();
-    }
-
-    // -------------------------- INIT FUNCTIONS -----------------------------------
-    protected void SetDetector()
-    {
-        if (_isRangedAttack && _summonSkill.WarriorDeathCount == 1)
-        {
-            _isRangedAttack = false;
-        }
-
-        // Target이 null인 문제를 해결하기 위해서 어느 Detector를 사용하는지 지정
-        if (_isRangedAttack)
-        {
-            _controller.GetComponent<MeleeDetector>().enabled = false;
-            _controller.GetComponent<RangedDetector>().enabled = true;
-            _detector = _controller.GetComponent<RangedDetector>();
-
-            _agent.stoppingDistance = _detector.AttackRange;
-        }
-        else
-        {
-            _controller.GetComponent<MeleeDetector>().enabled = true;
-            _controller.GetComponent<RangedDetector>().enabled = false;
-            _detector = _controller.GetComponent<MeleeDetector>();
-
-            _agent.stoppingDistance = _detector.AttackRange;
-        }
     }
 
     // -------------------------- ATTACK FUNCTIONS -----------------------------------
@@ -70,6 +42,8 @@ public class MummyManState : State
     // -------------------------- GLOBAL FUNCTIONS -----------------------------------
     public void CheckGlobal()
     {
+        SetDetector();
+
         if (_stat.Hp <= 0)
         {
             _controller.ChangeState(_controller.DIE_STATE);
@@ -80,6 +54,32 @@ public class MummyManState : State
         {
             if ((_controller.CurState == _controller.IDLE_STATE) || (_controller.CurState == _controller.IDLE_BATTLE_STATE) || (_controller.CurState == _controller.CHASE_STATE))
                 _controller.ChangeState(_controller.CLAP_STATE);
+        }
+    }
+
+    protected void SetDetector()
+    {
+        if (_isRangedAttack && _summonSkill.WarriorDeathCount == 1)
+        {
+            _isRangedAttack = false;
+        }
+
+        // Target이 null인 문제를 해결하기 위해서 어느 Detector를 사용하는지 지정
+        if (_isRangedAttack)
+        {
+            _controller.GetComponent<MeleeDetector>().enabled = false;
+            _controller.GetComponent<RangedDetector>().enabled = true;
+            _detector = _controller.GetComponent<RangedDetector>();
+
+            _agent.stoppingDistance = _detector.AttackRange;
+        }
+        else
+        {
+            _controller.GetComponent<MeleeDetector>().enabled = true;
+            _controller.GetComponent<RangedDetector>().enabled = false;
+            _detector = _controller.GetComponent<MeleeDetector>();
+
+            _agent.stoppingDistance = _detector.AttackRange;
         }
     }
 

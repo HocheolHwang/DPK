@@ -41,7 +41,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
         Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
 
-        //StartCoroutine(TestDie());
+        //StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인
     }
     protected virtual void Update()
     {
