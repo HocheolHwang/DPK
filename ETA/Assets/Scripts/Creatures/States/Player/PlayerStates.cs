@@ -150,18 +150,18 @@ namespace PlayerStates
             _agent.isStopped = true;
 
             _playerController.SkillSlot.CastSkill(_playerController._usingSkill);
-            _animator.CrossFade("SKILL1", 0.05f);
-            _detector.Target.GetComponent<BaseController>().TakeDamage(50);
+            //_animator.CrossFade("SKILL1", 0.05f);
+            //_detector.Target.GetComponent<BaseController>().TakeDamage(50);
 
         }
 
         public override void Execute()
         {
-            tmp += Time.deltaTime;
-            if (tmp > 1.5f)
-            {
-                _playerController.ChangeState(_playerController.MOVE_STATE);
-            }
+            //tmp += Time.deltaTime;
+            //if (tmp > 1.5f)
+            //{
+            //    _playerController.ChangeState(_playerController.MOVE_STATE);
+            //}
             base.Execute();
         }
 
