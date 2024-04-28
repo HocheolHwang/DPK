@@ -20,7 +20,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
-            if ( !_MeetPlayer && _detector.Target != null )
+            if (!_meetPlayer && _detector.Target != null) // 첫 조우 때 CLAP으로 시작
             {
                 _controller.ChangeState(_controller.CLAP_STATE);
             }
@@ -117,7 +117,7 @@ namespace MummyManStateItem
         {
             _agent.velocity = Vector3.zero;
             // 근거리 몬스터가 죽고 근거리 디텍터를 활성화한 상태
-            if ( !_IsRangedAttack )
+            if ( !_isRangedAttack)
             {
                 // attack( left, right - 둘 다 len이 같음 ) + wind_mill 연속 공격
                 _attackLen = _animData.AttackAnim.length;
@@ -142,7 +142,7 @@ namespace MummyManStateItem
             _animTime += Time.deltaTime;
 
             // 근거리 디텍터
-            if ( !_IsRangedAttack && _animTime >= _threadHold)
+            if ( !_isRangedAttack && _animTime >= _threadHold)
             {
                 // 첫 공격 이후
                 if ( _animTime >= (_threadHold - (_attackLen + _windMillLen) ) )
@@ -165,7 +165,8 @@ namespace MummyManStateItem
                 }
                 
             }
-            else if (_IsRangedAttack && _animTime >= _threadHold * 2.0f)   // 원거리 디텍터
+            // 원거리 디텍터
+            else if (_isRangedAttack && _animTime >= _threadHold * 2.0f)
             {
                 ControlChangeState();
             }
@@ -190,14 +191,13 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            _MeetPlayer = true;
-            if (_IsDeadAllMonster) _DeadAllMonsterCnt--;
+            _meetPlayer = true;
 
             _agent.velocity = Vector3.zero;
             InitTime(_animData.ClapAnim.length);
             _animator.CrossFade(_animData.ClapParamHash, 0.1f);
 
-            // 여기에서 함수로 몬스터를 소환한다.
+            _summonSkill.Summon();
         }
 
         public override void Execute()
@@ -227,15 +227,11 @@ namespace MummyManStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-            _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
         }
 
         public override void Execute()
         {
-            if (IsStayForSeconds())
-            {
-                _controller.RevertToPrevState();
-            }
+            
         }
         public override void Exit()
         {
@@ -256,8 +252,6 @@ namespace MummyManStateItem
         {
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
-
-            // warrior와 buffer에게 man이 사망했음을 알린다.
         }
 
         public override void Execute()
@@ -311,16 +305,7 @@ namespace MummyManStateItem
             if (_controller.CurState == _controller.CLAP_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
-            if (_stat.Hp <= 0)
-            {
-                _controller.ChangeState(_controller.DIE_STATE);
-            }
-
-            if (_IsDeadAllMonster && _DeadAllMonsterCnt >= 1)
-            {
-                if ( (_controller.CurState == _controller.IDLE_STATE) || (_controller.CurState == _controller.IDLE_BATTLE_STATE) || (_controller.CurState == _controller.CHASE_STATE) )
-                _controller.ChangeState(_controller.CLAP_STATE);
-            }
+            CheckGlobal();
         }
     }
     #endregion

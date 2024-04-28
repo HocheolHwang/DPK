@@ -1,32 +1,53 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 
 public class MummyManState : State
 {
-    protected static bool _MeetPlayer;              // 플레이어와 첫 조우 여부
-    protected static bool _IsRangedAttack;          // 원거리 디텍터를 활성화한 상태
-
-    protected static bool _IsDeadAllMonster;        // 모든 몬스터가 죽었는가 -> 글로벌에서 이를 감지하여 CLAP으로 전환, 단 공격 및 패턴 상태일 때는 안 됨
-    protected static int _DeadAllMonsterCnt = 1;    // 0이면 모든 몬스터가 죽었다가 다시 살아났음을 알려줌
+    protected static bool _meetPlayer;                     // 플레이어와 첫 조우 여부
+    protected static bool _isRangedAttack = true;          // 원거리 디텍터를 활성화한 상태
+    protected const int MaxSummonCount = 1;                // 첫 조우 이후에 Buffer와 Warrior가 살아날 수 있는 횟수
 
     protected MummyManController _controller;
     protected MummyManAnimationData _animData;
+    protected SummonSkill _summonSkill;
 
     public MummyManState(MummyManController controller) : base(controller)
     {
         _controller = controller;
         _animData = controller.AnimData;
+        _summonSkill = controller.SummonSkill;
+        SetDetector();
     }
 
-    // -------------------------- CLAP FUNCTIONS -----------------------------------
-    // ACTION으로 buffer와 warrior를 소환한다. -> action 아님 Resource Manager를 이용
-    // buffer는 man 뒤의 n 거리 뒤에
-    // warrior는 옆에 소환한다. -> 근거리 공격 패턴을 얻은 상태일 수 있기 때문
+    // -------------------------- INIT FUNCTIONS -----------------------------------
+    protected void SetDetector()
+    {
+        if (_isRangedAttack && _summonSkill.WarriorDeathCount == 1)
+        {
+            _isRangedAttack = false;
+        }
 
-    // 모든 몬스터가 한 번씩 죽었음을 알 수 있는 함수가 필요
+        // Target이 null인 문제를 해결하기 위해서 어느 Detector를 사용하는지 지정
+        if (_isRangedAttack)
+        {
+            _controller.GetComponent<MeleeDetector>().enabled = false;
+            _controller.GetComponent<RangedDetector>().enabled = true;
+            _detector = _controller.GetComponent<RangedDetector>();
 
+            _agent.stoppingDistance = _detector.AttackRange;
+        }
+        else
+        {
+            _controller.GetComponent<MeleeDetector>().enabled = true;
+            _controller.GetComponent<RangedDetector>().enabled = false;
+            _detector = _controller.GetComponent<MeleeDetector>();
+
+            _agent.stoppingDistance = _detector.AttackRange;
+        }
+    }
 
     // -------------------------- ATTACK FUNCTIONS -----------------------------------
     protected void ControlChangeState()
@@ -44,5 +65,37 @@ public class MummyManState : State
         {
             _controller.ChangeState(_controller.CHASE_STATE);
         }
+    }
+
+    // -------------------------- GLOBAL FUNCTIONS -----------------------------------
+    public void CheckGlobal()
+    {
+        if (_stat.Hp <= 0)
+        {
+            _controller.ChangeState(_controller.DIE_STATE);
+        }
+
+        // 둘 다 한 번씩 죽었을 때, 한 번 더 살려낸다.
+        if (IsSummoningMonster())
+        {
+            if ((_controller.CurState == _controller.IDLE_STATE) || (_controller.CurState == _controller.IDLE_BATTLE_STATE) || (_controller.CurState == _controller.CHASE_STATE))
+                _controller.ChangeState(_controller.CLAP_STATE);
+        }
+    }
+
+    private bool IsSummoningMonster()
+    {
+        // 플레이어를 만났고
+        if (_meetPlayer)
+        {
+            // 한 번씩 소환했으며
+            if (_summonSkill.BufferSummonCount == MaxSummonCount && _summonSkill.WarriorSummonCount == MaxSummonCount)
+            {
+                // 모두 한 번만 죽은 경우
+                if (_summonSkill.BufferDeathCount == MaxSummonCount && _summonSkill.WarriorDeathCount == MaxSummonCount)
+                    return true;
+            }
+        }
+        return false;
     }
 }
