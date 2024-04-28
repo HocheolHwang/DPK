@@ -56,6 +56,9 @@ public class SkillSystem : MonoBehaviour
             case Define.SkillType.Holding:
                 StartHolding();
                 break;
+            case Define.SkillType.Immediately:
+                ImmediatelyCast();
+                break;
             default:
                 targetingGo.gameObject.SetActive(false);
                 rangeObject.SetActive(false);
@@ -157,6 +160,15 @@ public class SkillSystem : MonoBehaviour
         currentType = Define.SkillType.None;
         Debug.Log(myController);
         myController.ChangeState(myController.HOLD_STATE);
+        TargetPosition = transform.position + gameObject.transform.forward * 3;
+    }
+
+    public void ImmediatelyCast()
+    {
+        currentType = Define.SkillType.None;
+        Debug.Log(myController);
+        myController.ChangeState(myController.SKILL_STATE);
+        TargetPosition = transform.position + gameObject.transform.forward * 3;
     }
 
     public void Clear()

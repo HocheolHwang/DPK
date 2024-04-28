@@ -21,10 +21,11 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
 
 
-    float _changedColorTime = 0.1f;
+    float _changedColorTime = 0.15f;
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
     private Color[] _originalColors;  // 원래의 머티리얼 색상 저장용 배열
     Color _damagedColor = Color.gray;
+    protected ParticleSystem _shieldEffect;
 
     float _destroyedTime = 3.0f;
 
@@ -39,10 +40,25 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         SetOriginColor();
 
         Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+
     }
     protected virtual void Update()
     {
         _stateMachine.Execute();
+        
+        if (Stat.Shield > 0 && _shieldEffect == null)
+        {
+            _shieldEffect = Managers.Resource.Instantiate("Effect/Shield", transform).GetComponent<ParticleSystem>();
+            _shieldEffect.transform.localPosition += transform.up;
+        }
+        else
+        {
+            if(Stat.Shield <= 0 && _shieldEffect != null)
+            {
+                Managers.Resource.Destroy(_shieldEffect.gameObject);
+
+            }
+        }
     }
     protected abstract void Init();
 
@@ -85,9 +101,25 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             damage = 1;
         }
 
+        UI_AttackedDamage attackedDamage_ui = null;
+
+        if (Stat.Shield >= damage)
+        {
+            Stat.Shield -= damage;
+            attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
+            attackedDamage_ui.IsGurared = true;
+            return;
+        }
+        else
+        {
+            damage -= Stat.Shield;
+            Stat.Shield = 0;
+        }
+
+
         StartCoroutine(ChangeDamagedColorTemporarily());
 
-        UI_AttackedDamage attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
+        attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
         attackedDamage_ui.AttackedDamage = damage;
         
         Stat.Hp -= damage;
@@ -149,5 +181,16 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             renderer.material.SetColor("_BaseColor", Color.white);
             renderer.material.color = _originalColors[i];
         }
+    }
+
+    public void GetShield(int amount)
+    {
+        Stat.Shield += amount;
+    }
+
+    public void RemoveShield(int amount)
+    {
+        Stat.Shield -= amount;
+        if (Stat.Shield < 0) Stat.Shield = 0;
     }
 }

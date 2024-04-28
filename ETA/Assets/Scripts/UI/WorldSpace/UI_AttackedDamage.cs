@@ -8,6 +8,7 @@ public class UI_AttackedDamage : UI_Base
 {
 
     public int AttackedDamage { get; set; }
+    public bool IsGurared;
     public float _startTime;
     public float _duration = 0.75f;
     enum Texts
@@ -21,7 +22,7 @@ public class UI_AttackedDamage : UI_Base
     {
         //Bind<GameObject>(typeof(GameObjects));
         Bind<TextMeshProUGUI>(typeof(Texts));
-        Get<TextMeshProUGUI>((int)Texts.AttackedDamageText).text = $"{AttackedDamage}";
+        Get<TextMeshProUGUI>((int)Texts.AttackedDamageText).text = IsGurared ? "SHIELD" : $"{AttackedDamage}";
         Transform parent = transform.parent;
         transform.position = parent.position + Vector3.up * (parent.GetComponent<Collider>().bounds.size.y);
         _startTime = Time.time;
