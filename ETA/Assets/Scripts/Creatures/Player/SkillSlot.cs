@@ -25,7 +25,7 @@ public class SkillSlot : MonoBehaviour
             if (type != null && type.IsSubclassOf(typeof(Component)))
             {
                 skill[i] = (TmpSkill)gameObject.AddComponent(type);
-                skill[i].SetCoolDownTime(4);
+                
             }
         }
 

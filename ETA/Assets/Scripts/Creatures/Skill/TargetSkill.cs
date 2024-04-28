@@ -6,7 +6,7 @@ public class TargetSkill : TmpSkill
 {
     protected override void Init()
     {
-        _cooldownTime = 4;
+        SetCoolDownTime(4);
         base.Init();
     }
 
