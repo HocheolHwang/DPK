@@ -178,7 +178,7 @@ public class NetworkManager : MonoBehaviour
         }
 
         //토큰이 있으면 access token 실어보내기
-        string token = Managers.PlayerInfo.GetToken();
+        string token = Managers.Player.GetToken();
         if (token != null)
         {
             request.SetRequestHeader("Authorization", "Bearer " + token);

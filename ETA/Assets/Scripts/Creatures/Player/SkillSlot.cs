@@ -106,6 +106,10 @@ public class SkillSlot : MonoBehaviour
         skill[(int)key].CollavoCast();
     }
 
+    public void NormalAttack()
+    {
+        GetComponent<WarriorNormalAttackSkill>().Cast();
+    }
 
 
     public void Clear()

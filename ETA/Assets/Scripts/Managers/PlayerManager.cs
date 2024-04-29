@@ -14,7 +14,7 @@ public class PlayerManager
     private int index;
     private bool partyLeader;
 
-    PlayerManager() { }
+    public PlayerManager() { }
 
     public static PlayerManager GetInstance()
     {

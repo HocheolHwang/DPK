@@ -97,7 +97,6 @@ namespace PlayerStates
 
     public class AttackState : PlayerState
     {
-        float tmp = 0;
         
         public AttackState(PlayerController playerController) : base(playerController)
         {
@@ -109,9 +108,7 @@ namespace PlayerStates
             base.Enter();
             _agent.velocity = Vector3.zero;
             _agent.isStopped = true;
-            tmp = 0;
-            _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-            _detector.Target.GetComponent<BaseController>().TakeDamage(_playerController.Stat.AttackDamage);
+            _playerController.SkillSlot.NormalAttack();
             LookAtEnemy();
       
 
@@ -119,11 +116,6 @@ namespace PlayerStates
 
         public override void Execute()
         {
-            tmp += Time.deltaTime;
-            if( tmp > 1.5f)
-            {
-                _playerController.ChangeState(_playerController.MOVE_STATE);
-            }
             base.Execute();
         }
 
