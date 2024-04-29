@@ -7,9 +7,11 @@ public class ImmediatelySkill : TmpSkill
     protected override void Init()
     {
         SetCoolDownTime(1);
-        base.Init();
+        Damage = 30;
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
+        base.Init();
+
     }
 
     public override IEnumerator StartSkillCast()
