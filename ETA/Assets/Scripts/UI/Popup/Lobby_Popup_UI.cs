@@ -57,8 +57,8 @@ public class Lobby_Popup_UI : UI_Popup
     private void OpenDungeonSelect(PointerEventData data)
     {
         // 모든 Popup UI를 닫고 던전 선택 Popup UI를 띄움
-        // CloseAllPopupUI();
-        // Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
+        CloseAllPopupUI();
+        Managers.UI.ShowPopupUI<Dungeon_Select_Popup_UI>("[Lobby]_Dungeon_Select_Popup_UI");
     }
 
     // 던전 입장 Popup UI 열기
