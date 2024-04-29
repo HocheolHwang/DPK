@@ -120,10 +120,10 @@ public class Login_Popup_UI : UI_Popup
         // 메시지가 "success"인 경우 After Login Popup UI 띄움
         if (message == "success")
         {
-            Managers.PlayerInfo.SetToken(dto.accessToken);
-            Managers.PlayerInfo.SetGold(dto.playerGold);
-            Managers.PlayerInfo.SetFirst(dto.first);
-            Managers.PlayerInfo.SetNickName(JWTDecord.DecodeJWT(dto.accessToken));
+            Managers.Player.SetToken(dto.accessToken);
+            Managers.Player.SetGold(dto.playerGold);
+            Managers.Player.SetFirst(dto.first);
+            Managers.Player.SetNickName(JWTDecord.DecodeJWT(dto.accessToken));
 
             // 모든 Popup UI를 닫음
             CloseAllPopupUI();
