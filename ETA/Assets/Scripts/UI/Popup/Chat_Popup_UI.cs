@@ -22,11 +22,16 @@ public class Chat_Popup_UI : UI_Popup
     // 클래스 멤버 변수로 선언
     private TMP_InputField chatMessage;
 
+    //포톤 채팅
+    private PhotonChat chat;
+
     // 로그인 UI 초기화
     public override void Init()
     {
         base.Init(); // 기본 초기화
 
+        chat = GameObject.Find("@Scene").GetComponent<PhotonChat>();
+        chat.chatUI = this;
         // 바인딩
         Bind<TMP_InputField>(typeof(InputFields));
         Bind<Button>(typeof(Buttons));
@@ -66,6 +71,15 @@ public class Chat_Popup_UI : UI_Popup
         }
 
         // 여기에 메시지를 보내는 등의 코드를 추가
+        // 
+        if (chat != null)
+            chat.SendMessage(chatMessage.text);
+        else
+        {
+            chat = GameObject.Find("@Scene").GetComponent<PhotonChat>();
+            chat.SendMessage(chatMessage.text);
+
+        }
 
         // 메시지 전송 후 입력 필드에 다시 포커스 설정
         SetFocusToInputField();
@@ -86,5 +100,18 @@ public class Chat_Popup_UI : UI_Popup
     {
         EventSystem.current.SetSelectedGameObject(chatMessage.gameObject);
         chatMessage.ActivateInputField();
+    }
+
+    public  void ReceiveMessage(string sender, string message)
+    {
+        // Managers.Resource.Load<GameObject>();
+        GameObject chatPrefab = Managers.Resource.Instantiate("UI/SubItem/Chat_Item");
+
+        //chatPrefab.transform.Find("Nickname_Text").GetComponent<TextMeshProUGUI>().text = sender;
+        //chatPrefab.transform.Find("Chat_Text").GetComponent<TextMeshProUGUI>().text = message;
+        chatPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = sender;
+        chatPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = message;
+
+        chatPrefab.transform.SetParent(gameObject.transform.Find("Chat_Popup_Container/Chat_Container/Scroll View/Viewport/Content"));
     }
 }
