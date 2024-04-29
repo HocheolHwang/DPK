@@ -22,6 +22,11 @@ public class SkillSystem : MonoBehaviour
     ParticleSystem targetingGo;
     GameObject rangeObject;
 
+    public Vector3 SkillRange = new Vector3(0,0,0);
+
+
+    public Vector3 TargetPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +55,9 @@ public class SkillSystem : MonoBehaviour
                 break;
             case Define.SkillType.Holding:
                 StartHolding();
+                break;
+            case Define.SkillType.Immediately:
+                ImmediatelyCast();
                 break;
             default:
                 targetingGo.gameObject.SetActive(false);
@@ -93,6 +101,7 @@ public class SkillSystem : MonoBehaviour
                 currentType = Define.SkillType.None;
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                 targetingGo.gameObject.SetActive(false);
+                TargetPosition = hit.collider.transform.position;
                 myController.ChangeState(myController.SKILL_STATE);
             }
         }
@@ -125,20 +134,21 @@ public class SkillSystem : MonoBehaviour
                 Cursor.SetCursor(skillCursor, Vector2.zero, CursorMode.Auto);
                 currentCursor = CursorType.Range;
                 rangeObject.gameObject.SetActive(true);
-                rangeObject.gameObject.transform.localScale = new Vector3(4, 0.01f, 4);
+                rangeObject.gameObject.transform.localScale = new Vector3(SkillRange.x, 0.01f, SkillRange.z);
                 targetingGo.gameObject.SetActive(false);
             }
 
-            Debug.Log($"범위 스킬 지정 중 {hit.point}");
-            
+
             rangeObject.transform.position = hit.point + Vector3.up * 0.05f;
 
             if (Input.GetMouseButtonDown(0))
             {
                 currentType = Define.SkillType.None;
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-                rangeObject.gameObject.SetActive(false);
+                rangeObject.SetActive(false);
+                TargetPosition = hit.point;
                 myController.ChangeState(myController.SKILL_STATE);
+                
                 Debug.Log("범위 스킬 사용");
             }
 
@@ -150,6 +160,15 @@ public class SkillSystem : MonoBehaviour
         currentType = Define.SkillType.None;
         Debug.Log(myController);
         myController.ChangeState(myController.HOLD_STATE);
+        TargetPosition = transform.position + gameObject.transform.forward * 3;
+    }
+
+    public void ImmediatelyCast()
+    {
+        currentType = Define.SkillType.None;
+        Debug.Log(myController);
+        myController.ChangeState(myController.SKILL_STATE);
+        TargetPosition = transform.position + gameObject.transform.forward * 3;
     }
 
     public void Clear()

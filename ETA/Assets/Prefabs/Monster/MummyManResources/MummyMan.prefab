@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 2045859972520013980}
   - component: {fileID: -7887648138693454644}
   - component: {fileID: 1770780272972965906}
+  - component: {fileID: 3694731791571937186}
   m_Layer: 7
   m_Name: MummyMan
   m_TagString: Monster
@@ -282,6 +283,7 @@ MonoBehaviour:
   _moveSpeed: 3
   _attackDamage: 3
   _defense: 2
+  _shield: 0
 --- !u!114 &4061189257114539398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,15 +291,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640021385561637830}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 15
+  DetectRange: 15
   _attackRange: 4
   _target: {fileID: 0}
-  targetLayerMask:
+  TargetLayerMask:
     serializedVersion: 2
     m_Bits: 64
 --- !u!114 &2045859972520013980
@@ -312,10 +314,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 15
+  DetectRange: 15
   _attackRange: 8
   _target: {fileID: 0}
-  targetLayerMask:
+  TargetLayerMask:
     serializedVersion: 2
     m_Bits: 64
 --- !u!114 &-7887648138693454644
@@ -339,9 +341,9 @@ MonoBehaviour:
   throwParamName: THROW
   shoutingParamName: SHOUTING
   jumpParamName: JUMP
-  windMillParamName: WIND_MILL
   foreShadowingParamName: FORE_SHADOWING
   rushParamName: RUSH
+  windMillParamName: WIND_MILL
   clapParamName: CLAP
   clapAnim: {fileID: 1827226128182048838, guid: eedf0c13cf540bc4c9110071cb1ccfd6, type: 3}
   jumpAnim: {fileID: 1827226128182048838, guid: 4e731a58c77f3254a957fc0b98a334eb, type: 3}
@@ -362,10 +364,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd5f0e5c9be13f4d99c3539caea0a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 8
-  animator: {fileID: 0}
-  agent: {fileID: 0}
-  stat: {fileID: 0}
+  UnitType: 8
+  Animator: {fileID: 0}
+  Agent: {fileID: 0}
+  Stat: {fileID: 0}
+--- !u!114 &3694731791571937186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640021385561637830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f7672fbc833d2408495df32fd9b35c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buffer: {fileID: 6508141731047996470, guid: 3d60d40720e7a9e4fa5298d34c40a3c6, type: 3}
+  _warrior: {fileID: 5081131588909657924, guid: 6ce950c30ebaede44a4a13efacb599fc, type: 3}
 --- !u!1 &703396583548552387
 GameObject:
   m_ObjectHideFlags: 0

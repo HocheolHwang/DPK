@@ -26,7 +26,8 @@ namespace PlayerStates
         {
             base.Enter();
             _animator.CrossFade("IDLE", 0, -1, 0);
-            
+            _agent.velocity = Vector3.zero;
+            _agent.isStopped = true;
         }
 
         public override void Execute()
@@ -150,18 +151,18 @@ namespace PlayerStates
             _agent.isStopped = true;
 
             _playerController.SkillSlot.CastSkill(_playerController._usingSkill);
-            _animator.CrossFade("SKILL1", 0.05f);
-            _detector.Target.GetComponent<BaseController>().TakeDamage(50);
+            //_animator.CrossFade("SKILL1", 0.05f);
+            //_detector.Target.GetComponent<BaseController>().TakeDamage(50);
 
         }
 
         public override void Execute()
         {
-            tmp += Time.deltaTime;
-            if (tmp > 1.5f)
-            {
-                _playerController.ChangeState(_playerController.MOVE_STATE);
-            }
+            //tmp += Time.deltaTime;
+            //if (tmp > 1.5f)
+            //{
+            //    _playerController.ChangeState(_playerController.MOVE_STATE);
+            //}
             base.Execute();
         }
 
@@ -264,9 +265,10 @@ namespace PlayerStates
             //}
             // 3초뒤 풀림
             GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = (Time.time - startTime) / 3.0f;
+
             if (Time.time - startTime >= 3.0f)
             {
-                _playerController.ChangeState(_playerController.MOVE_STATE);
+                _playerController.ChangeState(_playerController.SKILL_STATE);
             }
 
             if (Input.anyKey)
@@ -278,7 +280,7 @@ namespace PlayerStates
             else // 키를 떄면?
             {
                 
-                _playerController.ChangeState(_playerController.MOVE_STATE);
+                _playerController.ChangeState(_playerController.SKILL_STATE);
                 
             }
         }

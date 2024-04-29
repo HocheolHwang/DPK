@@ -53,7 +53,7 @@ public class PoolManager
 
             poolable.gameObject.SetActive(true);
 
-            // DontDestroyOnLoad ÇØÁ¦
+            // DontDestroyOnLoad í•´ì œ
             if (parent == null)
                 poolable.transform.parent = Managers.Scene.CurrentScene.transform;
             
@@ -91,9 +91,9 @@ public class PoolManager
         string name = poolable.gameObject.name;
 
 
-        // ÈçÇÏÁö ¾ÊÀº ÀÌÀ¯
-        // ÇÑ¹øµµ ²¨³»Áö ¾ÊÀº Ä£±¸¸¦ ³ÖÀ» ÀÏÀº ¾øÀ¸´Ï±î
-        // ¹Ì¸® »ı¼ºµÅ ÀÖ´ø Ä£±¸´Â À¯°¨ ÀÌÁö¸¸ »èÁ¦ÇØ¾ß°Ú´Ù
+        // í”í•˜ì§€ ì•Šì€ ì´ìœ 
+        // í•œë²ˆë„ êº¼ë‚´ì§€ ì•Šì€ ì¹œêµ¬ë¥¼ ë„£ì„ ì¼ì€ ì—†ìœ¼ë‹ˆê¹Œ
+        // ë¯¸ë¦¬ ìƒì„±ë¼ ìˆë˜ ì¹œêµ¬ëŠ” ìœ ê° ì´ì§€ë§Œ ì‚­ì œí•´ì•¼ê² ë‹¤
 
         if (_pool.ContainsKey(name) == false)
         {

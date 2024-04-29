@@ -17,8 +17,7 @@ public class MummyWarriorController : BaseController
 
     private MummyWarriorAnimationData _animData;
     public MummyWarriorAnimationData AnimData { get => _animData; }
-
-    public static event Action<MummyWarriorController> OnDeath;
+    public Action OnDeath;
 
     protected override void Awake()
     {
@@ -57,10 +56,9 @@ public class MummyWarriorController : BaseController
     // ---------------------------------- IDamage ------------------------------------------
     public override void DestroyEvent()
     {
-        base.DestroyEvent();
+        // Summon Class에서 세팅한 함수를 수행
+        OnDeath?.Invoke();
 
-        // Mummy Man 한테 죽었음을 알려주기
-        OnDeath?.Invoke(this);
-        // MummyWarriorController.OnDeath -= OnDeath;
+        base.DestroyEvent();
     }
 }

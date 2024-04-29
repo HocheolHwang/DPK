@@ -17,8 +17,7 @@ public class MummyBufferController : BaseController
 
     private MummyBufferAnimationData _animData;
     public MummyBufferAnimationData AnimData { get => _animData; }
-
-    public static event Action<MummyBufferController> OnDeath;
+    public Action OnDeath;
 
     protected override void Awake()
     {
@@ -57,9 +56,9 @@ public class MummyBufferController : BaseController
     // ---------------------------------- IDamage ------------------------------------------
     public override void DestroyEvent()
     {
-        base.DestroyEvent();
+        // 죽었을 경우 보내는 ACTION
+        OnDeath?.Invoke();
 
-        // Mummy Man 한테 죽었음을 알려주기
-        OnDeath?.Invoke(this);
+        base.DestroyEvent();
     }
 }

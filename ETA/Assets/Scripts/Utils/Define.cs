@@ -9,7 +9,9 @@ public class Define
         None,
         Target,
         Range,
-        Holding
+        Holding,
+        Immediately
+
     }
     public enum SkillKey
     {
