@@ -12,7 +12,7 @@ public class Hand_Cursor_Changer : MonoBehaviour, IPointerEnterHandler, IPointer
     private void Start()
     {
         // 손가락 커서 이미지를 Resources에서 로드하여 handCursor 변수에 저장
-        handCursor = Resources.Load<Texture2D>("Sprites/7. Common Sprites/Cursor Sprites/Hand Cursor");
+        handCursor = Resources.Load<Texture2D>("Sprites/Cursor Sprites/Hand Cursor");
     }
 
     // 마우스가 UI 오브젝트에 들어갈 때 호출되는 메서드
