@@ -25,9 +25,9 @@ public class Massacre : TmpSkill
             ps.transform.rotation = Quaternion.Euler(direction * 45f,  -90f, 0f);
 
             if (i % 2 == 0)
-                _animator.CrossFade("Skill01_1", 0.1f); // 1번째와 3번째 칼 휘두르기
+                _animator.CrossFade("ATTACK1", 0.1f); // 1번째와 3번째 칼 휘두르기
             else
-                _animator.CrossFade("Skill01_2", 0.1f); // 2번째와 4번째 칼 휘두르기
+                _animator.CrossFade("ATTACK2", 0.1f); // 2번째와 4번째 칼 휘두르기
 
             ps.Play();
 
