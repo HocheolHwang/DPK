@@ -83,8 +83,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         // 임시 코드
          
-        Managers.PlayerInfo.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
-        Debug.Log(Managers.PlayerInfo.GetNickName());
+        //Managers.PlayerInfo.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
+        //Debug.Log(Managers.PlayerInfo.GetNickName());
 
         if (isConnecting)
         {
@@ -273,6 +273,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         isConnecting = true;
         Debug.Log("OnConnectedToMaster");
         PhotonNetwork.JoinLobby();
+
+        // 테스트코드
+        // PhotonNetwork.JoinRandomOrCreateRoom();
     }
 
     public override void OnJoinedLobby()
