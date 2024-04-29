@@ -6,7 +6,7 @@ using UnityEngine;
 // Boar의 근거리 공격
 public class BoarAutoAttack : Pattern
 {
-    [Header("원하는 이펙트와 사운드 이름을 넣으세요")]
+    [Header("원하는 이펙트와 사운드 이름을 넣으세요 - 디버깅")]
     [SerializeField] string _effectName;
     [SerializeField] string _soundName;
 
@@ -14,6 +14,7 @@ public class BoarAutoAttack : Pattern
     {
         base.Init();
 
+        _createTime = 0.1f;
         _patternRange = new Vector3(0.4f, 0.5f, 1.6f);
     }
 
@@ -37,7 +38,7 @@ public class BoarAutoAttack : Pattern
         
         //ps.transform.position = hitbox.transform.position;
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
         //yield return new WaitForSeconds(ps.main.duration);
