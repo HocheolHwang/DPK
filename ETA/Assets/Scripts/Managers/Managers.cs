@@ -16,6 +16,7 @@ public class Managers : MonoBehaviour
     NetworkManager _network = new NetworkManager();
     PlayerManager _playerInfo = PlayerManager.GetInstance();
     PoolManager _pool = new PoolManager();
+    EffectManager _effect = new EffectManager();
     CoroutineManager _coroutine;
     
     public static InputManager Input { get { return Instance._input; } }
@@ -28,6 +29,7 @@ public class Managers : MonoBehaviour
     public static PlayerManager PlayerInfo { get { return Instance._playerInfo; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static CoroutineManager Coroutine { get; private set;}
+    public static EffectManager Effect { get { return Instance._effect; } }
 
     void Start()
     {
@@ -57,8 +59,10 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
 
+            
             s_instance._pool.Init();
             s_instance._sound.Init();
+            s_instance._effect.Init();
         }
     }
 
