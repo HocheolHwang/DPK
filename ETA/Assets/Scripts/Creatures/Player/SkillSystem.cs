@@ -30,7 +30,7 @@ public class SkillSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        skillCursor = Resources.Load<Texture2D>("Sprites/7. Common Sprites/Cursor Sprites/Enemy Cursor"); // 커서는 나중에 바꾸기
+        skillCursor = Resources.Load<Texture2D>("Sprites/Cursor Sprites/Enemy Cursor"); // 커서는 나중에 바꾸기
 
         targetingGo = Managers.Resource.Instantiate("Targeting").GetComponent<ParticleSystem>();
         targetingGo.Play();
