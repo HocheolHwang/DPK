@@ -39,6 +39,7 @@ public class KnightGController : BaseMonsterController
 
     protected override void Start()
     {
+        base.Start();
         ChangeState(IDLE_STATE);
     }
 

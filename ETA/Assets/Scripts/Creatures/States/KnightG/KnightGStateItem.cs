@@ -130,16 +130,19 @@ namespace KnightGStateItem
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
 
             // 2가지 자동 공격 모션이 존재한다.
-            if (attackCnt % 2 == 0)
+            if (attackCnt % 2 == 1)
             {
                 InitTime(_animData.AttackAnim.length);
                 _animator.CrossFade(_animData.AttackParamHash, 0.4f);
 
+                _controller.PatternInfo.PatternList[(int)EKnightGPattern.FirstAuto].Cast();
             }
-            else if (attackCnt % 2 == 1)
+            else if (attackCnt % 2 == 0)
             {
                 InitTime(_animData.AttackUpAnim.length);
                 _animator.CrossFade(_animData.AttackUpParamHash, 0.4f);
+
+                _controller.PatternInfo.PatternList[(int)EKnightGPattern.SecondAuto].Cast();
             }
             
         }
@@ -275,19 +278,26 @@ namespace KnightGStateItem
         {
             InitTime(_animData.CounterEnableAnim.length);
 
-            _animator.SetFloat("CounterEnableSpeed", 0.5f);
+            _animator.SetFloat("CounterEnableSpeed", 0.25f);
             _animator.CrossFade(_animData.CounterEnableParamHash, 0.1f);
+
+            _controller.PatternInfo.PatternList[(int)EKnightGPattern.CounterEnable].Cast();
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
-            if (_animTime >= _threadHold * 2.0f)
+
+            // 카운터에 맞으면 그로기
+            if (_controller.IsHitCounter)
+            {
+                _controller.ChangeState(_controller.GROGGY_STATE);
+            }
+
+            if (_animTime >= _threadHold * 4.0f)
             {
                 _controller.ChangeState(_controller.COUNTER_ATTACK_STATE);
             }
-
-            // 여기서 카운터 스킬에 맞았을 경우 그로기 상태로 전환
         }
         public override void Exit()
         {
@@ -308,6 +318,8 @@ namespace KnightGStateItem
         {
             InitTime(_animData.CounterAttackAnim.length);
             _animator.CrossFade(_animData.CounterAttackParamHash, 0.1f);
+
+            _controller.PatternInfo.PatternList[(int)EKnightGPattern.CounterAttack].Cast();
         }
 
         public override void Execute()
@@ -463,7 +475,7 @@ namespace KnightGStateItem
         {
             if (IsStayForSeconds())
             {
-                _controller.RevertToPrevState();
+                _controller.ChangeState(_controller.IDLE_STATE);
             }
         }
         public override void Exit()
