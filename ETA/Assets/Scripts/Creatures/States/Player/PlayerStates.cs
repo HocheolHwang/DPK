@@ -26,7 +26,8 @@ namespace PlayerStates
         {
             base.Enter();
             _animator.CrossFade("IDLE", 0, -1, 0);
-            
+            _agent.velocity = Vector3.zero;
+            _agent.isStopped = true;
         }
 
         public override void Execute()

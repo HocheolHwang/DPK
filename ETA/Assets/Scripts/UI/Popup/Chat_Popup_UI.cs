@@ -1,6 +1,7 @@
+using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine;
 using TMPro;
 
 public class Chat_Popup_UI : UI_Popup
@@ -42,6 +43,9 @@ public class Chat_Popup_UI : UI_Popup
         Button chatEnterButton = GetButton((int)Buttons.Chat_Enter_Button);
         AddUIEvent(chatEnterButton.gameObject, ChatEnter);
         AddUIKeyEvent(chatEnterButton.gameObject, () => ChatEnter(null), KeyCode.Return);
+
+        // Chat_InputField에 포커스 설정
+        StartCoroutine(SetFocusOnInputField());
     }
 
     // 뒤로가기
@@ -53,9 +57,34 @@ public class Chat_Popup_UI : UI_Popup
     // 입력하기
     private void ChatEnter(PointerEventData data)
     {
-        // 입력 필드가 비어있을 시 메서드 종료
-        if (string.IsNullOrEmpty(chatMessage.text)) return;
+        // 입력 필드가 비어있을 시
+        if (string.IsNullOrEmpty(chatMessage.text))
+        {
+            // 입력 필드에 포커스하고 메서드 종료
+            SetFocusToInputField();
+            return;
+        }
 
+        // 여기에 메시지를 보내는 등의 코드를 추가
 
+        // 메시지 전송 후 입력 필드에 다시 포커스 설정
+        SetFocusToInputField();
+    }
+
+    // 채팅창이 처음 열렸을 때 포커스 설정
+    private IEnumerator SetFocusOnInputField()
+    {
+        // 프레임이 완전히 렌더링될 때까지 기다림
+        yield return null;
+
+        // 입력 필드에 포커스 설정하는 메서드 호출
+        SetFocusToInputField();
+    }
+
+    // 입력 필드에 포커스 설정하는 메서드
+    private void SetFocusToInputField()
+    {
+        EventSystem.current.SetSelectedGameObject(chatMessage.gameObject);
+        chatMessage.ActivateInputField();
     }
 }
