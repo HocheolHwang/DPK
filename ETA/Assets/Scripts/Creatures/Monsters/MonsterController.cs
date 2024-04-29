@@ -49,7 +49,7 @@ public class MonsterController : BaseMonsterController
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
-        Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
+        Agent.stoppingDistance = Detector.AttackRange - 0.3f;      // 멈추는 거리는 공격 사거리의 0.3만큼 뺀 값이다. 이러지 않으면 범위 끝에서 CHASE 상태에서 변하지 않는 현상이 존재
     }
 
     // ---------------------------------- IDamage ------------------------------------------

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Boar의 근거리 공격
-public class BoarAutoAttack : Pattern
+public class TreeAutoAttack : Pattern
 {
     [Header("원하는 이펙트와 사운드 이름을 넣으세요 - 디버깅")]
     [SerializeField] string _effectName;
@@ -15,7 +15,7 @@ public class BoarAutoAttack : Pattern
         base.Init();
 
         _createTime = 0.1f;
-        _patternRange = new Vector3(0.4f, 0.5f, 1.3f);
+        _patternRange = new Vector3(0.9f, 0.5f, 1.3f);
     }
 
     public override IEnumerator StartPatternCast()

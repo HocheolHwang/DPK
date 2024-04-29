@@ -746,7 +746,7 @@ GameObject:
   - component: {fileID: 7516381338963428569}
   - component: {fileID: -1704938390380672281}
   m_Layer: 7
-  m_Name: Boar
+  m_Name: Boar_Tutorial
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -907,7 +907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DetectRange: 15
-  _attackRange: 2.2
+  _attackRange: 1.7
   _target: {fileID: 0}
   TargetLayerMask:
     serializedVersion: 2
