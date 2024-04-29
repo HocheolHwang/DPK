@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Pattern : MonoBehaviour ,IPattern
 {
-    [Header("애니메이션이 재생된 이후 이펙트와 Hitbox가 생기는 시점")]
+    [Header("애니메이션이 재생된 이후 이펙트와 Hitbox가 생기는 시점 - 디버깅")]
     [SerializeField] protected float _createTime;
     [SerializeField] protected Vector3 _patternRange;
 
