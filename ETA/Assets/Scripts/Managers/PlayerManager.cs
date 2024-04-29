@@ -15,7 +15,7 @@ public class PlayerManager
     private bool partyLeader;
     private bool first;
 
-    PlayerManager() { }
+    public PlayerManager() { }
 
     public static PlayerManager GetInstance()
     {

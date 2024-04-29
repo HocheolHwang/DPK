@@ -68,7 +68,7 @@ namespace PlayerStates
             {
                 //_agent.isStopped = false;
                 _agent.speed = moveSpeed;
-                //_agent.SetDestination(_detector.Target.transform.position);
+                _agent.SetDestination(_detector.Target.transform.position);
 
                 //Debug.Log($"{_detector.Target.gameObject.name}");
                 //float dist = Vector3.Distance(_detector.Target.transform.position, _playerController.transform.position);
@@ -97,7 +97,6 @@ namespace PlayerStates
 
     public class AttackState : PlayerState
     {
-        float tmp = 0;
         
         public AttackState(PlayerController playerController) : base(playerController)
         {
@@ -109,9 +108,7 @@ namespace PlayerStates
             base.Enter();
             _agent.velocity = Vector3.zero;
             _agent.isStopped = true;
-            tmp = 0;
-            _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-            _detector.Target.GetComponent<BaseController>().TakeDamage(_playerController.Stat.AttackDamage);
+            _playerController.SkillSlot.NormalAttack();
             LookAtEnemy();
       
 
@@ -119,11 +116,6 @@ namespace PlayerStates
 
         public override void Execute()
         {
-            tmp += Time.deltaTime;
-            if( tmp > 1.5f)
-            {
-                _playerController.ChangeState(_playerController.MOVE_STATE);
-            }
             base.Execute();
         }
 
@@ -175,6 +167,7 @@ namespace PlayerStates
     public class CollavoState : PlayerState
     {
         float tmp = 0;
+        
 
         public CollavoState(PlayerController playerController) : base(playerController)
         {
@@ -185,29 +178,33 @@ namespace PlayerStates
         {
             base.Enter();
             tmp = 0;
-            _animator.CrossFade("SKILL2", 0.05f);
-            Collider[] enemies = Physics.OverlapSphere(_playerController.transform.position, 6.0f, LayerMask.GetMask("Monster"));
 
-            foreach (Collider enemy in enemies)
-            {
-                enemy.GetComponent<MonsterController>().TakeDamage(50);
-            }
+            _playerController.SkillSlot.CastCollavoSkill(_playerController._usingSkill);
+
+            //_animator.CrossFade("SKILL2", 0.05f);
+            //Collider[] enemies = Physics.OverlapSphere(_playerController.transform.position, 6.0f, LayerMask.GetMask("Monster"));
+
+            //foreach (Collider enemy in enemies)
+            //{
+            //    enemy.GetComponent<MonsterController>().TakeDamage(50);
+            //}
 
 
         }
 
         public override void Execute()
         {
-            tmp += Time.deltaTime;
-            if (tmp > 1.5f)
-            {
-                _playerController.ChangeState(_playerController.MOVE_STATE);
-            }
+            //tmp += Time.deltaTime;
+            //if (tmp > 1.5f)
+            //{
+            //    _playerController.ChangeState(_playerController.MOVE_STATE);
+            //}
             base.Execute();
         }
 
         public override void Exit()
         {
+            
             base.Exit();
         }
     }
@@ -240,6 +237,7 @@ namespace PlayerStates
     {
         Define.SkillKey currentSkill;
         float startTime;
+        ParticleSystem _chargeEffect;
         public HoldState(PlayerController playerController) : base(playerController)
         {
 
@@ -253,6 +251,10 @@ namespace PlayerStates
             _agent.isStopped = true;
             // 콜라보 스킬 정보를 시스템에 저장 해야함
             _animator.CrossFade("HOLD", 0.2f);
+            //SwordChargeUp
+            _chargeEffect = Managers.Resource.Instantiate("Effect/SwordChargeUp").GetComponent<ParticleSystem>();
+            _chargeEffect.transform.position = _playerController.transform.position + _playerController.transform.up;
+            _chargeEffect.Play();
         }
 
         public override void Execute()
@@ -280,13 +282,14 @@ namespace PlayerStates
             else // 키를 떄면?
             {
                 
-                _playerController.ChangeState(_playerController.SKILL_STATE);
+                _playerController.ChangeState(_playerController.COLLAVO_STATE);
                 
             }
         }
 
         public override void Exit()
         {
+            Managers.Resource.Destroy(_chargeEffect.gameObject);
             GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = 0;
         }
     }

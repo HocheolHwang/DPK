@@ -28,37 +28,10 @@ public class SkillSlot : MonoBehaviour
                 
             }
         }
-
-
-        //skill[0] = gameObject.GetOrAddComponent<TargetSkill>();
-        
-        // 테스트용 하드 코딩
-        /*
-        skill[0] = new SkillWarrior.TestSkill1();
-        skill[1] = new SkillWarrior.TestSkill2();
-        skill[2] = new SkillWarrior.TestSkill1();
-        skill[3] = new SkillWarrior.TestSkill2();
-        skill[4] = new SkillWarrior.TestSkill1();
-        skill[5] = new SkillWarrior.TestSkill1();
-        skill[6] = new SkillWarrior.TestSkill1();
-        skill[7] = new SkillWarrior.TestSkill1();
-        _animator = GetComponent<Animator>(); // 애니메이터 컴포넌트 할당
-        for(int i = 0; i < skill.Length; i++)
-        {
-            skill[i].InitSetting();
-        }
-        */
     }
 
     public void SelectSkill(Define.SkillKey key)
     {
-        // 테스트용 하드 코딩
-        /*
-        Debug.Log($"{skill[(int)key].data.animator}");
-        _animator.CrossFade(skill[(int)key].data.animator, 0.05f);
-        skill[(int)key].Using();
-        */
-
         TmpSkill current = skill[(int)key];
 
         // 여기서 쿨타임 관리
@@ -101,6 +74,15 @@ public class SkillSlot : MonoBehaviour
         Debug.Log($"Skill Key = {key}");
     }
 
+    public void CastCollavoSkill(Define.SkillKey key)
+    {
+        skill[(int)key].CollavoCast();
+    }
+
+    public void NormalAttack()
+    {
+        GetComponent<WarriorNormalAttackSkill>().Cast();
+    }
 
 
     public void Clear()

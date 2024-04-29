@@ -178,7 +178,7 @@ namespace MummyManStateItem
     }
     #endregion
 
-    // -------------------------------------- CLAP ------------------------------------------------
+    // -------------------------------------- CLAP( SUMMON_SKILL ) ------------------------------------------------
     #region CLAP
     public class ClapState : MummyManState
     {

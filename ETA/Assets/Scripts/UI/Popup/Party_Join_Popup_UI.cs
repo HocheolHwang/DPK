@@ -1,6 +1,8 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
 
 public class Party_Join_Popup_UI : UI_Popup
 {
@@ -57,8 +59,8 @@ public class Party_Join_Popup_UI : UI_Popup
     private void OpenDungeonSelect(PointerEventData data)
     {
         // 창을 모두 닫은 뒤에 던전 선택 Popup UI를 띄움
-        // CloseAllPopupUI();
-        // Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
+        CloseAllPopupUI();
+        Managers.UI.ShowPopupUI<Dungeon_Select_Popup_UI>("[Lobby]_Dungeon_Select_Popup_UI");
     }
 
     // 던전 입장 Popup UI 열기

@@ -73,7 +73,7 @@ public class TestUI : MonoBehaviour
 
     public void ShowPartyLeader()
     {
-        partyLeader.SetActive(Managers.PlayerInfo.GetPartyLeader());
+        partyLeader.SetActive(Managers.Player.GetPartyLeader());
     }
 
     //// 테스트 로그인

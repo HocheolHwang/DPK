@@ -6,28 +6,29 @@ public class ImmediatelySkill : TmpSkill
 {
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(1);
         base.Init();
         SkillType = Define.SkillType.Immediately;
-        skillRange = new Vector3(7, 7, 7);
+        skillRange = new Vector3(3, 3, 3);
     }
 
     public override IEnumerator StartSkillCast()
     {
-        _animator.CrossFade("SKILL1", 0.1f);
-        yield return new WaitForSeconds(0.7f);
+        _animator.CrossFade("TEMP", 0.1f);
+        yield return new WaitForSeconds(0.1f);
 
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBox").GetComponent<HitBox>();
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
-        hitbox.transform.position = _skillSystem.TargetPosition;
+        hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
+
+        ParticleSystem ps = Managers.Resource.Instantiate("Effect/SlashWideBlue").GetComponent<ParticleSystem>();
+        ps.transform.position = gameObject.transform.position + transform.up;
+        
+        ps.Play();
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
-        ParticleSystem ps = Managers.Resource.Instantiate("Effect/SpikeWaveStone").GetComponent<ParticleSystem>();
-        ps.transform.position = hitbox.transform.position;
-        ps.Play();
-
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1.0f);
         Managers.Resource.Destroy(ps.gameObject);
         _controller.ChangeState(_controller.MOVE_STATE);
     }

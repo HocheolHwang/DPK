@@ -12,7 +12,7 @@ namespace SkillWarrior
             data.damage = 1000;
             data.casting = 1.5f;
             data.animator = "Skill01_1";
-            data.effect = Resources.Load<GameObject>("Assets/Scenes/Test/SkillTest/skilleffect.prefab");
+            data.effect = Resources.Load<GameObject>("Effect/skilleffect1.prefab");
         }
 
         public override void Using()

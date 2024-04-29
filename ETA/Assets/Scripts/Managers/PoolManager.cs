@@ -84,6 +84,7 @@ public class PoolManager
         pool.Root.parent = _root;
 
         _pool.Add(original.name, pool);
+
     }
 
     public void Push(Poolable poolable)

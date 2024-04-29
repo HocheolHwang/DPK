@@ -805,7 +805,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 0
+  SkillRange: {x: 0, y: 0, z: 0}
   TargetPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &644390010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644389994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f29c5f59c750a4a9266e32e311ef88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillType: 1
+  Damage: 50
+  skillRange: {x: 0, y: 0, z: 0}
 --- !u!1001 &655862280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1129,6 +1145,10 @@ PrefabInstance:
     - target: {fileID: 6268509727253025285, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279640478072988589, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
+      propertyPath: Speed
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7279640478072988589, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
       propertyPath: DetectRange
@@ -2284,6 +2304,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1753130428}
+  - component: {fileID: 1753130429}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -2306,6 +2327,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1753130429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753130427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2055ee7bcb703840bc89fac750e1a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1880781059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5561927539487953201, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
@@ -2576,6 +2609,10 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7290405898905307331, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      propertyPath: _moveSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7290405898905307331, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: _attackDamage
       value: 50
       objectReference: {fileID: 0}
@@ -2586,6 +2623,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4957167276760604118, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       insertIndex: -1
       addedObject: {fileID: 644390002}
+    - targetCorrespondingSourceObject: {fileID: 4957167276760604118, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 644390010}
   m_SourcePrefab: {fileID: 100100000, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
 --- !u!1 &5617222080534105740
 GameObject:
