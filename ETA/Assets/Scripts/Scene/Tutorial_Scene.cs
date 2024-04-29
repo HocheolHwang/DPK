@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Tutorial_Scene : MonoBehaviour
 {
-
     void Start()
     {
         
     }
-    
 }
