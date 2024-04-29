@@ -5,7 +5,7 @@ using UnityEngine;
 
 using KnightGStateItem;
 
-public class KnightGController : BaseController
+public class KnightGController : BaseMonsterController
 {
     // KnightG가 가지는 상태
     public State IDLE_STATE;
@@ -37,7 +37,7 @@ public class KnightGController : BaseController
         Init();
     }
 
-    private void Start()
+    protected override void Start()
     {
         ChangeState(IDLE_STATE);
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 using MummyWarriorStateItem;
 using System;
 
-public class MummyWarriorController : BaseController
+public class MummyWarriorController : BaseMonsterController
 {
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
@@ -25,7 +25,7 @@ public class MummyWarriorController : BaseController
         Init();
     }
 
-    private void Start()
+    protected override void Start()
     {
         ChangeState(IDLE_STATE);
     }

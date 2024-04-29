@@ -12,10 +12,11 @@ public class Managers : MonoBehaviour
     UIManager _ui = new UIManager();
     SceneManagerEx _scene = new SceneManagerEx();
     SoundManager _sound = new SoundManager();
-    PhotonManager _photon = new PhotonManager();
-    NetworkManager _network = new NetworkManager();
-    PlayerManager _playerInfo = PlayerManager.GetInstance();
+    PhotonManager _photon;
+    NetworkManager _network;
+    PlayerManager _player = new PlayerManager();
     PoolManager _pool = new PoolManager();
+    EffectManager _effect = new EffectManager();
     CoroutineManager _coroutine;
     
     public static InputManager Input { get { return Instance._input; } }
@@ -25,9 +26,10 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PhotonManager Photon { get; private set; }
     public static NetworkManager Network { get; private set; }
-    public static PlayerManager PlayerInfo { get { return Instance._playerInfo; } }
+    public static PlayerManager Player { get { return Instance._player; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static CoroutineManager Coroutine { get; private set;}
+    public static EffectManager Effect { get { return Instance._effect; } }
 
     void Start()
     {
@@ -44,6 +46,7 @@ public class Managers : MonoBehaviour
     {
         if (s_instance == null)
         {
+            Debug.Log("@@");
             GameObject go = GameObject.Find("@Managers");
             if (go == null)
             {
@@ -56,9 +59,13 @@ public class Managers : MonoBehaviour
 
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
-
+            
+            
             s_instance._pool.Init();
             s_instance._sound.Init();
+            s_instance._effect.Init();
+
+            Photon.Connect();
         }
     }
 
