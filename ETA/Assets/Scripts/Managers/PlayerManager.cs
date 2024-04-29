@@ -13,6 +13,7 @@ public class PlayerManager
     private string curClass;
     private int index;
     private bool partyLeader;
+    private bool first;
 
     PlayerManager() { }
 
@@ -67,6 +68,10 @@ public class PlayerManager
     {
         this.partyLeader = partyLeader;
     }
+    public void SetFirst(bool first)
+    {
+        this.first = first;
+    }
 
     public string GetId()
     {
@@ -100,5 +105,9 @@ public class PlayerManager
     public bool GetPartyLeader()
     {
         return partyLeader;
+    }
+    public bool GetFirst()
+    {
+        return first;
     }
 }

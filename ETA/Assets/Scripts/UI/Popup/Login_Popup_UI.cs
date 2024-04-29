@@ -119,11 +119,11 @@ public class Login_Popup_UI : UI_Popup
         string message = dto.message;
         // 메시지가 "success"인 경우 After Login Popup UI 띄움
         if (message == "success")
-        {            
-            PlayerManager.GetInstance().SetToken(dto.accessToken);
-            PlayerManager.GetInstance().SetGold(dto.playerGold);
-            
-            PlayerManager.GetInstance().SetNickName(JWTDecord.DecodeJWT(dto.accessToken));
+        {
+            Managers.PlayerInfo.SetToken(dto.accessToken);
+            Managers.PlayerInfo.SetGold(dto.playerGold);
+            Managers.PlayerInfo.SetFirst(dto.first);
+            Managers.PlayerInfo.SetNickName(JWTDecord.DecodeJWT(dto.accessToken));
 
             // 모든 Popup UI를 닫음
             CloseAllPopupUI();
