@@ -42,6 +42,12 @@ public abstract class TmpSkill : MonoBehaviour
         StartCoroutine(StartSkillCast());
     }
 
+    public void CollavoCast()
+    {
+        _lastExcuteTime = Time.time;
+        StartCoroutine(StartCollavoSkillCast());
+    }
+
     public bool CanCastSkill()
     {
         if (Time.time - _lastExcuteTime >= _cooldownTime) return true;
@@ -49,6 +55,9 @@ public abstract class TmpSkill : MonoBehaviour
     }
 
     public abstract IEnumerator StartSkillCast();
+    public virtual IEnumerator StartCollavoSkillCast() {
+        yield return null;
+    }
 
 
 }
