@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using MonsterStateItem;
+using UnityEngine.AI;
 
-public class MonsterController : BaseController
+public class MonsterController : BaseMonsterController
 {
     // Monster가 공통으로 가지는 상태
     public State IDLE_STATE;
@@ -24,7 +25,7 @@ public class MonsterController : BaseController
         Init();
     }
 
-    private void Start()
+    protected override void Start()
     {
         ChangeState(IDLE_STATE);
     }
@@ -48,7 +49,7 @@ public class MonsterController : BaseController
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
-        Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
+        Agent.stoppingDistance = Detector.AttackRange - 0.3f;      // 멈추는 거리는 공격 사거리의 0.3만큼 뺀 값이다. 이러지 않으면 범위 끝에서 CHASE 상태에서 변하지 않는 현상이 존재
     }
 
     // ---------------------------------- IDamage ------------------------------------------

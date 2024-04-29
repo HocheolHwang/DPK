@@ -16,7 +16,8 @@ public class ImmediatelySkill : TmpSkill
     {
         _animator.CrossFade("TEMP", 0.1f);
         yield return new WaitForSeconds(0.1f);
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBox").GetComponent<HitBox>();
+
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;

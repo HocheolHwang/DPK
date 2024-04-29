@@ -18,7 +18,7 @@ public class TargetSkill : TmpSkill
         ParticleSystem ps1 = Managers.Resource.Instantiate("Effect/SwordVolleyBlue").GetComponent<ParticleSystem>();
         ps1.transform.position = _skillSystem.TargetPosition + gameObject.transform.up;
         ps1.Play();
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBox").GetComponent<HitBox>();
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = _skillSystem.TargetPosition;
         yield return new WaitForSeconds(0.1f);
