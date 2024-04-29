@@ -35,13 +35,13 @@ public class PhotonChat : MonoBehaviour
 
         ChatMessage message = new ChatMessage();
         message.message = msg;
-        message.sender = Managers.PlayerInfo.GetNickName();
+        message.sender = Managers.Player.GetNickName();
 
 
         // empty message
         if (message.message.Length < 1) return;
 
-        message.sender = Managers.PlayerInfo.GetNickName();
+        message.sender = Managers.Player.GetNickName();
 
 
         string messageJson = JsonUtility.ToJson(message);
