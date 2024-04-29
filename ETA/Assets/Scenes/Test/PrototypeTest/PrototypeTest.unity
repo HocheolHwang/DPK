@@ -805,6 +805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 0
+  SkillRange: {x: 0, y: 0, z: 0}
   TargetPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &655862280
 PrefabInstance:
@@ -1129,6 +1130,10 @@ PrefabInstance:
     - target: {fileID: 6268509727253025285, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279640478072988589, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
+      propertyPath: Speed
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7279640478072988589, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
       propertyPath: DetectRange
@@ -2574,6 +2579,10 @@ PrefabInstance:
     - target: {fileID: 7290405898905307331, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: _maxHp
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7290405898905307331, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      propertyPath: _moveSpeed
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7290405898905307331, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: _attackDamage
