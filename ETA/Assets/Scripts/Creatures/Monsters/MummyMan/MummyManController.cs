@@ -5,7 +5,7 @@ using UnityEngine;
 
 using MummyManStateItem;
 
-public class MummyManController : BaseController
+public class MummyManController : BaseMonsterController
 {
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
@@ -42,7 +42,7 @@ public class MummyManController : BaseController
         Init();
     }
 
-    private void Start()
+    protected override void Start()
     {
         ChangeState(IDLE_STATE);
     }

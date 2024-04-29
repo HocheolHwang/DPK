@@ -531,10 +531,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86cc2e01477d23642b72d4eb2b4b9830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 5
-  animator: {fileID: 0}
-  agent: {fileID: 0}
-  stat: {fileID: 0}
+  UnitType: 0
+  Animator: {fileID: 0}
+  Agent: {fileID: 0}
+  Stat: {fileID: 0}
 --- !u!114 &452731348794098034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,6 +552,7 @@ MonoBehaviour:
   _moveSpeed: 3
   _attackDamage: 3
   _defense: 0
+  _shield: 0
 --- !u!114 &-4592542451953495264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,10 +565,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 15
+  DetectRange: 15
   _attackRange: 8
   _target: {fileID: 0}
-  targetLayerMask:
+  TargetLayerMask:
     serializedVersion: 2
     m_Bits: 64
 --- !u!114 &6766364674128847522

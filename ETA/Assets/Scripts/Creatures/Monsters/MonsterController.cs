@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using MonsterStateItem;
+using UnityEngine.AI;
 
-public class MonsterController : BaseController
+public class MonsterController : BaseMonsterController
 {
     // Monster가 공통으로 가지는 상태
     public State IDLE_STATE;
@@ -24,7 +25,7 @@ public class MonsterController : BaseController
         Init();
     }
 
-    private void Start()
+    protected override void Start()
     {
         ChangeState(IDLE_STATE);
     }
