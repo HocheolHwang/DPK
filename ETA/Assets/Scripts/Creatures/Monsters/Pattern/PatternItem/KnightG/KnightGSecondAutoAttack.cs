@@ -1,31 +1,33 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Boar의 근거리 공격
-public class BoarAutoAttack : Pattern
+public class KnightGSecondAutoAttack : Pattern
 {
-    [Header("원하는 이펙트와 사운드 이름을 넣으세요 - 디버깅")]
+    [Header("원하는 이펙트 이름을 넣으세요 - 디버깅")]
     [SerializeField] string _effectName;
-    [SerializeField] string _soundName;
+
+    [Header("개발 편의성")]
+    [SerializeField] float _hitboxForwardLoc = 1.0f;
+    [SerializeField] Vector3 _hitboxRange = new Vector3(5.3f, 4.0f, 5.0f);
+    [SerializeField] float _upLoc = 1.0f;
+    [SerializeField] float _rightLoc = 0.4f;
 
     public override void Init()
     {
         base.Init();
 
-        _createTime = 0.1f;
-        _patternRange = new Vector3(0.4f, 0.5f, 1.3f);
+        _createTime = 0.7f;
+        _patternRange = _hitboxRange;
     }
 
     public override IEnumerator StartPatternCast()
     {
         // 멈췄을 때 target을 향해 hitbox, effect 생성
-        Vector3 rootForward = transform.TransformDirection(Vector3.forward * (_controller.Detector.AttackRange - 0.7f)); // Target이 null일 수 있기 때문에 임의로 지정
-        Vector3 rootUp = transform.TransformDirection(Vector3.up * 0.4f);
-        Vector3 objectPosition = transform.position + rootForward + rootUp;
-        //Vector3 dir = _controller.Detector.Target.position - transform.position;
-        //Vector3 _objectPosition = transform.position + dir.normalized * _controller.Detector.AttackRange;
+        Vector3 rootForward = transform.TransformDirection(Vector3.forward * (_controller.Detector.AttackRange - _hitboxForwardLoc));
+        Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
+        Vector3 rootRight = transform.TransformDirection(Vector3.right * _rightLoc);
+        Vector3 objectLoc = transform.position + rootForward + rootUp + rootRight;
 
         yield return new WaitForSeconds(_createTime);
 
@@ -34,9 +36,7 @@ public class BoarAutoAttack : Pattern
         hitbox.SetUp(transform, _attackDamage);
         hitbox.transform.localScale = _patternRange;
         hitbox.transform.rotation = transform.rotation;
-        hitbox.transform.position = objectPosition;
-        
-        //ps.transform.position = hitbox.transform.position;
+        hitbox.transform.position = objectLoc;
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);

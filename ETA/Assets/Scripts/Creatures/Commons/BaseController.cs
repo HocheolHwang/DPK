@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using static Define;
 
 public abstract class BaseController : MonoBehaviour, IDamageable
 {
@@ -93,7 +94,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     }
 
     // ---------------------------------- IDamage ------------------------------------------
-    public virtual void TakeDamage(int attackDamage)
+    public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
         // 최소 데미지 = 1
         int damage = Mathf.Abs(attackDamage - Stat.Defense);
@@ -117,7 +118,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             Stat.Shield = 0;
         }
 
-
         StartCoroutine(ChangeDamagedColorTemporarily());
 
         attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
@@ -131,6 +131,15 @@ public abstract class BaseController : MonoBehaviour, IDamageable
             Stat.Hp = 0;
             DestroyObject();
         }
+        else if (isCounter)
+        {
+            CounterEvent();
+        }
+    }
+
+    public virtual void CounterEvent()
+    {
+        // 카운터, 히든 기믹 파훼 판단
     }
 
     public virtual void DestroyEvent()

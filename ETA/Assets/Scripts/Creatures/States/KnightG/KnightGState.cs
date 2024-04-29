@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum EKnightGPattern
+{
+    FirstAuto       = 0,
+    SecondAuto,
+    CounterEnable,
+    CounterAttack,
+}
+
 // KnightG 상태
 public class KnightGState : State
 {
