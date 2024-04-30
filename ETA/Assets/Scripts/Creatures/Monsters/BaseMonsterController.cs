@@ -22,7 +22,7 @@ public class BaseMonsterController : BaseController
 
     protected virtual void Start()
     {
-        InitCounter();      // Boss Controller만 상속
+        StartCoroutine(InitCounter());      // Boss Controller만 상속
     }
 
     protected override void Update()
@@ -44,11 +44,17 @@ public class BaseMonsterController : BaseController
 
     IEnumerator InitCounter()
     {
-        // counter 맞고 0.15초 뒤에 맞았다는 상태를 초기화
-        yield return new WaitForSeconds(0.15f);
-        if (_isHitCounter)
+        while (true)
         {
-            _isHitCounter = false;
+            yield return new WaitForSeconds(0.15f);
+            Debug.Log(_isHitCounter);
+            if (_isHitCounter)
+            {
+                
+                _isHitCounter = false;
+            }
         }
+        // counter 맞고 0.15초 뒤에 맞았다는 상태를 초기화
+
     }
 }
