@@ -11,6 +11,7 @@ public class PlayerZone : MonoBehaviour
     private float currentSpeed;  // 현재 이동 속도
 
     [SerializeField] private PlayerController playerController;
+    float _delta;
 
 
     void Start()
@@ -26,9 +27,8 @@ public class PlayerZone : MonoBehaviour
 
     void moveFront()
     {
-
         Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(2,1,6), new Quaternion(), TargetLayerMask);
-        if (enemies.Length <= 0)
+        if (enemies.Length <= 0 && _delta >= 1.0f)
         {
             transform.position += transform.forward * Time.deltaTime * currentSpeed;
         }
