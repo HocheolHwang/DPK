@@ -19,12 +19,13 @@ public class PlayerZone : MonoBehaviour
     void Start()
     {
         currentSpeed = Speed;  // 시작할 때 현재 속도를 초기 속도로 설정
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        _agent.GetComponent<NavMeshAgent>();
+        
         moveFront();
     }
 
@@ -33,10 +34,13 @@ public class PlayerZone : MonoBehaviour
         Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(2,1,6), new Quaternion(), TargetLayerMask);
         if (enemies.Length <= 0)
         {
-
-            //_delta += Time.deltaTime;
-            //_delta = _delta >= currentSpeed ? currentSpeed : _delta;
-            transform.position += transform.forward * Time.deltaTime * currentSpeed;
+            _delta += Time.deltaTime / 2;
+            _delta = _delta >= 1.0f ? 1.0f : _delta;
+            transform.position += transform.forward * Time.deltaTime * currentSpeed * _delta;
+        }
+        else
+        {
+            _delta = 0;
         }
 
     }
