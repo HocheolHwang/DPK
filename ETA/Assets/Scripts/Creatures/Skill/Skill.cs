@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class TmpSkill : MonoBehaviour
+public abstract class Skill : MonoBehaviour
 {
     protected PlayerController _controller;
     protected Animator _animator;

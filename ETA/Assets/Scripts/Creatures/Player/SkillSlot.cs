@@ -8,10 +8,10 @@ public class SkillSlot : MonoBehaviour
     public SkillSystem SkillSystem { get; set; }
     // Start is called before the first frame update
     //ISkill[] skill = new ISkill[8];
-    TmpSkill[] skill = new TmpSkill[8];
+    Skill[] skill = new Skill[8];
     private Animator _animator;
 
-    private TmpSkill _currentSkill;
+    private Skill _currentSkill;
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
@@ -26,7 +26,7 @@ public class SkillSlot : MonoBehaviour
             // 후에 as를 이용한 타입캐스트 해주기
             if (type != null && type.IsSubclassOf(typeof(Component)))
             {
-                skill[i] = (TmpSkill)gameObject.AddComponent(type);
+                skill[i] = (Skill)gameObject.AddComponent(type);
                 
             }
         }
@@ -34,7 +34,7 @@ public class SkillSlot : MonoBehaviour
 
     public void SelectSkill(Define.SkillKey key)
     {
-        TmpSkill current = skill[(int)key];
+        Skill current = skill[(int)key];
 
         // 여기서 쿨타임 관리
         if (current.CanCastSkill() == false) return;

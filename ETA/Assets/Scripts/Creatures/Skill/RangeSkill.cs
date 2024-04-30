@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeSkill : TmpSkill
+public class RangeSkill : Skill
 {
 
 

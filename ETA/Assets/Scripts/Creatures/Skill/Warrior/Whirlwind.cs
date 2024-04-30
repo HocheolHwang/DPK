@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Whirlwind : TmpSkill
+public class Whirlwind : Skill
 {
     protected override void Init()
     {

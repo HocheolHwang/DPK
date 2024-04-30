@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImmediatelySkill : TmpSkill
+public class ImmediatelySkill : Skill
 {
     protected override void Init()
     {

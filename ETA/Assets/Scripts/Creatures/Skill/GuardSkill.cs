@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardSkill : TmpSkill
+public class GuardSkill : Skill
 {
     protected override void Init()
     {
