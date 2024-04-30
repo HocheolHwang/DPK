@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 7118630212406091290}
   - component: {fileID: 559439563170383307}
   - component: {fileID: 100036981632282693}
+  - component: {fileID: 1777990908021287832}
   m_Layer: 7
   m_Name: KnightG
   m_TagString: Monster
@@ -410,6 +411,7 @@ MonoBehaviour:
   Animator: {fileID: 0}
   Agent: {fileID: 0}
   Stat: {fileID: 0}
+  _isHitCounter: 0
 --- !u!114 &5488658513957896410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +494,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5c95ab9b2d32f446839edb755caf404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1777990908021287832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212645854604629280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f251232eea01f0942a2b1542720c0528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1349130284437004762
