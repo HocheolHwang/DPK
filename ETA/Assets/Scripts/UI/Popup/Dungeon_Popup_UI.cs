@@ -17,7 +17,8 @@ public class Dungeon_Popup_UI : UI_Popup
     // 텍스트 인덱스
     enum Texts
     {
-        Dungeon_Name_Text
+        Dungeon_Name_Text,
+        Time_Text
     }
 
     // Slider 인덱스
@@ -39,10 +40,12 @@ public class Dungeon_Popup_UI : UI_Popup
     private GameObject starShardPlainIcon;
     private GameObject bossStatus;
     private TextMeshProUGUI dungeonNameText;
+    private TextMeshProUGUI timeText;
     private Slider dungeonProgressBar;
     public Transform[] checkpoints;
     private int totalCheckpoints = 3;
     private int currentCheckpointIndex = 0;
+    private float gameTime = 0f;
 
     // 로그인 UI 초기화
     public override void Init()
@@ -64,6 +67,9 @@ public class Dungeon_Popup_UI : UI_Popup
         bossStatus = GetObject((int)GameObjects.Boss_Status);
         bossStatus.SetActive(false);
 
+        // 게임 시간
+        timeText = GetText((int)Texts.Time_Text);
+
         // 선택된 던전
         dungeonNameText = GetText((int)Texts.Dungeon_Name_Text);
         UpdateSelectedDungeon();
@@ -83,6 +89,15 @@ public class Dungeon_Popup_UI : UI_Popup
         Button openMenuButton = GetButton((int)Buttons.Open_Menu_Button);
         AddUIEvent(openMenuButton.gameObject, OpenMenu);
         AddUIKeyEvent(openMenuButton.gameObject, () => OpenMenu(null), KeyCode.Escape);
+    }
+
+    void Update()
+    {
+        // 던전에 있는 동안 시간 흐름
+        gameTime += Time.deltaTime;
+        int minutes = Mathf.FloorToInt(gameTime / 60);
+        int seconds = Mathf.FloorToInt(gameTime % 60);
+        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     void OnDestroy()
