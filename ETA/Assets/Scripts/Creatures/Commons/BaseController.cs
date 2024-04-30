@@ -10,6 +10,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 {
     protected StateMachine _stateMachine;
     protected State _curState;
+    protected State _prevState;
 
     [Header("Common Property")]
     [SerializeField] public Define.UnitType UnitType;
@@ -21,6 +22,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
     public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
+    public State PrevState { get => _prevState; set => _prevState = _stateMachine.PrevState; }
 
     float _changedColorTime = 0.15f;
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
@@ -97,7 +99,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
         // 최소 데미지 = 1
-        int damage = Mathf.Abs(attackDamage - Stat.Defense);
+        int damage = attackDamage - Stat.Defense;
         if (damage <= 1)
         {
             damage = 1;
@@ -184,7 +186,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         {
             renderer.material.SetColor("_Color", _damagedColor);
             renderer.material.SetColor("_BaseColor", _damagedColor);
-
         }
         // 지정된 시간만큼 기다림
         yield return new WaitForSeconds(_changedColorTime);

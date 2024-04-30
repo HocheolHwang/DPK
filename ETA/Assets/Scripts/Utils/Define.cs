@@ -76,6 +76,8 @@ public class Define
     public enum Effect
     {
         WarriorNormalAttackEffect,
+        CounterEnable,
+        CounterAttack,
         MaxCount
     }
 }
