@@ -64,6 +64,10 @@ public class TutorialController : MonoBehaviour
 
         if ( !nextSceneName.Equals(""))
         {
+            // 현재 선택된 던전을 1번으로 수정
+            PlayerPrefs.SetInt("SelectedDungeonNumber", 1);
+            PlayerPrefs.Save();
+
             // Scene 이동 전에 모든 팝업 창 닫은 뒤 이동
             Managers.UI.CloseAllPopupUI();
             SceneManager.LoadScene(nextSceneName);
