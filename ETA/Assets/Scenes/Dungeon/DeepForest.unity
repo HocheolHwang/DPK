@@ -1073,6 +1073,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5702561941051398015, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
   m_PrefabInstance: {fileID: 655862280}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &705662776 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2863890987585669294, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
+  m_PrefabInstance: {fileID: 845442763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &705662780
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705662776}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &720714022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1294,7 +1321,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2863890987585669294, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 705662780}
   m_SourcePrefab: {fileID: 100100000, guid: 527ab76dfffb47c4ab1afd207a4c6601, type: 3}
 --- !u!4 &845442764 stripped
 Transform:
