@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HolyHammer : TmpSkill
+public class HolyHammer : Skill
 {
     protected override void Init()
     {

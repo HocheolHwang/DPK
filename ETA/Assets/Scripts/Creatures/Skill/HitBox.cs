@@ -10,13 +10,15 @@ public class HitBox : MonoBehaviour
     private int _damage;
     private int _penetration;           // 관통 부여
     private bool _isCounter;
+    private float _duration;
 
-    public void SetUp(Transform attacker, int damage, int penetration = -1, bool isCounter = false)
+    public void SetUp(Transform attacker, int damage, int penetration = -1, bool isCounter = false, float duration = 0.1f)
     {
         _attacker = attacker;
         _damage = damage;
         _penetration = penetration;
         _isCounter = isCounter;
+        _duration = duration;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,5 +43,13 @@ public class HitBox : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        StartCoroutine(InActiveColider(_duration));
+        
+    }
+
+    IEnumerator InActiveColider(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        gameObject.SetActive(false);
     }
 }

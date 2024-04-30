@@ -122,11 +122,6 @@ public class Dungeon_Popup_UI : UI_Popup
             playerStat = playerObject.GetComponent<Stat>();
         }
 
-        BossMonster bossObject = FindObjectOfType<BossMonster>();
-        if (bossObject != null)
-        {
-            bossStat = bossObject.GetComponent<Stat>();
-        }
 
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
 
@@ -220,6 +215,11 @@ public class Dungeon_Popup_UI : UI_Popup
 
         if (dungeonProgressBar.value == 1)
         {
+            BossMonster bossObject = FindObjectOfType<BossMonster>();
+            if (bossObject != null)
+            {
+                bossStat = bossObject.GetComponent<Stat>();
+            }
             // 보스 상태창을 염
             bossStatus.SetActive(true);
             GetText((int)Texts.Boss_Name_Text).text = bossStat.gameObject.name;

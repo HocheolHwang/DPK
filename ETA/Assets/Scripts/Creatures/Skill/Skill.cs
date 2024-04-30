@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class TmpSkill : MonoBehaviour
+public abstract class Skill : MonoBehaviour
 {
     protected PlayerController _controller;
     protected Animator _animator;
@@ -15,6 +15,8 @@ public abstract class TmpSkill : MonoBehaviour
     public Vector3 skillRange;
 
     private Coroutine _currentCoroutine;
+    public float ElapsedTime { get { return Time.time - _lastExcuteTime; } }
+    public float CooldownTime { get { return _cooldownTime; } set { _cooldownTime = value; } }
 
 
     // Start is called before the first frame update
@@ -52,7 +54,7 @@ public abstract class TmpSkill : MonoBehaviour
 
     public bool CanCastSkill()
     {
-        if (Time.time - _lastExcuteTime >= _cooldownTime) return true;
+        if (ElapsedTime >= _cooldownTime) return true;
         return false;
     }
 
