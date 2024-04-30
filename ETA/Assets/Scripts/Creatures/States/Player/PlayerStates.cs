@@ -306,6 +306,8 @@ namespace PlayerStates
         {
             if (_playerController.CurState is DieState) return;
 
+            if (_playerController.isFinished) _playerController.ChangeState(_playerController.IDLE_STATE); ;
+
             if(_playerController.Stat.Hp <= 0)
             {
                 _playerController.ChangeState(_playerController.DIE_STATE);

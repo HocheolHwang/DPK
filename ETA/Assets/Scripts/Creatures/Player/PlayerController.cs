@@ -21,6 +21,7 @@ public class PlayerController : BaseController
     [SerializeField]
     public Transform _destination;
     public Define.SkillKey _usingSkill;
+    public bool isFinished;
 
     public SkillSlot SkillSlot { get; set;}
 
