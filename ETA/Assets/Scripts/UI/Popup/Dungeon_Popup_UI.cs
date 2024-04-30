@@ -2,6 +2,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using TMPro;
+using PlayerStates;
 
 public class Dungeon_Popup_UI : UI_Popup
 {
@@ -20,13 +21,17 @@ public class Dungeon_Popup_UI : UI_Popup
         Dungeon_Name_Text,
         Time_Text,
         Member_Nickname_Text_1,
-        Player_Nickname_Text
+        Player_Nickname_Text,
+        Player_HP_Text
     }
 
     // Slider 인덱스
     enum Sliders
     {
-        Dungeon_Progress_Bar
+        Dungeon_Progress_Bar,
+        Member_HP_Slider_1,
+        Player_HP_Slider,
+        Player_EXP_Slider
     }
 
     // 버튼 인덱스
@@ -45,11 +50,17 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI timeText;
     private TextMeshProUGUI memberNicknameText1;
     private TextMeshProUGUI playerNicknameText;
+    private TextMeshProUGUI playerHPText;
     private Slider dungeonProgressBar;
+    private Slider memberHPSlider1;
+    private Slider playerHPSlider;
+    private Slider playerEXPSlider;
     public Transform[] checkpoints;
     private int totalCheckpoints = 3;
     private int currentCheckpointIndex = 0;
     private float gameTime = 0f;
+
+    public Stat playerStat;
 
     // 로그인 UI 초기화
     public override void Init()
@@ -87,6 +98,20 @@ public class Dungeon_Popup_UI : UI_Popup
         dungeonProgressBar = GetSlider((int)Sliders.Dungeon_Progress_Bar);
         dungeonProgressBar.value = 0;
 
+        playerHPText = GetText((int)Texts.Player_HP_Text);
+        playerHPSlider = GetSlider((int)Sliders.Player_HP_Slider);
+        playerHPSlider.value = 1;
+        memberHPSlider1 = GetSlider((int)Sliders.Member_HP_Slider_1);
+        memberHPSlider1.value = 1;
+
+        playerEXPSlider = GetSlider((int)Sliders.Player_EXP_Slider);
+
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            playerStat = playerObject.GetComponent<Stat>();
+        }
+
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
 
         // 채팅 Popup UI 열기 버튼 이벤트 등록
@@ -107,6 +132,8 @@ public class Dungeon_Popup_UI : UI_Popup
         int minutes = Mathf.FloorToInt(gameTime / 60);
         int seconds = Mathf.FloorToInt(gameTime % 60);
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+        UpdateHP();
     }
 
     void OnDestroy()
@@ -148,6 +175,15 @@ public class Dungeon_Popup_UI : UI_Popup
                 dungeonNameText.text = "알 수 없는 던전입니다.";
                 break;
         }
+    }
+
+    public void UpdateHP()
+    {
+        // 체력 업데이트
+        playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
+        playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
+
+        memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
     }
 
     public void UpdateProgress()

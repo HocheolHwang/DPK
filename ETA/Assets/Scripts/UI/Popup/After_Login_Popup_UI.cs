@@ -22,8 +22,8 @@ public class After_Login_Popup_UI : UI_Popup
 
         // 게임 시작 버튼 이벤트 등록
         Button gameStartButton = GetButton((int)Buttons.Game_Start_Button);
-        AddUIEvent(gameStartButton.gameObject, LoadLobbyScene);
-        AddUIKeyEvent(gameStartButton.gameObject, () => LoadLobbyScene(null), KeyCode.Return);
+        AddUIEvent(gameStartButton.gameObject, LoadNextScene);
+        AddUIKeyEvent(gameStartButton.gameObject, () => LoadNextScene(null), KeyCode.Return);
 
         // 게임 종료 버튼 이벤트 등록
         Button gameExitButton = GetButton((int)Buttons.Game_Exit_Button);
@@ -32,13 +32,21 @@ public class After_Login_Popup_UI : UI_Popup
     }
 
     // 로비로 이동
-    private void LoadLobbyScene(PointerEventData data)
+    private void LoadNextScene(PointerEventData data)
     {
         // 씬 이동하기 전에 모든 스택을 비움
         CloseAllPopupUI();
 
-        // 로비 씬으로 이동
-        SceneManager.LoadScene("Lobby");
+        if (Managers.Player.GetFirst())
+        {
+            // 첫 번째 로그인일 경우, 튜토리얼 Scene으로 이동
+            SceneManager.LoadScene("Tutorial");
+        }
+        else
+        {
+            // 첫 번째 로그인이 아닐 경우, 바로 로비 Scene으로 이동
+            SceneManager.LoadScene("Lobby");
+        }
     }
 
     // 게임 종료

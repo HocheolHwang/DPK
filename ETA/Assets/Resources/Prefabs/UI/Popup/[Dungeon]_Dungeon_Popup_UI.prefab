@@ -2293,6 +2293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkpoints: []
+  playerStat: {fileID: 0}
 --- !u!1 &1576341024129042994
 GameObject:
   m_ObjectHideFlags: 0
@@ -6928,7 +6929,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d4d92a03c4a3ffb48a344ebd2754f1a7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
