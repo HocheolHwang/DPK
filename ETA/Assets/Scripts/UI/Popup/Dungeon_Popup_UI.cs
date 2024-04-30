@@ -1,5 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 using PlayerStates;
@@ -9,6 +10,7 @@ public class Dungeon_Popup_UI : UI_Popup
     // 게임오브젝트 인덱스
     enum GameObjects
     {
+        Tutorial_Icon,
         DeepForest_Icon,
         ForgottenTemple_Icon,
         StarShardPlain_Icon,
@@ -21,6 +23,7 @@ public class Dungeon_Popup_UI : UI_Popup
         Dungeon_Name_Text,
         Time_Text,
         Member_Nickname_Text_1,
+        Player_Tier_Text,
         Player_Nickname_Text,
         Player_HP_Text,
         Boss_HP_Text,
@@ -45,6 +48,7 @@ public class Dungeon_Popup_UI : UI_Popup
     }
 
     // 추가된 멤버 변수
+    private GameObject tutorialIcon;
     private GameObject deepForestIcon;
     private GameObject forgottenTempleIcon;
     private GameObject starShardPlainIcon;
@@ -52,6 +56,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI timeText;
     private TextMeshProUGUI memberNicknameText1;
+    private TextMeshProUGUI playerTierText;
     private TextMeshProUGUI playerNicknameText;
     private TextMeshProUGUI playerHPText;
     private TextMeshProUGUI bossHPText;
@@ -65,8 +70,15 @@ public class Dungeon_Popup_UI : UI_Popup
     private int currentCheckpointIndex = 0;
     private float gameTime = 0f;
 
+    private Button openChatButton;
+    private Button openMenuButton;
+
     public Stat playerStat;
     public Stat bossStat;
+
+    // 현재 Scene이 튜토리얼 Scene인지 확인
+    private bool isTutorialScene;
+
 
     // 로그인 UI 초기화
     public override void Init()
@@ -79,12 +91,26 @@ public class Dungeon_Popup_UI : UI_Popup
         Bind<Slider>(typeof(Sliders));
         Bind<Button>(typeof(Buttons));
 
+        isTutorialScene = SceneManager.GetActiveScene().name == "Tutorial";
+
         // 닉네임
         memberNicknameText1 = GetText((int)Texts.Member_Nickname_Text_1);
+        playerTierText = GetText((int)Texts.Player_Tier_Text);
+
+        if (isTutorialScene)
+        {
+            playerTierText.text = "던전처리기사 수험생";
+        }
+        else
+        {
+            playerTierText.text = "견습 던전처리기사";
+        }
+
         playerNicknameText = GetText((int)Texts.Player_Nickname_Text);
         UpdateUserInfo();
 
         // 던전 아이콘
+        tutorialIcon = GetObject((int)GameObjects.Tutorial_Icon);
         deepForestIcon = GetObject((int)GameObjects.DeepForest_Icon);
         forgottenTempleIcon = GetObject((int)GameObjects.ForgottenTemple_Icon);
         starShardPlainIcon = GetObject((int)GameObjects.StarShardPlain_Icon);
@@ -125,15 +151,25 @@ public class Dungeon_Popup_UI : UI_Popup
 
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
 
-        // 채팅 Popup UI 열기 버튼 이벤트 등록
-        Button openChatButton = GetButton((int)Buttons.Open_Chat_Button);
-        AddUIEvent(openChatButton.gameObject, OpenChat);
-        AddUIKeyEvent(openChatButton.gameObject, () => OpenChat(null), KeyCode.C);
 
-        // 메뉴 Popup UI 열기 버튼 이벤트 등록
-        Button openMenuButton = GetButton((int)Buttons.Open_Menu_Button);
-        AddUIEvent(openMenuButton.gameObject, OpenMenu);
-        AddUIKeyEvent(openMenuButton.gameObject, () => OpenMenu(null), KeyCode.Escape);
+        openChatButton = GetButton((int)Buttons.Open_Chat_Button);
+        openMenuButton = GetButton((int)Buttons.Open_Menu_Button);
+        if (isTutorialScene)
+        {
+            // 튜토리얼 Scene에서 채팅 및 메뉴 버튼 숨김
+            openChatButton.gameObject.SetActive(false);
+            openMenuButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            // 채팅 Popup UI 열기 버튼 이벤트 등록
+            AddUIEvent(openChatButton.gameObject, OpenChat);
+            AddUIKeyEvent(openChatButton.gameObject, () => OpenChat(null), KeyCode.C);
+
+            // 메뉴 Popup UI 열기 버튼 이벤트 등록
+            AddUIEvent(openMenuButton.gameObject, OpenMenu);
+            AddUIKeyEvent(openMenuButton.gameObject, () => OpenMenu(null), KeyCode.Escape);
+        }
     }
 
     void Update()
@@ -150,6 +186,13 @@ public class Dungeon_Popup_UI : UI_Popup
     void OnDestroy()
     {
         KnightGController.OnBossDestroyed -= HandleBossDestroyed;
+
+        if (isTutorialScene)
+        {
+            // 튜토리얼이 끝나면 채팅 버튼과 메뉴 버튼을 다시 활성화
+            openChatButton.gameObject.SetActive(true);
+            openMenuButton.gameObject.SetActive(true);
+        }
     }
 
     // 유저 정보 업데이트하기
@@ -162,11 +205,15 @@ public class Dungeon_Popup_UI : UI_Popup
     // 현재 던전 정보 업데이트하기
     private void UpdateSelectedDungeon()
     {
-        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
+        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
+        tutorialIcon.SetActive(false);
         deepForestIcon.SetActive(false);
         forgottenTempleIcon.SetActive(false);
         starShardPlainIcon.SetActive(false);
 
+        // 현재 Scene이 튜토리얼 Scene일 경우 선택된 던전 정보를 0으로 만듬
+        if (isTutorialScene) selectedDungeonNumber = 0;
+        
         // 던전 번호에 따라 다른 텍스트를 설정
         switch (selectedDungeonNumber)
         {
@@ -183,7 +230,8 @@ public class Dungeon_Popup_UI : UI_Popup
                 starShardPlainIcon.SetActive(true);
                 break;
             default:
-                dungeonNameText.text = "알 수 없는 던전입니다.";
+                dungeonNameText.text = "던전처리기사 실기 시험장";
+                tutorialIcon.SetActive(true);
                 break;
         }
     }
