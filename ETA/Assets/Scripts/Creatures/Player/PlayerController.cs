@@ -99,6 +99,21 @@ public class PlayerController : BaseController
             _usingSkill = Define.SkillKey.A;
             SkillSlot.SelectSkill(Define.SkillKey.A);
         }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            _usingSkill = Define.SkillKey.S;
+            SkillSlot.SelectSkill(Define.SkillKey.S);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            _usingSkill = Define.SkillKey.D;
+            SkillSlot.SelectSkill(Define.SkillKey.D);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _usingSkill = Define.SkillKey.F;
+            SkillSlot.SelectSkill(Define.SkillKey.F);
+        }
 
     }
 

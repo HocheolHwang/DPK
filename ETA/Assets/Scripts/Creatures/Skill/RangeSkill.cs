@@ -10,6 +10,7 @@ public class RangeSkill : Skill
     protected override void Init()
     {
         SetCoolDownTime(4);
+        Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(7,7,7);

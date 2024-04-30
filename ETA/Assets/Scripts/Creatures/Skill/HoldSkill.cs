@@ -7,7 +7,7 @@ public class HoldSkill : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(20);
         base.Init();
         SkillType = Define.SkillType.Holding;
         skillRange = new Vector3(7,7,7);
