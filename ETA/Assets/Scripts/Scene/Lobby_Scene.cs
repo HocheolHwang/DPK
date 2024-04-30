@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lobby_Scene : MonoBehaviour
+public class Lobby_Scene : BaseScene
 {
     void Start()
     {
@@ -15,5 +15,10 @@ public class Lobby_Scene : MonoBehaviour
         {
             Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
         }
+    }
+
+    public override void Clear()
+    {
+        Debug.Log("Login Scene Clear");
     }
 }
