@@ -64,6 +64,8 @@ public class TutorialController : MonoBehaviour
 
         if ( !nextSceneName.Equals(""))
         {
+            // Scene 이동 전에 모든 팝업 창 닫은 뒤 이동
+            Managers.UI.CloseAllPopupUI();
             SceneManager.LoadScene(nextSceneName);
         }
     }
