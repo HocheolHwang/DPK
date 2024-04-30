@@ -37,8 +37,16 @@ public class After_Login_Popup_UI : UI_Popup
         // 씬 이동하기 전에 모든 스택을 비움
         CloseAllPopupUI();
 
-        // 로비 씬으로 이동
-        SceneManager.LoadScene("Lobby");
+        if (Managers.Player.GetFirst())
+        {
+            // 첫 번째 로그인일 경우, 튜토리얼 Scene으로 이동
+            SceneManager.LoadScene("Tutorial");
+        }
+        else
+        {
+            // 첫 번째 로그인이 아닐 경우, 바로 로비 Scene으로 이동
+            SceneManager.LoadScene("Lobby");
+        }
     }
 
     // 게임 종료
