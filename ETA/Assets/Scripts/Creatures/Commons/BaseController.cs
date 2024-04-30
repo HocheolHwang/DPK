@@ -21,8 +21,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
 
     public StateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
-    public State CurState { get => _curState; set => _curState = _stateMachine.CurState; }
-    public State PrevState { get => _prevState; set => _prevState = _stateMachine.PrevState; }
+    public State CurState { get => _stateMachine.CurState; }
+    public State PrevState { get => _stateMachine.PrevState; }
 
     float _changedColorTime = 0.15f;
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
