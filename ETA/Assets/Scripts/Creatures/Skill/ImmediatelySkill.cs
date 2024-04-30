@@ -7,6 +7,7 @@ public class ImmediatelySkill : TmpSkill
     protected override void Init()
     {
         SetCoolDownTime(1);
+        Damage = 10;
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
@@ -16,9 +17,9 @@ public class ImmediatelySkill : TmpSkill
     {
         _animator.CrossFade("TEMP", 0.1f);
         yield return new WaitForSeconds(0.1f);
-
+        Managers.Sound.Play("Skill/RSkill");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, Damage, -1, true);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
 

@@ -108,8 +108,9 @@ namespace PlayerStates
             base.Enter();
             _agent.velocity = Vector3.zero;
             _agent.isStopped = true;
-            _playerController.SkillSlot.NormalAttack();
             LookAtEnemy();
+            _playerController.SkillSlot.NormalAttack();
+            
       
 
         }
