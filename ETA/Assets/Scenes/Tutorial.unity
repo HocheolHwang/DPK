@@ -5809,6 +5809,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 1.1314936
       objectReference: {fileID: 0}
+    - target: {fileID: 1297333950975864082, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4312293048030923749, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: DetectRange
       value: 3
@@ -5832,6 +5836,10 @@ PrefabInstance:
     - target: {fileID: 5141149260217362134, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: m_Speed
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5141149260217362134, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
+      propertyPath: avoidancePriority
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 5722285683226651515, guid: ca4f387447d7f744aa1f04f7805e6a23, type: 3}
       propertyPath: _destination

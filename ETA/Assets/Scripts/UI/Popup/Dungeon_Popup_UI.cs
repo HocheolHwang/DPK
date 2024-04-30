@@ -22,7 +22,8 @@ public class Dungeon_Popup_UI : UI_Popup
         Time_Text,
         Member_Nickname_Text_1,
         Player_Nickname_Text,
-        Player_HP_Text
+        Player_HP_Text,
+        Boss_HP_Text
     }
 
     // Slider 인덱스
@@ -30,6 +31,7 @@ public class Dungeon_Popup_UI : UI_Popup
     {
         Dungeon_Progress_Bar,
         Member_HP_Slider_1,
+        Boss_HP_Slider,
         Player_HP_Slider,
         Player_EXP_Slider
     }
@@ -51,8 +53,10 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI memberNicknameText1;
     private TextMeshProUGUI playerNicknameText;
     private TextMeshProUGUI playerHPText;
+    private TextMeshProUGUI bossHPText;
     private Slider dungeonProgressBar;
     private Slider memberHPSlider1;
+    private Slider bossHPSlider;
     private Slider playerHPSlider;
     private Slider playerEXPSlider;
     public Transform[] checkpoints;
@@ -61,6 +65,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private float gameTime = 0f;
 
     public Stat playerStat;
+    public Stat bossStat;
 
     // 로그인 UI 초기화
     public override void Init()
@@ -98,6 +103,10 @@ public class Dungeon_Popup_UI : UI_Popup
         dungeonProgressBar = GetSlider((int)Sliders.Dungeon_Progress_Bar);
         dungeonProgressBar.value = 0;
 
+        bossHPText = GetText((int)Texts.Boss_HP_Text);
+        bossHPSlider = GetSlider((int)Sliders.Boss_HP_Slider);
+        bossHPSlider.value = 1;
+
         playerHPText = GetText((int)Texts.Player_HP_Text);
         playerHPSlider = GetSlider((int)Sliders.Player_HP_Slider);
         playerHPSlider.value = 1;
@@ -110,6 +119,12 @@ public class Dungeon_Popup_UI : UI_Popup
         if (playerObject != null)
         {
             playerStat = playerObject.GetComponent<Stat>();
+        }
+
+        GameObject bossObject = GameObject.FindWithTag("Knight G");
+        if (playerObject != null)
+        {
+            bossStat = bossObject.GetComponent<Stat>();
         }
 
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
@@ -184,6 +199,10 @@ public class Dungeon_Popup_UI : UI_Popup
         playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
 
         memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
+
+        // 보스 체력 업데이트
+        bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
+        bossHPSlider.value = (float)bossStat.Hp / bossStat.MaxHp;
     }
 
     public void UpdateProgress()
