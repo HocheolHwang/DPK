@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class KnightGCounterAttackPattern : Pattern
 {
-    [Header("원하는 이펙트 이름을 넣으세요 - 디버깅")]
-    [SerializeField] string _effectName;
-
     [Header("개발 편의성")]
     [SerializeField] float _hitboxForwardLoc = 0.3f;
-    [SerializeField] Vector3 _hitboxRange = new Vector3(3.5f, 3.0f, 3.5f);
+    [SerializeField] Vector3 _hitboxRange = new Vector3(5.0f, 5.0f, 5.0f);
     [SerializeField] float _upLoc = 1.0f;
     [SerializeField] float _rightLoc = 0f;
 
@@ -17,7 +14,7 @@ public class KnightGCounterAttackPattern : Pattern
     {
         base.Init();
 
-        _createTime = 0.4f;
+        _createTime = 0.44f;
         _patternRange = _hitboxRange;
     }
 
@@ -31,20 +28,19 @@ public class KnightGCounterAttackPattern : Pattern
 
         yield return new WaitForSeconds(_createTime);
 
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        //ParticleSystem ps = Managers.Resource.Instantiate($"Effect/{_effectName}").GetComponent<ParticleSystem>();
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
         hitbox.SetUp(transform, _attackDamage);
-        hitbox.transform.localScale = _patternRange;
+        hitbox.GetComponent<SphereCollider>().radius = 6.0f;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
+
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.CounterAttack, _controller.transform);
+        ps.transform.position = hitbox.transform.position;
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
-        // 여기에서 후속타를 넣으면 된다. -> 함수로 관리하던가
-        // hitbox 첫줄 + hitbox 2번째 줄에 2개 + hitbox 3번째 줄에 3개 -> 부채꼴 형식으로 연쇄공격
-
-        //yield return new WaitForSeconds(ps.main.duration);
-        //Managers.Resource.Destroy(ps.gameObject);
+        yield return new WaitForSeconds(ps.main.duration);
+        Managers.Resource.Destroy(ps.gameObject);
     }
 }
