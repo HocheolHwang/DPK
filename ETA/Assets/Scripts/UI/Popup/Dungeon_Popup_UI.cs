@@ -123,7 +123,7 @@ public class Dungeon_Popup_UI : UI_Popup
         }
 
         BossMonster bossObject = FindObjectOfType<BossMonster>();
-        if (playerObject != null)
+        if (bossObject != null)
         {
             bossStat = bossObject.GetComponent<Stat>();
         }
