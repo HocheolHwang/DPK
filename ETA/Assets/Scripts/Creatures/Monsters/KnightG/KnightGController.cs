@@ -73,7 +73,7 @@ public class KnightGController : BaseMonsterController
         GROGGY_STATE = new GroggyState(this);
         GLOBAL_STATE = new GlobalState(this);
 
-        _stateMachine.SetGlobalState(GLOBAL_STATE);
+        //_stateMachine.SetGlobalState(GLOBAL_STATE);
 
         Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
     }

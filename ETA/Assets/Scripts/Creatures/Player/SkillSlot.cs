@@ -12,6 +12,7 @@ public class SkillSlot : MonoBehaviour
     private Animator _animator;
 
     private Skill _currentSkill;
+    public Skill CurrentSkill { get { return _currentSkill; } }
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
