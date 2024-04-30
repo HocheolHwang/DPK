@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DungeonScene : BaseScene
 {
+    private void Start()
+    {
+        Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
+    }
     // Start is called before the first frame update
     public override void Clear()
     {
