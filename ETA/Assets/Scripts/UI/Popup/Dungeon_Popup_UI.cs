@@ -18,7 +18,9 @@ public class Dungeon_Popup_UI : UI_Popup
     enum Texts
     {
         Dungeon_Name_Text,
-        Time_Text
+        Time_Text,
+        Member_Nickname_Text_1,
+        Player_Nickname_Text
     }
 
     // Slider 인덱스
@@ -41,6 +43,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private GameObject bossStatus;
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI timeText;
+    private TextMeshProUGUI memberNicknameText1;
+    private TextMeshProUGUI playerNicknameText;
     private Slider dungeonProgressBar;
     public Transform[] checkpoints;
     private int totalCheckpoints = 3;
@@ -57,6 +61,11 @@ public class Dungeon_Popup_UI : UI_Popup
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Slider>(typeof(Sliders));
         Bind<Button>(typeof(Buttons));
+
+        // 닉네임
+        memberNicknameText1 = GetText((int)Texts.Member_Nickname_Text_1);
+        playerNicknameText = GetText((int)Texts.Player_Nickname_Text);
+        UpdateUserInfo();
 
         // 던전 아이콘
         deepForestIcon = GetObject((int)GameObjects.DeepForest_Icon);
@@ -103,6 +112,13 @@ public class Dungeon_Popup_UI : UI_Popup
     void OnDestroy()
     {
         KnightGController.OnBossDestroyed -= HandleBossDestroyed;
+    }
+
+    // 유저 정보 업데이트하기
+    private void UpdateUserInfo()
+    {
+        memberNicknameText1.text = Managers.Player.GetNickName();
+        playerNicknameText.text = Managers.Player.GetNickName();
     }
 
     // 현재 던전 정보 업데이트하기

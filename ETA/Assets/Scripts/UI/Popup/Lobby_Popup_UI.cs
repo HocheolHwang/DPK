@@ -8,7 +8,9 @@ public class Lobby_Popup_UI : UI_Popup
     // 텍스트 인덱스
     enum Texts
     {
-        Dungeon_Name_Text
+        Member_Nickname_Text_1,
+        Dungeon_Name_Text,
+        Party_Name_Text
     }
 
     // 버튼 인덱스
@@ -23,6 +25,8 @@ public class Lobby_Popup_UI : UI_Popup
 
     // 클래스 멤버 변수로 선언
     private TextMeshProUGUI dungeonNameText;
+    private TextMeshProUGUI memberNicknameText1;
+    private TextMeshProUGUI partyNameText;
 
     // 로그인 UI 초기화
     public override void Init()
@@ -32,6 +36,11 @@ public class Lobby_Popup_UI : UI_Popup
         // 바인딩
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
+
+        // 닉네임 및 파티 명
+        memberNicknameText1 = GetText((int)Texts.Member_Nickname_Text_1);
+        partyNameText = GetText((int)Texts.Party_Name_Text);
+        UpdateUserInfo();
 
         // 선택된 던전
         dungeonNameText = GetText((int)Texts.Dungeon_Name_Text);
@@ -58,6 +67,13 @@ public class Lobby_Popup_UI : UI_Popup
         Button openMenuButton = GetButton((int)Buttons.Open_Menu_Button);
         AddUIEvent(openMenuButton.gameObject, OpenMenu);
         AddUIKeyEvent(openMenuButton.gameObject, () => OpenMenu(null), KeyCode.Escape);
+    }
+
+    // 유저 정보 업데이트하기
+    private void UpdateUserInfo()
+    {
+        memberNicknameText1.text = Managers.Player.GetNickName();
+        partyNameText.text = $"{Managers.Player.GetNickName()}의 파티";
     }
 
     // 선택된 던전 업데이트하기
