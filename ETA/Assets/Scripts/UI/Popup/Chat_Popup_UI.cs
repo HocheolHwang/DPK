@@ -31,7 +31,7 @@ public class Chat_Popup_UI : UI_Popup
         base.Init(); // 기본 초기화
 
         chat = GameObject.Find("@Scene").GetComponent<PhotonChat>();
-        chat.chatUI = this;
+        chat.chatUI = this; 
         // 바인딩
         Bind<TMP_InputField>(typeof(InputFields));
         Bind<Button>(typeof(Buttons));
