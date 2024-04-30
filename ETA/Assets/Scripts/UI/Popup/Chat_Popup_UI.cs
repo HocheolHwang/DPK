@@ -107,10 +107,7 @@ public class Chat_Popup_UI : UI_Popup
         // Managers.Resource.Load<GameObject>();
         GameObject chatPrefab = Managers.Resource.Instantiate("UI/SubItem/Chat_Item");
 
-        //chatPrefab.transform.Find("Nickname_Text").GetComponent<TextMeshProUGUI>().text = sender;
-        //chatPrefab.transform.Find("Chat_Text").GetComponent<TextMeshProUGUI>().text = message;
-        chatPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = sender;
-        chatPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = message;
+        chatPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = sender + " : " + message;
 
         chatPrefab.transform.SetParent(gameObject.transform.Find("Chat_Popup_Container/Chat_Container/Scroll View/Viewport/Content"));
     }
