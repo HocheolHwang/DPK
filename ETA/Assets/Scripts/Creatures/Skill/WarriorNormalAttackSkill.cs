@@ -15,8 +15,9 @@ public class WarriorNormalAttackSkill : TmpSkill
     {
         if (_controller.StateMachine.CurState is PlayerStates.SkillState) yield break;
         _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-
+        
         yield return new WaitForSeconds(0.1f);
+        Managers.Sound.Play("Skill/NormalAttack");
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.WarriorNormalAttackEffect, gameObject.transform);
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);

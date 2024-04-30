@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace KnightGStateItem
@@ -49,6 +50,7 @@ namespace KnightGStateItem
 
         public override void Execute()
         {
+            // Counter
             if (counterTime >= threadHoldCounter)
             {
                 _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
@@ -98,7 +100,7 @@ namespace KnightGStateItem
             {
                 if (_controller.IsEnterPhaseTwo)
                 {
-                    _controller.ChangeState(_controller.PHASE_ATTACK_STATE);
+                    _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE);
                 }
                 else
                 {
@@ -355,7 +357,16 @@ namespace KnightGStateItem
             _animTime += Time.deltaTime;
             if ( _animTime >= _threadHold)
             {
-                _controller.ChangeState(_controller.PHASE_ATTACK_STATE);
+                _controller.IsEnterPhaseTwo = true;
+                // 타겟팅한 한 명의 적만 계속 공격하는 패턴
+                if (_detector.Target == null || !_detector.IsArriveToTarget())
+                {
+                    _controller.ChangeState(_controller.IDLE_STATE);
+                }
+                else
+                {
+                    _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE);
+                }
             }
 
             // Phase 진입을 끊는 스킬에 맞으면 그로기 상태로 전환
@@ -369,33 +380,33 @@ namespace KnightGStateItem
 
     // -------------------------------------- PHASE_ATTACK ------------------------------------------------
     #region PHASE_ATTACK
-    public class PhaseAttackState : KnightGState
-    {
-        public PhaseAttackState(KnightGController controller) : base(controller)
-        {
-        }
+    //public class PhaseAttackState : KnightGState
+    //{
+    //    public PhaseAttackState(KnightGController controller) : base(controller)
+    //    {
+    //    }
 
-        public override void Enter()
-        {
-            _controller.IsEnterPhaseTwo = true;
+    //    public override void Enter()
+    //    {
+    //        _controller.IsEnterPhaseTwo = true;
 
-            LookAtEnemy();
-            InitTime(_animData.PhaseAttackAnim.length);
-            _animator.CrossFade(_animData.PhaseAttackParamHash, 0.1f);
-        }
+    //        LookAtEnemy();
+    //        InitTime(_animData.PhaseAttackAnim.length);
+    //        _animator.CrossFade(_animData.PhaseAttackParamHash, 0.1f);
+    //    }
 
-        public override void Execute()
-        {
-            _animTime += Time.deltaTime;
-            if (_animTime >= _threadHold)
-            {
-                _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE);
-            }
-        }
-        public override void Exit()
-        {
-        }
-    }
+    //    public override void Execute()
+    //    {
+    //        _animTime += Time.deltaTime;
+    //        if (_animTime >= _threadHold)
+    //        {
+    //            _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE);
+    //        }
+    //    }
+    //    public override void Exit()
+    //    {
+    //    }
+    //}
     #endregion
 
     // -------------------------------------- PHASE_ATTACK_ING ------------------------------------------------
@@ -461,19 +472,29 @@ namespace KnightGStateItem
     #region GROGGY
     public class GroggyState : KnightGState
     {
+        float groggyTime;
         public GroggyState(KnightGController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
+            if (_controller.PrevState == _controller.COUNTER_ENABLE_STATE)
+            {
+                groggyTime = 3.0f;
+            }
+            else
+            {
+                groggyTime = 1.0f;
+            }
+
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
         }
 
         public override void Execute()
         {
-            if (IsStayForSeconds())
+            if (IsStayForSeconds(groggyTime))
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
@@ -508,9 +529,14 @@ namespace KnightGStateItem
             {
                 _controller.ChangeState(_controller.DIE_STATE);
             }
-            if ( !_controller.IsEnterPhaseTwo && _stat.Hp <= (_stat.MaxHp * 0.3))
+
+            // Phase 2
+            if (!_controller.IsEnterPhaseTwo && _stat.Hp <= (_stat.MaxHp * 0.3))
             {
-                _controller.ChangeState(_controller.PHASE_TRANSITION_STATE);
+                if ( (_controller.CurState == _controller.IDLE_STATE) || (_controller.CurState == _controller.IDLE_BATTLE_STATE) || (_controller.CurState == _controller.CHASE_STATE))
+                {
+                    _controller.ChangeState(_controller.PHASE_TRANSITION_STATE);
+                }
             }
 
             // PHASE 2에서 슈퍼 아머 상태를 관리

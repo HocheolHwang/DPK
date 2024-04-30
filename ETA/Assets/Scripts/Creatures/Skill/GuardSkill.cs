@@ -16,6 +16,7 @@ public class GuardSkill : TmpSkill
     {
         _animator.CrossFade("GUARD", 0.05f);
         yield return new WaitForSeconds(0.1f);
+        Managers.Sound.Play("Skill/GuardSkill");
         _controller.GetShield(100);
         yield return new WaitForSeconds(1.0f);
 

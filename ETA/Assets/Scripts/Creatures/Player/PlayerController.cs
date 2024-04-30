@@ -21,8 +21,11 @@ public class PlayerController : BaseController
     [SerializeField]
     public Transform _destination;
     public Define.SkillKey _usingSkill;
+    public bool isFinished;
 
     public SkillSlot SkillSlot { get; set;}
+
+
 
     private void Start()
     {
@@ -112,6 +115,13 @@ public class PlayerController : BaseController
         base.DestroyEvent();
         SkillSlot.Clear();
     }
+
+    public override void AttackedEvent()
+    {
+        base.AttackedEvent();
+        Managers.Sound.Play("Player/Attacked");
+    }
+
 
 
 

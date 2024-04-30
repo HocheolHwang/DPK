@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerZone : MonoBehaviour
 {
@@ -11,26 +12,35 @@ public class PlayerZone : MonoBehaviour
     private float currentSpeed;  // 현재 이동 속도
 
     [SerializeField] private PlayerController playerController;
+    float _delta;
+    NavMeshAgent _agent;
 
 
     void Start()
     {
         currentSpeed = Speed;  // 시작할 때 현재 속도를 초기 속도로 설정
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         moveFront();
     }
 
     void moveFront()
     {
-
         Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(2,1,6), new Quaternion(), TargetLayerMask);
         if (enemies.Length <= 0)
         {
-            transform.position += transform.forward * Time.deltaTime * currentSpeed;
+            _delta += Time.deltaTime / 2;
+            _delta = _delta >= 1.0f ? 1.0f : _delta;
+            transform.position += transform.forward * Time.deltaTime * currentSpeed * _delta;
+        }
+        else
+        {
+            _delta = 0;
         }
 
     }

@@ -108,8 +108,9 @@ namespace PlayerStates
             base.Enter();
             _agent.velocity = Vector3.zero;
             _agent.isStopped = true;
-            _playerController.SkillSlot.NormalAttack();
             LookAtEnemy();
+            _playerController.SkillSlot.NormalAttack();
+            
       
 
         }
@@ -304,6 +305,8 @@ namespace PlayerStates
         public override void Execute()
         {
             if (_playerController.CurState is DieState) return;
+
+            if (_playerController.isFinished) _playerController.ChangeState(_playerController.IDLE_STATE); ;
 
             if(_playerController.Stat.Hp <= 0)
             {
