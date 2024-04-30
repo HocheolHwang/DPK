@@ -27,6 +27,7 @@ public class RangeSkill : TmpSkill
         hitbox.transform.localScale = skillRange;
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
+        Managers.Sound.Play("Skill/WarriorStoneSpike");
         ParticleSystem ps = Managers.Resource.Instantiate("Effect/SpikeWaveStone").GetComponent<ParticleSystem>();
         ps.transform.position = hitbox.transform.position;
         ps.Play();
