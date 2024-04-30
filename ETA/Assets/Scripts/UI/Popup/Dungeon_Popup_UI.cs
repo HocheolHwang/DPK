@@ -208,6 +208,14 @@ public class Dungeon_Popup_UI : UI_Popup
     private void HandleBossDestroyed()
     {
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
+        PlayerController[] players = GameObject.FindObjectsOfType<PlayerController>();
+        PlayerZone zone = GameObject.FindObjectOfType<PlayerZone>();
+        zone.StopMovement();
+        foreach(var player in players)
+        {
+           
+            player.isFinished = true;
+        }
     }
 
     // 채팅 Popup UI 열기
