@@ -51,29 +51,23 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
     // 선택된 던전 업데이트하기
     private void UpdateSelectedDungeon()
     {
-        int secidedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
-        if (secidedDungeonNumber != 0)
+        int secidedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
+        
+        // 선택된 던전 번호에 따라 다른 텍스트를 설정
+        switch (secidedDungeonNumber)
         {
-            // 선택된 던전 번호에 따라 다른 텍스트를 설정
-            switch (secidedDungeonNumber)
-            {
-                case 1:
-                    dungeonEnterText.text = "[깊은 숲]에 입장하시겠습니까?";
-                    break;
-                case 2:
-                    dungeonEnterText.text = "[잊혀진 신전]에 입장하시겠습니까?";
-                    break;
-                case 3:
-                    dungeonEnterText.text = "[별의 조각 평원]에 입장하시겠습니까?";
-                    break;
-                default:
-                    dungeonEnterText.text = "알 수 없는 던전입니다.";
-                    break;
-            }
-        }
-        else
-        {
-            Debug.LogError("Dungeon_Select_Popup_UI 인스턴스를 찾을 수 없습니다.");
+            case 1:
+                dungeonEnterText.text = "[깊은 숲]에 입장하시겠습니까?";
+                break;
+            case 2:
+                dungeonEnterText.text = "[잊혀진 신전]에 입장하시겠습니까?";
+                break;
+            case 3:
+                dungeonEnterText.text = "[별의 조각 평원]에 입장하시겠습니까?";
+                break;
+            default:
+                dungeonEnterText.text = "알 수 없는 던전입니다.";
+                break;
         }
     }
 
@@ -90,30 +84,23 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         // 모든 팝업 UI를 닫습니다.
         CloseAllPopupUI();
 
-        int secidedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
-        if (secidedDungeonNumber != 0)
+        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
+        
+        // 선택된 던전 번호에 따라 다른 씬으로 이동합니다.
+        switch (selectedDungeonNumber)
         {
-            // 선택된 던전 번호에 따라 다른 씬으로 이동합니다.
-            switch (secidedDungeonNumber)
-            {
-                case 1:
-                    SceneManager.LoadScene("DeepForest");
-                    break;
-                case 2:
-                    SceneManager.LoadScene("ForgottenTemple");
-                    break;
-                case 3:
-                    SceneManager.LoadScene("StarShardPlain");
-                    break;
-                default:
-                    Debug.LogError("알 수 없는 던전 번호입니다.");
-                    break;
-            }
-        }
-        else
-        {
-            Debug.LogError("Dungeon_Select_Popup_UI 인스턴스를 찾을 수 없습니다.");
+            case 1:
+                SceneManager.LoadScene("DeepForest");
+                break;
+            case 2:
+                SceneManager.LoadScene("ForgottenTemple");
+                break;
+            case 3:
+                SceneManager.LoadScene("StarShardPlain");
+                break;
+            default:
+                Debug.LogError("알 수 없는 던전 번호입니다.");
+                break;
         }
     }
-
 }

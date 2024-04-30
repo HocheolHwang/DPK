@@ -26,7 +26,7 @@ public class Dungeon_Select_Popup_UI : UI_Popup
 
     // 클래스 멤버 변수로 선언
     private TextMeshProUGUI selectedDungeonText;
-    private int selectedDungeonNumber = 1;
+    private int existingDungeonNumber;
 
     // 로그인 UI 초기화
     public override void Init()
@@ -39,7 +39,10 @@ public class Dungeon_Select_Popup_UI : UI_Popup
 
         // 선택된 던전
         selectedDungeonText = GetText((int)Texts.Selected_Dungeon_Text);
-        selectedDungeonText.text = "선택된 던전: 깊은 숲";
+        UpdateSelectedDungeon();
+
+        // 현재 던전 정보를 저장
+        existingDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
 
         // 파티 참가 Popup UI 열기 버튼 이벤트 등록
         Button openPartyJoinButton = GetButton((int)Buttons.Open_Party_Join_Button);
@@ -76,6 +79,29 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         AddUIKeyEvent(dungeonSelectButton.gameObject, () => DungeonSelect(null), KeyCode.Return);
     }
 
+    // 선택된 던전 업데이트하기
+    private void UpdateSelectedDungeon()
+    {
+        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
+        
+        // 선택된 던전 번호에 따라 다른 텍스트를 설정
+        switch (selectedDungeonNumber)
+        {
+            case 1:
+                selectedDungeonText.text = "선택된 던전: [깊은 숲]";
+                break;
+            case 2:
+                selectedDungeonText.text = "선택된 던전: [잊혀진 신전]";
+                break;
+            case 3:
+                selectedDungeonText.text = "선택된 던전: [별의 조각 평원]";
+                break;
+            default:
+                selectedDungeonText.text = "알 수 없는 던전입니다.";
+                break;
+        }
+    }
+
     // 파티 참가 Popup UI 열기
     private void OpenPartyJoin(PointerEventData data)
     {
@@ -104,41 +130,47 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     // 깊은 숲 선택
     private void SelectDeepForest(PointerEventData data)
     {
-        selectedDungeonNumber = 1;
-        selectedDungeonText.text = "선택된 던전: 깊은 숲";
+        // 선택된 값을 PlayerPrefs에 저장
+        PlayerPrefs.SetInt("SelectedDungeonNumber", 1);
+        PlayerPrefs.Save();
+        UpdateSelectedDungeon();
     }
 
     // 잊혀진 신전 선택
     private void SelectForgottenTemple(PointerEventData data)
     {
-        selectedDungeonNumber = 2;
-        selectedDungeonText.text = "선택된 던전: 잊혀진 신전";
+        // 선택된 값을 PlayerPrefs에 저장
+        PlayerPrefs.SetInt("SelectedDungeonNumber", 2);
+        PlayerPrefs.Save();
+        UpdateSelectedDungeon();
     }
 
     // 별의 조각 평원 선택
     private void SelectStarShardPlain(PointerEventData data)
     {
-        selectedDungeonNumber = 3;
-        selectedDungeonText.text = "선택된 던전: 별의 조각 평원";
+        // 선택된 값을 PlayerPrefs에 저장
+        PlayerPrefs.SetInt("SelectedDungeonNumber", 3);
+        PlayerPrefs.Save();
+        UpdateSelectedDungeon();
     }
 
-    // 돌아가기
+    // 취소하기
     private void Cancel(PointerEventData data)
     {
+        // 취소할 경우 기존 선택된 던전 정보로 저장
+        PlayerPrefs.SetInt("SelectedDungeonNumber", existingDungeonNumber);
+        PlayerPrefs.Save();
+
         // 파티 참가 Popup UI를 닫은 뒤 로비 Popup UI를 띄움
         ClosePopupUI();
         Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
     }
 
-    // 던전 선택
+    // 저장하기 후 로비로 돌아가기
     private void DungeonSelect(PointerEventData data)
     {
-        Debug.Log($"니가 고른 던전은? {selectedDungeonNumber}");
-
-        // decidedDungeonNumber 값을 PlayerPrefs에 저장
-        PlayerPrefs.SetInt("SelectedDungeonNumber", selectedDungeonNumber);
-        PlayerPrefs.Save();
-
-        // ClosePopupUI();
+        // 파티 참가 Popup UI를 닫은 뒤 로비 Popup UI를 띄움
+        ClosePopupUI();
+        Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
     }
 }
