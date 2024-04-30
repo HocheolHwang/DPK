@@ -19,7 +19,12 @@ public class BoarAutoAttack : Pattern
         base.Init();
 
         _createTime = 0.1f;
+
         _patternRange = _hitboxRange;
+        if (gameObject.name == "BoarBoss")
+        {
+            _patternRange *= 2;
+        }
     }
 
     public override IEnumerator StartPatternCast()
