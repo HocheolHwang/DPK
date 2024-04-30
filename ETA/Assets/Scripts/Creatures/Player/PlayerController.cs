@@ -24,6 +24,8 @@ public class PlayerController : BaseController
 
     public SkillSlot SkillSlot { get; set;}
 
+
+
     private void Start()
     {
         Init();
@@ -112,6 +114,13 @@ public class PlayerController : BaseController
         base.DestroyEvent();
         SkillSlot.Clear();
     }
+
+    public override void AttackedEvent()
+    {
+        base.AttackedEvent();
+        Managers.Sound.Play("Player/Attacked");
+    }
+
 
 
 

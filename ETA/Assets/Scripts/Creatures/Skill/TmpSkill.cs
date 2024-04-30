@@ -14,6 +14,8 @@ public abstract class TmpSkill : MonoBehaviour
     public int Damage = 50;
     public Vector3 skillRange;
 
+    private Coroutine _currentCoroutine;
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,13 +41,13 @@ public abstract class TmpSkill : MonoBehaviour
     public void Cast()
     {
         _lastExcuteTime = Time.time;
-        StartCoroutine(StartSkillCast());
+        _currentCoroutine = StartCoroutine(StartSkillCast());
     }
 
     public void CollavoCast()
     {
         _lastExcuteTime = Time.time;
-        StartCoroutine(StartCollavoSkillCast());
+        _currentCoroutine = StartCoroutine(StartCollavoSkillCast());
     }
 
     public bool CanCastSkill()
@@ -57,6 +59,12 @@ public abstract class TmpSkill : MonoBehaviour
     public abstract IEnumerator StartSkillCast();
     public virtual IEnumerator StartCollavoSkillCast() {
         yield return null;
+    }
+
+    public void StopCast()
+    {
+        if (_currentCoroutine == null) return;
+        StopCoroutine(_currentCoroutine);
     }
 
 
