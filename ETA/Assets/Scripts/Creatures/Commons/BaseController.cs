@@ -155,7 +155,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
         // 애니메이션은 상태에서 관리 중
         GetComponent<Collider>().enabled = false;
-        Agent.enabled = false;
 
 
     }
