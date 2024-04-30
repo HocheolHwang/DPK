@@ -126,6 +126,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         attackedDamage_ui.AttackedDamage = damage;
         
         Stat.Hp -= damage;
+        
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
         if (Stat.Hp <= 0)
@@ -137,6 +138,10 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         {
             CounterEvent();
         }
+    }
+
+    public virtual void AttackedEvent() {
+        
     }
 
     public virtual void CounterEvent()

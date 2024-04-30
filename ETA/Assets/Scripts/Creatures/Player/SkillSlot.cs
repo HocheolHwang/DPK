@@ -10,6 +10,8 @@ public class SkillSlot : MonoBehaviour
     //ISkill[] skill = new ISkill[8];
     TmpSkill[] skill = new TmpSkill[8];
     private Animator _animator;
+
+    private TmpSkill _currentSkill;
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
@@ -70,18 +72,33 @@ public class SkillSlot : MonoBehaviour
     public void CastSkill(Define.SkillKey key)
     {
         //string s = skill[(int)key].animationName;
-        skill[(int)key].Cast();
+        if (_currentSkill != null)
+        {
+            _currentSkill.StopCast();
+        }
+        _currentSkill = skill[(int)key];
+        _currentSkill.Cast();
         Debug.Log($"Skill Key = {key}");
     }
 
     public void CastCollavoSkill(Define.SkillKey key)
     {
-        skill[(int)key].CollavoCast();
+        if (_currentSkill != null)
+        {
+            _currentSkill.StopCast();
+        }
+        _currentSkill = skill[(int)key];
+        _currentSkill.CollavoCast();
     }
 
     public void NormalAttack()
     {
-        GetComponent<WarriorNormalAttackSkill>().Cast();
+        if (_currentSkill != null)
+        {
+            _currentSkill.StopCast();
+        }
+        _currentSkill = GetComponent<WarriorNormalAttackSkill>();
+        _currentSkill.Cast();
     }
 
 

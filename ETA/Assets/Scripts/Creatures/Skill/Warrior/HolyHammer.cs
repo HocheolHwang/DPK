@@ -27,7 +27,7 @@ public class HolyHammer : TmpSkill
         hammerPrefab.transform.position = _skillSystem.TargetPosition;
 
         _animator.CrossFade("ATTACK4", 0.1f);
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBox").GetComponent<HitBox>();
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;

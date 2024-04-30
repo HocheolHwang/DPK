@@ -13,11 +13,13 @@ public class WarriorNormalAttackSkill : TmpSkill
 
     public override IEnumerator StartSkillCast()
     {
+        if (_controller.StateMachine.CurState is PlayerStates.SkillState) yield break;
         _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-
+        
         yield return new WaitForSeconds(0.1f);
-        Managers.Effect.Play(Define.Effect.WarriorNormalAttackEffect, gameObject.transform);
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBox").GetComponent<HitBox>();
+        Managers.Sound.Play("Skill/NormalAttack");
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WarriorNormalAttackEffect, gameObject.transform);
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 1.5f;
         hitbox.transform.rotation = gameObject.transform.rotation * hitbox.transform.rotation;
@@ -25,9 +27,10 @@ public class WarriorNormalAttackSkill : TmpSkill
         yield return new WaitForSeconds(0.1f);
 
         Managers.Resource.Destroy(hitbox.gameObject);
+
         yield return new WaitForSeconds(1.3f);
 
-
+        Managers.Effect.Stop(ps);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 }
