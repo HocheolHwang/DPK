@@ -123,7 +123,6 @@ public class Dungeon_Popup_UI : UI_Popup
         }
 
 
-
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
 
         // 채팅 Popup UI 열기 버튼 이벤트 등록
