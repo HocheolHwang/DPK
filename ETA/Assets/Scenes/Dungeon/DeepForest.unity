@@ -2018,6 +2018,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1868675572}
   - component: {fileID: 1868675573}
+  - component: {fileID: 1868675574}
+  - component: {fileID: 1868675575}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -2049,9 +2051,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 1868675569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2055ee7bcb703840bc89fac750e1a67, type: 3}
+  m_Script: {fileID: 11500000, guid: 009533f1922d043438ce7b65e34c6f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1868675574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868675569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4f7751b7725624e8cd38414357e5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatUI: {fileID: 0}
+--- !u!114 &1868675575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868675569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1928822554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2252,6 +2289,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1219953855528268219, guid: ee1f75a9120a0494094143838a1883dd, type: 3}
+      propertyPath: avoidancePriority
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3062761661400111319, guid: ee1f75a9120a0494094143838a1883dd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.09
