@@ -23,7 +23,8 @@ public class Dungeon_Popup_UI : UI_Popup
         Member_Nickname_Text_1,
         Player_Nickname_Text,
         Player_HP_Text,
-        Boss_HP_Text
+        Boss_HP_Text,
+        Boss_Name_Text,
     }
 
     // Slider 인덱스
@@ -121,7 +122,7 @@ public class Dungeon_Popup_UI : UI_Popup
             playerStat = playerObject.GetComponent<Stat>();
         }
 
-        GameObject bossObject = GameObject.FindWithTag("Knight G");
+        BossMonster bossObject = FindObjectOfType<BossMonster>();
         if (playerObject != null)
         {
             bossStat = bossObject.GetComponent<Stat>();
@@ -200,6 +201,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
         memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
 
+        if (bossStatus.activeSelf == false) return;
         // 보스 체력 업데이트
         bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
         bossHPSlider.value = (float)bossStat.Hp / bossStat.MaxHp;
@@ -220,6 +222,7 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             // 보스 상태창을 염
             bossStatus.SetActive(true);
+            GetText((int)Texts.Boss_Name_Text).text = bossStat.gameObject.name;
         }
     }
 
