@@ -1,71 +1,78 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using TMPro;
 
 public class Login_Popup_UI : UI_Popup
 {
-    // 텍스트 인덱스
-    enum Texts
-    {
-        Warning_Text
-    }
+    // ------------------------------ 변수 정의 ------------------------------
 
-    // 입력 필드 인덱스
-    enum InputFields
-    {
-        ID_InputField,
-        PW_InputField
-    }
-
-    // 버튼 인덱스
+    // 열거형 정의
     enum Buttons
     {
         Login_Button,
         Switch_Signup_Button,
         Game_Exit_Button
     }
+    enum InputFields
+    {
+        ID_InputField,
+        PW_InputField
+    }
 
-    // 클래스 멤버 변수로 선언
-    private TextMeshProUGUI warning;
+    enum Texts
+    {
+        Warning_Text
+    }
+
+    // UI 컴포넌트 바인딩 변수
+    private Button loginButton;
+    private Button switchSignupButton;
+    private Button gameExitButton;
     private TMP_InputField userID;
     private TMP_InputField userPW;
+    private TextMeshProUGUI warning;
 
-    // 로그인 UI 초기화
+
+    // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
     {
-        base.Init(); // 기본 초기화
+        // 기본 초기화
+        base.Init();
 
-        // 바인딩
-        Bind<TextMeshProUGUI>(typeof(Texts));
-        Bind<TMP_InputField>(typeof(InputFields));
+        // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
+        Bind<TMP_InputField>(typeof(InputFields));
+        Bind<TextMeshProUGUI>(typeof(Texts));
 
-        // 경고 문구
-        warning = GetText((int)Texts.Warning_Text);
+        // 로그인 시도 버튼 이벤트 등록
+        loginButton = GetButton((int)Buttons.Login_Button);
+        AddUIEvent(loginButton.gameObject, Login);
+        AddUIKeyEvent(loginButton.gameObject, () => Login(null), KeyCode.Return);
+
+        // 회원가입 전환 버튼 이벤트 등록
+        switchSignupButton = GetButton((int)Buttons.Switch_Signup_Button);
+        AddUIEvent(switchSignupButton.gameObject, SwitchSignup);
+
+        // 게임 종료 버튼 이벤트 등록
+        gameExitButton = GetButton((int)Buttons.Game_Exit_Button);
+        AddUIEvent(gameExitButton.gameObject, OpenGameExit);
+        AddUIKeyEvent(gameExitButton.gameObject, () => OpenGameExit(null), KeyCode.Escape);
 
         // 로그인 입력 정보
         userID = Get<TMP_InputField>((int)InputFields.ID_InputField);
         userPW = Get<TMP_InputField>((int)InputFields.PW_InputField);
 
-        // 로그인 시도 버튼 이벤트 등록
-        Button loginButton = GetButton((int)Buttons.Login_Button);
-        AddUIEvent(loginButton.gameObject, Login);
-        AddUIKeyEvent(loginButton.gameObject, () => Login(null), KeyCode.Return);
-
-        // 회원가입 전환 버튼 이벤트 등록
-        Button switchSignupButton = GetButton((int)Buttons.Switch_Signup_Button);
-        AddUIEvent(switchSignupButton.gameObject, SwitchSignup);
-
-        // 게임 종료 버튼 이벤트 등록
-        Button gameExitButton = GetButton((int)Buttons.Game_Exit_Button);
-        AddUIEvent(gameExitButton.gameObject, OpenGameExit);
-        AddUIKeyEvent(gameExitButton.gameObject, () => OpenGameExit(null), KeyCode.Escape);
+        // 경고 문구
+        warning = GetText((int)Texts.Warning_Text);
     }
 
-    // 비밀번호에 한글 입력시 자동으로 영어로 변환
+
+    // ------------------------------ 유니티 생명주기 메서드 ------------------------------
+
     void Update()
     {
+        // 비밀번호에 한글 입력시 자동으로 영어로 변환
         if (userPW.isFocused)
         {
             Input.imeCompositionMode = IMECompositionMode.Off;
@@ -76,7 +83,10 @@ public class Login_Popup_UI : UI_Popup
         }
     }
 
-    // 로그인 시도
+
+    // ------------------------------ 메서드 정의 ------------------------------
+
+    // 로그인 시도 메서드
     private void Login(PointerEventData data)
     {
         PlayerResDto dto = new PlayerResDto();
@@ -112,8 +122,7 @@ public class Login_Popup_UI : UI_Popup
         }
     }
 
-
-    // 로그인 시도 후 콜백 함수로 경고 텍스트 업데이트
+    // 로그인 시도 후 콜백 함수로 경고 텍스트 업데이트하는 메서드
     private void UpdateWarningText(PlayerResDto dto)
     {
         string message = dto.message;
@@ -142,7 +151,7 @@ public class Login_Popup_UI : UI_Popup
         }
     }
 
-    // 회원가입 Popup UI로 전환
+    // 회원가입 Popup UI로 전환하는 메서드
     private void SwitchSignup(PointerEventData data)
     {
         // 현재 Popup UI를 닫음
@@ -152,7 +161,7 @@ public class Login_Popup_UI : UI_Popup
         Managers.UI.ShowPopupUI<Signup_Popup_UI>("[Login]_Signup_Popup_UI");
     }
 
-    // 게임 종료
+    // 게임 종료 Popup UI 띄우기 메서드
     private void OpenGameExit(PointerEventData data)
     {
         // 게임 종료 Popup UI를 띄움

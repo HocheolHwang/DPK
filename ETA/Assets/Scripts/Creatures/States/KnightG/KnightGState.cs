@@ -9,6 +9,11 @@ enum EKnightGPattern
     SecondAuto,
     CounterEnable,
     CounterAttack,
+    TwoSkillEnergy,
+    TwoSkillAttack,
+    PhaseTransition,
+    PhaseAttack,
+    MAX_LEN,
 }
 
 // KnightG 상태
@@ -27,5 +32,11 @@ public class KnightGState : State
     {
         _controller = controller;
         _animData = controller.KnightGAnimData;
+    }
+
+    // ------------------------------ Pattern Functions ----------------------------
+    protected void StartCast(int patternIdx)
+    {
+        _controller.PatternInfo.PatternList[patternIdx].Cast();
     }
 }

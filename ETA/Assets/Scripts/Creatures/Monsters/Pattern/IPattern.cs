@@ -14,5 +14,6 @@ public interface IPattern
 
     // --------------------------- Pattern Logic ------------------------------
     void Cast();                                     // StartPatternCast 실행 - 스킬 실행
+    void StopCast();                                 // 멈춤
     abstract IEnumerator StartPatternCast();         // 스킬 로직 구현
 }

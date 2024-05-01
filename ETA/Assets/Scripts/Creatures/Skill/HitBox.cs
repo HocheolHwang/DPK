@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour
@@ -32,19 +33,19 @@ public class HitBox : MonoBehaviour
         }
         else if (_attacker.gameObject.CompareTag("Monster") && other.gameObject.CompareTag("Player"))
         {
+            Debug.Log($"player name : {other.gameObject.name}");
             other.GetComponent<IDamageable>().TakeDamage(_damage);
             _penetration--;
         }
 
         // 음수일 때는 계속 관통
-        // 0일 때는 파괴
+        // 0일 때는 비활성화 -> 파괴는 각 클래스에서 따로 처리한다.
         // 양수인 경우도 계속 관통
         if (_penetration == 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         StartCoroutine(InActiveColider(_duration));
-        
     }
 
     IEnumerator InActiveColider(float duration)

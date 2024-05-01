@@ -1,13 +1,22 @@
-using UnityEngine.UI;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using PlayerStates;
+using System;
 
 public class Dungeon_Popup_UI : UI_Popup
 {
-    // 게임오브젝트 인덱스
+    // ------------------------------ 변수 정의 ------------------------------
+
+    // 열거형 정의
+    enum Buttons
+    {
+        Open_Chat_Button,
+        Open_Menu_Button
+    }
+
     enum GameObjects
     {
         Tutorial_Icon,
@@ -17,7 +26,6 @@ public class Dungeon_Popup_UI : UI_Popup
         Boss_Status
     }
 
-    // 텍스트 인덱스
     enum Texts
     {
         Dungeon_Name_Text,
@@ -26,28 +34,22 @@ public class Dungeon_Popup_UI : UI_Popup
         Player_Tier_Text,
         Player_Nickname_Text,
         Player_HP_Text,
-        Boss_HP_Text,
         Boss_Name_Text,
+        Boss_HP_Text
     }
 
-    // Slider 인덱스
     enum Sliders
     {
         Dungeon_Progress_Bar,
         Member_HP_Slider_1,
-        Boss_HP_Slider,
         Player_HP_Slider,
-        Player_EXP_Slider
+        Player_EXP_Slider,
+        Boss_HP_Slider
     }
 
-    // 버튼 인덱스
-    enum Buttons
-    {
-        Open_Chat_Button,
-        Open_Menu_Button
-    }
-
-    // 추가된 멤버 변수
+    // UI 컴포넌트 바인딩 변수
+    private Button openChatButton;
+    private Button openMenuButton;
     private GameObject tutorialIcon;
     private GameObject deepForestIcon;
     private GameObject forgottenTempleIcon;
@@ -59,109 +61,59 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI playerTierText;
     private TextMeshProUGUI playerNicknameText;
     private TextMeshProUGUI playerHPText;
+    private TextMeshProUGUI bossNameText;
     private TextMeshProUGUI bossHPText;
     private Slider dungeonProgressBar;
     private Slider memberHPSlider1;
     private Slider bossHPSlider;
     private Slider playerHPSlider;
     private Slider playerEXPSlider;
+
+    // 게임 위치 및 진행 상태 변수
     public Transform[] checkpoints;
     private int totalCheckpoints = 3;
     private int currentCheckpointIndex = 0;
     private float gameTime = 0f;
 
-    private Button openChatButton;
-    private Button openMenuButton;
-
+    // 게임 플레이어 및 보스 상태 변수
     public Stat playerStat;
     public Stat bossStat;
 
-    // 현재 Scene이 튜토리얼 Scene인지 확인
+    // 현재 Scene 상태 변수
     private bool isTutorialScene;
 
 
-    // 로그인 UI 초기화
+    // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
     {
-        base.Init(); // 기본 초기화
+        // 기본 초기화
+        base.Init();
 
-        // 바인딩
+        // 컴포넌트 바인딩
+        Bind<Button>(typeof(Buttons));
         Bind<GameObject>(typeof(GameObjects));
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Slider>(typeof(Sliders));
-        Bind<Button>(typeof(Buttons));
 
+
+        // --------------- 튜토리얼 및 UI 버튼 이벤트 설정 ---------------
+
+        // 현재 Scene이 튜토리얼 Scene인지 확인
         isTutorialScene = SceneManager.GetActiveScene().name == "Tutorial";
 
-        // 닉네임
-        memberNicknameText1 = GetText((int)Texts.Member_Nickname_Text_1);
-        playerTierText = GetText((int)Texts.Player_Tier_Text);
-
-        if (isTutorialScene)
-        {
-            playerTierText.text = "던전처리기사 수험생";
-        }
-        else
-        {
-            playerTierText.text = "견습 던전처리기사";
-        }
-
-        playerNicknameText = GetText((int)Texts.Player_Nickname_Text);
-        UpdateUserInfo();
-
-        // 던전 아이콘
-        tutorialIcon = GetObject((int)GameObjects.Tutorial_Icon);
-        deepForestIcon = GetObject((int)GameObjects.DeepForest_Icon);
-        forgottenTempleIcon = GetObject((int)GameObjects.ForgottenTemple_Icon);
-        starShardPlainIcon = GetObject((int)GameObjects.StarShardPlain_Icon);
-
-        // 보스 상태창
-        bossStatus = GetObject((int)GameObjects.Boss_Status);
-        bossStatus.SetActive(false);
-
-        // 게임 시간
-        timeText = GetText((int)Texts.Time_Text);
-
-        // 선택된 던전
-        dungeonNameText = GetText((int)Texts.Dungeon_Name_Text);
-        UpdateSelectedDungeon();
-
-        // Slider와 GameObject 연결
-        dungeonProgressBar = GetSlider((int)Sliders.Dungeon_Progress_Bar);
-        dungeonProgressBar.value = 0;
-
-        bossHPText = GetText((int)Texts.Boss_HP_Text);
-        bossHPSlider = GetSlider((int)Sliders.Boss_HP_Slider);
-        bossHPSlider.value = 1;
-
-        playerHPText = GetText((int)Texts.Player_HP_Text);
-        playerHPSlider = GetSlider((int)Sliders.Player_HP_Slider);
-        playerHPSlider.value = 1;
-        memberHPSlider1 = GetSlider((int)Sliders.Member_HP_Slider_1);
-        memberHPSlider1.value = 1;
-
-        playerEXPSlider = GetSlider((int)Sliders.Player_EXP_Slider);
-
-        GameObject playerObject = GameObject.FindWithTag("Player");
-        if (playerObject != null)
-        {
-            playerStat = playerObject.GetComponent<Stat>();
-        }
-
-
-        KnightGController.OnBossDestroyed += HandleBossDestroyed;
-
-
+        // UI 버튼 요소들을 가져옴
         openChatButton = GetButton((int)Buttons.Open_Chat_Button);
         openMenuButton = GetButton((int)Buttons.Open_Menu_Button);
+
         if (isTutorialScene)
         {
-            // 튜토리얼 Scene에서 채팅 및 메뉴 버튼 숨김
+            // 튜토리얼 Scene일 경우, 채팅 및 메뉴 버튼 숨김
             openChatButton.gameObject.SetActive(false);
             openMenuButton.gameObject.SetActive(false);
         }
         else
         {
+            // 튜토리얼 Scene이 아닐 경우, 버튼 이벤트 등록
             // 채팅 Popup UI 열기 버튼 이벤트 등록
             AddUIEvent(openChatButton.gameObject, OpenChat);
             AddUIKeyEvent(openChatButton.gameObject, () => OpenChat(null), KeyCode.C);
@@ -170,16 +122,77 @@ public class Dungeon_Popup_UI : UI_Popup
             AddUIEvent(openMenuButton.gameObject, OpenMenu);
             AddUIKeyEvent(openMenuButton.gameObject, () => OpenMenu(null), KeyCode.Escape);
         }
+
+
+        // --------------- 던전 정보 UI 초기화 ---------------
+
+        // 던전 아이콘 초기화
+        tutorialIcon = GetObject((int)GameObjects.Tutorial_Icon);
+        deepForestIcon = GetObject((int)GameObjects.DeepForest_Icon);
+        forgottenTempleIcon = GetObject((int)GameObjects.ForgottenTemple_Icon);
+        starShardPlainIcon = GetObject((int)GameObjects.StarShardPlain_Icon);
+
+        // 던전 이름 초기화
+        dungeonNameText = GetText((int)Texts.Dungeon_Name_Text);
+
+        // 던전 시간 초기화
+        timeText = GetText((int)Texts.Time_Text);
+
+        // 던전 진행상황 슬라이더 초기화
+        dungeonProgressBar = GetSlider((int)Sliders.Dungeon_Progress_Bar);
+
+        // 던전 정보 업데이트
+        UpdateDungeonInfo();
+
+
+        // --------------- 보스 정보 UI 초기화 ---------------
+
+        // 보스 상태창 초기화 및 비활성화
+        bossStatus = GetObject((int)GameObjects.Boss_Status);
+        bossStatus.SetActive(false);
+
+        // 보스 이름 및 HP 텍스트, HP 슬라이더 초기화
+        bossNameText = GetText((int)Texts.Boss_Name_Text);
+        bossHPText = GetText((int)Texts.Boss_HP_Text);
+        bossHPSlider = GetSlider((int)Sliders.Boss_HP_Slider);
+
+        // 보스 정보 업데이트
+        UpdateBossInfo();
+
+
+        // --------------- 파티원 및 플레이어 정보 UI 초기화 ---------------
+
+        // 파티원 정보 초기화
+        memberNicknameText1 = GetText((int)Texts.Member_Nickname_Text_1);
+        memberHPSlider1 = GetSlider((int)Sliders.Member_HP_Slider_1);
+
+        // 플레이어 정보 초기화
+        playerTierText = GetText((int)Texts.Player_Tier_Text);
+        playerNicknameText = GetText((int)Texts.Player_Nickname_Text);
+        playerHPText = GetText((int)Texts.Player_HP_Text);
+        playerHPSlider = GetSlider((int)Sliders.Player_HP_Slider);
+        playerEXPSlider = GetSlider((int)Sliders.Player_EXP_Slider);
+
+        // 파티원 및 플레이어 정보 업데이트
+        UpdatePlayerInfo();
+
+        // 플레이어 게임 오브젝트 태그 이용해 찾기
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            playerStat = playerObject.GetComponent<Stat>();
+        }
     }
+
+
+    // ------------------------------ 유니티 생명주기 메서드 ------------------------------
 
     void Update()
     {
-        // 던전에 있는 동안 시간 흐름
-        gameTime += Time.deltaTime;
-        int minutes = Mathf.FloorToInt(gameTime / 60);
-        int seconds = Mathf.FloorToInt(gameTime % 60);
-        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        // 게임 시간 업데이트
+        UpdateTime();
 
+        // HP 업데이트
         UpdateHP();
     }
 
@@ -195,61 +208,92 @@ public class Dungeon_Popup_UI : UI_Popup
         }
     }
 
-    // 유저 정보 업데이트하기
-    private void UpdateUserInfo()
-    {
-        memberNicknameText1.text = Managers.Player.GetNickName();
-        playerNicknameText.text = Managers.Player.GetNickName();
-    }
 
-    // 현재 던전 정보 업데이트하기
-    private void UpdateSelectedDungeon()
+    // ------------------------------ 메서드 정의 ------------------------------
+
+    // 던전 정보 업데이트 메서드
+    private void UpdateDungeonInfo()
     {
+        // 선택된 던전 번호를 가져옴
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
+        
+        // 튜토리얼 Scene일 경우, 선택된 던전 번호를 0으로 설정
+        if (isTutorialScene) selectedDungeonNumber = 0;
+
+        // 아이콘 비활성화
         tutorialIcon.SetActive(false);
         deepForestIcon.SetActive(false);
         forgottenTempleIcon.SetActive(false);
         starShardPlainIcon.SetActive(false);
 
-        // 현재 Scene이 튜토리얼 Scene일 경우 선택된 던전 정보를 0으로 만듬
-        if (isTutorialScene) selectedDungeonNumber = 0;
-        
-        // 던전 번호에 따라 다른 텍스트를 설정
-        switch (selectedDungeonNumber)
+        // 던전 번호에 따라 다른 텍스트와 아이콘 설정
+        (string dungeonName, GameObject activeIcon) = selectedDungeonNumber switch
         {
-            case 1:
-                dungeonNameText.text = "깊은 숲";
-                deepForestIcon.SetActive(true);
-                break;
-            case 2:
-                dungeonNameText.text = "잊혀진 신전";
-                forgottenTempleIcon.SetActive(true);
-                break;
-            case 3:
-                dungeonNameText.text = "별의 조각 평원";
-                starShardPlainIcon.SetActive(true);
-                break;
-            default:
-                dungeonNameText.text = "던전처리기사 실기 시험장";
-                tutorialIcon.SetActive(true);
-                break;
-        }
+            1 => ("깊은 숲", deepForestIcon),
+            2 => ("잊혀진 신전", forgottenTempleIcon),
+            3 => ("별의 조각 평원", starShardPlainIcon),
+            _ => ("던전처리기사 실기 시험장", tutorialIcon)
+        };
+
+        // 던전 이름 설정
+        dungeonNameText.text = dungeonName;
+
+        // 해당하는 아이콘 활성화
+        activeIcon.SetActive(true);
+
+        // 던전 진행 슬라이더 설정
+        dungeonProgressBar.value = 0;
     }
 
+    // 보스 정보 업데이트 메서드
+    private void UpdateBossInfo()
+    {
+        // 보스 HP 슬라이더 설정
+        bossHPSlider.value = 1;
+
+        // 보스 파괴 이벤트 핸들러 등록
+        KnightGController.OnBossDestroyed += HandleBossDestroyed;
+    }
+
+    // 파티원 및 플레이어 정보 업데이트 메서드
+    private void UpdatePlayerInfo()
+    {
+        // 파티원 닉네임 및 HP 슬라이더 설정
+        memberNicknameText1.text = Managers.Player.GetNickName();
+        memberHPSlider1.value = 1;
+
+        // 플레이어 등급, 닉네임 및 HP 슬라이더 설정
+        playerTierText.text = isTutorialScene ? "던전처리기사 수험생" : "견습 던전처리기사";
+        playerNicknameText.text = Managers.Player.GetNickName();
+        playerHPSlider.value = 1;
+    }
+
+    // 게임 시간 업데이트 메서드
+    public void UpdateTime()
+    {
+        gameTime += Time.deltaTime;
+        int minutes = Mathf.FloorToInt(gameTime / 60);
+        int seconds = Mathf.FloorToInt(gameTime % 60);
+        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    // HP 업데이트 메서드
     public void UpdateHP()
     {
-        // 체력 업데이트
+        // 파티원 체력 업데이트
+        memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
+
+        // 플레이어 체력 업데이트
         playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
         playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
 
-        memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
-
-        if (bossStatus.activeSelf == false) return;
         // 보스 체력 업데이트
+        if (bossStatus.activeSelf == false) return;
         bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
         bossHPSlider.value = (float)bossStat.Hp / bossStat.MaxHp;
     }
 
+    // 던전 진행 슬라이더 업데이트
     public void UpdateProgress()
     {
         if (currentCheckpointIndex < totalCheckpoints)
@@ -268,13 +312,14 @@ public class Dungeon_Popup_UI : UI_Popup
             {
                 bossStat = bossObject.GetComponent<Stat>();
             }
-            // 보스 상태창을 염
+
+            // 보스 상태창을 띄움
             bossStatus.SetActive(true);
-            GetText((int)Texts.Boss_Name_Text).text = bossStat.gameObject.name;
+            bossNameText.text = bossStat.gameObject.name;
         }
     }
 
-    // 던전 결과 Popup UI 열기
+    // 던전 결과 Popup UI 띄우기 메서드
     private void HandleBossDestroyed()
     {
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
@@ -283,18 +328,17 @@ public class Dungeon_Popup_UI : UI_Popup
         zone.StopMovement();
         foreach(var player in players)
         {
-           
             player.isFinished = true;
         }
     }
 
-    // 채팅 Popup UI 열기
+    // 채팅 Popup UI 띄우기 메서드
     private void OpenChat(PointerEventData data)
     {
         Managers.UI.ShowPopupUI<Chat_Popup_UI>("[Common]_Chat_Popup_UI");
     }
 
-    // 메뉴 Popup UI 열기
+    // 메뉴 Popup UI 띄우기 메서드
     private void OpenMenu(PointerEventData data)
     {
         Managers.UI.ShowPopupUI<Menu_Popup_UI>("[Common]_Menu_Popup_UI");

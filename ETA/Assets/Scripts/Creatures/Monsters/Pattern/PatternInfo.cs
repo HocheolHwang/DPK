@@ -18,4 +18,12 @@ public class PatternInfo : MonoBehaviour
     {
         _patternList = new List<IPattern>();
     }
+
+    public void StopPatterns()
+    {
+        _patternList.ForEach(pattern =>
+        {
+            pattern.StopCast();
+        });
+    }
 }
