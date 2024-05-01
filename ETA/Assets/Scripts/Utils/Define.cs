@@ -36,9 +36,11 @@ public class Define
         Unknown,
         Login,
         Lobby,
-        Game,
-        Camp,
-        Dungeon
+        Opening,
+        Tutorial,
+        DeepForest,
+        ForgottenTemple,
+        StarShardPlain,
     }
     public enum UIEvent
     {

@@ -55,6 +55,7 @@ public class Load_Lobby_Popup_UI : UI_Popup
         CloseAllPopupUI();
 
         // 로비 Scene으로 이동
-        SceneManager.LoadScene("Lobby");
+        //SceneManager.LoadScene("Lobby");
+        Managers.Scene.LoadScene(Define.Scene.Lobby);
     }
 }
