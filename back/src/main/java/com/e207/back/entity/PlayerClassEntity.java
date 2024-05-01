@@ -17,6 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Table(name = "player_class")
 public class PlayerClassEntity {
+
     @EmbeddedId
     private PlayerClassId id;  // Embeddable 클래스를 사용한 복합 키
 
@@ -41,20 +42,3 @@ public class PlayerClassEntity {
     private int skillPoint = 0;
 
 }
-
-//@Getter
-//@Setter
-//@Embeddable
-//class PlayerClassId implements Serializable {
-//    private String playerId;
-//    private String classCode;
-//
-//    public PlayerClassId() {}
-//
-//    // 매개변수 있는 생성자
-//    public PlayerClassId(String playerId, String classCode) {
-//        this.playerId = playerId;
-//        this.classCode = classCode;
-//    }
-//
-//}
