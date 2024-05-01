@@ -8,9 +8,10 @@ public class Menu_Popup_UI : UI_Popup
     // 버튼 인덱스
     enum Buttons
     {
+        Open_Load_Lobby_Button,
+        Open_Game_Exit_Button,
         Cancel_Button,
-        Load_Lobby_Button,
-        Game_Exit_Button
+        Save_Button
     }
 
     // 로그인 UI 초기화
@@ -21,45 +22,49 @@ public class Menu_Popup_UI : UI_Popup
         // 버튼 바인딩
         Bind<Button>(typeof(Buttons));
 
-        // 남아 있기 버튼 이벤트 등록
+        // 로비로 돌아가기 Popup UI 열기 버튼 이벤트 등록
+        Button openLoadLobbyButton = GetButton((int)Buttons.Open_Load_Lobby_Button);
+        AddUIEvent(openLoadLobbyButton.gameObject, OpenLoadLobbyScene);
+
+        // 게임 종료 Popup UI 열기 버튼 이벤트 등록
+        Button openGameExitButton = GetButton((int)Buttons.Open_Game_Exit_Button);
+        AddUIEvent(openGameExitButton.gameObject, OpenGameExit);
+
+        // 돌아가기 버튼 이벤트 등록
         Button cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
 
-        // 로비로 이동하기 버튼 이벤트 등록
-        Button loadLobbyButton = GetButton((int)Buttons.Load_Lobby_Button);
-        AddUIEvent(loadLobbyButton.gameObject, LoadLobbyScene);
-        AddUIKeyEvent(loadLobbyButton.gameObject, () => LoadLobbyScene(null), KeyCode.Return);
-
-        // 게임 종료 버튼 이벤트 등록
-        Button gameExitButton = GetButton((int)Buttons.Game_Exit_Button);
-        AddUIEvent(gameExitButton.gameObject, GameExit);
-        AddUIKeyEvent(gameExitButton.gameObject, () => GameExit(null), KeyCode.Return);
+        // 저장하기 버튼 이벤트 등록
+        Button saveButton = GetButton((int)Buttons.Save_Button);
+        AddUIEvent(saveButton.gameObject, Save);
+        AddUIKeyEvent(saveButton.gameObject, () => Save(null), KeyCode.Return);
     }
 
-    // 남아 있기
+    // 돌아가기
     private void Cancel(PointerEventData data)
     {
         ClosePopupUI();
     }
 
-    // 로비로 이동하기
-    private void LoadLobbyScene(PointerEventData data)
+    // 저장하기
+    private void Save(PointerEventData data)
     {
-        // 씬 이동하기 전에 모든 스택을 비움
-        CloseAllPopupUI();
-
-        // 로비로 이동
-        SceneManager.LoadScene("Lobby");
+        // TODO: 변경사항 저장하는 코드 필요
+        ClosePopupUI();
     }
 
-    // 게임 종료
-    private void GameExit(PointerEventData data)
+    // 로비로 돌아가기 Popup UI 열기
+    private void OpenLoadLobbyScene(PointerEventData data)
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit(); // 어플리케이션 종료
-#endif
+        // 게임 종료 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Load_Lobby_Popup_UI>("[Dungeon]_Load_Lobby_Popup_UI");
+    }
+
+    // 게임 종료 Popup UI 열기
+    private void OpenGameExit(PointerEventData data)
+    {
+        // 게임 종료 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Game_Exit_Popup_UI>("[Common]_Game_Exit_Popup_UI");
     }
 }
