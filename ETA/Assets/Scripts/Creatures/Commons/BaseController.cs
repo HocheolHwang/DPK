@@ -126,7 +126,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         attackedDamage_ui.AttackedDamage = damage;
         
         Stat.Hp -= damage;
-        
+        AttackedEvent();
 
         Debug.Log($"{gameObject.name} has taken {damage} damage.");
         if (Stat.Hp <= 0)
