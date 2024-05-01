@@ -22,7 +22,7 @@ public class Massacre : Skill
             else
                 _animator.CrossFade("ATTACK2", 0.1f); // 2번째와 4번째 칼 휘두르기
 
-            // ParticleSystem ps = Managers.Effect.Play(Define.Effect.StoneSlash, gameObject.transform);
+            ParticleSystem ps = Managers.Effect.Play(Define.Effect.StoneSlash, gameObject.transform);
 
             // 히트박스 생성
             HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
@@ -31,7 +31,7 @@ public class Massacre : Skill
             hitbox.transform.localScale = skillRange;
 
             yield return new WaitForSeconds(0.3f);
-            // Managers.Effect.Stop(ps);
+            Managers.Effect.Stop(ps);
             Managers.Resource.Destroy(hitbox.gameObject);
         }
         yield return new WaitForSeconds(0.5f);
