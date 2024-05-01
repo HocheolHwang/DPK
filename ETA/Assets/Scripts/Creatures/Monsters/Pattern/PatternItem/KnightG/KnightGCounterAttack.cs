@@ -6,7 +6,7 @@ public class KnightGCounterAttackPattern : Pattern
 {
     [Header("개발 편의성")]
     [SerializeField] float _hitboxForwardLoc = 0.3f;
-    [SerializeField] Vector3 _hitboxRange = new Vector3(5.0f, 5.0f, 5.0f);
+    [SerializeField] float _hitboxRadius = 6.0f;
     [SerializeField] float _upLoc = 1.0f;
     [SerializeField] float _rightLoc = 0f;
 
@@ -15,7 +15,6 @@ public class KnightGCounterAttackPattern : Pattern
         base.Init();
 
         _createTime = 0.47f;
-        _patternRange = _hitboxRange;
     }
 
     public override IEnumerator StartPatternCast()
@@ -30,7 +29,7 @@ public class KnightGCounterAttackPattern : Pattern
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
         hitbox.SetUp(transform, _attackDamage);
-        hitbox.GetComponent<SphereCollider>().radius = 6.0f;
+        hitbox.GetComponent<SphereCollider>().radius = _hitboxRadius;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
 

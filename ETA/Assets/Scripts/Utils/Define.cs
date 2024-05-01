@@ -80,8 +80,11 @@ public class Define
         WarriorNormalAttackEffect,
         KnightG_CounterEnable,
         KnightG_CounterAttack,
-        KnightG_TwoSkillEnergy_Temp,
+        KnightG_TwoSkillEnergy,
         KnightG_TwoSkillAttack,
+        KnightG_PhaseTransition,
+        KnightG_PhaseAttack,
+        Groggy,
         MaxCount
     }
 }

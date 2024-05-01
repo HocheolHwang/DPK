@@ -18,7 +18,6 @@ public class KnightGController : BaseMonsterController
     public State COUNTER_ENABLE_STATE;
     public State COUNTER_ATTACK_STATE;
     public State PHASE_TRANSITION_STATE;
-    //public State PHASE_ATTACK_STATE;
     public State PHASE_ATTACK_ING_STATE;
     public State DIE_STATE;
     public State GROGGY_STATE;
@@ -66,7 +65,6 @@ public class KnightGController : BaseMonsterController
         COUNTER_ATTACK_STATE = new CounterAttackState(this);
         // Phase
         PHASE_TRANSITION_STATE = new PhaseTransitionState(this);
-        //PHASE_ATTACK_STATE = new PhaseAttackState(this);
         PHASE_ATTACK_ING_STATE = new PhaseAttackingState(this);
         // Global
         DIE_STATE = new DieState(this);

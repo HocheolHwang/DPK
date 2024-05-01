@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// hit box를 통해서 상태 이상 스킬인지 확인 -> counter랑 같은 로직                -> 후순위
-// 상태 이상 스킬인 경우 -> controller가 two skill attack 상태일 때 공격력을 낮춤 -> 후순위
-public class KnightGTwoSkillEnergy : Pattern
+// 특정 상태 이상에 맞으면 phase 진입을 끊을 수 있다.
+public class KnightGPhaseTransition : Pattern
 {
     KnightGAnimationData _animData;
     KnightGController _kcontroller;
@@ -20,11 +19,10 @@ public class KnightGTwoSkillEnergy : Pattern
     public override void Init()
     {
         base.Init();
-        
 
         _animData = _controller.GetComponent<KnightGAnimationData>();
         _kcontroller = _controller.GetComponent<KnightGController>();
-        _duration = 2.0f;   // 2.0f는 StateItem에서 설정한 2초 지속시간
+        _duration = _animData.PhaseTransitionAnim.length * 2.0f;   // 2.0f는 StateItem에서 설정한 애니메이션 재생 시간에 영향을 미친다.
 
         _createTime = 0.1f;
         _patternRange = _hitboxRange;
@@ -43,10 +41,12 @@ public class KnightGTwoSkillEnergy : Pattern
         _hitbox.transform.rotation = transform.rotation;
         _hitbox.transform.position = objectLoc;
 
-        _ps = Managers.Effect.Play(Define.Effect.KnightG_TwoSkillEnergy, _controller.transform);
-        _ps.transform.position = _hitbox.transform.position;
+        _ps = Managers.Effect.Play(Define.Effect.KnightG_PhaseTransition, _controller.transform);
+        _ps.transform.SetParent(transform);
+        
 
         // 시전 도중에 특정 상태이상 스킬을 맞으면 hit box와 effect가 사라지고, sound가 발생
+        // 상태에게 알려줘야함 -> groggy로 이동
         float timer = 0;
         while (timer < _duration)
         {
@@ -59,11 +59,10 @@ public class KnightGTwoSkillEnergy : Pattern
             //    yield break;
             //}
 
-            timer += Time.deltaTime;
+            //timer += Time.deltaTime;
             yield return null;
         }
 
         Managers.Resource.Destroy(_hitbox.gameObject);
-        Managers.Effect.Stop(_ps);
     }
 }

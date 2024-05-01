@@ -47,7 +47,7 @@ public class BaseMonsterController : BaseController
         while (true)
         {
             yield return new WaitForSeconds(0.15f);
-            Debug.Log(_isHitCounter);
+            //Debug.Log(_isHitCounter);
             if (_isHitCounter)
             {
                 

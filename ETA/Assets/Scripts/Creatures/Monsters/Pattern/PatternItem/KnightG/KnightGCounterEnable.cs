@@ -5,15 +5,11 @@ using System.Threading;
 using Unity;
 using UnityEngine;
 
-public class KnightGCounterEnablePattern : Pattern
+public class KnightGCounterEnable : Pattern
 {
     KnightGAnimationData _animData;
     KnightGController _kcontroller;
-
-    [Header("원하는 이펙트와 HIT_COUNTER 소리 이름을 넣으세요 - 디버깅")]
-    [SerializeField] string _soundName;
     
-
     [Header("개발 편의성")]
     [SerializeField] Vector3 _hitboxRange = new Vector3(2.0f, 4.0f, 2.0f);
     [SerializeField] float _upLoc = 2.0f;
@@ -31,7 +27,7 @@ public class KnightGCounterEnablePattern : Pattern
         base.Init();
         _animData = _controller.GetComponent<KnightGAnimationData>();
         _kcontroller = _controller.GetComponent<KnightGController>();
-        _duration = _animData.CounterEnableAnim.length * 4.0f - _createTime;        // 4.0f는 StateItem에서 설정한 애니메이션 재생 시간에 영향을 미친다.
+        _duration = _animData.CounterEnableAnim.length * 4.0f;        // 4.0f는 StateItem에서 설정한 애니메이션 재생 시간에 영향을 미친다.
 
         _createTime = 0.1f;
         _patternRange = _hitboxRange;
@@ -41,7 +37,6 @@ public class KnightGCounterEnablePattern : Pattern
 
     public override IEnumerator StartPatternCast()
     {
-        // 멈췄을 때 target을 향해 hitbox, effect 생성
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
         Vector3 objectLoc = transform.position + rootUp;
 

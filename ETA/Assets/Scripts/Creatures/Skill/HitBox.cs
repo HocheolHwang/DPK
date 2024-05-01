@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour
@@ -32,6 +33,7 @@ public class HitBox : MonoBehaviour
         }
         else if (_attacker.gameObject.CompareTag("Monster") && other.gameObject.CompareTag("Player"))
         {
+            Debug.Log($"player name : {other.gameObject.name}");
             other.GetComponent<IDamageable>().TakeDamage(_damage);
             _penetration--;
         }
@@ -44,7 +46,6 @@ public class HitBox : MonoBehaviour
             gameObject.SetActive(false);
         }
         StartCoroutine(InActiveColider(_duration));
-        
     }
 
     IEnumerator InActiveColider(float duration)
