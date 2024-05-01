@@ -80,6 +80,7 @@ public class Define
         KnightG_CounterAttack,
         KnightG_TwoSkillEnergy,
         KnightG_TwoSkillAttack,
+        KnightG_PhaseTransition,
         MaxCount
     }
 }

@@ -22,7 +22,7 @@ public class KnightGPhaseTransition : Pattern
 
         _animData = _controller.GetComponent<KnightGAnimationData>();
         _kcontroller = _controller.GetComponent<KnightGController>();
-        _duration = _animData.PhaseTransitionAnim.length * 2.0f - _createTime;   // 2.0f는 StateItem에서 설정한 애니메이션 재생 시간에 영향을 미친다.
+        _duration = _animData.PhaseTransitionAnim.length * 2.0f;   // 2.0f는 StateItem에서 설정한 애니메이션 재생 시간에 영향을 미친다.
 
         _createTime = 0.1f;
         _patternRange = _hitboxRange;
@@ -41,10 +41,9 @@ public class KnightGPhaseTransition : Pattern
         _hitbox.transform.rotation = transform.rotation;
         _hitbox.transform.position = objectLoc;
 
-        _ps = Managers.Effect.Play(Define.Effect.KnightG_TwoSkillEnergy, _controller.transform);
-        _ps.transform.position = _hitbox.transform.position;
-        ParticleSystem.MainModule _psMainModule = _ps.main;
-        _psMainModule.startLifetime = _animData.PhaseTransitionAnim.length * 2.0f;
+        _ps = Managers.Effect.Play(Define.Effect.KnightG_PhaseTransition, _controller.transform);
+        _ps.transform.SetParent(transform);
+        
 
         // 시전 도중에 특정 상태이상 스킬을 맞으면 hit box와 effect가 사라지고, sound가 발생
         // 상태에게 알려줘야함 -> groggy로 이동
@@ -60,11 +59,10 @@ public class KnightGPhaseTransition : Pattern
             //    yield break;
             //}
 
-            timer += Time.deltaTime;
+            //timer += Time.deltaTime;
             yield return null;
         }
 
         Managers.Resource.Destroy(_hitbox.gameObject);
-        Managers.Effect.Stop(_ps);
     }
 }

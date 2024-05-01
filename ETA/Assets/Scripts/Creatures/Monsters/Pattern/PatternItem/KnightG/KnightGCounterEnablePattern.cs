@@ -27,7 +27,7 @@ public class KnightGCounterEnablePattern : Pattern
         base.Init();
         _animData = _controller.GetComponent<KnightGAnimationData>();
         _kcontroller = _controller.GetComponent<KnightGController>();
-        _duration = _animData.CounterEnableAnim.length * 4.0f - _createTime;        // 4.0f는 StateItem에서 설정한 애니메이션 재생 시간에 영향을 미친다.
+        _duration = _animData.CounterEnableAnim.length * 4.0f;        // 4.0f는 StateItem에서 설정한 애니메이션 재생 시간에 영향을 미친다.
 
         _createTime = 0.1f;
         _patternRange = _hitboxRange;
