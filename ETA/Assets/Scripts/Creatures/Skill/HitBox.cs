@@ -37,11 +37,11 @@ public class HitBox : MonoBehaviour
         }
 
         // 음수일 때는 계속 관통
-        // 0일 때는 파괴
+        // 0일 때는 비활성화 -> 파괴는 각 클래스에서 따로 처리한다.
         // 양수인 경우도 계속 관통
         if (_penetration == 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         StartCoroutine(InActiveColider(_duration));
         

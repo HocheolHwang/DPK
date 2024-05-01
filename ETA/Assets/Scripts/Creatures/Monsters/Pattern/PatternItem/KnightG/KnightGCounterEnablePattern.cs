@@ -21,6 +21,7 @@ public class KnightGCounterEnablePattern : Pattern
         //64828C;
 
     private float _duration;
+    private int _penetration = 1;
     //private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
     //private Color[] _originalColors;  // 원래의 머티리얼 색상 저장용 배열
 
@@ -30,7 +31,7 @@ public class KnightGCounterEnablePattern : Pattern
         base.Init();
         _animData = _controller.GetComponent<KnightGAnimationData>();
         _kcontroller = _controller.GetComponent<KnightGController>();
-        _duration = _animData.CounterEnableAnim.length * 4.0f - _createTime;
+        _duration = _animData.CounterEnableAnim.length * 4.0f - _createTime;        // 4.0f는 StateItem에서 설정한 애니메이션 재생 시간에 영향을 미친다.
 
         _createTime = 0.1f;
         _patternRange = _hitboxRange;
@@ -48,16 +49,17 @@ public class KnightGCounterEnablePattern : Pattern
 
         //SetCounterColor();
 
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _attackDamage);
-        hitbox.transform.localScale = _patternRange;
-        hitbox.transform.rotation = transform.rotation;
-        hitbox.transform.position = objectLoc;
+        _hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+        _hitbox.SetUp(transform, _attackDamage, _penetration, false, _duration);
+        _hitbox.transform.localScale = _patternRange;
+        _hitbox.transform.rotation = transform.rotation;
+        _hitbox.transform.position = objectLoc;
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.CounterEnable, _controller.transform);
-        ps.transform.position = hitbox.transform.position;
-        ParticleSystem.MainModule psMainModule = ps.main;
-        psMainModule.startLifetime = _animData.CounterEnableAnim.length * 4.0f;
+        
+        _ps = Managers.Effect.Play(Define.Effect.KnightG_CounterEnable, _controller.transform);
+        _ps.transform.position = _hitbox.transform.position;
+        ParticleSystem.MainModule _psMainModule = _ps.main;
+        _psMainModule.startLifetime = _animData.CounterEnableAnim.length * 4.0f;
 
         // 시전 도중에 카운터 스킬을 맞으면 hit box와 effect가 사라지고, sound가 발생
         float timer = 0;
@@ -65,8 +67,8 @@ public class KnightGCounterEnablePattern : Pattern
         {
             if (_kcontroller.IsHitCounter)
             {
-                Managers.Resource.Destroy(hitbox.gameObject);
-                Managers.Effect.Stop(ps);
+                Managers.Resource.Destroy(_hitbox.gameObject);
+                Managers.Effect.Stop(_ps);
                 // 소리 발생
 
                 //RevertToOriginColor();
@@ -80,10 +82,11 @@ public class KnightGCounterEnablePattern : Pattern
 
         //RevertToOriginColor();
 
-        Managers.Resource.Destroy(hitbox.gameObject);
-        Managers.Effect.Stop(ps);
+        Managers.Resource.Destroy(_hitbox.gameObject);
+        Managers.Effect.Stop(_ps);
     }
 
+    #region Modify Color
     //public void SaveOriginColor()
     //{
     //    _allRenderers = GetComponentsInChildren<Renderer>();
@@ -116,4 +119,5 @@ public class KnightGCounterEnablePattern : Pattern
     //        renderer.material.color = _originalColors[i];
     //    }
     //}
+    #endregion
 }
