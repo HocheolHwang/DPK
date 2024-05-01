@@ -66,6 +66,9 @@ public class MonsterController : BaseMonsterController
             case Define.UnitType.Boar:
                 Managers.Sound.Play("Monster/Boar/BoarHit_SND", Define.Sound.Effect);
                 break;
+            case Define.UnitType.Porin:
+                Managers.Sound.Play("Monster/Porin/PorinHit_SND", Define.Sound.Effect);
+                break;
         }
     }
 }

@@ -13,6 +13,8 @@ public class HitBox : MonoBehaviour
     private bool _isCounter;
     private float _duration;
 
+    public int Penetration { get => _penetration; private set => _penetration = value; }
+
     public void SetUp(Transform attacker, int damage, int penetration = -1, bool isCounter = false, float duration = 0.1f)
     {
         _attacker = attacker;

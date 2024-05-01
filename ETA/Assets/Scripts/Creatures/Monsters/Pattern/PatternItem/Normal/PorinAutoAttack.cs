@@ -14,6 +14,8 @@ public class PorinAutoAttack : Pattern
     [SerializeField] Vector3 _hitboxRange = new Vector3(1.0f, 1.0f, 1.0f);
     [SerializeField] float _upLoc = 1.0f;
 
+    private int penetration = 1;
+
     public override void Init()
     {
         base.Init();
@@ -32,24 +34,38 @@ public class PorinAutoAttack : Pattern
         yield return new WaitForSeconds(_createTime);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        //ParticleSystem ps = Managers.Resource.Instantiate($"Effect/{_effectName}").GetComponent<ParticleSystem>();
-        hitbox.SetUp(transform, _attackDamage);
+        hitbox.SetUp(transform, _attackDamage, penetration, false, _duration);
         hitbox.transform.localScale = _patternRange;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
 
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Porin_Attack, _controller.transform);
+        ps.transform.rotation = hitbox.transform.rotation;
+        ps.transform.position = hitbox.transform.position;
+
+
         float timer = 0;
-        while (timer < _duration)
+        while (timer <= _duration)
         {
             Vector3 moveStep = hitbox.transform.forward * _speed * Time.deltaTime;
             hitbox.transform.position += moveStep;
+            ps.transform.position += moveStep;
 
             timer += Time.deltaTime;
+
+            if (hitbox.Penetration == 0)
+            {
+                Managers.Resource.Destroy(hitbox.gameObject);
+                Managers.Resource.Destroy(ps.gameObject);
+
+                // hit event를 여기서 실행시키면 됨
+
+                yield break;
+            }
+
             yield return null;
         }
         Managers.Resource.Destroy(hitbox.gameObject);
-
-        //yield return new WaitForSeconds(ps.main.duration);
-        //Managers.Resource.Destroy(ps.gameObject);
+        Managers.Resource.Destroy(ps.gameObject);
     }
 }

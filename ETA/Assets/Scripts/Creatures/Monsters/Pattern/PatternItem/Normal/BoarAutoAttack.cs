@@ -41,7 +41,7 @@ public class BoarAutoAttack : Pattern
         Managers.Sound.Play("Monster/Boar/BoarAttack_SND", Define.Sound.Effect);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        //ParticleSystem ps = Managers.Resource.Instantiate($"Effect/{_effectName}").GetComponent<ParticleSystem>();
+        //ParticleSystem ps = Managers.Resource.Instantiate($"Effect/{_effectName}").GetComponent<ParticleSystem>();        // hit effect에서 가운데에 나오는 뾰족한 것만 가져오기
         hitbox.SetUp(transform, _attackDamage);
         hitbox.transform.localScale = _patternRange;
         hitbox.transform.rotation = transform.rotation;

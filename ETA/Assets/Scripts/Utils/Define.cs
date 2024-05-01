@@ -89,6 +89,7 @@ public class Define
         SurfaceExplosionDirtStone,
         WhirlwindEffect1,
         WhirlwindEffect2,
+        Porin_Attack,
         MaxCount
     }
 }

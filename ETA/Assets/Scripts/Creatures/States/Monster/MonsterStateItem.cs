@@ -150,6 +150,8 @@ namespace MonsterStateItem
     #region DIE
     public class DieState : MonsterState
     {
+        private string _unitType;
+
         public DieState(MonsterController controller) : base(controller)
         {
         }
@@ -157,7 +159,8 @@ namespace MonsterStateItem
         public override void Enter() 
         {
             _agent.isStopped = true;
-            Managers.Sound.Play("Monster/Boar/BoarDie_SND", Define.Sound.Effect);
+            SearchUnitType();
+            Managers.Sound.Play($"Monster/{_unitType}/{_unitType}Die_SND", Define.Sound.Effect);
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
             _agent.enabled = false;
         }
@@ -167,6 +170,19 @@ namespace MonsterStateItem
         }
         public override void Exit() 
         {
+        }
+
+        private void SearchUnitType()
+        {
+            switch (_controller.UnitType)
+            {
+                case Define.UnitType.Boar:
+                    _unitType = "Boar";
+                    break;
+                case Define.UnitType.Porin:
+                    _unitType = "Porin";
+                    break;
+            }
         }
     }
     #endregion
