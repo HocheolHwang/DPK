@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class KnightGSecondAutoAttack : Pattern
 {
-    [Header("원하는 이펙트 이름을 넣으세요 - 디버깅")]
-    [SerializeField] string _effectName;
-
     [Header("개발 편의성")]
     [SerializeField] float _hitboxForwardLoc = 1.0f;
     [SerializeField] Vector3 _hitboxRange = new Vector3(5.3f, 4.0f, 5.0f);
@@ -38,7 +35,7 @@ public class KnightGSecondAutoAttack : Pattern
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
 
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
         //yield return new WaitForSeconds(ps.main.duration);

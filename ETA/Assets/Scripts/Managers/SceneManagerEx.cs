@@ -14,11 +14,10 @@ public class SceneManagerEx
     //    SceneManager.LoadScene(GetSceneName(type));
     //}
 
-    public void LoadScene(Define.Scene type, bool clear = false)
+    public void LoadScene(Define.Scene type, bool clear = true)
     {
         if(clear) Managers.Clear();
 
-        
         SceneManager.LoadScene(GetSceneName(type));
         
     }

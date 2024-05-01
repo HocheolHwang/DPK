@@ -18,7 +18,6 @@ public class KnightGController : BaseMonsterController
     public State COUNTER_ENABLE_STATE;
     public State COUNTER_ATTACK_STATE;
     public State PHASE_TRANSITION_STATE;
-    //public State PHASE_ATTACK_STATE;
     public State PHASE_ATTACK_ING_STATE;
     public State DIE_STATE;
     public State GROGGY_STATE;
@@ -66,14 +65,13 @@ public class KnightGController : BaseMonsterController
         COUNTER_ATTACK_STATE = new CounterAttackState(this);
         // Phase
         PHASE_TRANSITION_STATE = new PhaseTransitionState(this);
-        //PHASE_ATTACK_STATE = new PhaseAttackState(this);
         PHASE_ATTACK_ING_STATE = new PhaseAttackingState(this);
         // Global
         DIE_STATE = new DieState(this);
         GROGGY_STATE = new GroggyState(this);
         GLOBAL_STATE = new GlobalState(this);
 
-        //_stateMachine.SetGlobalState(GLOBAL_STATE);
+        _stateMachine.SetGlobalState(GLOBAL_STATE);
 
         Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
     }
