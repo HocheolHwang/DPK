@@ -74,8 +74,12 @@ namespace PlayerStates
                 //float dist = Vector3.Distance(_detector.Target.transform.position, _playerController.transform.position);
                 if (_detector.IsArriveToTarget())
                 {
+                    if (_playerController.CurState is MoveState)
+                    {
+                        _playerController.ChangeState(_playerController.ATTACK_STATE);
+                        return;
+                    }
 
-                    _playerController.ChangeState(_playerController.ATTACK_STATE);
                 }
             }
             else
@@ -132,7 +136,7 @@ namespace PlayerStates
         
         public SkillState(PlayerController playerController) : base(playerController)
         {
-
+            
         }
 
         public override void Enter()
@@ -248,6 +252,7 @@ namespace PlayerStates
         {
             startTime = Time.time;
             currentSkill = _playerController._usingSkill;
+            _playerController.SkillSlot.CurrentSkill?.StopCast();
             _agent.velocity = Vector3.zero;
             _agent.isStopped = true;
             // 콜라보 스킬 정보를 시스템에 저장 해야함

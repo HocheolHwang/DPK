@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetSkill : TmpSkill
+public class TargetSkill : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(5);
+        Damage = 50;
         base.Init();
     }
 

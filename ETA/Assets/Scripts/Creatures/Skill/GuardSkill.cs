@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardSkill : TmpSkill
+public class GuardSkill : Skill
 {
     protected override void Init()
     {
         SetCoolDownTime(2);
-        base.Init();
         SkillType = Define.SkillType.Immediately;
-        skillRange = new Vector3(7, 7, 7);
+        base.Init();
+        
     }
 
     public override IEnumerator StartSkillCast()

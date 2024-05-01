@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Massacre : TmpSkill
+public class Massacre : Skill
 {
     protected override void Init()
     {

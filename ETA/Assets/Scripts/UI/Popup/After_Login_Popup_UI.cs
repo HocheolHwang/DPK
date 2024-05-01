@@ -39,12 +39,28 @@ public class After_Login_Popup_UI : UI_Popup
 
         if (Managers.Player.GetFirst())
         {
-            // 첫 번째 로그인일 경우, 튜토리얼 Scene으로 이동
+            // 첫 번째 로그인일 경우 선택된 던전을 0번으로 저장
+            PlayerPrefs.SetInt("SelectedDungeonNumber", 0);
+            PlayerPrefs.Save();
+
+            // 첫 번째 로그인 1으로 저장
+            PlayerPrefs.SetInt("FirstLogin", 1);
+            PlayerPrefs.Save();
+
+            // 튜토리얼 Scene으로 이동
             SceneManager.LoadScene("Tutorial");
         }
         else
         {
-            // 첫 번째 로그인이 아닐 경우, 바로 로비 Scene으로 이동
+            // 첫 번째 로그인이 아닐 경우 선택된 던전을 1번으로 저장
+            PlayerPrefs.SetInt("SelectedDungeonNumber", 1);
+            PlayerPrefs.Save();
+
+            // 첫 번째 로그인이 아닌 0으로 저장
+            PlayerPrefs.SetInt("FirstLogin", 0);
+            PlayerPrefs.Save();
+
+            // 바로 로비 Scene으로 이동
             SceneManager.LoadScene("Lobby");
         }
     }

@@ -479,8 +479,10 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
-            if (_controller.PrevState == _controller.COUNTER_ENABLE_STATE)
+            Debug.Log(_controller.PrevState);
+            if (_controller.PrevState is CounterEnableState)
             {
+                Debug.Log("HOHOHO");
                 groggyTime = 3.0f;
             }
             else
