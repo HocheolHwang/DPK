@@ -78,6 +78,10 @@ public class Define
         WarriorNormalAttackEffect,
         CounterEnable,
         CounterAttack,
-        MaxCount
+        SurfaceExplosionDirtStone,
+        // StoneSlash,
+        WhirlwindEffect1,
+        WhirlwindEffect2,
+        MaxCount,
     }
 }
