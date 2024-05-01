@@ -5,7 +5,7 @@ using System.Threading;
 using Unity;
 using UnityEngine;
 
-public class KnightGCounterEnablePattern : Pattern
+public class KnightGCounterEnable : Pattern
 {
     KnightGAnimationData _animData;
     KnightGController _kcontroller;

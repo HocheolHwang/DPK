@@ -12,6 +12,7 @@ enum EKnightGPattern
     TwoSkillEnergy,
     TwoSkillAttack,
     PhaseTransition,
+    PhaseAttack,
     MAX_LEN,
 }
 

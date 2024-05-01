@@ -83,6 +83,7 @@ public class Define
         KnightG_TwoSkillEnergy,
         KnightG_TwoSkillAttack,
         KnightG_PhaseTransition,
+        KnightG_PhaseAttack,
         Groggy,
         MaxCount
     }

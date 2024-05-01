@@ -380,37 +380,6 @@ namespace KnightGStateItem
     }
     #endregion
 
-    // -------------------------------------- PHASE_ATTACK( Not Used ) ------------------------------------------------
-    #region PHASE_ATTACK
-    //public class PhaseAttackState : KnightGState
-    //{
-    //    public PhaseAttackState(KnightGController controller) : base(controller)
-    //    {
-    //    }
-
-    //    public override void Enter()
-    //    {
-    //        _controller.IsEnterPhaseTwo = true;
-
-    //        LookAtEnemy();
-    //        InitTime(_animData.PhaseAttackAnim.length);
-    //        _animator.CrossFade(_animData.PhaseAttackParamHash, 0.1f);
-    //    }
-
-    //    public override void Execute()
-    //    {
-    //        _animTime += Time.deltaTime;
-    //        if (_animTime >= _threadHold)
-    //        {
-    //            _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE);
-    //        }
-    //    }
-    //    public override void Exit()
-    //    {
-    //    }
-    //}
-    #endregion
-
     // -------------------------------------- PHASE_ATTACK_ING ------------------------------------------------
     #region PHASE_ATTACK_ING
     public class PhaseAttackingState : KnightGState
@@ -424,6 +393,8 @@ namespace KnightGStateItem
             LookAtEnemy();                                  // 동기화 편의성 + 공격하기 직전에만 목표물을 보고 싶기 때문
             InitTime(_animData.PhaseAttackingAnim.length);
             _animator.CrossFade(_animData.PhaseAttackingParamHash, 0.1f);
+
+            StartCast((int)EKnightGPattern.PhaseAttack);
         }
 
         public override void Execute()
