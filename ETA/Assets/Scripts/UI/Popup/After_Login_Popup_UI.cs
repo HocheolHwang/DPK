@@ -59,7 +59,8 @@ public class After_Login_Popup_UI : UI_Popup
             PlayerPrefs.Save();
 
             // 튜토리얼 Scene으로 이동
-            SceneManager.LoadScene("Tutorial");
+            
+            Managers.Scene.LoadScene(Define.Scene.Tutorial);
         }
         else
         {
@@ -72,7 +73,7 @@ public class After_Login_Popup_UI : UI_Popup
             PlayerPrefs.Save();
 
             // 로비 Scene으로 이동
-            SceneManager.LoadScene("Lobby");
+            Managers.Scene.LoadScene(Define.Scene.Lobby);
         }
     }
 

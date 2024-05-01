@@ -70,15 +70,15 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
 
         // 선택된 던전 번호에 따라 다른 씬으로 이동
-        string sceneName = selectedDungeonNumber switch
+        Define.Scene sceneName = selectedDungeonNumber switch
         {
-            1 => "DeepForest",
-            2 => "ForgottenTemple",
-            3 => "StarShardPlain",
-            _ => null // 던전 번호가 인식할 수 없는 값일 경우 null을 반환
+            1 => Define.Scene.DeepForest,
+            2 => Define.Scene.ForgottenTemple,
+            3 => Define.Scene.StarShardPlain,
+            _ => Define.Scene.Unknown // 던전 번호가 인식할 수 없는 값일 경우 null을 반환
         };
 
-        if (sceneName == null)
+        if (sceneName == Define.Scene.Unknown)
         {
             // 메서드 종료
             Debug.LogWarning("알 수 없는 던전 번호입니다. Scene 이동이 취소되었습니다.");
@@ -86,7 +86,8 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         }
 
         // 선택된 던전 Scene으로 이동
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene(sceneName);
+        Managers.Scene.LoadScene(sceneName);
     }
 
     // 선택된 던전 텍스트 업데이트 메서드
