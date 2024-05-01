@@ -23,6 +23,8 @@ public class Lobby_Scene : BaseScene
             // 첫 로그인 X: 로비 Popup UI를 띄움
             Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
         }
+
+        Managers.Sound.Play("BackgroundMusic/Lobby");
     }
 
     public override void Clear()
