@@ -85,12 +85,6 @@ public class Define
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
         Groggy,
-        CounterEnable,
-        CounterAttack,
-        SurfaceExplosionDirtStone,
-        // StoneSlash,
-        WhirlwindEffect1,
-        WhirlwindEffect2,
-        MaxCount,
+        MaxCount
     }
 }
