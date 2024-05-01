@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +27,8 @@ public class MeleeDetector : MonoBehaviour, IDetector
     private void Start()
     {
         _target = null;
-        StartCoroutine(UpdateTarget());
+        if (GetComponent<PhotonView>().IsMine) StartCoroutine(UpdateTarget());
+
     }
 
     private void OnDrawGizmos()
@@ -41,6 +43,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
 
     public IEnumerator UpdateTarget()
     {
+        
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
@@ -56,6 +59,8 @@ public class MeleeDetector : MonoBehaviour, IDetector
                 {
                     closeDist = distToEnemy;
                     Target = enemy.transform;
+                    int viewId= Target.GetComponent<PhotonView>().ViewID;
+                    gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
                 }
             }
         }
@@ -66,5 +71,21 @@ public class MeleeDetector : MonoBehaviour, IDetector
         if (_target == null) return false;
         return Vector3.Distance(_target.position, transform.position) < _attackRange;
         
+    }
+
+    [PunRPC]
+    void RPC_UpdateTarget(int viewId)
+    {
+
+        PhotonView[] views = GameObject.FindObjectsOfType<PhotonView>();
+
+        foreach(var view in views)
+        {
+            if(view.ViewID == viewId)
+            {
+                Target = view.transform;
+                return;
+            }
+        }
     }
 }
