@@ -9,11 +9,7 @@ public class KnightGCounterEnablePattern : Pattern
 {
     KnightGAnimationData _animData;
     KnightGController _kcontroller;
-
-    [Header("원하는 이펙트와 HIT_COUNTER 소리 이름을 넣으세요 - 디버깅")]
-    [SerializeField] string _soundName;
     
-
     [Header("개발 편의성")]
     [SerializeField] Vector3 _hitboxRange = new Vector3(2.0f, 4.0f, 2.0f);
     [SerializeField] float _upLoc = 2.0f;
@@ -41,7 +37,6 @@ public class KnightGCounterEnablePattern : Pattern
 
     public override IEnumerator StartPatternCast()
     {
-        // 멈췄을 때 target을 향해 hitbox, effect 생성
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
         Vector3 objectLoc = transform.position + rootUp;
 

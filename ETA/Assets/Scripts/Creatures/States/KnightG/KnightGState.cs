@@ -11,6 +11,8 @@ enum EKnightGPattern
     CounterAttack,
     TwoSkillEnergy,
     TwoSkillAttack,
+    PhaseTransition,
+    MAX_LEN,
 }
 
 // KnightG 상태

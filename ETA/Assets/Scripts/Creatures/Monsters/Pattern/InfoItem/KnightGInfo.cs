@@ -21,5 +21,6 @@ public class KnightGInfo : PatternInfo
 
         // phase 2
         // phase 2 진입에 성공하면 자식 객체로 아우라 이펙트를 넣고 파괴하지 않는다.
+        PatternList.Add(gameObject.GetOrAddComponent<KnightGPhaseTransition>());
     }
 }

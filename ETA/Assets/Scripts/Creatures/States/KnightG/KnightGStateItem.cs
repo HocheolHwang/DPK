@@ -320,7 +320,7 @@ namespace KnightGStateItem
             InitTime(_animData.CounterAttackAnim.length);
             _animator.CrossFade(_animData.CounterAttackParamHash, 0.1f);
 
-            _controller.PatternInfo.PatternList[(int)EKnightGPattern.CounterAttack].Cast();
+            StartCast((int)EKnightGPattern.CounterAttack);
         }
 
         public override void Execute()
@@ -348,13 +348,16 @@ namespace KnightGStateItem
         public override void Enter()
         {
             InitTime(_animData.PhaseTransitionAnim.length);
+            _animator.SetFloat("PhaseTransitionSpeed", 0.5f);
             _animator.CrossFade(_animData.PhaseTransitionParamHash, 0.1f);
+
+            StartCast((int)EKnightGPattern.PhaseTransition);
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
-            if ( _animTime >= _threadHold)
+            if ( _animTime >= _threadHold * 2.0f)
             {
                 _controller.IsEnterPhaseTwo = true;
                 // 타겟팅한 한 명의 적만 계속 공격하는 패턴
