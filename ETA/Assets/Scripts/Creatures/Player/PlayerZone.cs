@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,8 @@ public class PlayerZone : MonoBehaviour
     [SerializeField] public float Speed = 6;
     private float currentSpeed;  // 현재 이동 속도
 
-    [SerializeField] private PlayerController playerController;
+    [SerializeField] public PlayerController playerController;
     float _delta;
-    NavMeshAgent _agent;
 
 
     void Start()
@@ -25,7 +25,20 @@ public class PlayerZone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(playerController == null)
+        {
+            GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (var playerObj in playerObjects)
+            {
+                if (playerObj.GetComponent<PhotonView>().IsMine)
+                {
+                    playerController = playerObj.GetComponent<PlayerController>();
+                    break;
+                }
+
+            }
+        }
         moveFront();
     }
 

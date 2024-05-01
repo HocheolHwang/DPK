@@ -65,7 +65,7 @@ public class Managers : MonoBehaviour
             s_instance._sound.Init();
             s_instance._effect.Init();
 
-            Photon.Connect();
+            //Photon.Connect();
         }
     }
 

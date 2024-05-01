@@ -7,6 +7,9 @@ using Photon.Realtime;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
+    public Action OnEnterDungeon;
+
+
     #region private fields
     private string gameVersion = "1";
     private byte maxplayersPerRoom = 3;
@@ -286,6 +289,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = Managers.Player.GetNickName();
         // 방장 해제
         Managers.Player.SetPartyLeader(false);
+
+        // TMP
+        PhotonNetwork.JoinRandomOrCreateRoom();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -330,6 +336,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         updatePlayerList();
         if(PhotonNetwork.IsMasterClient)
             Managers.Player.SetPartyLeader(true);
+
+
+        OnEnterDungeon?.Invoke();
+
 
 
     }

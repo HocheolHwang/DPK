@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 using PlayerStates;
+using Photon.Pun;
 
 public class Dungeon_Popup_UI : UI_Popup
 {
@@ -142,11 +143,28 @@ public class Dungeon_Popup_UI : UI_Popup
 
         playerEXPSlider = GetSlider((int)Sliders.Player_EXP_Slider);
 
-        GameObject playerObject = GameObject.FindWithTag("Player");
-        if (playerObject != null)
-        {
-            playerStat = playerObject.GetComponent<Stat>();
-        }
+        // TODO : 내 캐릭터 찾기
+
+        //GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        //Debug.Log(playerObjects);
+
+        //foreach(var playerObj in playerObjects)
+        //{
+        //    Debug.Log(playerObj.name);
+        //    if (playerObj.GetComponent<PhotonView>().IsMine)
+        //    {
+        //        playerStat = playerObj.GetComponent<Stat>();
+        //        break;
+        //    }
+            
+        //}
+
+        //Debug.Log(playerStat);
+        //GameObject playerObject = GameObject.FindWithTag("Player");
+        //if (playerObject != null)
+        //{
+        //    playerStat = playerObject.GetComponent<Stat>();
+        //}
 
 
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
@@ -239,10 +257,31 @@ public class Dungeon_Popup_UI : UI_Popup
     public void UpdateHP()
     {
         // 체력 업데이트
-        playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
-        playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
 
-        memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
+        if(playerStat != null)
+        {
+            playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
+            playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
+
+            memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
+        }
+        else
+        {
+            GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+            Debug.Log(playerObjects);
+
+            foreach (var playerObj in playerObjects)
+            {
+                Debug.Log(playerObj.name);
+                if (playerObj.GetComponent<PhotonView>().IsMine)
+                {
+                    playerStat = playerObj.GetComponent<Stat>();
+                    break;
+                }
+
+            }
+        }
+
 
         if (bossStatus.activeSelf == false) return;
         // 보스 체력 업데이트

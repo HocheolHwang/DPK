@@ -66,12 +66,9 @@ namespace PlayerStates
 
             if (_detector.Target != null)
             {
-                //_agent.isStopped = false;
                 _agent.speed = moveSpeed;
                 _agent.SetDestination(_detector.Target.transform.position);
 
-                //Debug.Log($"{_detector.Target.gameObject.name}");
-                //float dist = Vector3.Distance(_detector.Target.transform.position, _playerController.transform.position);
                 if (_detector.IsArriveToTarget())
                 {
                     if (_playerController.CurState is MoveState)

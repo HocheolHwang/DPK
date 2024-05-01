@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 
 using PlayerStates;
+using Photon.Pun;
+
 public class PlayerController : BaseController
 {
 
@@ -24,6 +26,8 @@ public class PlayerController : BaseController
     public bool isFinished;
 
     public SkillSlot SkillSlot { get; set;}
+
+    public PhotonView photonView;
 
 
 
@@ -46,10 +50,12 @@ public class PlayerController : BaseController
         GLOBAL_STATE = new GlobalState(this);
 
         SkillSlot = gameObject.GetOrAddComponent<SkillSlot>();
+        photonView = gameObject.GetComponent<PhotonView>();
         
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
-        //_destination = GameObject.Find("FRONT_2").transform;
+        // TODO : 번호에 따른 목적지 변경 해줘야함
+        _destination = GameObject.Find("FRONT_2").transform;
 
         ChangeState(IDLE_STATE);
         ChangeState(MOVE_STATE);
@@ -61,12 +67,6 @@ public class PlayerController : BaseController
         Managers.Input.MouseAction -= MouseEvent;
         Managers.Input.MouseAction += MouseEvent;
 
-    }
-
-    IEnumerator StartMove()
-    {
-        yield return new WaitForSeconds(3);
-        ChangeState(MOVE_STATE);
     }
 
 
