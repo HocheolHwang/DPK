@@ -6,10 +6,13 @@ import com.e207.back.dto.request.SelectClassRequestDto;
 import com.e207.back.dto.response.CurrentClassResponseDto;
 import com.e207.back.dto.response.SelectClassResponseDto;
 import com.e207.back.entity.ClassEntity;
+import com.e207.back.entity.PlayerClassEntity;
 import com.e207.back.entity.PlayerClassLogEntity;
 import com.e207.back.entity.PlayerEntity;
+import com.e207.back.entity.id.PlayerClassId;
 import com.e207.back.repository.ClassRepository;
 import com.e207.back.repository.PlayerClassLogRepository;
+import com.e207.back.repository.PlayerClassRepository;
 import com.e207.back.repository.PlayerRepository;
 import com.e207.back.service.ClassService;
 import com.e207.back.util.CustomUserDetails;
@@ -26,11 +29,15 @@ import java.util.Optional;
 public class ClassServiceImpl implements ClassService {
 
     private final PlayerClassLogRepository playerClassLogRepository;
+    private final PlayerClassRepository playerClassRepository;
     private final PlayerRepository playerRepository;
     private final ClassRepository classRepository;
     @Override
     public ResponseEntity<? super CurrentClassResponseDto> getCurrentClass(CurrentClassRequestDto dto) {
         String classCode = null;
+        Long currentExp = null;
+        int currentLevel = 0;
+        int skillPoint = 0;
         try{
             CustomUserDetails customUserDetails = CustomUserDetails.LoadUserDetails();
             String playerId = customUserDetails.getPlayerId();
@@ -40,12 +47,19 @@ public class ClassServiceImpl implements ClassService {
 
             classCode = playerClassLogEntity.get().getClassEntity().getClassCode();
 
+            PlayerClassId id = new PlayerClassId(playerId, classCode);
+            Optional<PlayerClassEntity> playerClass = playerClassRepository.findById(id);
+
+            currentExp = playerClass.get().getPlayerExp();
+            currentLevel = playerClass.get().getPlayerLevel();
+            skillPoint = playerClass.get().getSkillPoint();
+
         }catch (Exception exception){
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
 
-        return CurrentClassResponseDto.success(classCode);
+        return CurrentClassResponseDto.success(classCode, currentExp, currentLevel, skillPoint);
     }
 
     @Override
