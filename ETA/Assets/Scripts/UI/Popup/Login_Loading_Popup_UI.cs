@@ -1,17 +1,17 @@
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using UnityEngine;
 using TMPro;
 
 public class Login_Loading_Popup_UI : UI_Popup
 {
-    // 텍스트 인덱스
+    // ------------------------------ 변수 정의 ------------------------------
+
+    // 열거형 정의
     enum Texts
     {
         Tip_Content_Text
     }
 
-    // 클래스 멤버 변수로 선언
+    // UI 컴포넌트 바인딩 변수
     private TextMeshProUGUI tipContent;
 
     // 팁 텍스트 리스트
@@ -28,25 +28,33 @@ public class Login_Loading_Popup_UI : UI_Popup
         // 팁 추가 가능
     };
 
-    // 로그인 UI 초기화
+
+    // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
     {
-        base.Init(); // 기본 초기화
+        // 기본 초기화
+        base.Init();
 
-        // 바인딩
+        // 컴포넌트 바인딩
         Bind<TextMeshProUGUI>(typeof(Texts));
 
-        // 경고 문구
+        // 경고 문구 설정
         tipContent = GetText((int)Texts.Tip_Content_Text);
 
-        // 랜덤한 팁 텍스트 설정
+        // 랜덤한 팁 설정
         SetRandomTip();
     }
+
+
+    // ------------------------------ 메서드 정의 ------------------------------
 
     // 랜덤한 팁을 설정하는 메서드
     private void SetRandomTip()
     {
-        int randomIndex = Random.Range(0, tips.Length); // 랜덤 인덱스 생성
-        tipContent.text = tips[randomIndex]; // 랜덤 텍스트 선택하여 할당
+        // 랜덤 인덱스 생성
+        int randomIndex = Random.Range(0, tips.Length);
+        
+        // 랜덤 텍스트 선택하여 할당
+        tipContent.text = tips[randomIndex];
     }
 }
