@@ -157,6 +157,7 @@ namespace MonsterStateItem
         public override void Enter() 
         {
             _agent.isStopped = true;
+            Managers.Sound.Play("Monster/Boar/BoarDie_SND", Define.Sound.Effect);
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
             _agent.enabled = false;
         }

@@ -58,4 +58,14 @@ public class MonsterController : BaseMonsterController
         base.DestroyEvent();
         // ENUM이 아니라 네이밍 컨벤션을 통해서 Resource Manager를 잘 다루기
     }
+
+    public override void AttackedEvent()
+    {
+        switch (UnitType)
+        {
+            case Define.UnitType.Boar:
+                Managers.Sound.Play("Monster/Boar/BoarHit_SND", Define.Sound.Effect);
+                break;
+        }
+    }
 }

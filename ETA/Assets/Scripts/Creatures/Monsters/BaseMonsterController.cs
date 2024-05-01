@@ -36,9 +36,9 @@ public class BaseMonsterController : BaseController
 
     // ---------------------------------- Hit Counter Event ------------------------------------------
     // 카운터, 히든 기믹 파훼 판단
-    public override void CounterEvent()
+    public override void GimmickEvent()
     {
-        base.CounterEvent();
+        base.GimmickEvent();
         _isHitCounter = true;
     }
 
@@ -55,6 +55,5 @@ public class BaseMonsterController : BaseController
             }
         }
         // counter 맞고 0.15초 뒤에 맞았다는 상태를 초기화
-
     }
 }

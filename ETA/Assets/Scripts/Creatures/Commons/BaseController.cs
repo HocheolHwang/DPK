@@ -136,7 +136,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         }
         else if (isCounter)
         {
-            CounterEvent();
+            GimmickEvent();
         }
     }
 
@@ -144,7 +144,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         
     }
 
-    public virtual void CounterEvent()
+    public virtual void GimmickEvent()
     {
         // 카운터, 히든 기믹 파훼 판단
     }
