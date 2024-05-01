@@ -9,7 +9,7 @@ public class RangeSkill : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(8);
+        SetCoolDownTime(10);
         Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Range;

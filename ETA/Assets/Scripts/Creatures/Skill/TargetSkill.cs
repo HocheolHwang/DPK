@@ -6,7 +6,7 @@ public class TargetSkill : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(5);
+        SetCoolDownTime(7);
         Damage = 10;
         base.Init();
     }
