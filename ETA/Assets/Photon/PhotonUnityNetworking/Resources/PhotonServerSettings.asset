@@ -41,6 +41,15 @@ MonoBehaviour:
   - RespawnSpaceship
   - ReceiveMessage
   - RPC_UpdateTarget
+  - RPC_ChangeToAttackState
+  - RPC_ChangeToMoveState
+  - RPC_SetTargetPosition
+  - RPC_SetUsingSkill
+  - RPC_ChangeToSkillState
+  - RPC_ChangeToCollavoState
+  - RPC_ChangeToHoldState
+  - RPC_ChangeToDieState
+  - RPC_ChangeToIdleState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

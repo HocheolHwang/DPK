@@ -51,8 +51,10 @@ namespace PlayerStates
         public override void Enter()
         {
             base.Enter();
+            if(_playerController.photonView.IsMine) _playerController.ChangeToMoveState();
             _animator.CrossFade("MOVE", 0.05f);
             _agent.isStopped = false;
+            
         }
 
         public override void Execute()
@@ -63,6 +65,7 @@ namespace PlayerStates
             float moveSpeed = _playerController.Stat.MoveSpeed;
             //_agent.Move(dir * Time.deltaTime * moveSpeed);
 
+            if (_playerController.photonView.IsMine == false) return;
 
             if (_detector.Target != null)
             {
@@ -75,6 +78,8 @@ namespace PlayerStates
                     {
                         _playerController.ChangeState(_playerController.ATTACK_STATE);
                         return;
+
+                        
                     }
 
                 }
@@ -107,6 +112,7 @@ namespace PlayerStates
         public override void Enter()
         {
             base.Enter();
+            if (_playerController.photonView.IsMine) _playerController.ChangeToAttackState();
             _agent.velocity = Vector3.zero;
             _agent.isStopped = true;
             LookAtEnemy();
@@ -129,7 +135,6 @@ namespace PlayerStates
 
     public class SkillState : PlayerState
     {
-        float tmp = 0;
         
         public SkillState(PlayerController playerController) : base(playerController)
         {
@@ -139,8 +144,7 @@ namespace PlayerStates
         public override void Enter()
         {
             base.Enter();
-            tmp = 0;
-
+            if (_playerController.photonView.IsMine) _playerController.ChangeToSkillState();
             _agent.velocity = Vector3.zero;
             _agent.isStopped = true;
 
@@ -180,7 +184,7 @@ namespace PlayerStates
         {
             base.Enter();
             tmp = 0;
-
+            if (_playerController.photonView.IsMine) _playerController.ChangeToCollavoState();
             _playerController.SkillSlot.CastCollavoSkill(_playerController._usingSkill);
 
             //_animator.CrossFade("SKILL2", 0.05f);
@@ -222,7 +226,7 @@ namespace PlayerStates
         public override void Enter()
         {
 
-
+            if (_playerController.photonView.IsMine) _playerController.ChangeToDieState();
             _animator.CrossFade("DIE", 0.05f);
         }
 
@@ -237,7 +241,6 @@ namespace PlayerStates
 
     public class HoldState : PlayerState
     {
-        Define.SkillKey currentSkill;
         float startTime;
         ParticleSystem _chargeEffect;
         public HoldState(PlayerController playerController) : base(playerController)
@@ -248,7 +251,7 @@ namespace PlayerStates
         public override void Enter()
         {
             startTime = Time.time;
-            currentSkill = _playerController._usingSkill;
+            if (_playerController.photonView.IsMine) _playerController.ChangeToHoldState();
             _playerController.SkillSlot.CurrentSkill?.StopCast();
             _agent.velocity = Vector3.zero;
             _agent.isStopped = true;
@@ -269,6 +272,8 @@ namespace PlayerStates
             //    return;
             //}
             // 3초뒤 풀림
+
+            if (_playerController.photonView.IsMine == false) return;
             GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = (Time.time - startTime) / 3.0f;
 
             if (Time.time - startTime >= 3.0f)
@@ -306,6 +311,7 @@ namespace PlayerStates
 
         public override void Execute()
         {
+            if (_playerController.photonView.IsMine == false) return;
             if (_playerController.CurState is DieState) return;
 
             if (_playerController.isFinished) _playerController.ChangeState(_playerController.IDLE_STATE); ;

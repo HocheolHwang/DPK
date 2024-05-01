@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -102,6 +103,7 @@ public class SkillSystem : MonoBehaviour
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                 targetingGo.gameObject.SetActive(false);
                 TargetPosition = hit.collider.transform.position;
+                SyncTargetPosition(TargetPosition);
                 myController.ChangeState(myController.SKILL_STATE);
             }
         }
@@ -147,6 +149,7 @@ public class SkillSystem : MonoBehaviour
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                 rangeObject.SetActive(false);
                 TargetPosition = hit.point;
+                SyncTargetPosition(TargetPosition);
                 myController.ChangeState(myController.SKILL_STATE);
                 
                 Debug.Log("범위 스킬 사용");
@@ -160,6 +163,7 @@ public class SkillSystem : MonoBehaviour
         currentType = Define.SkillType.None;
         myController.ChangeState(myController.HOLD_STATE);
         TargetPosition = transform.position + gameObject.transform.forward * 3;
+        SyncTargetPosition(TargetPosition);
     }
 
     public void ImmediatelyCast()
@@ -168,6 +172,7 @@ public class SkillSystem : MonoBehaviour
         Debug.Log(myController);
         myController.ChangeState(myController.SKILL_STATE);
         TargetPosition = transform.position + gameObject.transform.forward * 3;
+        SyncTargetPosition(TargetPosition);
     }
 
     public void Clear()
@@ -177,5 +182,18 @@ public class SkillSystem : MonoBehaviour
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         currentType = Define.SkillType.None;
         currentCursor = CursorType.None;
+    }
+
+
+    
+    void SyncTargetPosition(Vector3 position)
+    {
+        GetComponent<PhotonView>().RPC("RPC_SetTargetPosition", RpcTarget.Others, position);
+    }
+
+    [PunRPC]
+    void RPC_SetTargetPosition(Vector3 position)
+    {
+        TargetPosition = position;
     }
 }
