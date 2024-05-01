@@ -47,6 +47,9 @@ public class Dungeon_Popup_UI : UI_Popup
     private int currentCheckpointIndex = 0;
     private float gameTime = 0f;
 
+    // 현재 누적된 경험치
+    private int currentExp = 0;
+
     // 로그인 UI 초기화
     public override void Init()
     {
@@ -119,19 +122,35 @@ public class Dungeon_Popup_UI : UI_Popup
             case 1:
                 dungeonNameText.text = "깊은 숲";
                 deepForestIcon.SetActive(true);
+                currentExp = 10;
                 break;
             case 2:
                 dungeonNameText.text = "잊혀진 신전";
                 forgottenTempleIcon.SetActive(true);
+                currentExp = 20;
                 break;
             case 3:
                 dungeonNameText.text = "별의 조각 평원";
                 starShardPlainIcon.SetActive(true);
+                currentExp = 30;
                 break;
             default:
                 dungeonNameText.text = "알 수 없는 던전입니다.";
                 break;
         }
+    }
+
+    public void SummaryExp()
+    {
+        // 경험치 합산
+        Managers.Player.AddExp(currentExp);
+        EXPStatisticsReqDto dto = new EXPStatisticsReqDto();
+        dto.currentExp = Managers.Player.GetExp();
+        dto.classCode = Managers.Player.GetClassCode();
+        dto.playerLevel = Managers.Player.GetLevel();
+        dto.reason = dungeonNameText.text + "던전 클리어";
+        dto.expDelta = currentExp;
+        Managers.Network.EXPStatisticsCall(dto);
     }
 
     public void UpdateProgress()
@@ -143,6 +162,10 @@ public class Dungeon_Popup_UI : UI_Popup
 
             // 체크포인트 인덱스에 따라 진행바를 업데이트
             dungeonProgressBar.value = (float) currentCheckpointIndex / totalCheckpoints;
+
+            // 체크 포인트 통과 시 받는 경험치 증가
+            int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1)-1;
+            currentExp += (10 * (5* selectedDungeonNumber)) * currentCheckpointIndex;
         }
 
         if (dungeonProgressBar.value == 1)
@@ -155,6 +178,15 @@ public class Dungeon_Popup_UI : UI_Popup
     // 던전 결과 Popup UI 열기
     private void HandleBossDestroyed()
     {
+        // 보스 클리어
+        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1) - 1;
+        currentExp += (10 * (5 * selectedDungeonNumber)) * currentCheckpointIndex;
+
+        SummaryExp();
+
+        // 초기화
+        currentExp = 0;
+        
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
     }
 

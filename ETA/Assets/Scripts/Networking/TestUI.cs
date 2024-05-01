@@ -76,6 +76,12 @@ public class TestUI : MonoBehaviour
         partyLeader.SetActive(Managers.Player.GetPartyLeader());
     }
 
+    public void AddExp()
+    {
+        Debug.Log(Managers.Player.GetExp());
+        Managers.Player.AddExp(500);
+    }
+
     //// 테스트 로그인
     //public void signIn()
     //{
