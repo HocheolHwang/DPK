@@ -1,47 +1,57 @@
-using UnityEngine.UI;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class Load_Lobby_Popup_UI : UI_Popup
 {
-    // 버튼 인덱스
+    // ------------------------------ 변수 정의 ------------------------------
+
+    // 열거형 정의
     enum Buttons
     {
         Cancel_Button,
         Load_Lobby_Button
     }
 
-    // 로그인 UI 초기화
+    // UI 컴포넌트 바인딩 변수
+    private Button cancelButton;
+    private Button loadLobbyButton;
+
+
+    // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
     {
-        base.Init(); // 기본 초기화
+        // 기본 초기화
+        base.Init();
 
-        // 바인딩
+        // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
 
         // 남아있기 버튼 이벤트 등록
-        Button cancelButton = GetButton((int)Buttons.Cancel_Button);
+        cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
 
         // 로비로 돌아가기 버튼 이벤트 등록
-        Button loadLobbyButton = GetButton((int)Buttons.Load_Lobby_Button);
+        loadLobbyButton = GetButton((int)Buttons.Load_Lobby_Button);
         AddUIEvent(loadLobbyButton.gameObject, LoadLobby);
         AddUIKeyEvent(loadLobbyButton.gameObject, () => LoadLobby(null), KeyCode.Return);
     }
 
-    // 남아있기
+
+    // ------------------------------ 메서드 정의 ------------------------------
+
+    // 남아있기 메서드
     private void Cancel(PointerEventData data)
     {
         ClosePopupUI();
     }
 
-    // 로비로 돌아가기
+    // 로비로 돌아가기 메서드
     private void LoadLobby(PointerEventData data)
     {
-        // 모든 팝업 UI를 닫습니다.
+        // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
 
         // 로비 Scene으로 이동
