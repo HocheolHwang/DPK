@@ -29,16 +29,16 @@ public class KnightGFirstAutoAttack : Pattern
         yield return new WaitForSeconds(_createTime);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        //ParticleSystem ps = Managers.Resource.Instantiate($"Effect/{_effectName}").GetComponent<ParticleSystem>();
         hitbox.SetUp(transform, _attackDamage);
         hitbox.transform.localScale = _patternRange;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
 
+        Managers.Sound.Play("Monster/KnightG/KnightGFirstAutoAttack_SND", Define.Sound.Effect);
+
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
-        //yield return new WaitForSeconds(ps.main.duration);
-        //Managers.Resource.Destroy(ps.gameObject);
+        
     }
 }

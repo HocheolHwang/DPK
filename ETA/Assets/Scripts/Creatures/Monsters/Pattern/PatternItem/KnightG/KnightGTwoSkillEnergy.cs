@@ -46,6 +46,9 @@ public class KnightGTwoSkillEnergy : Pattern
         _ps = Managers.Effect.Play(Define.Effect.KnightG_TwoSkillEnergy, _controller.transform);
         _ps.transform.position = _hitbox.transform.position;
 
+        // KnightGTwoSkillEnergy_SND
+        _ps.GetComponent<AudioSource>().Play();
+
         // 시전 도중에 특정 상태이상 스킬을 맞으면 hit box와 effect가 사라지고, sound가 발생
         float timer = 0;
         while (timer < _duration)
@@ -65,5 +68,6 @@ public class KnightGTwoSkillEnergy : Pattern
 
         Managers.Resource.Destroy(_hitbox.gameObject);
         Managers.Effect.Stop(_ps);
+        _ps.GetComponent<AudioSource>().Stop();
     }
 }
