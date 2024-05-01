@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Party_Join_Confirm_Popup_UI : UI_Popup
+public class Load_Lobby_Popup_UI : UI_Popup
 {
     // ------------------------------ 변수 정의 ------------------------------
 
@@ -10,12 +11,12 @@ public class Party_Join_Confirm_Popup_UI : UI_Popup
     enum Buttons
     {
         Cancel_Button,
-        Party_Join_Button
+        Load_Lobby_Button
     }
 
     // UI 컴포넌트 바인딩 변수
     private Button cancelButton;
-    private Button partyJoinButton;
+    private Button loadLobbyButton;
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -27,35 +28,33 @@ public class Party_Join_Confirm_Popup_UI : UI_Popup
         // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
 
-        // 취소하기 버튼 이벤트 등록
+        // 남아있기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
 
-        // 참가하기 버튼 이벤트 등록
-        partyJoinButton = GetButton((int)Buttons.Party_Join_Button);
-        AddUIEvent(partyJoinButton.gameObject, PartyJoin);
-        AddUIKeyEvent(partyJoinButton.gameObject, () => PartyJoin(null), KeyCode.Return);
+        // 로비로 돌아가기 버튼 이벤트 등록
+        loadLobbyButton = GetButton((int)Buttons.Load_Lobby_Button);
+        AddUIEvent(loadLobbyButton.gameObject, LoadLobby);
+        AddUIKeyEvent(loadLobbyButton.gameObject, () => LoadLobby(null), KeyCode.Return);
     }
 
 
     // ------------------------------ 메서드 정의 ------------------------------
 
-    // 취소하기 메서드
+    // 남아있기 메서드
     private void Cancel(PointerEventData data)
     {
         ClosePopupUI();
     }
 
-    // 참가하기 메서드
-    private void PartyJoin(PointerEventData data)
+    // 로비로 돌아가기 메서드
+    private void LoadLobby(PointerEventData data)
     {
-        // TODO: 파티에 참가하는 코드 추가 필요
-
-        // 모든 Popup UI를 닫음
+        // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
 
-        // 로비 Popup UI를 띄움
-        Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
+        // 로비 Scene으로 이동
+        SceneManager.LoadScene("Lobby");
     }
 }
