@@ -160,7 +160,10 @@ namespace MonsterStateItem
         {
             _agent.isStopped = true;
             SearchUnitType();
-            Managers.Sound.Play($"Monster/{_unitType}/{_unitType}Die_SND", Define.Sound.Effect);
+            if (_unitType != null)
+            {
+                Managers.Sound.Play($"Monster/{_unitType}/{_unitType}Die_SND", Define.Sound.Effect);
+            }
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
             _agent.enabled = false;
         }
@@ -181,6 +184,9 @@ namespace MonsterStateItem
                     break;
                 case Define.UnitType.Porin:
                     _unitType = "Porin";
+                    break;
+                default:
+                    _unitType = null;
                     break;
             }
         }

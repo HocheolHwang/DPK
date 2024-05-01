@@ -56,6 +56,8 @@ public class KnightGCounterEnable : Pattern
         ParticleSystem.MainModule _psMainModule = _ps.main;
         _psMainModule.startLifetime = _animData.CounterEnableAnim.length * 4.0f;
 
+        Managers.Sound.Play("Monster/KnightG/KnightGCounterEnergy_SND", Define.Sound.Effect);
+
         // 시전 도중에 카운터 스킬을 맞으면 hit box와 effect가 사라지고, sound가 발생
         float timer = 0;
         while (timer < _duration)
@@ -64,10 +66,7 @@ public class KnightGCounterEnable : Pattern
             {
                 Managers.Resource.Destroy(_hitbox.gameObject);
                 Managers.Effect.Stop(_ps);
-                // 소리 발생
-
-                //RevertToOriginColor();
-
+                Managers.Sound.Play("Monster/CounterEnable_SND", Define.Sound.Effect);
                 yield break;
             }
 
