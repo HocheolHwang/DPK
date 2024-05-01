@@ -184,14 +184,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void ExitRoom()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (PhotonNetwork.PlayerList[1] != null)
-            {
-                ChangeMasterClient(PhotonNetwork.PlayerList[1]);
-                Debug.Log(PhotonNetwork.PlayerList[1] + "로 변경~");
-            }
-        }
         // 방이 아니면 탈퇴 불가
         if (!PhotonNetwork.InRoom) return;
         // room -> Lobby
@@ -255,17 +247,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             idx++;
         }
     }
-
-    //마스터 클라이언트 위임
-    void ChangeMasterClient(Photon.Realtime.Player newMaster)
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.SetMasterClient(newMaster);
-        }
-    }
-
-
     // #endregion
 
     #region MonoBehaviourPunCallbacks callbacks
@@ -288,9 +269,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Managers.Player.SetPartyLeader(false);
     }
 
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    public override void OnRoomListUpdate(List<RoomInfo> newRooms)
     {
-        foreach (RoomInfo rooom in roomList)
+        foreach (RoomInfo rooom in newRooms)
         {
             bool change = false;
             for (int i = 0; i < roomlist.Count; i++)
@@ -330,8 +311,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         updatePlayerList();
         if(PhotonNetwork.IsMasterClient)
             Managers.Player.SetPartyLeader(true);
-
-
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
@@ -340,7 +319,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         updatePlayerList();
         // 만약 나간 플레이어가 방장인 경우
          
-        if(PhotonNetwork.IsMasterClient)
+    }
+
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+        // 마스터 클라이언트가 변경 되었을 때 호출
+
+        if (PhotonNetwork.IsMasterClient)
         {
             ExitGames.Client.Photon.Hashtable curProperties = PhotonNetwork.CurrentRoom.CustomProperties;
             // 방장 변경
@@ -365,11 +350,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             //    }
             //}
         }
-    }
-
-    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
-    {
-        // 마스터 클라이언트가 변경 되었을 때 호출
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
