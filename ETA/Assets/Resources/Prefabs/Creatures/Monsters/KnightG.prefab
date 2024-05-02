@@ -427,8 +427,8 @@ MonoBehaviour:
   _maxHp: 100
   _hp: 100
   _moveSpeed: 3
-  _attackDamage: 3
-  _defense: 1
+  _attackDamage: 20
+  _defense: 5
   _shield: 0
 --- !u!114 &7118630212406091290
 MonoBehaviour:
@@ -473,7 +473,6 @@ MonoBehaviour:
   counterEnableParamName: COUNTER_ENABLE
   counterAttackParamName: COUNTER_ATTACK
   phaseTransitionParamName: PHASE_TRANSITION
-  phaseAttackParamName: PHASE_ATTACK
   phaseAttackingkParamName: PHASE_ATTACK_ING
   attackUpAnim: {fileID: 1827226128182048838, guid: a3c7236065acd134ab7923a02101288c, type: 3}
   twoSkillTransitionAnim: {fileID: 1827226128182048838, guid: b310e86cd6951c3458e80e36c1da54df, type: 3}
@@ -482,7 +481,6 @@ MonoBehaviour:
   counterEnableAnim: {fileID: 1827226128182048838, guid: eddb46c4221cc874dba6c65f856e71ea, type: 3}
   counterAttackAnim: {fileID: 1827226128182048838, guid: 1e2a898687adfa645be22df5746bf8ee, type: 3}
   phaseTransitionAnim: {fileID: 1827226128182048838, guid: 8412eb76a4fed1947827b40deb17873b, type: 3}
-  phaseAttackAnim: {fileID: 1827226128182048838, guid: 68623ab11ffbdd94887be472d7e151b9, type: 3}
   phaseAttackingAnim: {fileID: 1827226128182048838, guid: 88ba5476cde50284f8a65e584bf0043b, type: 3}
 --- !u!114 &100036981632282693
 MonoBehaviour:

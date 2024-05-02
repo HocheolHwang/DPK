@@ -1261,6 +1261,7 @@ MonoBehaviour:
   Stat: {fileID: 0}
   _destination: {fileID: 0}
   _usingSkill: 0
+  isFinished: 0
 --- !u!195 &1219953855528268219
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1384,8 +1385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159ad026f5bff748819b48b1f65b0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 300
-  _hp: 300
+  _maxHp: 250
+  _hp: 250
   _moveSpeed: 8
   _attackDamage: 50
   _defense: 10
@@ -1417,7 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12f29c5f59c750a4a9266e32e311ef88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkillType: 1
+  SkillType: 0
   Damage: 25
   skillRange: {x: 0, y: 0, z: 0}
 --- !u!1 &3417425532124081283
