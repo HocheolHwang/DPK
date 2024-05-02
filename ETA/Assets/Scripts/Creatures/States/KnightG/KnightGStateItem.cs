@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace KnightGStateItem
@@ -49,17 +50,16 @@ namespace KnightGStateItem
 
         public override void Execute()
         {
+            // Counter
             if (counterTime >= threadHoldCounter)
             {
                 _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
-            }
-
-            if (twoSkillTrigger == 1 && _stat.Hp <= (_stat.MaxHp * 0.6))
+            } 
+            else if (twoSkillTrigger == 1 && _stat.Hp <= (_stat.MaxHp * 0.6))
             {
                 _controller.ChangeState(_controller.TWO_SKILL_TRANSITION_STATE);
-            }
-
-            if (IsStayForSeconds())
+            } 
+            else if (IsStayForSeconds())
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
             }
@@ -93,12 +93,11 @@ namespace KnightGStateItem
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-
-            if (_detector.IsArriveToTarget())
+            else if (_detector.IsArriveToTarget())
             {
                 if (_controller.IsEnterPhaseTwo)
                 {
-                    _controller.ChangeState(_controller.PHASE_ATTACK_STATE);
+                    _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE);
                 }
                 else
                 {
@@ -135,14 +134,14 @@ namespace KnightGStateItem
                 InitTime(_animData.AttackAnim.length);
                 _animator.CrossFade(_animData.AttackParamHash, 0.4f);
 
-                _controller.PatternInfo.PatternList[(int)EKnightGPattern.FirstAuto].Cast();
+                StartCast((int)EKnightGPattern.FirstAuto);
             }
             else if (attackCnt % 2 == 0)
             {
                 InitTime(_animData.AttackUpAnim.length);
                 _animator.CrossFade(_animData.AttackUpParamHash, 0.4f);
 
-                _controller.PatternInfo.PatternList[(int)EKnightGPattern.SecondAuto].Cast();
+                StartCast((int)EKnightGPattern.SecondAuto);
             }
             
         }
@@ -156,8 +155,7 @@ namespace KnightGStateItem
                 {
                     _controller.ChangeState(_controller.IDLE_STATE);
                 }
-
-                if (_detector.IsArriveToTarget())
+                else if (_detector.IsArriveToTarget())
                 {
                     _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
                 }
@@ -216,6 +214,8 @@ namespace KnightGStateItem
             _animator.SetFloat("SkillEnergySpeed", 0.5f);
             InitTime(_animData.TwoSkillEnergyAnim.length);
             _animator.CrossFade(_animData.TwoSkillEnergyParamHash, 0.2f);
+
+            StartCast((int)EKnightGPattern.TwoSkillEnergy);
         }
 
         public override void Execute()
@@ -249,6 +249,8 @@ namespace KnightGStateItem
             _animator.SetFloat("SkillAttackSpeed", 0.5f);
             InitTime(_animData.TwoSkillAttackAnim.length);
             _animator.CrossFade(_animData.TwoSkillAttackParamHash, 0.2f);
+
+            StartCast((int)EKnightGPattern.TwoSkillAttack);
         }
 
         public override void Execute()
@@ -281,7 +283,7 @@ namespace KnightGStateItem
             _animator.SetFloat("CounterEnableSpeed", 0.25f);
             _animator.CrossFade(_animData.CounterEnableParamHash, 0.1f);
 
-            _controller.PatternInfo.PatternList[(int)EKnightGPattern.CounterEnable].Cast();
+            StartCast((int)EKnightGPattern.CounterEnable);
         }
 
         public override void Execute()
@@ -293,8 +295,7 @@ namespace KnightGStateItem
             {
                 _controller.ChangeState(_controller.GROGGY_STATE);
             }
-
-            if (_animTime >= _threadHold * 4.0f)
+            else if (_animTime >= _threadHold * 4.0f)
             {
                 _controller.ChangeState(_controller.COUNTER_ATTACK_STATE);
             }
@@ -319,7 +320,7 @@ namespace KnightGStateItem
             InitTime(_animData.CounterAttackAnim.length);
             _animator.CrossFade(_animData.CounterAttackParamHash, 0.1f);
 
-            _controller.PatternInfo.PatternList[(int)EKnightGPattern.CounterAttack].Cast();
+            StartCast((int)EKnightGPattern.CounterAttack);
         }
 
         public override void Execute()
@@ -347,50 +348,31 @@ namespace KnightGStateItem
         public override void Enter()
         {
             InitTime(_animData.PhaseTransitionAnim.length);
+            _animator.SetFloat("PhaseTransitionSpeed", 0.5f);
             _animator.CrossFade(_animData.PhaseTransitionParamHash, 0.1f);
+
+            StartCast((int)EKnightGPattern.PhaseTransition);
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
-            if ( _animTime >= _threadHold)
+            if ( _animTime >= _threadHold * 2.0f)
             {
-                _controller.ChangeState(_controller.PHASE_ATTACK_STATE);
+                _controller.IsEnterPhaseTwo = true;
+                // 타겟팅한 한 명의 적만 계속 공격하는 패턴
+                if (_detector.Target == null || !_detector.IsArriveToTarget())
+                {
+                    _controller.ChangeState(_controller.IDLE_STATE);
+                }
+                else
+                {
+                    _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE);
+                }
             }
 
             // Phase 진입을 끊는 스킬에 맞으면 그로기 상태로 전환
             // 2페이즈 진입 실패로 인해 1페이즈 스킬로만 공격할 수 있음
-        }
-        public override void Exit()
-        {
-        }
-    }
-    #endregion
-
-    // -------------------------------------- PHASE_ATTACK ------------------------------------------------
-    #region PHASE_ATTACK
-    public class PhaseAttackState : KnightGState
-    {
-        public PhaseAttackState(KnightGController controller) : base(controller)
-        {
-        }
-
-        public override void Enter()
-        {
-            _controller.IsEnterPhaseTwo = true;
-
-            LookAtEnemy();
-            InitTime(_animData.PhaseAttackAnim.length);
-            _animator.CrossFade(_animData.PhaseAttackParamHash, 0.1f);
-        }
-
-        public override void Execute()
-        {
-            _animTime += Time.deltaTime;
-            if (_animTime >= _threadHold)
-            {
-                _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE);
-            }
         }
         public override void Exit()
         {
@@ -411,6 +393,8 @@ namespace KnightGStateItem
             LookAtEnemy();                                  // 동기화 편의성 + 공격하기 직전에만 목표물을 보고 싶기 때문
             InitTime(_animData.PhaseAttackingAnim.length);
             _animator.CrossFade(_animData.PhaseAttackingParamHash, 0.1f);
+
+            StartCast((int)EKnightGPattern.PhaseAttack);
         }
 
         public override void Execute()
@@ -421,9 +405,7 @@ namespace KnightGStateItem
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-
-            // Loop 활성화 필수
-            if (_animTime >= _threadHold)
+            else if (_animTime >= _threadHold)  // Loop 활성화 필수
             {
                 _controller.ChangeState(_controller.PHASE_ATTACK_ING_STATE, true);
             }
@@ -446,6 +428,8 @@ namespace KnightGStateItem
         {
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
+            Managers.Sound.Play("Monster/KnightG/KnightGDie_SND", Define.Sound.Effect);
+            _controller.GetComponentInChildren<ParticleSystem>().Stop();
         }
 
         public override void Execute()
@@ -461,19 +445,31 @@ namespace KnightGStateItem
     #region GROGGY
     public class GroggyState : KnightGState
     {
+        float groggyTime;
         public GroggyState(KnightGController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
+            Debug.Log(_controller.PrevState);
+            if (_controller.PrevState is CounterEnableState)
+            {
+                Debug.Log("HOHOHO");
+                groggyTime = 3.0f;
+            }
+            else
+            {
+                groggyTime = 1.0f;
+            }
+
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
         }
 
         public override void Execute()
         {
-            if (IsStayForSeconds())
+            if (IsStayForSeconds(groggyTime))
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
@@ -488,29 +484,43 @@ namespace KnightGStateItem
     #region GLOBAL
     public class GlobalState : KnightGState
     {
+        ParticleSystem ps;
+
         public GlobalState(KnightGController controller) : base(controller)
         {
         }
 
+        public override void Enter()
+        {
+            ps = Managers.Effect.Play(Define.Effect.Groggy, _controller.transform);
+            ps.transform.SetParent(_controller.transform);
+            ps.transform.localScale = new Vector3(0, 3.0f, 0);
+        }
+
         public override void Execute()
         {
+            // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
+            if (_controller.CurState == _controller.DIE_STATE) return;
+            if (_controller.CurState == _controller.GROGGY_STATE) return;               // 그로기 상태는 특정 상태에서 분기
+
             if (counterTimeTrigger <= 0)
             {
                 counterTime += Time.deltaTime;
             }            
 
-            // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
-            if (_controller.CurState == _controller.DIE_STATE) return;
-            if (_controller.CurState == _controller.GROGGY_STATE) return;               // 그로기 상태는 특정 상태에서 분기
+            
 
             // GLOBAL_STATE로 전환하는 로직
             if (_stat.Hp <= 0)
             {
                 _controller.ChangeState(_controller.DIE_STATE);
             }
-            if ( !_controller.IsEnterPhaseTwo && _stat.Hp <= (_stat.MaxHp * 0.3))
+            else if (!_controller.IsEnterPhaseTwo && _stat.Hp <= (_stat.MaxHp * 0.3))
             {
-                _controller.ChangeState(_controller.PHASE_TRANSITION_STATE);
+                if ( (_controller.CurState == _controller.IDLE_STATE) || (_controller.CurState == _controller.IDLE_BATTLE_STATE) || (_controller.CurState == _controller.CHASE_STATE))
+                {
+                    _controller.ChangeState(_controller.PHASE_TRANSITION_STATE);
+                }
             }
 
             // PHASE 2에서 슈퍼 아머 상태를 관리
@@ -518,6 +528,11 @@ namespace KnightGStateItem
             {
 
             }
+        }
+
+        public override void Exit()
+        {
+            Managers.Effect.Stop(ps);
         }
     }
     #endregion

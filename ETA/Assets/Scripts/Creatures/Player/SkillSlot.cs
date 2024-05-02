@@ -8,8 +8,11 @@ public class SkillSlot : MonoBehaviour
     public SkillSystem SkillSystem { get; set; }
     // Start is called before the first frame update
     //ISkill[] skill = new ISkill[8];
-    TmpSkill[] skill = new TmpSkill[8];
+    Skill[] skill = new Skill[8];
     private Animator _animator;
+
+    private Skill _currentSkill;
+    public Skill CurrentSkill { get { return _currentSkill; } }
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
@@ -24,7 +27,7 @@ public class SkillSlot : MonoBehaviour
             // 후에 as를 이용한 타입캐스트 해주기
             if (type != null && type.IsSubclassOf(typeof(Component)))
             {
-                skill[i] = (TmpSkill)gameObject.AddComponent(type);
+                skill[i] = (Skill)gameObject.AddComponent(type);
                 
             }
         }
@@ -32,7 +35,7 @@ public class SkillSlot : MonoBehaviour
 
     public void SelectSkill(Define.SkillKey key)
     {
-        TmpSkill current = skill[(int)key];
+        Skill current = skill[(int)key];
 
         // 여기서 쿨타임 관리
         if (current.CanCastSkill() == false) return;
@@ -70,18 +73,34 @@ public class SkillSlot : MonoBehaviour
     public void CastSkill(Define.SkillKey key)
     {
         //string s = skill[(int)key].animationName;
-        skill[(int)key].Cast();
+        if (_currentSkill != null)
+        {
+            _currentSkill.StopCast();
+        }
+        _currentSkill = skill[(int)key];
+        _currentSkill.Cast();
         Debug.Log($"Skill Key = {key}");
     }
 
     public void CastCollavoSkill(Define.SkillKey key)
     {
-        skill[(int)key].CollavoCast();
+        if (_currentSkill != null)
+        {
+            _currentSkill.StopCast();
+        }
+        _currentSkill = skill[(int)key];
+        _currentSkill.CollavoCast();
     }
 
     public void NormalAttack()
     {
-        GetComponent<WarriorNormalAttackSkill>().Cast();
+        if (_currentSkill != null)
+        {
+            _currentSkill.StopCast();
+        }
+        // TODO: 직업이 여러개면 바꿔 주어야할 것
+        _currentSkill = gameObject.GetOrAddComponent<WarriorNormalAttackSkill>();
+        _currentSkill.Cast();
     }
 
 
@@ -91,24 +110,3 @@ public class SkillSlot : MonoBehaviour
         SkillSystem.Clear();
     }
 }
-
-/*
-public class SkillSlot : MonoBehaviour
-{
-    // Start is called before the first frame update
-    SOSkill[] skill = new SOSkill[8];
-    public void Start()
-    {
-        for(int i = 0; i < skill.Length; i++)
-        {
-            skill[i] = new SOSkill();
-        }
-    }
-
-    public void CastSkill(Define.SkillKey key)
-    {
-        string s = skill[(int)key].animationName;
-        Debug.Log($"Skill Key = {key}");
-    }
-}
-*/

@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeSkill : TmpSkill
+public class RangeSkill : Skill
 {
 
 
 
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(8);
+        Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(7,7,7);

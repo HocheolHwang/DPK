@@ -10,6 +10,10 @@ public abstract class Pattern : MonoBehaviour ,IPattern
 
     protected BaseMonsterController _controller;
     protected int _attackDamage;
+    private Coroutine _currentCoroutine;
+
+    protected HitBox _hitbox;
+    protected ParticleSystem _ps;
 
     public BaseMonsterController Controller { get => _controller; private set => _controller = value; }
     public int AttackDamage { get => _attackDamage; private set => _attackDamage = value; }
@@ -27,10 +31,21 @@ public abstract class Pattern : MonoBehaviour ,IPattern
         _controller = GetComponent<BaseMonsterController>();
         _attackDamage = _controller.Stat.AttackDamage;
     }
+
     // --------------------------- Pattern Logic ------------------------------
     public void Cast()
     {
-        StartCoroutine(StartPatternCast());
+        _currentCoroutine = StartCoroutine(StartPatternCast());
+    }
+
+    public void StopCast()
+    {
+        if (_currentCoroutine == null) return;
+        StopCoroutine(_currentCoroutine);
+
+        // Coroutine에서 생성한 게임 오브젝트 제거
+        //if (_hitbox != null) Managers.Resource.Destroy(_hitbox.gameObject);
+        //if (_ps != null) Managers.Effect.Stop(_ps);
     }
 
     public abstract IEnumerator StartPatternCast();

@@ -21,8 +21,11 @@ public class PlayerController : BaseController
     [SerializeField]
     public Transform _destination;
     public Define.SkillKey _usingSkill;
+    public bool isFinished;
 
     public SkillSlot SkillSlot { get; set;}
+
+
 
     private void Start()
     {
@@ -96,6 +99,21 @@ public class PlayerController : BaseController
             _usingSkill = Define.SkillKey.A;
             SkillSlot.SelectSkill(Define.SkillKey.A);
         }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            _usingSkill = Define.SkillKey.S;
+            SkillSlot.SelectSkill(Define.SkillKey.S);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            _usingSkill = Define.SkillKey.D;
+            SkillSlot.SelectSkill(Define.SkillKey.D);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _usingSkill = Define.SkillKey.F;
+            SkillSlot.SelectSkill(Define.SkillKey.F);
+        }
 
     }
 
@@ -112,6 +130,13 @@ public class PlayerController : BaseController
         base.DestroyEvent();
         SkillSlot.Clear();
     }
+
+    public override void AttackedEvent()
+    {
+        base.AttackedEvent();
+        Managers.Sound.Play("Player/Attacked");
+    }
+
 
 
 

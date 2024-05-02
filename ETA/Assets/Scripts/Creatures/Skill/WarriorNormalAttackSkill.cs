@@ -2,26 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarriorNormalAttackSkill : TmpSkill
+public class WarriorNormalAttackSkill : Skill
 {
     protected override void Init()
     {
-        base.Init();
+        Damage = 25;
         SkillType = Define.SkillType.Immediately;
-        skillRange = new Vector3(0.5f, 1.0f, 3f);
+        skillRange = new Vector3(0.25f, 1.0f, 3f);
+
+        base.Init();
+
     }
 
     public override IEnumerator StartSkillCast()
     {
         if (_controller.StateMachine.CurState is PlayerStates.SkillState) yield break;
         _animator.CrossFade("NORMAL_ATTACK", 0.05f);
-
+        
         yield return new WaitForSeconds(0.1f);
+        Managers.Sound.Play("Skill/NormalAttack");
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.WarriorNormalAttackEffect, gameObject.transform);
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 1.5f;
-        hitbox.transform.rotation = gameObject.transform.rotation * hitbox.transform.rotation;
+        hitbox.transform.rotation = gameObject.transform.rotation;
         hitbox.transform.localScale = skillRange;
         yield return new WaitForSeconds(0.1f);
 

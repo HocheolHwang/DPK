@@ -1,47 +1,83 @@
-using UnityEngine.UI;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine;
+using UnityEngine.UI;
 
 public class After_Login_Popup_UI : UI_Popup
 {
-    // 버튼 인덱스
+    // ------------------------------ 변수 정의 ------------------------------
+
+    // 열거형 정의
     enum Buttons
     {
         Game_Start_Button,
-        Game_Exit_Button
+        Open_Game_Exit_Button
     }
 
-    // 로그인 UI 초기화
+    // UI 컴포넌트 바인딩 변수
+    private Button gameStartButton;
+    private Button openGameExitButton;
+
+
+    // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
     {
-        base.Init(); // 기본 초기화
+        // 기본 초기화
+        base.Init();
 
-        // 버튼 바인딩
+        // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
 
         // 게임 시작 버튼 이벤트 등록
-        Button gameStartButton = GetButton((int)Buttons.Game_Start_Button);
-        AddUIEvent(gameStartButton.gameObject, LoadLobbyScene);
-        AddUIKeyEvent(gameStartButton.gameObject, () => LoadLobbyScene(null), KeyCode.Return);
+        gameStartButton = GetButton((int)Buttons.Game_Start_Button);
+        AddUIEvent(gameStartButton.gameObject, GameStart);
+        AddUIKeyEvent(gameStartButton.gameObject, () => GameStart(null), KeyCode.Return);
 
-        // 게임 종료 버튼 이벤트 등록
-        Button gameExitButton = GetButton((int)Buttons.Game_Exit_Button);
-        AddUIEvent(gameExitButton.gameObject, OpenGameExit);
-        AddUIKeyEvent(gameExitButton.gameObject, () => OpenGameExit(null), KeyCode.Escape);
+        // 게임 종료 Popup UI 띄우기 버튼 이벤트 등록
+        openGameExitButton = GetButton((int)Buttons.Open_Game_Exit_Button);
+        AddUIEvent(openGameExitButton.gameObject, OpenGameExit);
+        AddUIKeyEvent(openGameExitButton.gameObject, () => OpenGameExit(null), KeyCode.Escape);
     }
 
-    // 로비로 이동
-    private void LoadLobbyScene(PointerEventData data)
+
+    // ------------------------------ 메서드 정의 ------------------------------
+
+    // 게임 시작 메서드
+    private void GameStart(PointerEventData data)
     {
-        // 씬 이동하기 전에 모든 스택을 비움
+        // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
 
-        // 로비 씬으로 이동
-        SceneManager.LoadScene("Lobby");
+        if (Managers.Player.GetFirst())
+        {
+            // 첫 로그인 O: 선택된 던전을 0으로 저장
+            PlayerPrefs.SetInt("SelectedDungeonNumber", 0);
+            PlayerPrefs.Save();
+
+            // 첫 로그인 여부 1로 저장  
+            PlayerPrefs.SetInt("FirstLogin", 1);
+            PlayerPrefs.Save();
+
+            // 튜토리얼 Scene으로 이동
+            
+            Managers.Scene.LoadScene(Define.Scene.Tutorial);
+        }
+        else
+        {
+            // 첫 로그인 X: 선택된 던전을 1로 저장
+            PlayerPrefs.SetInt("SelectedDungeonNumber", 1);
+            PlayerPrefs.Save();
+
+            // 첫 로그인 여부 0으로 저장
+            PlayerPrefs.SetInt("FirstLogin", 0);
+            PlayerPrefs.Save();
+
+            // 로비 Scene으로 이동
+            Managers.Scene.LoadScene(Define.Scene.Lobby);
+        }
     }
 
-    // 게임 종료
+    // 게임 종료 Popup UI 띄우기 메서드
     private void OpenGameExit(PointerEventData data)
     {
         // 게임 종료 Popup UI를 띄움

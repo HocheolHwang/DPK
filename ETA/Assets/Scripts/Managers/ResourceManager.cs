@@ -20,7 +20,7 @@ public class ResourceManager
 
     public GameObject Instantiate(string path, Transform parent = null)
     {
-        // 1. ÀÌ¹Ì µé°í ÀÖÀ¸¸é ¹Ù·Î »ç¿ë OK
+        // 1. ì´ë¯¸ ë“¤ê³  ìˆìœ¼ë©´ ë°”ë¡œ ì‚¬ìš© OK
         GameObject original = Load<GameObject>($"Prefabs/{path}");
         if(original == null)
         {
@@ -28,7 +28,7 @@ public class ResourceManager
             return null;
         }
 
-        // 2. È¤½Ã Ç®¸µµÈ ¾Ö°¡ ÀÖÀ»±î?
+        // 2. í˜¹ì‹œ í’€ë§ëœ ì• ê°€ ìˆì„ê¹Œ?
         if (original.GetComponent<Poolable>() != null)
             return Managers.Pool.Pop(original, parent).gameObject;
 
@@ -41,7 +41,7 @@ public class ResourceManager
     public void Destroy(GameObject go)
     {
         if (go == null) return;
-        // Ç®¸µ¤· ¤ÓÇÊ¿äÇÏ¸é -> Ç®¸µ ¸Å´ÏÀú ÇÑÅ× À§Å¹
+        // í’€ë§ã…‡ ã…£í•„ìš”í•˜ë©´ -> í’€ë§ ë§¤ë‹ˆì € í•œí…Œ ìœ„íƒ
         Poolable poolable = go.GetComponent<Poolable>();
         if(poolable != null)
         {

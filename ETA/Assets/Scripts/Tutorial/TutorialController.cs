@@ -11,7 +11,7 @@ public class TutorialController : MonoBehaviour
 
     // 튜토리얼이 끝나면 넘어갈 씬 이름
     [SerializeField]
-    private string              nextSceneName = "";
+    private Define.Scene              nextSceneName;
 
     // 현재 진행하고 있는 튜토리얼 
     private TutorialBase        currentTutorial = null;
@@ -64,7 +64,14 @@ public class TutorialController : MonoBehaviour
 
         if ( !nextSceneName.Equals(""))
         {
-            SceneManager.LoadScene(nextSceneName);
+            // 현재 선택된 던전을 1번으로 수정
+            PlayerPrefs.SetInt("SelectedDungeonNumber", 1);
+            PlayerPrefs.Save();
+
+            // Scene 이동 전에 모든 팝업 창 닫은 뒤 이동
+            Managers.UI.CloseAllPopupUI();
+            //SceneManager.LoadScene(nextSceneName);
+            Managers.Scene.LoadScene(nextSceneName);
         }
     }
 }

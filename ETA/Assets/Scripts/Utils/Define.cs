@@ -36,9 +36,11 @@ public class Define
         Unknown,
         Login,
         Lobby,
-        Game,
-        Camp,
-        Dungeon
+        Opening,
+        Tutorial,
+        DeepForest,
+        ForgottenTemple,
+        StarShardPlain,
     }
     public enum UIEvent
     {
@@ -76,6 +78,18 @@ public class Define
     public enum Effect
     {
         WarriorNormalAttackEffect,
+        KnightG_CounterEnable,
+        KnightG_CounterAttack,
+        KnightG_TwoSkillEnergy,
+        KnightG_TwoSkillAttack,
+        KnightG_PhaseTransition,
+        KnightG_PhaseAttack,
+        Groggy,
+        StoneSlash,
+        SurfaceExplosionDirtStone,
+        WhirlwindEffect1,
+        WhirlwindEffect2,
+        Porin_Attack,
         MaxCount
     }
 }
