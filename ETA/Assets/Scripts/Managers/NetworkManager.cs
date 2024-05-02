@@ -17,8 +17,7 @@ public class NetworkManager : MonoBehaviour
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log(request.downloadHandler.text);
-            Debug.LogError($"[Web Request Error] {request.error}");
+            Debug.LogError($"[Request Error] {request.error}\n{request.downloadHandler.text}");
         }
         else
         {
@@ -36,7 +35,7 @@ public class NetworkManager : MonoBehaviour
         if (request.result != UnityWebRequest.Result.Success)
         {
             // 회원가입 실패
-            Debug.LogError($"[Web Request Error] {request.error}");
+            Debug.LogError($"[Request Error] {request.error}\n{request.downloadHandler.text}");
 
             // 에러 메세지 전달
             callback?.Invoke(message.message);
@@ -62,7 +61,7 @@ public class NetworkManager : MonoBehaviour
         if (request.result != UnityWebRequest.Result.Success)
         {
             // 로그인 실패
-            Debug.LogError($"[Web Request Error] {request.error}");
+            Debug.LogError($"[Login Error] {request.error}\n{request.downloadHandler.text}");
 
             PlayerResDto data = JsonUtility.FromJson<PlayerResDto>(request.downloadHandler.text);
 
@@ -89,7 +88,7 @@ public class NetworkManager : MonoBehaviour
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"[Web Request Error] {request.error}");
+            Debug.LogError($"[Rank Error] {request.error}\n{request.downloadHandler.text}");
         }
         else
         {
@@ -108,7 +107,7 @@ public class NetworkManager : MonoBehaviour
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"[Web Request Error] {request.error}");
+            Debug.LogError($"[Rank Error] {request.error}\n{request.downloadHandler.text}");
         }
         else
         {
@@ -128,7 +127,7 @@ public class NetworkManager : MonoBehaviour
         ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"[Gold Request Error] {request.error}");
+            Debug.LogError($"[Request Error] {request.error}\n{request.downloadHandler.text}");
         }
         else
         {
@@ -148,10 +147,11 @@ public class NetworkManager : MonoBehaviour
         yield return request.SendWebRequest();
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"[Gold Request Error] {request.error}");
+            Debug.LogError($"[Current Class Error] {request.error}\n{request.downloadHandler.text}");
             CurClassDto data = new CurClassDto();
-            callback?.Invoke(data);
 
+            // 없다면 디폴트 값을 설정해줘야함
+            callback?.Invoke(data);
         }
         else
         {
