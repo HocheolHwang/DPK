@@ -16,7 +16,8 @@ public class PlayerManager
     private bool first;
 
     private int playerLevel = 1;
-    private int curExp;
+    private long curExp;
+    private int skillPoint;
 
     
 
@@ -100,7 +101,7 @@ public class PlayerManager
     }
 
 
-    public void AddExp(int exp)
+    public void AddExp(long exp)
     {
         this.curExp += exp;
 
@@ -133,9 +134,18 @@ public class PlayerManager
 
         if (curExp < 0) curExp = 0;
     }
-    public void SetExp(int exp)
+    public void SetExp(long exp)
     {
         this.curExp = exp;
+    }
+    
+    public void SetSkillPoint(int skillPoint)
+    {
+        this.skillPoint = skillPoint;
+    }
+    public void SetLevel(int level)
+    {
+        this.playerLevel = level;
     }
 
     #endregion
@@ -180,13 +190,17 @@ public class PlayerManager
         return first;
     }
 
-    public int GetExp()
+    public long GetExp()
     {
         return curExp;
     }
     public int GetLevel()
     {
         return playerLevel;
+    }
+    public int GetSkillPoint()
+    {
+        return skillPoint;
     }
 
     #endregion

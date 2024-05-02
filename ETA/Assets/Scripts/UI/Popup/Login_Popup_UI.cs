@@ -130,6 +130,8 @@ public class Login_Popup_UI : UI_Popup
 
             // 로그인 완료 Popup UI를 띄움
             Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
+
+            Managers.Network.CurrentClassCall(CurrentClass);
         }
         else if (message == "Database error.")
         {
@@ -140,6 +142,15 @@ public class Login_Popup_UI : UI_Popup
             //warning.text = message;            
             warning.text = "아이디와 비밀번호를 확인해주세요.";
         }
+    }
+
+    private void CurrentClass(CurClassDto dto)
+    {
+        Debug.Log(dto.playerLevel);
+        Managers.Player.SetExp(dto.currentExp);
+        Managers.Player.SetClassCode(dto.classCode);
+        Managers.Player.SetLevel(dto.playerLevel);
+        Managers.Player.SetSkillPoint(dto.skillPoint);
     }
 
     // 회원가입 Popup UI로 전환
