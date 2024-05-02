@@ -3392,6 +3392,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3504072409022027814, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: _attackDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3645796155762523812, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -8265,6 +8269,10 @@ PrefabInstance:
       propertyPath: TargetLayerMask.m_Bits
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 3504072409022027814, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: _attackDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4929261757231762885, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Name
       value: Boar04
@@ -11415,6 +11423,10 @@ PrefabInstance:
     - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: TargetLayerMask.m_Bits
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504072409022027814, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: _attackDamage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4929261757231762885, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Name
@@ -15986,6 +15998,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3504072409022027814, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: _attackDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3645796155762523812, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -17167,7 +17183,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.4188679, g: 0.37043276, b: 0.3058526, a: 1}
+  m_Color: {r: 1, g: 0.94279486, b: 0.73018867, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -21931,6 +21947,10 @@ PrefabInstance:
     - target: {fileID: 2190058818407168450, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: TargetLayerMask.m_Bits
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504072409022027814, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: _attackDamage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4929261757231762885, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Name

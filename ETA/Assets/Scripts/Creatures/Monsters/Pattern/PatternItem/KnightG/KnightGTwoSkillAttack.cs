@@ -67,7 +67,7 @@ public class KnightGTwoSkillAttack : Pattern
     IEnumerator CreateHitbox(Transform parent, Vector3 objectLoc)
     {
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _attackDamage);
+        hitbox.SetUp(transform, _attackDamage * 3);
         hitbox.GetComponent<SphereCollider>().radius = _hitboxRadius;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.SetParent(parent);
