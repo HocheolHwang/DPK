@@ -17,12 +17,14 @@ public class Massacre : Skill
         // 애니메이션과 이펙트 재생
         for (int i = 0; i < 4; i++)
         {
+            Define.Effect effectName = (i % 2 == 0) ? Define.Effect.StoneSlash1 : Define.Effect.StoneSlash2;
+
             if (i % 2 == 0)
                 _animator.CrossFade("ATTACK1", 0.1f); // 1번째와 3번째 칼 휘두르기
             else
                 _animator.CrossFade("ATTACK2", 0.1f); // 2번째와 4번째 칼 휘두르기
 
-            ParticleSystem ps = Managers.Effect.Play(Define.Effect.StoneSlash, gameObject.transform);
+            ParticleSystem ps = Managers.Effect.Play(effectName, gameObject.transform);
 
             // 히트박스 생성
             HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
