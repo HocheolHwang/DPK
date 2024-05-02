@@ -82,6 +82,8 @@ public class Dungeon_Popup_UI : UI_Popup
     // 현재 Scene 상태 변수
     private bool isTutorialScene;
 
+    // 현재 누적된 경험치
+    private int currentExp = 0;
 
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
@@ -301,6 +303,10 @@ public class Dungeon_Popup_UI : UI_Popup
             // 체크포인트 통과시 인덱스 증가
             currentCheckpointIndex++;
 
+            // 체크 포인트 통과 시 받는 경험치 증가
+            int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
+            currentExp += (10 * (5* selectedDungeonNumber)) * currentCheckpointIndex;
+
             // 체크포인트 인덱스에 따라 진행바를 업데이트
             dungeonProgressBar.value = (float) currentCheckpointIndex / totalCheckpoints;
         }
@@ -322,6 +328,14 @@ public class Dungeon_Popup_UI : UI_Popup
     // 던전 결과 Popup UI 띄우기 메서드
     private void HandleBossDestroyed()
     {
+        // 보스 클리어
+        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
+        if(selectedDungeonNumber!= 0)
+        {
+            currentExp += (10 * (5 * selectedDungeonNumber)) * currentCheckpointIndex;
+            SummaryExp();
+        }
+
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
         PlayerController[] players = GameObject.FindObjectsOfType<PlayerController>();
         PlayerZone zone = GameObject.FindObjectOfType<PlayerZone>();
@@ -342,5 +356,24 @@ public class Dungeon_Popup_UI : UI_Popup
     private void OpenMenu(PointerEventData data)
     {
         Managers.UI.ShowPopupUI<Menu_Popup_UI>("[Common]_Menu_Popup_UI");
+    }
+
+    // 경험치 리포트
+    public void SummaryExp()
+    {
+        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
+
+        // 현재 던전 경험치
+        currentExp = ((selectedDungeonNumber-1) * 5) * 10;
+
+        // 경험치 합산
+        Managers.Player.AddExp(currentExp);
+        EXPStatisticsReqDto dto = new EXPStatisticsReqDto();
+        dto.currentExp = Managers.Player.GetExp();
+        dto.classCode = Managers.Player.GetClassCode();
+        dto.playerLevel = Managers.Player.GetLevel();
+        dto.reason = dungeonNameText.text + "던전 클리어";
+        dto.expDelta = currentExp;
+        Managers.Network.EXPStatisticsCall(dto);
     }
 }
