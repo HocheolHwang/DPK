@@ -261,7 +261,7 @@ public class NetworkManager : MonoBehaviour
     // 직업 불러오기
     public void CurrentClassCall(Action<CurClassDto> callback)
     {
-        StartCoroutine(CurrentClassRequest(CreateRequest("PUT", "class/current"), callback));
+        StartCoroutine(CurrentClassRequest(CreateRequest("GET", "class/current"), callback));
     }
 
     // 직업 불러오기
