@@ -70,7 +70,6 @@ namespace MummyManStateItem
     #region CHASE
     public class ChaseState : MummyManState
     {
-        // 몬스터끼리 뭉쳐지지 말고 경로에 몬스터가 있으면 피해서 이동하도록 수정
         public ChaseState(MummyManController controller) : base(controller)
         {
         }

@@ -81,8 +81,6 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
-            counterTimeTrigger = 0;
-
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
         }
@@ -130,6 +128,7 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            counterTimeTrigger = 0;
             attackCnt++;
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
 
