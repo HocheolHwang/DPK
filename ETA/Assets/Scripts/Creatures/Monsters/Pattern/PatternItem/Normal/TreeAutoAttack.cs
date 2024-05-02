@@ -18,12 +18,13 @@ public class TreeAutoAttack : Pattern
     {
         base.Init();
 
-        _createTime = 0.1f;
+        _createTime = 0.3f;
         _patternRange = _hitboxRange;
     }
 
     public override IEnumerator StartPatternCast()
     {
+        Managers.Sound.Play("Monster/Tree/TreeAttack_SND", Define.Sound.Effect);
         // 멈췄을 때 target을 향해 hitbox, effect 생성
         Vector3 rootForward = transform.TransformDirection(Vector3.forward * (_controller.Detector.AttackRange - _hitboxForwardLoc)); // Target이 null일 수 있기 때문에 임의로 지정
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
@@ -39,8 +40,10 @@ public class TreeAutoAttack : Pattern
         hitbox.transform.localScale = _patternRange;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
-        
+
         //ps.transform.position = hitbox.transform.position;
+
+        
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
