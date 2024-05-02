@@ -450,6 +450,7 @@ namespace KnightGStateItem
     #region GROGGY
     public class GroggyState : KnightGState
     {
+        ParticleSystem ps;
         float groggyTime;
         public GroggyState(KnightGController controller) : base(controller)
         {
@@ -457,6 +458,10 @@ namespace KnightGStateItem
 
         public override void Enter()
         {
+            ps = Managers.Effect.Play(Define.Effect.Groggy, _controller.transform);
+            ps.transform.SetParent(_controller.transform);
+            ps.transform.localScale = new Vector3(0, 3.0f, 0);
+
             Debug.Log(_controller.PrevState);
             if (_controller.PrevState is CounterEnableState)
             {
@@ -481,6 +486,7 @@ namespace KnightGStateItem
         }
         public override void Exit()
         {
+            Managers.Effect.Stop(ps);
         }
     }
     #endregion
@@ -489,17 +495,12 @@ namespace KnightGStateItem
     #region GLOBAL
     public class GlobalState : KnightGState
     {
-        ParticleSystem ps;
-
         public GlobalState(KnightGController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
-            ps = Managers.Effect.Play(Define.Effect.Groggy, _controller.transform);
-            ps.transform.SetParent(_controller.transform);
-            ps.transform.localScale = new Vector3(0, 3.0f, 0);
         }
 
         public override void Execute()
@@ -537,7 +538,6 @@ namespace KnightGStateItem
 
         public override void Exit()
         {
-            Managers.Effect.Stop(ps);
         }
     }
     #endregion
