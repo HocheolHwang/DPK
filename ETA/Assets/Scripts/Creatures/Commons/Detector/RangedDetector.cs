@@ -17,8 +17,8 @@ using static UnityEngine.GraphicsBuffer;
 public class RangedDetector : MonoBehaviour, IDetector
 {
     [Header("Set Values from the Inspector")]
-    [SerializeField] public float DetectRange;
-    [SerializeField] private float _attackRange;
+    [SerializeField] public float DetectRange = 18.0f;
+    [SerializeField] private float _attackRange = 14.0f;
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask TargetLayerMask;
     //[SerializeField] private PlayerController[] _players;
@@ -60,6 +60,8 @@ public class RangedDetector : MonoBehaviour, IDetector
 
     private void OnDrawGizmos()
     {
+        if (!GetComponent<RangedDetector>().enabled) return;
+
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
         if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, DetectRange);
@@ -79,13 +81,15 @@ public class RangedDetector : MonoBehaviour, IDetector
             {
                 _target = null;
             }
-            else if ( _hasMetTargetOne && _isWaitComplete )
+            
+            if ( _hasMetTargetOne && _isWaitComplete )
             {
                 // detectRange 안쪽과 attackRange 바깥쪽에 플레이어가 존재하도록 값을 세팅한다.
                 // 그래야 모든 플레이어를 감지할 수 있기 때문이다.
                 float farthestDist = 0;
                 foreach (Collider player in enemies)
                 {
+                    // player.GetComponent<Collider>().enabled
                     if (player.GetComponent<Stat>().Hp > 0)
                     {
                         float distToEnemy = Vector3.Distance(transform.position, player.transform.position);
@@ -130,6 +134,6 @@ public class RangedDetector : MonoBehaviour, IDetector
     public bool IsArriveToTarget()
     {
         if (_target == null) return false;
-        return Vector3.Distance(_target.position, transform.position) < _attackRange;
+        return Vector3.Distance(_target.position, transform.position) <= _attackRange;
     }
 }
