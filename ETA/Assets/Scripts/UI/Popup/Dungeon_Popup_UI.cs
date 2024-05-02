@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -26,6 +27,26 @@ public class Dungeon_Popup_UI : UI_Popup
         Boss_Status
     }
 
+    enum Images
+    {
+        Skill_1_Cooldown_Image,
+        Skill_2_Cooldown_Image,
+        Skill_3_Cooldown_Image,
+        Skill_4_Cooldown_Image,
+        Skill_5_Cooldown_Image,
+        Skill_6_Cooldown_Image,
+        Skill_7_Cooldown_Image,
+        Skill_8_Cooldown_Image,
+        Skill_1_Unable_Image,
+        Skill_2_Unable_Image,
+        Skill_3_Unable_Image,
+        Skill_4_Unable_Image,
+        Skill_5_Unable_Image,
+        Skill_6_Unable_Image,
+        Skill_7_Unable_Image,
+        Skill_8_Unable_Image
+    }
+
     enum Texts
     {
         Dungeon_Name_Text,
@@ -35,7 +56,15 @@ public class Dungeon_Popup_UI : UI_Popup
         Player_Nickname_Text,
         Player_HP_Text,
         Boss_Name_Text,
-        Boss_HP_Text
+        Boss_HP_Text,
+        Skill_1_Cooldown_Text,
+        Skill_2_Cooldown_Text,
+        Skill_3_Cooldown_Text,
+        Skill_4_Cooldown_Text,
+        Skill_5_Cooldown_Text,
+        Skill_6_Cooldown_Text,
+        Skill_7_Cooldown_Text,
+        Skill_8_Cooldown_Text
     }
 
     enum Sliders
@@ -55,6 +84,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private GameObject forgottenTempleIcon;
     private GameObject starShardPlainIcon;
     private GameObject bossStatus;
+    private Image[] skillCooldownImages = new Image[8];
+    private Image[] skillUnableImages = new Image[8];
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI timeText;
     private TextMeshProUGUI memberNicknameText1;
@@ -63,6 +94,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI playerHPText;
     private TextMeshProUGUI bossNameText;
     private TextMeshProUGUI bossHPText;
+    private TextMeshProUGUI[] skillCooldownTexts = new TextMeshProUGUI[8];
     private Slider dungeonProgressBar;
     private Slider memberHPSlider1;
     private Slider bossHPSlider;
@@ -85,6 +117,9 @@ public class Dungeon_Popup_UI : UI_Popup
     // 현재 누적된 경험치
     private int currentExp = 0;
 
+    // 스킬 슬롯
+    private SkillSlot skillSlot;
+
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
     {
@@ -94,6 +129,7 @@ public class Dungeon_Popup_UI : UI_Popup
         // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
         Bind<GameObject>(typeof(GameObjects));
+        Bind<Image>(typeof(Images));
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Slider>(typeof(Sliders));
 
@@ -184,6 +220,31 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             playerStat = playerObject.GetComponent<Stat>();
         }
+
+
+        // --------------- 쿨타임 UI 초기화 ---------------
+
+        // 스킬 슬롯 참조
+        skillSlot = FindObjectOfType<SkillSlot>();
+
+        // 이미지와 텍스트 초기화를 반복문으로 처리
+        for (int i = 0; i < skillCooldownImages.Length; i++)
+        {
+            // 쿨다운 이미지 배열 초기화
+            skillCooldownImages[i] = GetImage((int)Images.Skill_1_Cooldown_Image + i);
+
+            // 스킬 사용불가 이미지 배열 초기화
+            skillUnableImages[i] = GetImage((int)Images.Skill_1_Unable_Image + i);
+
+            // 쿨타임 텍스트 배열 초기화
+            skillCooldownTexts[i] = GetText((int)Texts.Skill_1_Cooldown_Text + i);
+        }
+
+        // 던전 입장 시 모든 스킬의 쿨타임 UI 초기화
+        for (int i = 0; i < 8; i++)
+        {
+            ResetCooldownUI(i);
+        }
     }
 
 
@@ -196,6 +257,12 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // HP 업데이트
         UpdateHP();
+
+        // 스킬 쿨타임 업데이트
+        for (int i = 0; i < 8; i++)
+        {
+            UpdateCooldownUI(i);
+        }
     }
 
     void OnDestroy()
@@ -295,7 +362,7 @@ public class Dungeon_Popup_UI : UI_Popup
         bossHPSlider.value = (float)bossStat.Hp / bossStat.MaxHp;
     }
 
-    // 던전 진행 슬라이더 업데이트
+    // 던전 진행 슬라이더 업데이트 메서드
     public void UpdateProgress()
     {
         if (currentCheckpointIndex < totalCheckpoints)
@@ -325,7 +392,7 @@ public class Dungeon_Popup_UI : UI_Popup
         }
     }
 
-    // 던전 결과 Popup UI 띄우기 메서드
+    // 보스 처치 시 실행되는 메서드
     private void HandleBossDestroyed()
     {
         // 보스 클리어
@@ -336,7 +403,9 @@ public class Dungeon_Popup_UI : UI_Popup
             SummaryExp();
         }
 
+        // 던전 결과 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
+
         PlayerController[] players = GameObject.FindObjectsOfType<PlayerController>();
         PlayerZone zone = GameObject.FindObjectOfType<PlayerZone>();
         zone.StopMovement();
@@ -358,7 +427,7 @@ public class Dungeon_Popup_UI : UI_Popup
         Managers.UI.ShowPopupUI<Menu_Popup_UI>("[Common]_Menu_Popup_UI");
     }
 
-    // 경험치 리포트
+    // 경험치 리포트 메서드
     public void SummaryExp()
     {
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
@@ -369,11 +438,53 @@ public class Dungeon_Popup_UI : UI_Popup
         // 경험치 합산
         Managers.Player.AddExp(currentExp);
         EXPStatisticsReqDto dto = new EXPStatisticsReqDto();
+        dto.classCode = Managers.Player.GetClassCode();
         dto.currentExp = Managers.Player.GetExp();
         dto.classCode = Managers.Player.GetClassCode();
         dto.playerLevel = Managers.Player.GetLevel();
         dto.reason = dungeonNameText.text + "던전 클리어";
         dto.expDelta = currentExp;
         Managers.Network.EXPStatisticsCall(dto);
+    }
+
+    // 쿨타임 UI 초기화 메서드
+    private void ResetCooldownUI(int skillIndex)
+    {
+        skillCooldownImages[skillIndex].fillAmount = 0;
+        skillUnableImages[skillIndex].gameObject.SetActive(false);
+        skillCooldownTexts[skillIndex].text = "";
+    }
+
+    // 스킬 쿨타임 UI 업데이트 메서드
+    private void UpdateCooldownUI(int skillIndex)
+    {
+        float cooldownTime = skillSlot.Skills[skillIndex].CooldownTime;
+        float elapsedTime = skillSlot.Skills[skillIndex].ElapsedTime;
+
+        // 남은 시간 초기화
+        float remainingTime = cooldownTime - elapsedTime;
+
+        // 남은 시간이 0보다 작거나 같으면 ResetCooldownUI 호출 후 함수 종료
+        if (remainingTime <= 0)
+        {
+            ResetCooldownUI(skillIndex);
+            return;
+        }
+
+        // 스킬 사용불가 이미지를 활성화
+        skillUnableImages[skillIndex].gameObject.SetActive(true);
+
+        // 남은 시간을 텍스트에 업데이트
+        if (remainingTime > 1)
+        {
+            skillCooldownTexts[skillIndex].text = Mathf.Ceil(remainingTime).ToString() + "s";
+        }
+        else
+        {
+            skillCooldownTexts[skillIndex].text = remainingTime.ToString("F1");
+        }
+
+        // 남은 시간 / 스킬 쿨타임 비율에 따라 fllAmount 값 업데이트
+        skillCooldownImages[skillIndex].fillAmount = remainingTime / cooldownTime;
     }
 }

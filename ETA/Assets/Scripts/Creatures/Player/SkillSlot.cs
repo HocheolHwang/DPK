@@ -9,6 +9,8 @@ public class SkillSlot : MonoBehaviour
     // Start is called before the first frame update
     //ISkill[] skill = new ISkill[8];
     Skill[] skill = new Skill[8];
+    public Skill[] Skills { get { return skill; } }
+
     private Animator _animator;
 
     private Skill _currentSkill;
