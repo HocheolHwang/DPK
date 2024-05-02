@@ -45,9 +45,12 @@ public class MeleeDetector : MonoBehaviour, IDetector
         {
             yield return new WaitForSeconds(0.1f);
 
-            Target = null;
             float closeDist = Mathf.Infinity;
             Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);
+            if (enemies.Length  == 0)
+            {
+                _target = null;
+            }
 
             foreach (Collider enemy in enemies)
             {
@@ -55,7 +58,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
                 if (distToEnemy < closeDist)
                 {
                     closeDist = distToEnemy;
-                    Target = enemy.transform;
+                    _target = enemy.transform;
                 }
             }
         }
