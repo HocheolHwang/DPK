@@ -5,10 +5,12 @@ using UnityEngine.UIElements;
 
 public class Dungeon_Scene : BaseScene
 {
+    private FadeEffect _fadeEffect;
     private void Start()
     {
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/DeepForest");
+        Managers.UI.ShowPopupUI<Fade_Effect_UI>("[Common]_Fade_Effect_UI");
     }
     
     public override void Clear()

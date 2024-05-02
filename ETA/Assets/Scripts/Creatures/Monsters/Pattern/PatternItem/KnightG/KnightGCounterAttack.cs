@@ -28,7 +28,7 @@ public class KnightGCounterAttackPattern : Pattern
         yield return new WaitForSeconds(_createTime);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _attackDamage);
+        hitbox.SetUp(transform, _attackDamage * 3);
         hitbox.GetComponent<SphereCollider>().radius = _hitboxRadius;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
