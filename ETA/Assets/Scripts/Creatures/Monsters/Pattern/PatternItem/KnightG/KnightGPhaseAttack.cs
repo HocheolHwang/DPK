@@ -38,7 +38,7 @@ public class KnightGPhaseAttack : Pattern
         StartCoroutine(expandCollider(objectLoc));
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.KnightG_PhaseAttack, _controller.transform);
-        //ps.GetComponent<AudioSource>().Play();
+        Managers.Sound.Play("Monster/KnightG/KnightGPhaseAttack_SND", Define.Sound.Effect);
         ps.transform.position = hitbox.transform.position;
 
         yield return new WaitForSeconds(0.15f);
