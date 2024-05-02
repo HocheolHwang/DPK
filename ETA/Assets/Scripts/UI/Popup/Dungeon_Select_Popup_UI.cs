@@ -71,11 +71,11 @@ public class Dungeon_Select_Popup_UI : UI_Popup
 
         // 잊혀진 신전 선택 버튼 이벤트 등록
         selectForgottenTempleButton = GetButton((int)Buttons.Select_ForgottenTemple_Button);
-        AddUIEvent(selectForgottenTempleButton.gameObject, SelectForgottenTemple);
+        // AddUIEvent(selectForgottenTempleButton.gameObject, SelectForgottenTemple);
 
         // 별의 조각 평원 선택 버튼 이벤트 등록
         selectStarShardPlainButton = GetButton((int)Buttons.Select_StarShardPlain_Button);
-        AddUIEvent(selectStarShardPlainButton.gameObject, SelectStarShardPlain);
+        // AddUIEvent(selectStarShardPlainButton.gameObject, SelectStarShardPlain);
 
         // 돌아가기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
