@@ -20,6 +20,7 @@ public class KnightGTwoSkillAttack : Pattern
         _hitboxForwardLoc = _controller.Detector.AttackRange;
         
         _coroutineList = new Coroutine[6];
+        _patternDmg = 80;
     }
 
     public override IEnumerator StartPatternCast()
@@ -67,7 +68,7 @@ public class KnightGTwoSkillAttack : Pattern
     IEnumerator CreateHitbox(Transform parent, Vector3 objectLoc)
     {
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _attackDamage * 3);
+        hitbox.SetUp(transform, _attackDamage + _patternDmg);
         hitbox.GetComponent<SphereCollider>().radius = _hitboxRadius;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.SetParent(parent);

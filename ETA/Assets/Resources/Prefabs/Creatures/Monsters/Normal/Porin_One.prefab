@@ -366,6 +366,7 @@ MonoBehaviour:
   Animator: {fileID: 0}
   Agent: {fileID: 0}
   Stat: {fileID: 0}
+  _isHitCounter: 0
 --- !u!114 &-200248791155993165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,7 +399,7 @@ MonoBehaviour:
   _maxHp: 100
   _hp: 100
   _moveSpeed: 3
-  _attackDamage: 3
+  _attackDamage: 20
   _defense: 0
   _shield: 0
 --- !u!114 &-8917290406281487489

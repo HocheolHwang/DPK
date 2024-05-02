@@ -18,6 +18,8 @@ public class KnightGPhaseAttack : Pattern
         base.Init();
 
         _createTime = 0.47f;
+        // 
+        // _patternDmg = 
     }
 
     public override IEnumerator StartPatternCast()
@@ -51,7 +53,7 @@ public class KnightGPhaseAttack : Pattern
     private IEnumerator expandCollider(Vector3 loc)
     {
         HitBox spreadHitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
-        spreadHitbox.SetUp(transform, _attackDamage, -1, false, _duration);
+        spreadHitbox.SetUp(transform, _attackDamage - 10, -1, false, _duration);
         spreadHitbox.transform.rotation = transform.rotation;
         spreadHitbox.transform.position = loc;
 
