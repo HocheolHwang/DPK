@@ -43,7 +43,10 @@ public class KnightGPhaseTransition : Pattern
 
         _ps = Managers.Effect.Play(Define.Effect.KnightG_PhaseTransition, _controller.transform);
         _ps.transform.SetParent(transform);
-        
+
+        Invoke("PlayBeatSound", 0.25f);
+        Invoke("PlayBeatSound", 0.55f);
+        Invoke("PlayCrySound", 0.7f);
 
         // 시전 도중에 특정 상태이상 스킬을 맞으면 hit box와 effect가 사라지고, sound가 발생
         // 상태에게 알려줘야함 -> groggy로 이동
@@ -64,5 +67,15 @@ public class KnightGPhaseTransition : Pattern
         }
 
         Managers.Resource.Destroy(_hitbox.gameObject);
+    }
+
+    public void PlayBeatSound()
+    {
+        Managers.Sound.Play("Monster/KnightG/KnightGPhaseTransitionF_SND", Define.Sound.Effect);
+    }
+
+    public void PlayCrySound()
+    {
+        Managers.Sound.Play("Monster/KnightG/KnightGPhaseTransitionB_SND", Define.Sound.Effect);
     }
 }
