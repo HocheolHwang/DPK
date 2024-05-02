@@ -80,7 +80,7 @@ public class Signup_Popup_UI : UI_Popup
     void Update()
     {
         // 비밀번호에 한글 입력시 자동으로 영어로 변환
-        if (userPW.isFocused)
+        if (userPW.isFocused || userPWCheck.isFocused)
         {
             Input.imeCompositionMode = IMECompositionMode.Off;
         }
