@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Dungeon_Popup_UI -> CurrentCheckPointIndex에서 현재 wave 정보를 확인할 수 있다
 public abstract class Pattern : MonoBehaviour ,IPattern
 {
     [Header("애니메이션이 재생된 이후 이펙트와 Hitbox가 생기는 시점 - 디버깅")]
     [SerializeField] protected float _createTime;
     [SerializeField] protected Vector3 _patternRange;
 
+    [Header(" attackDMG + patternDMG ")]
+    [SerializeField] protected int _patternDmg;
+
     protected BaseMonsterController _controller;
     protected int _attackDamage;
+    protected int _curStage;                    // 무한의 탑 컨텐츠가 있는 경우 사용
     private Coroutine _currentCoroutine;
 
     protected HitBox _hitbox;

@@ -107,6 +107,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private int currentCheckpointIndex = 0;
     private float gameTime = 0f;
 
+    public int CurrentCheckPointIndex { get => currentCheckpointIndex; private set => currentCheckpointIndex = value; }
+
     // 게임 플레이어 및 보스 상태 변수
     public Stat playerStat;
     public Stat bossStat;
