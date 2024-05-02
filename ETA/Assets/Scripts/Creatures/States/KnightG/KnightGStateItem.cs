@@ -93,7 +93,12 @@ namespace KnightGStateItem
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-            else if (_detector.IsArriveToTarget())
+            else
+            {
+                _agent.SetDestination(_detector.Target.position);
+            }
+            
+            if (_detector.IsArriveToTarget())
             {
                 if (_controller.IsEnterPhaseTwo)
                 {
@@ -105,7 +110,7 @@ namespace KnightGStateItem
                 }
             }
 
-            _agent.SetDestination(_detector.Target.position);
+            
         }
 
         public override void Exit()
