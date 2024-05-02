@@ -10,7 +10,7 @@ public class PlayerManager
     private string accessToken;
     private int gold;
     private string playerId;
-    private string curClass;
+    private string curClass = "C001";
     private int index;
     private bool partyLeader;
     private bool first;
@@ -175,6 +175,8 @@ public class PlayerManager
     }
     public string GetClassCode()
     {
+        if (curClass == null)
+            curClass =  "C001";
         return curClass;
     }
     public int GetIndex()
