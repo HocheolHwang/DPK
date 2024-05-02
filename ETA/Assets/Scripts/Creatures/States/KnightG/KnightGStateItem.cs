@@ -459,12 +459,11 @@ namespace KnightGStateItem
         {
             ps = Managers.Effect.Play(Define.Effect.Groggy, _controller.transform);
             ps.transform.SetParent(_controller.transform);
-            ps.transform.localScale = new Vector3(0, 3.0f, 0);
+            ps.transform.position = new Vector3(0, 3.0f, 0);
 
             Debug.Log(_controller.PrevState);
             if (_controller.PrevState is CounterEnableState)
             {
-                Debug.Log("HOHOHO");
                 groggyTime = 3.0f;
             }
             else
@@ -504,16 +503,14 @@ namespace KnightGStateItem
 
         public override void Execute()
         {
-            // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
-            if (_controller.CurState == _controller.DIE_STATE) return;
-            if (_controller.CurState == _controller.GROGGY_STATE) return;               // 그로기 상태는 특정 상태에서 분기
-
             if (counterTimeTrigger <= 0)
             {
                 counterTime += Time.deltaTime;
-            }            
+            }
 
-            
+            // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
+            if (_controller.CurState == _controller.DIE_STATE) return;
+            if (_controller.CurState == _controller.GROGGY_STATE) return;               // 그로기 상태는 특정 상태에서 분기
 
             // GLOBAL_STATE로 전환하는 로직
             if (_stat.Hp <= 0)

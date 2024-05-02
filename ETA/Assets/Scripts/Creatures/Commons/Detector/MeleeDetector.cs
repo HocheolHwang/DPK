@@ -71,10 +71,4 @@ public class MeleeDetector : MonoBehaviour, IDetector
         if (_target == null) return false;
         return Vector3.Distance(_target.position, transform.position) <= _attackRange;
     }
-
-    public bool IsArriveToTarget(float attackRange)
-    {
-        if (_target == null) return false;
-        return Vector3.Distance(_target.position, transform.position) <= attackRange;
-    }
 }

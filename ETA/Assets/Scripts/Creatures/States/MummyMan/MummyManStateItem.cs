@@ -1,3 +1,4 @@
+using KnightGStateItem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,7 @@ namespace MummyManStateItem
     public class IdleBattleState : MummyManState
     {
         // CHASE -> IDLE BATTLE -> ATTACK
+        // CHASE -> IDLE BATTLE -> SHOUTING
         public IdleBattleState(MummyManController controller) : base(controller)
         {
         }
@@ -54,7 +56,11 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
-            if (IsStayForSeconds())
+            if (_shoutingTime >= _threadHoldShouting)
+            {
+                _controller.ChangeState(_controller.SHOUTING_STATE);
+            }
+            else if (IsStayForSeconds())
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
             }
@@ -204,7 +210,7 @@ namespace MummyManStateItem
         {
             _animTime += Time.deltaTime;
 
-            if (_animTime >=  _threadHold)
+            if (_animTime >= _threadHold)
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
@@ -212,6 +218,41 @@ namespace MummyManStateItem
 
         public override void Exit()
         {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- SHOUTING ------------------------------------------------
+    #region SHOUTING
+    public class ShoutingState : MummyManState
+    {
+        // 3초 동안 기절을 부여한다.
+        public ShoutingState(MummyManController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            InitTime(_animData.ShoutingAnim.length);
+
+            _animator.SetFloat("ShoutingSpeed", 0.5f);
+            _animator.CrossFade(_animData.ShoutingParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            if (_animTime >= (_threadHold * 2))
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+            _shoutingTime = 0;
         }
     }
     #endregion
@@ -267,25 +308,42 @@ namespace MummyManStateItem
     #region GROGGY
     public class GroggyState : MummyManState
     {
+        ParticleSystem ps;
+        float groggyTime = 3.0f;
+
         public GroggyState(MummyManController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
+            ps = Managers.Effect.Play(Define.Effect.Groggy, _controller.transform);
+            ps.transform.SetParent(_controller.transform);
+            ps.transform.position = new Vector3(0, 3.0f, 0);
+
+            //if (_controller.PrevState is CounterEnableState)
+            //{
+            //    groggyTime = 3.0f;
+            //}
+            //else
+            //{
+            //    groggyTime = 1.0f;
+            //}
+
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
         }
 
         public override void Execute()
         {
-            if (IsStayForSeconds())
+            if (IsStayForSeconds(groggyTime))
             {
                 _controller.RevertToPrevState();
             }
         }
         public override void Exit()
         {
+            Managers.Effect.Stop(ps);
         }
     }
     #endregion
@@ -300,6 +358,11 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (_meetPlayer)
+            {
+                _shoutingTime += Time.deltaTime;
+            }
+
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
             if (_controller.CurState == _controller.CLAP_STATE) return;
