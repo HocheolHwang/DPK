@@ -261,7 +261,7 @@ public class Dungeon_Popup_UI : UI_Popup
         UpdateHP();
 
         // 스킬 쿨타임 업데이트
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 5; i++)
         {
             UpdateCooldownUI(i);
         }

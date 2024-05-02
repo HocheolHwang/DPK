@@ -16,6 +16,7 @@ public class KnightGFirstAutoAttack : Pattern
 
         _createTime = 1.2f;
         _patternRange = _hitboxRange;
+        _patternDmg = 5;
     }
 
     public override IEnumerator StartPatternCast()
@@ -29,7 +30,7 @@ public class KnightGFirstAutoAttack : Pattern
         yield return new WaitForSeconds(_createTime);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _attackDamage);
+        hitbox.SetUp(transform, _attackDamage + _patternDmg);
         hitbox.transform.localScale = _patternRange;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;

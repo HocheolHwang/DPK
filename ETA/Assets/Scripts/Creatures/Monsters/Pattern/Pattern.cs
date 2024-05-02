@@ -10,11 +10,11 @@ public abstract class Pattern : MonoBehaviour ,IPattern
     [SerializeField] protected Vector3 _patternRange;
 
     [Header(" attackDMG + patternDMG ")]
+    [SerializeField] protected int _attackDamage;
     [SerializeField] protected int _patternDmg;
 
     protected BaseMonsterController _controller;
-    protected int _attackDamage;
-    protected int _curStage;                    // 무한의 탑 컨텐츠가 있는 경우 사용
+    //protected int _curStage;                    // 무한의 탑 컨텐츠가 있는 경우 사용
     private Coroutine _currentCoroutine;
 
     protected HitBox _hitbox;

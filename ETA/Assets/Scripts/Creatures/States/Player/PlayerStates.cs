@@ -12,6 +12,11 @@ namespace PlayerStates
         {
             this._playerController = playerController;
         }
+
+        public override void Enter()
+        {
+            base.Enter();
+        }
     }
 
 
@@ -225,6 +230,9 @@ namespace PlayerStates
         public override void Enter()
         {
 
+            _playerController.SkillSlot.CurrentSkill.StopCast();
+            _agent.velocity = Vector3.zero;
+            _agent.isStopped = true;
 
             _animator.CrossFade("DIE", 0.05f);
         }
