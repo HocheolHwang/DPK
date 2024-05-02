@@ -85,6 +85,7 @@ public class Define
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
         Groggy,
+        SwordWaveWhite,
         StoneSlash1,
         StoneSlash2,
         SurfaceExplosionDirtStone,
