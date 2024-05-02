@@ -1466,8 +1466,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6508141731047996470}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7373832, z: -0, w: 0.6754747}
-  m_LocalPosition: {x: -11.076486, y: 0.083333336, z: 1.5145978}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 19.23, y: 0.083333336, z: -16.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1603,6 +1603,7 @@ MonoBehaviour:
   Animator: {fileID: 0}
   Agent: {fileID: 0}
   Stat: {fileID: 0}
+  _isHitCounter: 0
 --- !u!114 &-5362759381566863542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1633,8 +1634,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectRange: 15
-  _attackRange: 8
+  DetectRange: 18
+  _attackRange: 14
   _target: {fileID: 0}
   TargetLayerMask:
     serializedVersion: 2

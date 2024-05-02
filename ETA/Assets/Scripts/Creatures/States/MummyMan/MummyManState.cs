@@ -10,6 +10,8 @@ public class MummyManState : State
     protected static bool _isRangedAttack = true;          // 원거리 디텍터를 활성화한 상태
     protected const int MaxSummonCount = 1;                // 첫 조우 이후에 Buffer와 Warrior가 살아날 수 있는 횟수
 
+    protected float _curAttackRange;                         // 비활성화 상태에서 가장 맨 위에 있는 컴포넌트의 attack range가 적용됨
+
     protected MummyManController _controller;
     protected MummyManAnimationData _animData;
     protected SummonSkill _summonSkill;
@@ -72,6 +74,8 @@ public class MummyManState : State
             _detector = _controller.GetComponent<RangedDetector>();
 
             _agent.stoppingDistance = _detector.AttackRange;
+            _curAttackRange = _detector.AttackRange;
+            Debug.Log($"range: {_detector.AttackRange} | isRangedAttack: {_isRangedAttack}");
         }
         else
         {
@@ -80,6 +84,8 @@ public class MummyManState : State
             _detector = _controller.GetComponent<MeleeDetector>();
 
             _agent.stoppingDistance = _detector.AttackRange;
+            _curAttackRange = _detector.AttackRange;
+            Debug.Log($"range: {_detector.AttackRange} | isRangedAttack: {_isRangedAttack}");
         }
     }
 

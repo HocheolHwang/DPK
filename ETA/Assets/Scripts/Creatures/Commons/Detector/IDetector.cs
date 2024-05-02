@@ -9,4 +9,5 @@ public interface IDetector
 
     IEnumerator UpdateTarget();
     bool IsArriveToTarget();
+    bool IsArriveToTarget(float attackRange);
 }

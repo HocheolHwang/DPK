@@ -86,12 +86,14 @@ namespace MummyManStateItem
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-            if (_detector.IsArriveToTarget())
+            else if (_detector.Target != null && _detector.IsArriveToTarget())
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
-
-            _agent.SetDestination(_detector.Target.position);
+            else
+            {
+                _agent.SetDestination(_detector.Target.position);
+            }
         }
 
         public override void Exit()
@@ -133,7 +135,6 @@ namespace MummyManStateItem
                 _animator.SetFloat("ThrowSpeed", 0.5f);
                 _animator.CrossFade(_animData.ThrowParamHash, 0.2f);
             }
-            _detector.Target.GetComponent<PlayerController>().TakeDamage(20);
         }
 
         public override void Execute()
