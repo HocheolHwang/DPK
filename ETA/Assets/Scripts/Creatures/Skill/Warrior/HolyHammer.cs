@@ -9,7 +9,7 @@ public class HolyHammer : Skill
         SetCoolDownTime(4);
         base.Init();
         SkillType = Define.SkillType.Range;
-        skillRange = new Vector3(7, 7, 7);
+        skillRange = new Vector3(3, 3, 3);
     }
     public override IEnumerator StartSkillCast()
     {
@@ -25,7 +25,26 @@ public class HolyHammer : Skill
         Vector3 direction = transform.position + new Vector3(0f, 5f, 0f) - _skillSystem.TargetPosition;
         Quaternion rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(-90f, 0f, 0f);
         hammerPrefab.transform.rotation = rotation;
-        hammerPrefab.transform.position = _skillSystem.TargetPosition;
+
+        // 대상과의 거리 계산
+        float distanceToTarget = Vector3.Distance(hammerPrefab.transform.position, _skillSystem.TargetPosition);
+
+        // 이동 속도 계산 (1초에 도달할 거리)
+        float moveSpeed = 30f;
+
+        // 대상까지 도달하기 위한 이동 시간 계산
+        float moveTime = distanceToTarget / moveSpeed;
+
+        // 대상까지 이동하기
+        float elapsedTime = 0f;
+        while (elapsedTime < moveTime)
+        {
+            // 실제로 이동하기
+            hammerPrefab.transform.position = Vector3.Lerp(hammerPrefab.transform.position, _skillSystem.TargetPosition, elapsedTime / moveTime);
+            elapsedTime += Time.deltaTime;
+            yield return null; // 한 프레임 대기
+        }
+        // hammerPrefab.transform.position = _skillSystem.TargetPosition;
 
         _animator.CrossFade("ATTACK4", 0.1f);
         Managers.Sound.Play("Skill/Crash");
@@ -33,9 +52,9 @@ public class HolyHammer : Skill
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
-        yield return new WaitForSeconds(0.1f);
-        Managers.Resource.Destroy(hitbox.gameObject);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.SurfaceExplosionDirtStone, hitbox.transform);
+        yield return new WaitForSeconds(0.01f);
+        Managers.Resource.Destroy(hitbox.gameObject);
 
         yield return new WaitForSeconds(0.8f);
         Managers.Effect.Stop(ps);

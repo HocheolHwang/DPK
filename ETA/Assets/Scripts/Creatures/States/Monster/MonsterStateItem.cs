@@ -185,6 +185,9 @@ namespace MonsterStateItem
                 case Define.UnitType.Porin:
                     _unitType = "Porin";
                     break;
+                case Define.UnitType.Tree:
+                    _unitType = "Tree";
+                    break;
                 default:
                     _unitType = null;
                     break;
