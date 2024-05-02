@@ -178,11 +178,15 @@ public class Dungeon_Popup_UI : UI_Popup
     // 던전 결과 Popup UI 열기
     private void HandleBossDestroyed()
     {
+
         // 보스 클리어
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1) - 1;
-        currentExp += (10 * (5 * selectedDungeonNumber)) * currentCheckpointIndex;
+        if(selectedDungeonNumber!= 0)
+        {
+            currentExp += (10 * (5 * selectedDungeonNumber)) * currentCheckpointIndex;
+            SummaryExp();
+        }
 
-        SummaryExp();
 
         // 초기화
         currentExp = 0;
