@@ -6,8 +6,8 @@ public class TargetSkill : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(5);
-        Damage = 50;
+        SetCoolDownTime(7);
+        Damage = 10;
         base.Init();
     }
 
@@ -23,18 +23,16 @@ public class TargetSkill : Skill
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = _skillSystem.TargetPosition;
-        yield return new WaitForSeconds(0.2f);
-        Managers.Resource.Destroy(hitbox.gameObject);
-        Managers.Sound.Play("Skill/TargetSkill");
-        yield return new WaitForSeconds(0.2f);
-        Managers.Sound.Play("Skill/TargetSkill");
-        yield return new WaitForSeconds(0.2f);
-        Managers.Sound.Play("Skill/TargetSkill");
-        yield return new WaitForSeconds(0.2f);
-        Managers.Sound.Play("Skill/TargetSkill");
-        yield return new WaitForSeconds(0.2f);
-        Managers.Sound.Play("Skill/TargetSkill");
-        yield return new WaitForSeconds(0.3f);
+
+        for(int i = 0; i < 7; i++)
+        {
+            yield return new WaitForSeconds(0.20f);
+            Managers.Resource.Destroy(hitbox.gameObject);
+            hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+            hitbox.SetUp(transform, Damage);
+            hitbox.transform.position = _skillSystem.TargetPosition;
+            Managers.Sound.Play("Skill/TargetSkill");
+        }
         _controller.ChangeState(_controller.MOVE_STATE);
         yield return new WaitForSeconds(0.4f);
         Managers.Resource.Destroy(ps1.gameObject);
