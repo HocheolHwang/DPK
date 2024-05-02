@@ -77,6 +77,7 @@ public class MummyManController : BaseMonsterController
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
         // 공격 사거리와 멈추는 거리를 같게 세팅 -> StateItem의 SetDetector에서 세팅
+        UnitType = Define.UnitType.MummyMan;
     }
 
     // ---------------------------------- IDamage ------------------------------------------
