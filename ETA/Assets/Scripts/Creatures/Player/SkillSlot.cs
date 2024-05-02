@@ -18,6 +18,7 @@ public class SkillSlot : MonoBehaviour
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
+        GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
 
         string[] loadedSkills = { "TargetSkill", "RangeSkill", "HoldSkill", "ImmediatelySkill", "GuardSkill"};
         for (int i = 0; i < loadedSkills.Length; i++)
