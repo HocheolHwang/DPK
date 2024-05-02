@@ -255,7 +255,7 @@ public class NetworkManager : MonoBehaviour
     public void EXPStatisticsCall(EXPStatisticsReqDto dto)
     {
         string expData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("PUT", "palyer/exp")));
+        StartCoroutine(SendWebRequest(CreateRequest("PUT", "player/exp", expData)));
     }
 
     // 직업 불러오기
