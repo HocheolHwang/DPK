@@ -143,18 +143,21 @@ public class NetworkManager : MonoBehaviour
     }
 
     // 현재 직업 불러오기
-    IEnumerator CurrentClassRequest(UnityWebRequest request, Action<ClassReqDto> callback)
+    IEnumerator CurrentClassRequest(UnityWebRequest request, Action<CurClassDto> callback)
     {
         yield return request.SendWebRequest();
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"[Gold Request Error] {request.error}");
+            CurClassDto data = new CurClassDto();
+            callback?.Invoke(data);
+
         }
         else
         {
             Debug.Log(request.result);
             Debug.Log("Response: " + request.downloadHandler.text);
-            ClassReqDto data = JsonUtility.FromJson<ClassReqDto>(request.downloadHandler.text);
+            CurClassDto data = JsonUtility.FromJson<CurClassDto>(request.downloadHandler.text);
 
             // 직업 변화
             //PlayerManager.GetInstance().SetClassCode(data.classCode);
@@ -252,11 +255,11 @@ public class NetworkManager : MonoBehaviour
     public void EXPStatisticsCall(EXPStatisticsReqDto dto)
     {
         string expData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("PUT", "palyer/exp")));
+        StartCoroutine(SendWebRequest(CreateRequest("PUT", "player/exp", expData)));
     }
 
     // 직업 불러오기
-    public void CurrentClassCall(Action<ClassReqDto> callback)
+    public void CurrentClassCall(Action<CurClassDto> callback)
     {
         StartCoroutine(CurrentClassRequest(CreateRequest("PUT", "class/current"), callback));
     }

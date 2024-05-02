@@ -15,7 +15,7 @@ public class EXPStatisticsReqDto
     public int playerLevel;
 
     // 현재 경험치
-    public int currentExp;
+    public long currentExp;
 
     // 경험치 얻은 경로
     public string reason;
