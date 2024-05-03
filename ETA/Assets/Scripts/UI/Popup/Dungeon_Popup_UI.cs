@@ -290,7 +290,6 @@ public class Dungeon_Popup_UI : UI_Popup
         if (checkpoints != null)
         {
             totalCheckpoints = checkpoints.transform.childCount;
-            Debug.Log($"@@@@@@@@@@@@@@@@@@{totalCheckpoints}");
         }
         else
         {
