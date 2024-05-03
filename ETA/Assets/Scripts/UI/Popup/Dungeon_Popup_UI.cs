@@ -3,8 +3,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using PlayerStates;
-using System;
 
 public class Dungeon_Popup_UI : UI_Popup
 {

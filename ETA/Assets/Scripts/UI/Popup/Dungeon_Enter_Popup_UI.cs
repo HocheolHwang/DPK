@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -86,7 +85,6 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         }
 
         // 선택된 던전 Scene으로 이동
-        //SceneManager.LoadScene(sceneName);
         Managers.Scene.LoadScene(sceneName);
     }
 

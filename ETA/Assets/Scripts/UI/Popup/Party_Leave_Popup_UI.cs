@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Load_Lobby_Popup_UI : UI_Popup
+public class Party_Leave_Popup_UI : UI_Popup
 {
     // ------------------------------ 변수 정의 ------------------------------
 
@@ -10,12 +10,12 @@ public class Load_Lobby_Popup_UI : UI_Popup
     enum Buttons
     {
         Cancel_Button,
-        Load_Lobby_Button
+        Party_Leave_Button
     }
 
     // UI 컴포넌트 바인딩 변수
     private Button cancelButton;
-    private Button loadLobbyButton;
+    private Button partyLeaveButton;
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -24,7 +24,7 @@ public class Load_Lobby_Popup_UI : UI_Popup
         // 기본 초기화
         base.Init();
 
-        // 컴포넌트 바인딩
+        // 바인딩
         Bind<Button>(typeof(Buttons));
 
         // 취소하기 버튼 이벤트 등록
@@ -32,10 +32,10 @@ public class Load_Lobby_Popup_UI : UI_Popup
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
 
-        // 로비로 돌아가기 버튼 이벤트 등록
-        loadLobbyButton = GetButton((int)Buttons.Load_Lobby_Button);
-        AddUIEvent(loadLobbyButton.gameObject, LoadLobby);
-        AddUIKeyEvent(loadLobbyButton.gameObject, () => LoadLobby(null), KeyCode.Return);
+        // 파티 탈퇴 버튼 이벤트 등록
+        partyLeaveButton = GetButton((int)Buttons.Party_Leave_Button);
+        AddUIEvent(partyLeaveButton.gameObject, PartyLeave);
+        AddUIKeyEvent(partyLeaveButton.gameObject, () => PartyLeave(null), KeyCode.Return);
     }
 
 
@@ -47,13 +47,15 @@ public class Load_Lobby_Popup_UI : UI_Popup
         ClosePopupUI();
     }
 
-    // 로비로 돌아가기 메서드
-    private void LoadLobby(PointerEventData data)
+    // 파티 탈퇴 메서드
+    private void PartyLeave(PointerEventData data)
     {
-        // Scene 이동 전에 모든 스택을 비움
+        // TODO: 파티에서 탈퇴하는 코드 추가 필요
+
+        // 모든 Popup UI를 닫음
         CloseAllPopupUI();
 
-        // 로비 Scene으로 이동
-        Managers.Scene.LoadScene(Define.Scene.Lobby);
+        // 로비 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
     }
 }
