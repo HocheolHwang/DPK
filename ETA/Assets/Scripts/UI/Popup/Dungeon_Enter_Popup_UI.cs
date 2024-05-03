@@ -87,7 +87,13 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
 
         // 선택된 던전 Scene으로 이동
         //SceneManager.LoadScene(sceneName);
-        Managers.Scene.LoadScene(sceneName);
+        // TMP
+        //Managers.Scene.LoadScene(sceneName);
+        Managers.Scene.LoadScene(Define.Scene.MultiPlayTest);
+
+        // 다른 애들도 가라고 RPC
+        FindObjectOfType<MyPhoton>().ChangeSceneAllPlayer(Define.Scene.MultiPlayTest);
+
     }
 
     // 선택된 던전 텍스트 업데이트 메서드

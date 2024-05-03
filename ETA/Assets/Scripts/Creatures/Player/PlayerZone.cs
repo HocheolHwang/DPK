@@ -9,8 +9,9 @@ public class PlayerZone : MonoBehaviour
     // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask TargetLayerMask;
-    [SerializeField] public float Speed = 6;
+    [SerializeField] public float Speed = 8;
     private float currentSpeed;  // 현재 이동 속도
+    bool isStarted;
 
     [SerializeField] public PlayerController playerController;
     float _delta;
@@ -18,14 +19,14 @@ public class PlayerZone : MonoBehaviour
 
     void Start()
     {
-        currentSpeed = Speed;  // 시작할 때 현재 속도를 초기 속도로 설정
+        currentSpeed = 8;  // 시작할 때 현재 속도를 초기 속도로 설정
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(playerController == null)
+        if (playerController == null)
         {
             GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
@@ -39,17 +40,26 @@ public class PlayerZone : MonoBehaviour
 
             }
         }
-        moveFront();
+
+        if (isStarted) moveFront();
+
+    }
+
+    public void Run()
+    {
+        isStarted = true;
     }
 
     void moveFront()
     {
+        Debug.Log("move");
         Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(2,1,6), new Quaternion(), TargetLayerMask);
         if (enemies.Length <= 0)
         {
             _delta += Time.deltaTime / 2;
             _delta = _delta >= 1.0f ? 1.0f : _delta;
             transform.position += transform.forward * Time.deltaTime * currentSpeed * _delta;
+            Debug.Log($"move {currentSpeed}");
         }
         else
         {

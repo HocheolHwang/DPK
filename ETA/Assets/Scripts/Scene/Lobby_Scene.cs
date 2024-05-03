@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,14 @@ public class Lobby_Scene : BaseScene
         }
 
         Managers.Sound.Play("BackgroundMusic/Lobby");
+        Debug.Log(PhotonNetwork.SerializationRate);
+        PhotonNetwork.SerializationRate = 10;
+        Debug.Log(PhotonNetwork.PrecisionForFloatSynchronization);
+        PhotonNetwork.PrecisionForFloatSynchronization = 0.1f;
+
+        Debug.Log(PhotonNetwork.SendRate);
+        PhotonNetwork.SendRate = 120;
+        Managers.Photon.Connect();
     }
 
     public override void Clear()

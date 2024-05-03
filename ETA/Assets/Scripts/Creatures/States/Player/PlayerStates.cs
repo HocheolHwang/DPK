@@ -65,12 +65,12 @@ namespace PlayerStates
         public override void Execute()
         {
             base.Execute();
-
+            if (_playerController.photonView.IsMine == false) return;
             Vector3 dest = _playerController._destination.position;
             float moveSpeed = _playerController.Stat.MoveSpeed;
             //_agent.Move(dir * Time.deltaTime * moveSpeed);
 
-            if (_playerController.photonView.IsMine == false) return;
+            
 
             if (_detector.Target != null)
             {

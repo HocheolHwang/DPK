@@ -7,7 +7,6 @@ using Photon.Realtime;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    public Action OnEnterDungeon;
 
 
     #region private fields
@@ -70,7 +69,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #region MonoBehaviour Callbacks
     private void Awake()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
         //Connect();
     }
     void Start()
@@ -253,6 +252,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // #endregion
 
     #region MonoBehaviourPunCallbacks callbacks
+
     public override void OnConnectedToMaster()
     {
         isConnecting = true;
@@ -315,11 +315,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 로컬 플레이어의 캐릭터를 생성하고 Photon 네트워크에 등록
         //GameObject player = PhotonNetwork.Instantiate("Prefabs/Player/Player", Vector3.zero, Quaternion.identity);
         updatePlayerList();
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient) { 
             Managers.Player.SetPartyLeader(true);
+            GameObject MyPhoton = PhotonNetwork.Instantiate("Prefabs/MyPhoton", new Vector3(), new Quaternion());
+            MyPhoton.name = "MyPhoton";
+            DontDestroyOnLoad(MyPhoton);
+        }
 
-
-        OnEnterDungeon?.Invoke();
 
 
 

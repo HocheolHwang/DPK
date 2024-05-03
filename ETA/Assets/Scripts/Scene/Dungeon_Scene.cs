@@ -6,19 +6,27 @@ using UnityEngine.UIElements;
 
 public class Dungeon_Scene : BaseScene
 {
-    private FadeEffect _fadeEffect;
     PlayerZone playerZone;
+
+    bool isStarted;
     
     private void Start()
     {
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/DeepForest");
         Managers.UI.ShowPopupUI<Fade_Effect_UI>("[Common]_Fade_Effect_UI");
-        Managers.Photon.OnEnterDungeon -= InitPlayers;
-        Managers.Photon.OnEnterDungeon += InitPlayers;
-        Managers.Photon.Connect();
-        
+
+        //Managers.Photon.OnEnterDungeon += InitPlayers;
+        //Managers.Photon.Connect();
+
         //PhotonNetwork.Instantiate("Creatures/Player/Player.prefab", new Vector3(13.09f, 0.5f, 0f),new Quaternion());
+        MyPhoton mp = GameObject.FindObjectOfType<MyPhoton>();
+        mp.SendLoadMsg();
+
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    PhotonNetwork.Instantiate("Prefabs/Creatures/Player/PlayerZone", new Vector3(16f, 0.5f, 0f), Quaternion.Euler(0,90,0));
+        //}
     }
     
     public override void Clear()
@@ -48,7 +56,7 @@ public class Dungeon_Scene : BaseScene
 
         }
         GameObject player = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Player", new Vector3(13.09f, 0.5f, 0f), new Quaternion());
-        
-        
     }
+
+
 }

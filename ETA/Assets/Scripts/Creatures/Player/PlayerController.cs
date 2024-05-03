@@ -55,19 +55,26 @@ public class PlayerController : BaseController
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
         // TODO : 번호에 따른 목적지 변경 해줘야함
-        _destination = GameObject.Find("FRONT_2").transform;
+        
 
-        ChangeState(IDLE_STATE);
-        ChangeState(MOVE_STATE);
+        //ChangeState(IDLE_STATE);
+        
+        
         if (photonView.IsMine)
         {
-            
+            _destination = GameObject.Find("FRONT_2").transform;
+            //ChangeState(MOVE_STATE);
             Managers.Input.KeyAction -= KeyEvent;
             Managers.Input.KeyAction += KeyEvent;
 
             Managers.Input.MouseAction -= MouseEvent;
             Managers.Input.MouseAction += MouseEvent;
+            Camera.main.GetComponent<CameraController>()._player = gameObject;
+
+            
         }
+        Debug.Log($"{photonView.IsMine}");
+        FindObjectOfType<MyPhoton>().SendCharacherInstantiatedMsg();
 
 
 
