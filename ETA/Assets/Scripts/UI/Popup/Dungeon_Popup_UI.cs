@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -49,6 +48,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
     enum Texts
     {
+        Dungeon_Tier_Text,
         Dungeon_Name_Text,
         Time_Text,
         Member_Nickname_Text_1,
@@ -79,13 +79,11 @@ public class Dungeon_Popup_UI : UI_Popup
     // UI 컴포넌트 바인딩 변수
     private Button openChatButton;
     private Button openMenuButton;
-    private GameObject tutorialIcon;
-    private GameObject deepForestIcon;
-    private GameObject forgottenTempleIcon;
-    private GameObject starShardPlainIcon;
+    private GameObject[] dungeonIcons = new GameObject[4];
     private GameObject bossStatus;
     private Image[] skillCooldownImages = new Image[8];
     private Image[] skillUnableImages = new Image[8];
+    private TextMeshProUGUI dungeonTierText;
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI timeText;
     private TextMeshProUGUI memberNicknameText1;
@@ -102,8 +100,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private Slider playerEXPSlider;
 
     // 게임 위치 및 진행 상태 변수
-    public Transform[] checkpoints;
-    private int totalCheckpoints = 3;
+    private GameObject checkpoints;
+    private int totalCheckpoints;
     private int currentCheckpointIndex = 0;
     private float gameTime = 0f;
 
@@ -166,13 +164,18 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // --------------- 던전 정보 UI 초기화 ---------------
 
-        // 던전 아이콘 초기화
-        tutorialIcon = GetObject((int)GameObjects.Tutorial_Icon);
-        deepForestIcon = GetObject((int)GameObjects.DeepForest_Icon);
-        forgottenTempleIcon = GetObject((int)GameObjects.ForgottenTemple_Icon);
-        starShardPlainIcon = GetObject((int)GameObjects.StarShardPlain_Icon);
+        // 체크포인트 초기화
+        checkpoints = GameObject.Find("CheckPoints");
 
-        // 던전 이름 초기화
+        // 던전 아이콘 초기화를 반복문으로 처리
+        for (int i = 0; i < dungeonIcons.Length; i++)
+        {
+            // 던전 아이콘 배열 초기화
+            dungeonIcons[i] = GetObject((int)GameObjects.Tutorial_Icon + i);
+        }
+
+        // 던전 등급 및 이름 초기화
+        dungeonTierText = GetText((int)Texts.Dungeon_Tier_Text);
         dungeonNameText = GetText((int)Texts.Dungeon_Name_Text);
 
         // 던전 시간 초기화
@@ -285,26 +288,41 @@ public class Dungeon_Popup_UI : UI_Popup
     // 던전 정보 업데이트 메서드
     private void UpdateDungeonInfo()
     {
+        // 체크 포인트 개수 확인
+        if (checkpoints != null)
+        {
+            totalCheckpoints = checkpoints.transform.childCount;
+            Debug.Log($"@@@@@@@@@@@@@@@@@@{totalCheckpoints}");
+        }
+        else
+        {
+            Debug.LogError("'checkpoints' 오브젝트를 찾을 수 없습니다.");
+        }
+
         // 선택된 던전 번호를 가져옴
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
         
         // 튜토리얼 Scene일 경우, 선택된 던전 번호를 0으로 설정
         if (isTutorialScene) selectedDungeonNumber = 0;
 
-        // 아이콘 비활성화
-        tutorialIcon.SetActive(false);
-        deepForestIcon.SetActive(false);
-        forgottenTempleIcon.SetActive(false);
-        starShardPlainIcon.SetActive(false);
+        // 아이콘 비활성화를 반복문으로 처리
+        for (int i = 0; i < dungeonIcons.Length; i++)
+        {
+            // 던전 아이콘 배열 비활성화
+            dungeonIcons[i].SetActive(false);
+        }
 
         // 던전 번호에 따라 다른 텍스트와 아이콘 설정
-        (string dungeonName, GameObject activeIcon) = selectedDungeonNumber switch
+        (string dungeonTier, string dungeonName, GameObject activeIcon) = selectedDungeonNumber switch
         {
-            1 => ("깊은 숲", deepForestIcon),
-            2 => ("잊혀진 신전", forgottenTempleIcon),
-            3 => ("별의 조각 평원", starShardPlainIcon),
-            _ => ("던전처리기사 실기 시험장", tutorialIcon)
+            1 => ("초급 던전", "깊은 숲", dungeonIcons[1]),
+            2 => ("중급 던전", "잊혀진 신전", dungeonIcons[2]),
+            3 => ("고급 던전", "별의 조각 평원", dungeonIcons[3]),
+            _ => ("튜토리얼 던전", "던전처리기사 실기 시험장", dungeonIcons[0])
         };
+
+        // 던전 티어 설정
+        dungeonTierText.text = dungeonTier;
 
         // 던전 이름 설정
         dungeonNameText.text = dungeonName;
