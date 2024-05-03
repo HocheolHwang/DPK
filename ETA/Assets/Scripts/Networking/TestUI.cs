@@ -57,7 +57,7 @@ public class TestUI : MonoBehaviour
     {
         //PhotonManager photon = gameObject.GetComponent<PhotonManager>();
 
-        //Managers.Photon.MakeRoom();
+        Managers.Photon.JoinRandomRoom();
     }
     public void JoinRoom()
     {
