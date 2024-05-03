@@ -54,6 +54,7 @@ public class Lobby_Popup_UI : UI_Popup
         // 파티 탈퇴 Popup UI 띄우기 버튼 이벤트 등록
         openPartyLeaveButton = GetButton((int)Buttons.Open_Party_Leave_Button);
         AddUIEvent(openPartyLeaveButton.gameObject, OpenPartyLeave);
+        openPartyLeaveButton.gameObject.SetActive(false); // 임시로 비활성화
 
         // 던전 선택 Popup UI 띄우기 버튼 이벤트 등록
         openDungeonSelectButton = GetButton((int)Buttons.Open_Dungeon_Select_Button);
