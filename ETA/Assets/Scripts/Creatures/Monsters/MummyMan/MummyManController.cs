@@ -66,10 +66,10 @@ public class MummyManController : BaseMonsterController
         ATTACK_STATE = new AttackState(this);
         // SOMMON
         CLAP_STATE = new ClapState(this);
-        BACK_LOCATION_STATE = new BackLocationState(this);
 
         SHOUTING_STATE = new ShoutingState(this);
         JUMP_STATE = new JumpState(this);
+        BACK_LOCATION_STATE = new BackLocationState(this);
 
         // Global
         DIE_STATE = new DieState(this);

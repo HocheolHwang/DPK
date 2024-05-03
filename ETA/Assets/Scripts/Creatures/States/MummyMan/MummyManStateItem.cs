@@ -27,7 +27,8 @@ namespace MummyManStateItem
             }
             else if (_detector.Target != null)
             {
-                _controller.ChangeState(_controller.CHASE_STATE);
+                _controller.ChangeState(_controller.JUMP_STATE);
+                //_controller.ChangeState(_controller.CHASE_STATE);
             }
         }
 
@@ -269,20 +270,22 @@ namespace MummyManStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
+            _agent.enabled = false;               // BACK_LOCATION에서 true
+            _destPos = MonsterManager.Instance.GetCenterPos(_controller.transform); // y축은 transform.position.y
+
             InitTime(_animData.JumpAnim.length);
-
-            // Target 위치 저장
-            // Transition 위치 저장 -> static
-
             _animator.SetFloat("JumpSpeed", 0.5f);
             _animator.CrossFade(_animData.JumpParamHash, 0.1f);
+
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
 
-            if (_animTime >= (_threadHold * 2))
+            JumpToTarget(_animTime);
+
+            if (_animTime >= (_threadHold * 2.0f))
             {
                 _controller.ChangeState(_controller.IDLE_STATE);    // BAKC_LOCATION
             }
@@ -305,7 +308,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            _agent.velocity = Vector3.zero;
+            // 이동은 Pattern에서 관리
         }
 
         public override void Execute()
@@ -314,6 +317,7 @@ namespace MummyManStateItem
         }
         public override void Exit()
         {
+            _agent.enabled = true;
         }
     }
     #endregion
