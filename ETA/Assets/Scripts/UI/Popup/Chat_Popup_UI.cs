@@ -11,6 +11,7 @@ public class Chat_Popup_UI : UI_Popup
     // 열거형 정의
     enum Buttons
     {
+        Close_Button,
         Cancel_Button,
         Chat_Enter_Button
     }
@@ -21,6 +22,7 @@ public class Chat_Popup_UI : UI_Popup
     }
 
     // UI 컴포넌트 바인딩 변수
+    private Button closeButton;
     private Button cancelButton;
     private Button chatEnterButton;
     private TMP_InputField chatMessage;
@@ -38,6 +40,10 @@ public class Chat_Popup_UI : UI_Popup
         // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
         Bind<TMP_InputField>(typeof(InputFields));
+
+        // 닫기 버튼 이벤트 등록
+        closeButton = GetButton((int)Buttons.Close_Button);
+        AddUIEvent(closeButton.gameObject, Cancel);
 
         // 닫기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
