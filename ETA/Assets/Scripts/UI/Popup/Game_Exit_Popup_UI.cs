@@ -27,7 +27,7 @@ public class Game_Exit_Popup_UI : UI_Popup
         // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
 
-        // 돌아가기 버튼 이벤트 등록
+        // 취소하기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
@@ -41,7 +41,7 @@ public class Game_Exit_Popup_UI : UI_Popup
 
     // ------------------------------ 메서드 정의 ------------------------------
 
-    // 돌아가기 메서드
+    // 취소하기 메서드
     private void Cancel(PointerEventData data)
     {
         ClosePopupUI();
