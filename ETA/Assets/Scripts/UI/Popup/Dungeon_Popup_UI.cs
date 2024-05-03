@@ -100,8 +100,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private Slider playerEXPSlider;
 
     // 게임 위치 및 진행 상태 변수
-    public Transform[] checkpoints;
-    private int totalCheckpoints = 3;
+    private GameObject checkpoints;
+    private int totalCheckpoints;
     private int currentCheckpointIndex = 0;
     private float gameTime = 0f;
 
@@ -163,6 +163,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
 
         // --------------- 던전 정보 UI 초기화 ---------------
+
+        // 체크포인트 초기화
+        checkpoints = GameObject.Find("CheckPoints");
 
         // 던전 아이콘 초기화를 반복문으로 처리
         for (int i = 0; i < dungeonIcons.Length; i++)
@@ -285,6 +288,17 @@ public class Dungeon_Popup_UI : UI_Popup
     // 던전 정보 업데이트 메서드
     private void UpdateDungeonInfo()
     {
+        // 체크 포인트 개수 확인
+        if (checkpoints != null)
+        {
+            totalCheckpoints = checkpoints.transform.childCount;
+            Debug.Log($"@@@@@@@@@@@@@@@@@@{totalCheckpoints}");
+        }
+        else
+        {
+            Debug.LogError("'checkpoints' 오브젝트를 찾을 수 없습니다.");
+        }
+
         // 선택된 던전 번호를 가져옴
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
         
