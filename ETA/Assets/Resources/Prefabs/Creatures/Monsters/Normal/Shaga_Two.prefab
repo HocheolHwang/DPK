@@ -432,6 +432,7 @@ MonoBehaviour:
   Animator: {fileID: 0}
   Agent: {fileID: 0}
   Stat: {fileID: 0}
+  _isHitCounter: 0
 --- !u!114 &1944331424631495235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,7 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectRange: 15
+  _detectRange: 15
   _attackRange: 3
   _target: {fileID: 0}
   TargetLayerMask:
