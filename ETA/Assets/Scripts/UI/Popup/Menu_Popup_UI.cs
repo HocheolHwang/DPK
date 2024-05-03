@@ -10,6 +10,7 @@ public class Menu_Popup_UI : UI_Popup
     // 열거형 정의
     enum Buttons
     {
+        Close_Button,
         Open_Setting_Button,
         Close_Setting_Button,
         Open_Load_Lobby_Button,
@@ -24,6 +25,7 @@ public class Menu_Popup_UI : UI_Popup
     }
 
     // UI 컴포넌트 바인딩 변수
+    private Button closeButton;
     private Button openSettingButton;
     private Button closeSettingButton;
     private Button openLoadLobbyButton;
@@ -45,6 +47,10 @@ public class Menu_Popup_UI : UI_Popup
         // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
         Bind<GameObject>(typeof(GameObjects));
+
+        // 닫기 버튼 이벤트 등록
+        closeButton = GetButton((int)Buttons.Close_Button);
+        AddUIEvent(closeButton.gameObject, Cancel);
 
         // 설정 띄우기 버튼 이벤트 등록
         openSettingButton = GetButton((int)Buttons.Open_Setting_Button);
