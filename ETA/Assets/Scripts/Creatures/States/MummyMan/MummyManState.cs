@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using System.Data;
 using UnityEngine;
 
 public class MummyManState : State
@@ -13,6 +14,10 @@ public class MummyManState : State
 
     protected static float _shoutingTime;
     protected static float _threadHoldShouting = 15.0f;
+
+    protected static Transform _target;
+    protected static Vector3 _startPos;
+    protected static Vector3 _destPos;
 
     protected MummyManController _controller;
     protected MummyManAnimationData _animData;
@@ -41,6 +46,28 @@ public class MummyManState : State
         {
             _controller.ChangeState(_controller.CHASE_STATE);
         }
+    }
+
+    // -------------------------- JUMP FUNCTIONS -----------------------------------
+
+    // Time.deltatime을 인자로 받으면?
+    protected bool JumpToTarget(float deltaTime)   // 점프 상태일 때는 forward지만, BACK_LOCATION 상태일 때는 뒤로 돌고 forward이다.
+    {
+        _startPos = _controller.transform.position;
+        if (Vector3.Distance(_startPos, _destPos) <= 0.1f)
+        {
+            _controller.transform.position = _destPos;
+            return true;
+        }
+        //float duration = _threadHold * (1.0f / animSpeed);
+
+        // destPos 방향을 바라본다.
+        _controller.transform.LookAt(_destPos);
+
+        // duration초 만큼 이동한다.
+        Vector3 moveStopPos = Vector3.Lerp(_startPos, _destPos, deltaTime / 25);
+        _controller.transform.position = moveStopPos;
+        return false;
     }
 
     // -------------------------- GLOBAL FUNCTIONS -----------------------------------
@@ -76,6 +103,7 @@ public class MummyManState : State
             _detector = _controller.GetComponent<RangedDetector>();
 
             _agent.stoppingDistance = _detector.AttackRange;
+            _target = _detector.Target;
         }
         else
         {
@@ -84,6 +112,7 @@ public class MummyManState : State
             _detector = _controller.GetComponent<MeleeDetector>();
 
             _agent.stoppingDistance = _detector.AttackRange;
+            _target = _detector.Target;
         }
     }
 

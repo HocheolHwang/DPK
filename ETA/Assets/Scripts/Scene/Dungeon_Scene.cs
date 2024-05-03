@@ -11,6 +11,7 @@ public class Dungeon_Scene : BaseScene
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/DeepForest");
         Managers.UI.ShowPopupUI<Fade_Effect_UI>("[Common]_Fade_Effect_UI");
+        Managers.Resource.Instantiate("MonsterManager").name = "@MonsterManager";
     }
     
     public override void Clear()

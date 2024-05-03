@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectRange: 15
+  _detectRange: 18
   _attackRange: 14
   _target: {fileID: 0}
   TargetLayerMask:
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectRange: 15
+  _detectRange: 15
   _attackRange: 4
   _target: {fileID: 0}
   TargetLayerMask:

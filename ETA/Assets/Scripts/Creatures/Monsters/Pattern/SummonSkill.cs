@@ -18,6 +18,7 @@ public class SummonSkill : MonoBehaviour
 
     private NavMeshAgent _agent;
 
+    [Header("사망, 소환 횟수 디버깅")]
     [SerializeField]  private int _bufferSummonCount = 0;
     [SerializeField]  private int _warriorSummonCount = 0;
     [SerializeField]  private int _bufferDeathCount = 0;                         // buffer와 warrior가 한 번씩 죽었을 경우, 글로벌에서 이를 감지하여 CLAP으로 전환, 단 공격 및 패턴 상태일 때는 안 됨
