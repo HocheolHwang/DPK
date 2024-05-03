@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 6760424032922597382}
   - component: {fileID: 2083004164519320189}
   m_Layer: 5
-  m_Name: Dungeon_Enter_Button_Text
+  m_Name: Party_Leave_Button_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 113.765, y: 0}
+  m_AnchoredPosition: {x: 117.765, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8072155916449682388
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC785\uC7A5\uD558\uAE30"
+  m_text: "\uD30C\uD2F0 \uD0C8\uD1F4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 107322b28a6fb8048a7c497c93a609d7, type: 2}
   m_sharedMaterial: {fileID: -6761498643447211643, guid: 107322b28a6fb8048a7c497c93a609d7, type: 2}
@@ -237,9 +237,9 @@ GameObject:
   - component: {fileID: 157182885887453997}
   - component: {fileID: 6394328159706182345}
   - component: {fileID: 6460234129826568812}
-  - component: {fileID: 8321081998393616258}
+  - component: {fileID: 7388353857740393215}
   m_Layer: 5
-  m_Name: '[Lobby]_Dungeon_Enter_Popup_UI'
+  m_Name: '[Lobby]_Party_Leave_Popup_UI'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8321081998393616258
+--- !u!114 &7388353857740393215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1497264639093478386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 864a3b7b6ccfb2c4a814d311a11fd4d2, type: 3}
+  m_Script: {fileID: 11500000, guid: e97a79ba8c669bf40ad7948e3ab122f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1575425603105001857
@@ -579,7 +579,7 @@ GameObject:
   - component: {fileID: 6546436675519355659}
   - component: {fileID: 7299523275325411991}
   m_Layer: 5
-  m_Name: Dungeon_Enter_Title_Text
+  m_Name: Party_Leave_Title_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB358\uC804 \uC785\uC7A5"
+  m_text: "\uD30C\uD2F0 \uD0C8\uD1F4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 107322b28a6fb8048a7c497c93a609d7, type: 2}
   m_sharedMaterial: {fileID: -6761498643447211643, guid: 107322b28a6fb8048a7c497c93a609d7, type: 2}
@@ -781,7 +781,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB358\uC804\uC5D0 \uC785\uC7A5\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  m_text: "\uD30C\uD2F0\uC5D0\uC11C \uD0C8\uD1F4\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 107322b28a6fb8048a7c497c93a609d7, type: 2}
   m_sharedMaterial: {fileID: -6761498643447211643, guid: 107322b28a6fb8048a7c497c93a609d7, type: 2}
@@ -1034,7 +1034,7 @@ GameObject:
   - component: {fileID: 6079761784618845975}
   - component: {fileID: 1781369461744948771}
   m_Layer: 5
-  m_Name: Dungeon_Enter_Button
+  m_Name: Party_Leave_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1058,7 +1058,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 361.29498, y: 0}
+  m_AnchoredPosition: {x: 365.29498, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6284947424053753729
@@ -1416,7 +1416,7 @@ GameObject:
   - component: {fileID: 9066715539228538971}
   - component: {fileID: 5149141025046744124}
   m_Layer: 5
-  m_Name: Dungeon_Enter_Popup_Container
+  m_Name: Party_Leave_Popup_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

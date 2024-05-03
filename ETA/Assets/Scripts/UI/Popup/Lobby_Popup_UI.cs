@@ -11,6 +11,7 @@ public class Lobby_Popup_UI : UI_Popup
     enum Buttons
     {
         Open_Party_Join_Button,
+        Open_Party_Leave_Button,
         Open_Dungeon_Select_Button,
         Open_Dungeon_Enter_Button,
         Open_Chat_Button,
@@ -26,6 +27,7 @@ public class Lobby_Popup_UI : UI_Popup
 
     // UI 컴포넌트 바인딩 변수
     private Button openPartyJoinButton;
+    private Button openPartyLeaveButton;
     private Button openDungeonSelectButton;
     private Button openDungeonEnterButton;
     private Button openChatButton;
@@ -48,6 +50,11 @@ public class Lobby_Popup_UI : UI_Popup
         // 파티 참가 Popup UI 띄우기 버튼 이벤트 등록
         openPartyJoinButton = GetButton((int)Buttons.Open_Party_Join_Button);
         AddUIEvent(openPartyJoinButton.gameObject, OpenPartyJoin);
+
+        // 파티 탈퇴 Popup UI 띄우기 버튼 이벤트 등록
+        openPartyLeaveButton = GetButton((int)Buttons.Open_Party_Leave_Button);
+        AddUIEvent(openPartyLeaveButton.gameObject, OpenPartyLeave);
+        openPartyLeaveButton.gameObject.SetActive(false); // 임시로 비활성화
 
         // 던전 선택 Popup UI 띄우기 버튼 이벤트 등록
         openDungeonSelectButton = GetButton((int)Buttons.Open_Dungeon_Select_Button);
@@ -88,6 +95,13 @@ public class Lobby_Popup_UI : UI_Popup
 
         // 파티 참가 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Party_Join_Popup_UI>("[Lobby]_Party_Join_Popup_UI");
+    }
+
+    // 파티 탈퇴 Popup UI 띄우기 메서드
+    private void OpenPartyLeave(PointerEventData data)
+    {
+        // 파티 탈퇴 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Party_Leave_Popup_UI>("[Lobby]_Party_Leave_Popup_UI");
     }
 
     // 던전 선택 Popup UI 띄우기 메서드

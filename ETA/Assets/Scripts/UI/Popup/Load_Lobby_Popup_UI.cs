@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Load_Lobby_Popup_UI : UI_Popup
@@ -28,7 +27,7 @@ public class Load_Lobby_Popup_UI : UI_Popup
         // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
 
-        // 남아있기 버튼 이벤트 등록
+        // 취소하기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
@@ -42,7 +41,7 @@ public class Load_Lobby_Popup_UI : UI_Popup
 
     // ------------------------------ 메서드 정의 ------------------------------
 
-    // 남아있기 메서드
+    // 취소하기 메서드
     private void Cancel(PointerEventData data)
     {
         ClosePopupUI();
@@ -55,7 +54,6 @@ public class Load_Lobby_Popup_UI : UI_Popup
         CloseAllPopupUI();
 
         // 로비 Scene으로 이동
-        //SceneManager.LoadScene("Lobby");
         Managers.Scene.LoadScene(Define.Scene.Lobby);
     }
 }

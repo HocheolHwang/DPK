@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Result_Popup_UI : UI_Popup
@@ -42,7 +41,6 @@ public class Result_Popup_UI : UI_Popup
         CloseAllPopupUI();
 
         // 로비 씬으로 이동
-        //SceneManager.LoadScene("Lobby");
         Managers.Scene.LoadScene(Define.Scene.Lobby);
     }
 }

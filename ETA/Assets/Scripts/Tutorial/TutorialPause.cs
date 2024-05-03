@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class PanelState
+{
+    public GameObject[] pausePanels;
+    public int currentPanelIndex = 0;
+}
+
 public class TutorialPause : MonoBehaviour
 {
-    public GameObject[] pausePanels; // 인스펙터에서 할당할 UI 팝업 배열
-    private int currentPanelIndex = 0; // 현재 표시된 팝업의 인덱스
+    public PanelState panelState;
 
     void OnTriggerEnter(Collider other)
     {
@@ -17,41 +23,39 @@ public class TutorialPause : MonoBehaviour
 
     public void PauseGame()
     {
-        Time.timeScale = 0;  // 게임 일시 정지
-        if (pausePanels.Length > 0)
+        Time.timeScale = 0;
+        if (panelState.pausePanels.Length > 0)
         {
-            pausePanels[currentPanelIndex].SetActive(true); // 첫 번째 UI 팝업 활성화
+            panelState.pausePanels[panelState.currentPanelIndex].SetActive(true);
         }
     }
 
     public void ResumeGame()
     {
-        Time.timeScale = 1; // 게임 재개
-        if (currentPanelIndex < pausePanels.Length)
+        foreach (var panel in panelState.pausePanels)
         {
-            pausePanels[currentPanelIndex].SetActive(false); // 현재 팝업 비활성화
+            panel.SetActive(false);
         }
+        Time.timeScale = 1;
+        panelState.currentPanelIndex = 0;
     }
 
     public void ShowNextPanel()
     {
-        // 현재 패널을 비활성화
-        if (currentPanelIndex < pausePanels.Length)
+        if (panelState.currentPanelIndex < panelState.pausePanels.Length)
         {
-            pausePanels[currentPanelIndex].SetActive(false);
+            panelState.pausePanels[panelState.currentPanelIndex].SetActive(false);
         }
 
-        // 인덱스 증가
-        currentPanelIndex++;
+        panelState.currentPanelIndex++;
 
-        // 다음 패널 활성화
-        if (currentPanelIndex < pausePanels.Length)
+        if (panelState.currentPanelIndex < panelState.pausePanels.Length)
         {
-            pausePanels[currentPanelIndex].SetActive(true);
+            panelState.pausePanels[panelState.currentPanelIndex].SetActive(true);
         }
         else
         {
-            // 모든 패널을 보여준 후 게임을 재개
+            panelState.currentPanelIndex = 0;  // Reset index
             ResumeGame();
         }
     }
