@@ -13,11 +13,12 @@ using static UnityEngine.GraphicsBuffer;
 public class MeleeDetector : MonoBehaviour, IDetector
 {
     [Header("Set Values from the Inspector")]
-    [SerializeField] public float DetectRange;
+    [SerializeField] private float _detectRange = 15.0f;
     [SerializeField] private float _attackRange;              // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask TargetLayerMask;
 
+    public float DetectRange { get => _detectRange; set => _detectRange = value; }
     public float AttackRange { get => _attackRange; private set => _attackRange = value; }
     public Transform Target { get => _target; private set => _target = value; }
 

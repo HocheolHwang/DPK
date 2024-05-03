@@ -76,7 +76,6 @@ public class MummyManState : State
             _detector = _controller.GetComponent<RangedDetector>();
 
             _agent.stoppingDistance = _detector.AttackRange;
-            _curAttackRange = _detector.AttackRange;
         }
         else
         {
@@ -85,7 +84,6 @@ public class MummyManState : State
             _detector = _controller.GetComponent<MeleeDetector>();
 
             _agent.stoppingDistance = _detector.AttackRange;
-            _curAttackRange = _detector.AttackRange;
         }
     }
 

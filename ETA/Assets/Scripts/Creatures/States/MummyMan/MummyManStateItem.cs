@@ -226,7 +226,7 @@ namespace MummyManStateItem
     #region SHOUTING
     public class ShoutingState : MummyManState
     {
-        // 3초 동안 기절을 부여한다.
+        // 3초 동안 기절을 부여한다. -> hit box에 추가
         public ShoutingState(MummyManController controller) : base(controller)
         {
         }
@@ -247,6 +247,44 @@ namespace MummyManStateItem
             if (_animTime >= (_threadHold * 2))
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+            _shoutingTime = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- JUMP ------------------------------------------------
+    #region JUMP
+    public class JumpState : MummyManState
+    {
+        // 3초 동안 기절을 부여한다. -> hit box에 추가
+        public JumpState(MummyManController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            InitTime(_animData.JumpAnim.length);
+
+            // Target 위치 저장
+            // Transition 위치 저장 -> static
+
+            _animator.SetFloat("JumpSpeed", 0.5f);
+            _animator.CrossFade(_animData.JumpParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            if (_animTime >= (_threadHold * 2))
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);    // BAKC_LOCATION
             }
         }
 

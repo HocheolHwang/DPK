@@ -1467,7 +1467,7 @@ Transform:
   m_GameObject: {fileID: 6508141731047996470}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 22.4, y: 0.083333336, z: -18.2}
+  m_LocalPosition: {x: 22.4, y: 0.083333336, z: -10.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1634,7 +1634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectRange: 18
+  _detectRange: 18
   _attackRange: 14
   _target: {fileID: 0}
   TargetLayerMask:

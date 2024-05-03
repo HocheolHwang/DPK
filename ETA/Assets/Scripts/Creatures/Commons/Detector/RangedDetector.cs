@@ -17,7 +17,7 @@ using static UnityEngine.GraphicsBuffer;
 public class RangedDetector : MonoBehaviour, IDetector
 {
     [Header("Set Values from the Inspector")]
-    [SerializeField] public float DetectRange = 18.0f;
+    [SerializeField] private float _detectRange = 18.0f;
     [SerializeField] private float _attackRange = 14.0f;
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask TargetLayerMask;
@@ -27,6 +27,7 @@ public class RangedDetector : MonoBehaviour, IDetector
     private float _waitSeconds;             // 기다린 시간
     private bool _isWaitComplete;           // 1.5초 기다렸나
 
+    public float DetectRange { get => _detectRange; set => _detectRange = value; }
     public float AttackRange { get => _attackRange; private set => _attackRange = value; }
     public Transform Target { get => _target; private set => _target = value; }
 
@@ -64,7 +65,7 @@ public class RangedDetector : MonoBehaviour, IDetector
 
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, DetectRange);
+        if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, _detectRange);
         else Gizmos.DrawWireSphere(_ray.origin, _attackRange);
     }
 
@@ -76,7 +77,7 @@ public class RangedDetector : MonoBehaviour, IDetector
         {
             yield return new WaitForSeconds(0.1f);
 
-            Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);
+            Collider[] enemies = Physics.OverlapSphere(transform.position, _detectRange, TargetLayerMask);
             if (enemies.Length == 0)
             {
                 _target = null;

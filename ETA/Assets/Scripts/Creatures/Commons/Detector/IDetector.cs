@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IDetector
 {
+    float DetectRange { get; set; }
     float AttackRange { get; }
     Transform Target { get; }
 

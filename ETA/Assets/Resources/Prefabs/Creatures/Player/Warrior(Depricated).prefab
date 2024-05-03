@@ -1864,12 +1864,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc78a9e555d3b941991385ee941d921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 0
-  animator: {fileID: 0}
-  agent: {fileID: 0}
-  stat: {fileID: 0}
+  UnitType: 0
+  Animator: {fileID: 0}
+  Agent: {fileID: 0}
+  Stat: {fileID: 0}
   _destination: {fileID: 0}
   _usingSkill: 0
+  isFinished: 0
 --- !u!195 &5141149260217362134
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1948,12 +1949,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 15
+  _detectRange: 3
   _attackRange: 3
   _target: {fileID: 0}
-  targetLayerMask:
+  TargetLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &7290405898905307331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1971,6 +1972,7 @@ MonoBehaviour:
   _moveSpeed: 6
   _attackDamage: 25
   _defense: 10
+  _shield: 0
 --- !u!1 &5137033652983234045
 GameObject:
   m_ObjectHideFlags: 0
