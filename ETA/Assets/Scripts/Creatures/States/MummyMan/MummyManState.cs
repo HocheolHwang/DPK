@@ -48,26 +48,29 @@ public class MummyManState : State
         }
     }
 
-    // -------------------------- JUMP FUNCTIONS -----------------------------------
+    // -------------------------- JUMP && BACK_LOCATION FUNCTIONS -----------------------------------
 
     // Time.deltatime을 인자로 받으면?
-    protected bool JumpToTarget(float deltaTime)   // 점프 상태일 때는 forward지만, BACK_LOCATION 상태일 때는 뒤로 돌고 forward이다.
+    protected void JumpToTarget(float deltaTime)   // 점프 상태일 때는 forward지만, BACK_LOCATION 상태일 때는 뒤로 돌고 forward이다.
     {
-        _startPos = _controller.transform.position;
         if (Vector3.Distance(_startPos, _destPos) <= 0.1f)
         {
             _controller.transform.position = _destPos;
-            return true;
+            return;
         }
-        //float duration = _threadHold * (1.0f / animSpeed);
 
         // destPos 방향을 바라본다.
         _controller.transform.LookAt(_destPos);
 
         // duration초 만큼 이동한다.
-        Vector3 moveStopPos = Vector3.Lerp(_startPos, _destPos, deltaTime / 25);
+        Vector3 moveStopPos = Vector3.Lerp(_startPos, _destPos, deltaTime);
         _controller.transform.position = moveStopPos;
-        return false;
+    }
+
+    protected void SetStartAndDestPos(Vector3 startPos, Vector3 destPos)
+    {
+        _startPos = startPos;
+        _destPos = destPos;
     }
 
     // -------------------------- GLOBAL FUNCTIONS -----------------------------------
