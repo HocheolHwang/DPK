@@ -40,11 +40,11 @@ public class SequentialTimelinePlayer : MonoBehaviour
             {
                 directors[currentDirectorIndex].Play();
             }
-            //else
-            //{
-            //    // 모든 타임라인이 재생된 후 로그인 씬으로 전환
-            //    GoToLoginScene();
-            //}
+            else
+            {
+                // 모든 타임라인이 재생된 후 로그인 씬으로 전환
+                GoToLoginScene();
+            }
         }
     }
 
@@ -58,6 +58,6 @@ public class SequentialTimelinePlayer : MonoBehaviour
 
     public void GoToLoginScene()
     {
-        SceneManager.LoadScene("Login");
+        Managers.Scene.LoadScene(Define.Scene.Login);
     }
 }
