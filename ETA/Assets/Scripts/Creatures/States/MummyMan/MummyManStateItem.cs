@@ -57,7 +57,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
-            if (_controller.PrevState == _controller.JUMP_STATE /* || wind mill 추가*/)
+            if (IsPreviousState())
             {
                 _controller.ChangeState(_controller.BACK_LOCATION_STATE);
             }
@@ -301,6 +301,42 @@ namespace MummyManStateItem
         public override void Exit()
         {
             _jumpTime = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- RUSH ------------------------------------------------
+    #region RUSH
+    public class RushState : MummyManState
+    {
+        public RushState(MummyManController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            SetStartAndDestPos(_controller.transform.position, _destPos);
+
+            // pattern 수행
+
+            InitTime(_animData.RushAnim.length);
+            _animator.SetFloat("RushSpeed", 0.5f);
+            _animator.CrossFade(_animData.RushParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            if (_animTime >= (_threadHold * 2.0f))
+            {
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+        public override void Exit()
+        {
         }
     }
     #endregion
