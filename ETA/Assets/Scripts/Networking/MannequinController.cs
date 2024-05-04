@@ -42,14 +42,13 @@ public class MannequinController : MonoBehaviour
         transform.GetChild(1).gameObject.SetActive(false);
         transform.GetChild(2).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(false);
-
+        Debug.Log($"{transform.GetChild(1).gameObject.name} {transform.GetChild(2).gameObject.name} {transform.GetChild(3).gameObject.name}");
         if(classCode == "C001")
         {
             transform.GetChild(1).gameObject.SetActive(true);
         }
         else if(classCode == "C002")
         {
-            Debug.Log("askldjasd");
             transform.GetChild(2).gameObject.SetActive(true);
         }
         else if(classCode == "C003")

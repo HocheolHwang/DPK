@@ -184,14 +184,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 현재 플레이어 직업 저장
     public void SetPlayerClass()
     {
-        if (PhotonNetwork.LocalPlayer.CustomProperties["CurClass"] == null)
+            Debug.Log($"현재 직업은 {Managers.Player.GetClassCode()} 입니다.");
+        //if (PhotonNetwork.LocalPlayer.CustomProperties["CurClass"] == null)
         {
+            Debug.Log("새로 추가");
             ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable() { { "CurClass", Managers.Player.GetClassCode() } };
             PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
-        }
-        else
-        {
-            PhotonNetwork.LocalPlayer.CustomProperties["CurClass"] = Managers.Player.GetClassCode();
         }
     }
 
@@ -241,7 +239,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         foreach(Photon.Realtime.Player player in PhotonNetwork.PlayerList)
         {
-            if (player.CustomProperties["PlayerIndex"] == null && player.CustomProperties["CurClass"] == null) return;
+            if (player.CustomProperties["PlayerIndex"] == null || player.CustomProperties["CurClass"] == null) return;
             Debug.Log(player.NickName);
             Debug.Log((int)player.CustomProperties["PlayerIndex"]);
             Debug.Log((string)player.CustomProperties["CurClass"]);
@@ -306,7 +304,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 ExitGames.Client.Photon.Hashtable properties = player.CustomProperties;
                 if (properties["PlayerIndex"] == null)
                 {
-                    Debug.Log(idx + "추가!!!!!!!!!!!!!!!");
                     properties.Add("PlayerIndex", idx);
                 }
                 else
@@ -418,7 +415,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         foreach (DictionaryEntry entry in changedProps)
         {
-            Debug.Log($"{targetPlayer.NickName}'s Property {entry.Key} changed to {entry.Value}");
+              Debug.Log($"{targetPlayer.NickName}'s Property {entry.Key} changed to {entry.Value}");
 
             if((string)entry.Key == "CurClass")
             {
@@ -429,9 +426,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 mannequins[(int)entry.Value].SetNickName(targetPlayer.NickName);
             }
         }
-
-        if ((int)targetPlayer.CustomProperties["PlayerIndex"] == 2)
-            Debug.LogError("비이이이이ㅣ이이이이사아아아ㅏ아아아앙!!!!!!");
     }
     #endregion
 }

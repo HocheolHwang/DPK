@@ -25,6 +25,7 @@ public class Lobby_Scene : BaseScene
         }
 
         Managers.Sound.Play("BackgroundMusic/Lobby");
+        Managers.Photon.Connect();
     }
 
     public override void Clear()
