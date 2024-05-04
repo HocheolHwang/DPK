@@ -33,6 +33,8 @@ public class MummyManState : State
     }
 
     // -------------------------- ATTACK FUNCTIONS -----------------------------------
+
+    #region ATTACK FUNCTIONS
     protected void ControlChangeState() // 근접 + 3타 중간에 있는 상태 전환 조건
     {
         if (_detector.Target == null)
@@ -49,9 +51,14 @@ public class MummyManState : State
             _controller.ChangeState(_controller.CHASE_STATE);
         }
     }
+    #endregion
 
     // -------------------------- JUMP && BACK_LOCATION FUNCTIONS -----------------------------------
+    
+    // Pattern에서 구현하도록 수정
     #region JUMP AND BACK_LOCATION FUNCTIONS
+
+    // pattern에서 구현할지 결정
     protected void JumpToTarget(float deltaTime)   // 점프 상태일 때는 forward지만, BACK_LOCATION 상태일 때는 뒤로 돌고 forward이다.
     {
         if (Vector3.Distance(_startPos, _destPos) <= 0.1f)
@@ -75,6 +82,30 @@ public class MummyManState : State
     }
     #endregion
 
+    // -------------------------- RUSH FUNCTIONS -----------------------------------
+    public bool IsPreviousState()
+    {
+        // wind mill 추가
+
+        if (_controller.PrevState == _controller.JUMP_STATE) return true;
+        if (_controller.PrevState == _controller.RUSH_STATE) return true;
+        // if (_controller.PrevState == _controller.) return true;
+
+        return false;
+    }
+
+    // pattern에서 이동 구현
+    public void RushToTarget()
+    {
+        // agent speed를 N배 증가 또는 일정 수치를 할당
+        _agent.speed = 10.0f;
+
+        // 목적지까지 agent를 이동
+        _agent.SetDestination(_destPos);
+
+        // agent.speed = Stat.MoveSpeed 원상복구
+    }
+
     // -------------------------- GLOBAL FUNCTIONS -----------------------------------
     #region GLOBAL_FUNCTIONS
     public void CheckGlobal()
@@ -91,6 +122,13 @@ public class MummyManState : State
         {
             if ((_controller.CurState == _controller.IDLE_STATE) || (_controller.CurState == _controller.IDLE_BATTLE_STATE) || (_controller.CurState == _controller.CHASE_STATE))
                 _controller.ChangeState(_controller.CLAP_STATE);
+        }
+        else if (IsDeadWarrior())
+        {
+            // Change Attack Mode
+            _isRangedAttack = false;
+
+            // ChangeState - Rush
         }
     }
 
@@ -135,6 +173,17 @@ public class MummyManState : State
                     return true;
             }
         }
+        return false;
+    }
+
+    private bool IsDeadWarrior()
+    {
+        if (_meetPlayer && (_summonSkill.BufferDeathCount == MaxSummonCount))
+        {
+            Debug.Log("Execute -Warrior DIE Event-");
+            return true;
+        }
+
         return false;
     }
     #endregion
