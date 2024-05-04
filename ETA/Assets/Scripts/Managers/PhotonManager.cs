@@ -21,6 +21,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     // current room
     private RoomInfo selectRoom;
+
+    // 로비 마네킹 관리를 위한 리스트
+    MannequinController[] mannequins = new MannequinController[3];
+
     #endregion
 
     #region public fields
@@ -72,6 +76,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
+        MannequinController[] treeMannequin = GameObject.FindObjectsOfType<MannequinController>();
+
+        Debug.Log(treeMannequin[0].index);
+
+        for(int i = 0; i<3; i++)
+          mannequins[treeMannequin[i].index] = treeMannequin[i];
+
+
+        //mannequins[0].EnterPlayer("0", "C001");
+        //mannequins[1].EnterPlayer("1", "C002");
+        //mannequins[2].EnterPlayer("2", "C003");
     }
 
     #endregion
@@ -82,7 +97,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void Connect()
     {
         // 임시 코드         
-        //Managers.PlayerInfo.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
+        if(Managers.Player.GetNickName()==null)
+        Managers.Player.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
         Managers.Player.SetNickName(Managers.Player.GetNickName());
         //Debug.Log(Managers.PlayerInfo.GetNickName());
 
@@ -155,6 +171,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
             Managers.Player.SetPartyLeader(true);
 
+        mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
+
         PhotonNetwork.CreateRoom(roomName, room);
     }
 
@@ -166,14 +184,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 현재 플레이어 직업 저장
     public void SetPlayerClass()
     {
-        if (PhotonNetwork.LocalPlayer.CustomProperties["CurClass"] == null)
+            Debug.Log($"현재 직업은 {Managers.Player.GetClassCode()} 입니다.");
+        //if (PhotonNetwork.LocalPlayer.CustomProperties["CurClass"] == null)
         {
+            Debug.Log("새로 추가");
             ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable() { { "CurClass", Managers.Player.GetClassCode() } };
             PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
-        }
-        else
-        {
-            PhotonNetwork.LocalPlayer.CustomProperties["CurClass"] = Managers.Player.GetClassCode();
         }
     }
 
@@ -205,6 +221,30 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.InRoom) return;
         // room -> Lobby
         PhotonNetwork.LeaveRoom();
+
+        mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
+        
+        mannequins[1].Init();
+        mannequins[2].Init();
+
+    }
+
+    public void ChangeMannequin()
+    {
+        Debug.Log("ghkfktyhuftyjrfyf  " + PhotonNetwork.PlayerList.Length + " + " + PhotonNetwork.CountOfPlayersInRooms);
+        for(int i = 0; i<3; i++)
+        {
+            mannequins[i].Init();
+        }
+
+        foreach(Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.CustomProperties["PlayerIndex"] == null || player.CustomProperties["CurClass"] == null) return;
+            Debug.Log(player.NickName);
+            Debug.Log((int)player.CustomProperties["PlayerIndex"]);
+            Debug.Log((string)player.CustomProperties["CurClass"]);
+            mannequins[(int)player.CustomProperties["PlayerIndex"]].EnterPlayer(player.NickName, (string)player.CustomProperties["CurClass"]);
+        }
     }
 
     // 방 리스트
@@ -256,10 +296,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         int idx = 0;
         foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
         {
-            // Debug.Log(idx + " : " + player.NickName);
+             Debug.Log(idx + " : " + player.NickName);
             if (player.IsLocal)
             {
                 Managers.Player.SetIndex(idx);
+
+                ExitGames.Client.Photon.Hashtable properties = player.CustomProperties;
+                if (properties["PlayerIndex"] == null)
+                {
+                    properties.Add("PlayerIndex", idx);
+                }
+                else
+                    properties["PlayerIndex"] = idx;
+
+                PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
             }
             idx++;
         }
@@ -328,33 +378,54 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 방에 들어오자마자 닉네임 설정
         if (PhotonNetwork.NickName == null)
             PhotonNetwork.NickName = Managers.Player.GetNickName();
-        
         updatePlayerList();
+        SetPlayerClass();
+        ChangeMannequin();
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         // 방 나간사람이 있는 경우 번호 갱신
         updatePlayerList();
+        ChangeMannequin();
     }
 
     // 마스터 클라이언트가 변경 되었을 때 호출
     public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
     {
-
         if (PhotonNetwork.IsMasterClient)
         {
+            Debug.Log("하이");
             ExitGames.Client.Photon.Hashtable curProperties = PhotonNetwork.CurrentRoom.CustomProperties;
             // 방장 변경
             Managers.Player.SetPartyLeader(true);
             curProperties["partyLeader"] = Managers.Player.GetNickName();
             PhotonNetwork.CurrentRoom.SetCustomProperties(curProperties);
         }
+
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         updatePlayerList();
+        ChangeMannequin();  
+    }
+
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        foreach (DictionaryEntry entry in changedProps)
+        {
+              Debug.Log($"{targetPlayer.NickName}'s Property {entry.Key} changed to {entry.Value}");
+
+            if((string)entry.Key == "CurClass")
+            {
+                mannequins[(int)targetPlayer.CustomProperties["PlayerIndex"]].ClassUpdate((string)entry.Value);
+            }
+            if((string)entry.Key == "PlayerIndex")
+            {
+                mannequins[(int)entry.Value].SetNickName(targetPlayer.NickName);
+            }
+        }
     }
     #endregion
 }
