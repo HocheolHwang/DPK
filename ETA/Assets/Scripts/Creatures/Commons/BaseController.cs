@@ -62,7 +62,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
         }
         else
         {
-            if(Stat.Shield <= 0 && _shieldEffect != null)
+            if (Stat.Shield <= 0 && _shieldEffect != null)
             {
                 Managers.Resource.Destroy(_shieldEffect.gameObject);
 
@@ -103,7 +103,16 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
     // ---------------------------------- IDamage ------------------------------------------
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
+        if (PhotonNetwork.IsMasterClient == false) return;
+        SendTakeDamageMsg(attackDamage, isCounter);
+
         // 최소 데미지 = 1
+        CalcDamage(attackDamage, isCounter);
+
+    }
+
+    public void CalcDamage(int attackDamage, bool isCounter)
+    {
         int damage = attackDamage - Stat.Defense;
         if (damage <= 1)
         {
@@ -129,7 +138,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
 
         attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
         attackedDamage_ui.AttackedDamage = damage;
-        
+
         Stat.Hp -= damage;
         AttackedEvent();
 
@@ -141,12 +150,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
         }
         else if (isCounter)
         {
-            GimmickEvent();
+            if(PhotonNetwork.IsMasterClient) GimmickEvent();
         }
     }
 
     public virtual void AttackedEvent() {
-        
+
     }
 
     public virtual void GimmickEvent()
@@ -232,8 +241,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
                 yield break;
             }
         }
-        
-        
+
+
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -259,11 +268,18 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
 
     public void FixedUpdate()
     {
-        Debug.Log("123123123");
         if (!photonView.IsMine)
         {
+            Debug.Log($"{gameObject.name}");
             transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
         }
     }
+
+    public void SendTakeDamageMsg(int attackDamage, bool isCounter)
+    {
+        photonView.RPC("RPC_TakeDamage", RpcTarget.Others, attackDamage, isCounter);
+    }
+
+
 }

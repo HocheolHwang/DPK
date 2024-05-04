@@ -136,8 +136,16 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -4221738504683466274, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
-      propertyPath: ObservedComponents.Array.size
+      propertyPath: observableSearch
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4221738504683466274, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4221738504683466274, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
+      propertyPath: ObservedComponents.Array.data[2]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 21808139380560185, guid: 8154b13638ef82148950b71dc638c68c, type: 3}
       propertyPath: m_Layer

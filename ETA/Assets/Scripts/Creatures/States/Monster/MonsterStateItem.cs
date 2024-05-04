@@ -22,6 +22,7 @@ namespace MonsterStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if ( _detector.Target != null)
             {
                 _controller.ChangeState(_controller.CHASE_STATE);
@@ -54,6 +55,7 @@ namespace MonsterStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (IsStayForSeconds())
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
@@ -84,6 +86,7 @@ namespace MonsterStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (_detector.Target == null)
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
@@ -126,6 +129,7 @@ namespace MonsterStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime > _threadHold * 2.0f)                    // 애니메이션 재생 시간이 2배 늘어난다.
             {
@@ -163,6 +167,7 @@ namespace MonsterStateItem
 
         public override void Enter() 
         {
+
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToDieState();
             _agent.isStopped = true;
             SearchUnitType();
@@ -212,6 +217,7 @@ namespace MonsterStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
 

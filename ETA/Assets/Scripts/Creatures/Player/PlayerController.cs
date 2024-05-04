@@ -251,4 +251,10 @@ public class PlayerController : BaseController
     {
         ChangeState(DIE_STATE);
     }
+
+    [PunRPC]
+    void RPC_TakeDamage(int attackDamage, bool isCounter)
+    {
+        CalcDamage(attackDamage, isCounter);
+    }
 }
