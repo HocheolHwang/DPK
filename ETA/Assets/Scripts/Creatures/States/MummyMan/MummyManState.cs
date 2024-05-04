@@ -13,7 +13,9 @@ public class MummyManState : State
     protected const int MaxSummonCount = 1;                // 첫 조우 이후에 Buffer와 Warrior가 살아날 수 있는 횟수
 
     protected static float _shoutingTime;
-    protected static float _threadHoldShouting = 15.0f;
+    protected static float _threadHoldShouting = 14.0f;
+    protected static float _jumpTime;
+    protected static float _threadHoldJump = 30.5f;
 
     protected static Transform _target;
     protected static Vector3 _startPos;
@@ -31,7 +33,7 @@ public class MummyManState : State
     }
 
     // -------------------------- ATTACK FUNCTIONS -----------------------------------
-    protected void ControlChangeState()
+    protected void ControlChangeState() // 근접 + 3타 중간에 있는 상태 전환 조건
     {
         if (_detector.Target == null)
         {
@@ -49,8 +51,7 @@ public class MummyManState : State
     }
 
     // -------------------------- JUMP && BACK_LOCATION FUNCTIONS -----------------------------------
-
-    // Time.deltatime을 인자로 받으면?
+    #region JUMP AND BACK_LOCATION FUNCTIONS
     protected void JumpToTarget(float deltaTime)   // 점프 상태일 때는 forward지만, BACK_LOCATION 상태일 때는 뒤로 돌고 forward이다.
     {
         if (Vector3.Distance(_startPos, _destPos) <= 0.1f)
@@ -72,8 +73,10 @@ public class MummyManState : State
         _startPos = startPos;
         _destPos = destPos;
     }
+    #endregion
 
     // -------------------------- GLOBAL FUNCTIONS -----------------------------------
+    #region GLOBAL_FUNCTIONS
     public void CheckGlobal()
     {
         SetDetector();
@@ -134,4 +137,5 @@ public class MummyManState : State
         }
         return false;
     }
+    #endregion
 }

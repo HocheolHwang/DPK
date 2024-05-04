@@ -61,6 +61,10 @@ namespace MummyManStateItem
             {
                 _controller.ChangeState(_controller.BACK_LOCATION_STATE);
             }
+            else if (_jumpTime >= _threadHoldJump)
+            {
+                _controller.ChangeState(_controller.JUMP_STATE);
+            }
             else if (_shoutingTime >= _threadHoldShouting)
             {
                 _controller.ChangeState(_controller.SHOUTING_STATE);
@@ -68,7 +72,6 @@ namespace MummyManStateItem
             else if (IsStayForSeconds())
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
-                //_controller.ChangeState(_controller.JUMP_STATE);
             }
         }
 
@@ -297,6 +300,7 @@ namespace MummyManStateItem
 
         public override void Exit()
         {
+            _jumpTime = 0;
         }
     }
     #endregion
@@ -421,7 +425,7 @@ namespace MummyManStateItem
             if (_meetPlayer)
             {
                 _shoutingTime += Time.deltaTime;
-                // jump는 hp 80%인 경우 수행
+                _jumpTime += Time.deltaTime;
             }
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
