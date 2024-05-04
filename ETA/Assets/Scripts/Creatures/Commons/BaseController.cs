@@ -238,6 +238,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        Debug.Log(stream.IsWriting);
         if (stream.IsWriting)
         {
             stream.SendNext(transform.position);
@@ -258,6 +259,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
 
     public void FixedUpdate()
     {
+        Debug.Log("123123123");
         if (!photonView.IsMine)
         {
             transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace MonsterStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToIdleState();
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
@@ -43,6 +45,7 @@ namespace MonsterStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToIdleBattleState();
             _agent.velocity = Vector3.zero;
             
             LookAtEnemy();
@@ -74,6 +77,7 @@ namespace MonsterStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToChaseState();
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
         }
@@ -111,6 +115,7 @@ namespace MonsterStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToAttackState();
             InitTime(_animData.AttackAnim.length);
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
             _animator.CrossFade(_animData.AttackParamHash, 0.2f);
@@ -158,6 +163,7 @@ namespace MonsterStateItem
 
         public override void Enter() 
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToDieState();
             _agent.isStopped = true;
             SearchUnitType();
             if (_unitType != null)
