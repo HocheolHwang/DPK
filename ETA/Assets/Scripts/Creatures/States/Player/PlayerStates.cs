@@ -177,7 +177,6 @@ namespace PlayerStates
 
     public class CollavoState : PlayerState
     {
-        float tmp = 0;
         
 
         public CollavoState(PlayerController playerController) : base(playerController)
@@ -188,7 +187,7 @@ namespace PlayerStates
         public override void Enter()
         {
             base.Enter();
-            tmp = 0;
+            
             if (_playerController.photonView.IsMine) _playerController.ChangeToCollavoState();
             _playerController.SkillSlot.CastCollavoSkill(_playerController._usingSkill);
 

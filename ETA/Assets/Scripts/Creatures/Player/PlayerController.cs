@@ -27,7 +27,7 @@ public class PlayerController : BaseController
 
     public SkillSlot SkillSlot { get; set;}
 
-    public PhotonView photonView;
+    
 
 
 
@@ -50,7 +50,7 @@ public class PlayerController : BaseController
         GLOBAL_STATE = new GlobalState(this);
 
         SkillSlot = gameObject.GetOrAddComponent<SkillSlot>();
-        photonView = gameObject.GetComponent<PhotonView>();
+        //photonView = gameObject.GetComponent<PhotonView>();
         
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
@@ -62,7 +62,8 @@ public class PlayerController : BaseController
         
         if (photonView.IsMine)
         {
-            _destination = GameObject.Find("FRONT_2").transform;
+            if(PhotonNetwork.IsMasterClient) _destination = GameObject.Find("FRONT_1").transform;
+            else _destination = GameObject.Find("FRONT_3").transform;
             //ChangeState(MOVE_STATE);
             Managers.Input.KeyAction -= KeyEvent;
             Managers.Input.KeyAction += KeyEvent;

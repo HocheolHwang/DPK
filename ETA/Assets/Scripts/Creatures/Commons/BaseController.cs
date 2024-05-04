@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,11 +7,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public abstract class BaseController : MonoBehaviour, IDamageable
+public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservable
 {
     protected StateMachine _stateMachine;
     protected State _curState;
     protected State _prevState;
+    public PhotonView photonView;
+    protected Vector3 networkPosition;
+    protected Quaternion networkRotation;
 
     [Header("Common Property")]
     [SerializeField] public Define.UnitType UnitType;
@@ -39,6 +43,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         Agent = GetComponent<NavMeshAgent>();
         Detector = GetComponent<IDetector>();
         Stat = GetComponent<Stat>();
+        photonView = GetComponent<PhotonView>();
 
         SetOriginColor();
 
@@ -229,5 +234,34 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         }
         
         
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+            stream.SendNext(Agent.velocity);
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkRotation = (Quaternion)stream.ReceiveNext();
+            Agent.velocity = (Vector3)stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            //transform.position += Agent.velocity * lag;
+            networkPosition += (Agent.velocity * lag);
+        }
+    }
+
+    public void FixedUpdate()
+    {
+        if (!photonView.IsMine)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+        }
     }
 }

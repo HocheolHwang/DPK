@@ -32,7 +32,7 @@ public class Lobby_Scene : BaseScene
         PhotonNetwork.PrecisionForFloatSynchronization = 0.1f;
 
         Debug.Log(PhotonNetwork.SendRate);
-        PhotonNetwork.SendRate = 120;
+        PhotonNetwork.SendRate = 60;
         Managers.Photon.Connect();
     }
 
