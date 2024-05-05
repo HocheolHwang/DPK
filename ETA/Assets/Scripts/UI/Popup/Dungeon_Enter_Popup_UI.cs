@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public class Dungeon_Enter_Popup_UI : UI_Popup
 {
@@ -60,8 +61,15 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
     }
 
     // 입장하기 메서드
-    private void DungeonEnter(PointerEventData data)
+    public void DungeonEnter(PointerEventData data)
     {
+        if(PhotonNetwork.InRoom == false)
+        {
+            FindObjectOfType<Lobby_Scene>().isSoloPlay = true;
+            Managers.Photon.MakeRoom("solo_" + Managers.Player.GetNickName());
+            return;
+
+        }
         // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
 

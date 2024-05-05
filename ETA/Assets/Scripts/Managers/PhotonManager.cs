@@ -370,14 +370,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //if (PhotonNetwork.NickName == null)
         //    PhotonNetwork.NickName = Managers.Player.GetNickName();
         
-        if (PhotonNetwork.IsMasterClient) { 
-            Managers.Player.SetPartyLeader(true);
-            GameObject gameSystem = PhotonNetwork.Instantiate("Prefabs/GameSystem", new Vector3(), new Quaternion());
-            gameSystem.name = "GameSystem";
-            DontDestroyOnLoad(gameSystem);
-        }
-        updatePlayerList();
-        SetPlayerClass();
+        //if (PhotonNetwork.IsMasterClient) { 
+        //    Managers.Player.SetPartyLeader(true);
+        //    GameObject gameSystem = PhotonNetwork.Instantiate("Prefabs/GameSystem", new Vector3(), new Quaternion());
+        //    gameSystem.name = "GameSystem";
+        //    DontDestroyOnLoad(gameSystem);
+        //}
+        //updatePlayerList();
+        //SetPlayerClass();
+
+
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
