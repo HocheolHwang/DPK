@@ -51,6 +51,7 @@ public class Party_Leave_Popup_UI : UI_Popup
     private void PartyLeave(PointerEventData data)
     {
         // TODO: 파티에서 탈퇴하는 코드 추가 필요
+        Managers.Photon.OnLeftRoom();
 
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
