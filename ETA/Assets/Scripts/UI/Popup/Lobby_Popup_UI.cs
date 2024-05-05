@@ -55,7 +55,6 @@ public class Lobby_Popup_UI : UI_Popup
         // 파티 탈퇴 Popup UI 띄우기 버튼 이벤트 등록
         openPartyLeaveButton = GetButton((int)Buttons.Open_Party_Leave_Button);
         AddUIEvent(openPartyLeaveButton.gameObject, OpenPartyLeave);
-        openPartyLeaveButton.gameObject.SetActive(false); // 임시로 비활성화
 
         // 던전 선택 Popup UI 띄우기 버튼 이벤트 등록
         openDungeonSelectButton = GetButton((int)Buttons.Open_Dungeon_Select_Button);
@@ -108,20 +107,34 @@ public class Lobby_Popup_UI : UI_Popup
     // 던전 선택 Popup UI 띄우기 메서드
     private void OpenDungeonSelect(PointerEventData data)
     {
-        // 파티에 있는데 방장이 아니면
-        if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient) return;
-        // 모든 Popup UI를 닫음
-        CloseAllPopupUI();
+        if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient)
+        {
+            // 파티원일 경우 던전 선택 불가 Popup UI를 띄움
+            Managers.UI.ShowPopupUI<Dungeon_Select_Unable_Popup_UI>("[Lobby]_Dungeon_Select_Unable_Popup_UI");
+        }
+        else
+        {
+            // 모든 Popup UI를 닫음
+            CloseAllPopupUI();
 
-        // 던전 선택 Popup UI를 띄움
-        Managers.UI.ShowPopupUI<Dungeon_Select_Popup_UI>("[Lobby]_Dungeon_Select_Popup_UI");
+            // 파티장이거나 파티 미소속일 경우 던전 선택 Popup UI를 띄움
+            Managers.UI.ShowPopupUI<Dungeon_Select_Popup_UI>("[Lobby]_Dungeon_Select_Popup_UI");
+        }
     }
 
     // 던전 입장 Popup UI 띄우기 메서드
     private void OpenDungeonEnter(PointerEventData data)
     {
-        if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient) return;
-        Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
+        if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient)
+        {
+            // 파티원일 경우 던전 입장 불가 Popup UI를 띄움
+            Managers.UI.ShowPopupUI<Dungeon_Enter_Unable_Popup_UI>("[Lobby]_Dungeon_Enter_Unable_Popup_UI");
+        }
+        else
+        {
+            // 파티장이거나 파티 미소속일 경우 던전 입장 Popup UI를 띄움
+            Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
+        }
     }
 
     // 채팅 Popup UI 띄우기 메서드
@@ -133,12 +146,26 @@ public class Lobby_Popup_UI : UI_Popup
     // 메뉴 Popup UI 띄우기 메서드
     private void OpenMenu(PointerEventData data)
     {
+        Debug.Log($"@@@@@@@@@@@@@{PhotonNetwork.InRoom}%%%%%%%%%%%%%%");
         Managers.UI.ShowPopupUI<Menu_Popup_UI>("[Common]_Menu_Popup_UI");
     }
 
     // 파티 정보 업데이트 메서드
     private void UpdatePartyInfo()
     {
+        if (PhotonNetwork.InRoom)
+        {
+            // 파티 참가 상태일 경우 참가 버튼 비활성화 및 탈퇴 버튼 활성화
+            openPartyJoinButton.gameObject.SetActive(false);
+            openPartyLeaveButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            // 파티 미참가 상태일 경우 참가 버튼 활성화 및 탈퇴 버튼 비활성화
+            openPartyJoinButton.gameObject.SetActive(true);
+            openPartyLeaveButton.gameObject.SetActive(false);
+        }
+
         memberNicknameText1.text = Managers.Player.GetNickName();
         partyNameText.text = $"{Managers.Player.GetNickName()}의 파티";
     }

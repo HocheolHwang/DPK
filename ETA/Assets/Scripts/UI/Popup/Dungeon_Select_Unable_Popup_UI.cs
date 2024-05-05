@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 
 public class Dungeon_Select_Unable_Popup_UI : UI_Popup
 {
