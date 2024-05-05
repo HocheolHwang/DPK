@@ -13,6 +13,7 @@ public class Party_Join_Popup_UI : UI_Popup
         Open_Dungeon_Select_Button,
         Open_Dungeon_Enter_Button,
         Cancel_Button,
+        Open_Party_Create_Button
     }
 
     // UI 컴포넌트 바인딩 변수
@@ -20,6 +21,7 @@ public class Party_Join_Popup_UI : UI_Popup
     private Button openDungeonSelectButton;
     private Button openDungeonEnterButton;
     private Button cancelButton;
+    private Button openPartyCreateButton;
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -47,6 +49,11 @@ public class Party_Join_Popup_UI : UI_Popup
         cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
+
+        // 파티 만들기 Popup UI 띄우기 버튼 이벤트 등록
+        openPartyCreateButton = GetButton((int)Buttons.Open_Party_Create_Button);
+        AddUIEvent(openPartyCreateButton.gameObject, OpenPartyCreate);
+        AddUIKeyEvent(openPartyCreateButton.gameObject, () => OpenPartyCreate(null), KeyCode.C);
     }
 
 
@@ -83,7 +90,7 @@ public class Party_Join_Popup_UI : UI_Popup
         Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
     }
 
-    // 닫기
+    // 닫기 메서드
     private void Cancel(PointerEventData data)
     {
         // 파티 참가 Popup UI를 닫음
@@ -91,5 +98,12 @@ public class Party_Join_Popup_UI : UI_Popup
 
         // 로비 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
+    }
+
+    // 파티 만들기 Popup UI 띄우기 메서드
+    private void OpenPartyCreate(PointerEventData data)
+    {
+        // 파티 만들기 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Party_Create_Popup_UI>("[Lobby]_Party_Create_Popup_UI");
     }
 }

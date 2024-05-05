@@ -25,6 +25,9 @@ public class Party_Item : MonoBehaviour
     // 파티 참가 확인 Popup UI 띄우기 메서드
     private void OpenPartyJoinConfirm()
     {
+        // 현재 선택된 게임 오브젝트를 해제하여 포커스를 제거
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+
         Managers.UI.ShowPopupUI<Party_Join_Confirm_Popup_UI>("[Lobby]_Party_Join_Confirm_Popup_UI");
     }
 }
