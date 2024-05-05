@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,5 +15,25 @@ public class Login_Scene : BaseScene
     public override void Clear()
     {
         Debug.Log("Login Scene Clear");
+    }
+
+    public override void OnJoinedLobby()
+    {
+        // 로그인 후 성공적으로 로비 입장시 UI가 뜬다.
+
+        if (Managers.Player.GetFirst())
+        {
+            Guid newGuid = Guid.NewGuid();
+            Managers.Photon.MakeRoom(Managers.Player.GetPlayerId() + newGuid.ToString());
+        }
+        else
+        {
+            Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
+        }
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
     }
 }

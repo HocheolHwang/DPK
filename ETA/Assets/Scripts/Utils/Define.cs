@@ -41,6 +41,7 @@ public class Define
         DeepForest,
         ForgottenTemple,
         StarShardPlain,
+        MultiPlayTest
     }
     public enum UIEvent
     {
@@ -85,6 +86,8 @@ public class Define
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
         Groggy,
+        GroundCrash,
+        BlessingEffect,
         HealEffect,
         SwordWaveWhite,
         StoneSlash1,

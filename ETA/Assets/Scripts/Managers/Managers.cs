@@ -46,7 +46,6 @@ public class Managers : MonoBehaviour
     {
         if (s_instance == null)
         {
-            Debug.Log("@@");
             GameObject go = GameObject.Find("@Managers");
             if (go == null)
             {
@@ -65,7 +64,7 @@ public class Managers : MonoBehaviour
             s_instance._sound.Init();
             s_instance._effect.Init();
 
-            Photon.Connect();
+            //Photon.Connect();
         }
     }
 

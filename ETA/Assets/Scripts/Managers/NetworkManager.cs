@@ -155,7 +155,6 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(request.result);
             Debug.Log("Response: " + request.downloadHandler.text);
             CurClassDto data = JsonUtility.FromJson<CurClassDto>(request.downloadHandler.text);
 

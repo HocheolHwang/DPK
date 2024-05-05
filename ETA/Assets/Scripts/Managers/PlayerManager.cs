@@ -111,7 +111,7 @@ public class PlayerManager
         Debug.Log("Cur Level : " + playerLevel);
         Debug.Log("Need Exp : " + needExp);
             Debug.Log("Cur Exp : " + curExp);
-        while (curExp > needExp)
+        while (curExp >= needExp)
         {
             if(curExp >= needExp)
             {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using KnightGStateItem;
+using Photon.Pun;
 
 public class KnightGController : BaseMonsterController
 {
@@ -84,5 +85,156 @@ public class KnightGController : BaseMonsterController
         OnBossDestroyed?.Invoke();
 
         base.DestroyEvent();
+    }
+
+
+    public void ChangeToIdleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToIdleState()
+    {
+        ChangeState(IDLE_STATE);
+    }
+
+    public void ChangeToIdleBattleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleBattleState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToIdleBattleState()
+    {
+        ChangeState(IDLE_BATTLE_STATE);
+    }
+
+    public void ChangeToChaseState()
+    {
+        photonView.RPC("RPC_ChangeToChaseState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToChaseState()
+    {
+        ChangeState(CHASE_STATE);
+    }
+
+    public void ChangeToAttackState()
+    {
+        photonView.RPC("RPC_ChangeToAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToAttackState()
+    {
+        ChangeState(ATTACK_STATE);
+    }
+
+    public void ChangeToDieState()
+    {
+        photonView.RPC("RPC_ChangeToDieState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToDieState()
+    {
+        ChangeState(DIE_STATE);
+    }
+
+    public void ChangeToTwoSkillTransitionState()
+    {
+        photonView.RPC("RPC_ChangeToTwoSkillTransitionState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToTwoSkillTransitionState()
+    {
+        ChangeState(TWO_SKILL_TRANSITION_STATE);
+    }
+
+    public void ChangeToTwoSkillEnergyState()
+    {
+        photonView.RPC("RPC_ChangeToTwoSkillEnergyState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToTwoSkillEnergyState()
+    {
+        ChangeState(TWO_SKILL_ENERGY_STATE);
+    }
+
+    public void ChangeToTwoSkillAttackState()
+    {
+        photonView.RPC("RPC_ChangeToTwoSkillAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToTwoSkillAttackState()
+    {
+        ChangeState(TWO_SKILL_ATTACK_STATE);
+    }
+
+    public void ChangeToCounterEnableState()
+    {
+        photonView.RPC("RPC_ChangeToCounterEnableState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToCounterEnableState()
+    {
+        ChangeState(COUNTER_ENABLE_STATE);
+    }
+
+    public void ChangeToCounterAttackState()
+    {
+        photonView.RPC("RPC_ChangeToCounterAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToCounterAttackState()
+    {
+        ChangeState(COUNTER_ATTACK_STATE);
+    }
+
+    public void ChangeToPhaseTransitionState()
+    {
+        photonView.RPC("RPC_ChangeToPhaseTransitionState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToPhaseTransitionState()
+    {
+        ChangeState(PHASE_TRANSITION_STATE);
+    }
+
+    public void ChangeToPhaseAttackIngState()
+    {
+        photonView.RPC("RPC_ChangeToPhaseAttackIngState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToPhaseAttackIngState()
+    {
+        ChangeState(PHASE_ATTACK_ING_STATE, true);
+    }
+
+    public void ChangeToGroggyState()
+    {
+        photonView.RPC("RPC_ChangeToGroggyState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToGroggyState()
+    {
+        ChangeState(GROGGY_STATE);
+    }
+
+
+    [PunRPC]
+    void RPC_TakeDamage(int attackDamage, bool isCounter)
+    {
+        CalcDamage(attackDamage, isCounter);
     }
 }

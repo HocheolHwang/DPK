@@ -13,7 +13,6 @@ public class EffectManager
         for (int i = 0; i < effectNames.Length - 1; i++)
         {
             GameObject go = Managers.Resource.Load<GameObject>($"Prefabs/Effect/{effectNames[i]}");
-            Debug.Log(effectNames[i]);
             Managers.Pool.CreatePool(go);
 
             _effectPrefabs[i] = go;

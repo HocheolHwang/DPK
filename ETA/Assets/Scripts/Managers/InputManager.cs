@@ -20,7 +20,8 @@ public class InputManager
     public void OnUpdate()
     {
         // UI를 무시해야 할 경우 입력 처리를 하지 않음
-        if (!IsPointerOverIgnoredUI()) return;
+        //if (!IsPointerOverIgknoredUI()) return;
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
         // 키 입력 이벤트 처리
         if (Input.anyKey && KeyAction != null)

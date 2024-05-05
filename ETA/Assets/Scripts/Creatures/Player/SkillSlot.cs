@@ -18,6 +18,7 @@ public class SkillSlot : MonoBehaviour
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
+        GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
 
         string[] loadedSkills = { "TargetSkill", "RangeSkill", "HoldSkill", "ImmediatelySkill", "GuardSkill"};
         for (int i = 0; i < loadedSkills.Length; i++)
@@ -101,7 +102,23 @@ public class SkillSlot : MonoBehaviour
             _currentSkill.StopCast();
         }
         // TODO: 직업이 여러개면 바꿔 주어야할 것
-        _currentSkill = gameObject.GetOrAddComponent<WarriorNormalAttackSkill>();
+        if (gameObject.name.Contains("Warrior"))
+        {
+            _currentSkill = gameObject.GetOrAddComponent<WarriorNormalAttackSkill>();
+        }
+        else if(gameObject.name.Contains("Archer"))
+        {
+            _currentSkill = gameObject.GetOrAddComponent<ArcherNormalAttackSkill>();
+        }
+        else if (gameObject.name.Contains("Mage"))
+        {
+            _currentSkill = gameObject.GetOrAddComponent<MageNormalAttackSkill>();
+        }
+        else
+        {
+            Debug.Log("존재하지 않는 직업 입니다.");
+        }
+        
         _currentSkill.Cast();
     }
 

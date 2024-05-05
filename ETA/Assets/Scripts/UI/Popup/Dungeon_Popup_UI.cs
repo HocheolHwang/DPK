@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using PlayerStates;
+using System;
+using Photon.Pun;
 
 public class Dungeon_Popup_UI : UI_Popup
 {
@@ -116,7 +119,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private int currentExp = 0;
 
     // 스킬 슬롯
-    private SkillSlot skillSlot;
+    public SkillSlot skillSlot;
 
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
@@ -371,13 +374,34 @@ public class Dungeon_Popup_UI : UI_Popup
     // HP 업데이트 메서드
     public void UpdateHP()
     {
-        // 파티원 체력 업데이트
-        memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
+        // 체력 업데이트
 
-        // 플레이어 체력 업데이트
-        playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
-        playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
+        if(playerStat != null)
+        {
+            playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
+            playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
 
+            memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
+        }
+        else
+        {
+            GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+            Debug.Log(playerObjects);
+
+            foreach (var playerObj in playerObjects)
+            {
+                Debug.Log(playerObj.name);
+                if (playerObj.GetComponent<PhotonView>().IsMine)
+                {
+                    playerStat = playerObj.GetComponent<Stat>();
+                    break;
+                }
+
+            }
+        }
+
+
+        if (bossStatus.activeSelf == false) return;
         // 보스 체력 업데이트
         if (bossStatus.activeSelf == false) return;
         bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
@@ -487,6 +511,7 @@ public class Dungeon_Popup_UI : UI_Popup
     // 스킬 쿨타임 UI 업데이트 메서드
     private void UpdateCooldownUI(int skillIndex)
     {
+        if (skillSlot == null) return; 
         float cooldownTime = skillSlot.Skills[skillIndex].CooldownTime;
         float elapsedTime = skillSlot.Skills[skillIndex].ElapsedTime;
 

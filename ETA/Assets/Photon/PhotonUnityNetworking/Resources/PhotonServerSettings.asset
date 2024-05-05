@@ -40,6 +40,30 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - ReceiveMessage
+  - RPC_UpdateTarget
+  - RPC_ChangeToAttackState
+  - RPC_ChangeToMoveState
+  - RPC_SetTargetPosition
+  - RPC_SetUsingSkill
+  - RPC_ChangeToSkillState
+  - RPC_ChangeToCollavoState
+  - RPC_ChangeToHoldState
+  - RPC_ChangeToDieState
+  - RPC_ChangeToIdleState
+  - RPC_ChangeScene
+  - RPC_LoadedScene
+  - RPC_CharacherInstantiated
+  - RPC_ChangeToChaseState
+  - RPC_ChangeToIdleBattleState
+  - RPC_TakeDamage
+  - RPC_ChangeToCounterAttackState
+  - RPC_ChangeToCounterEnableState
+  - RPC_ChangeToGroggyState
+  - RPC_ChangeToPhaseAttackIngState
+  - RPC_ChangeToPhaseTransitionState
+  - RPC_ChangeToTwoSkillAttackState
+  - RPC_ChangeToTwoSkillEnergyState
+  - RPC_ChangeToTwoSkillTransitionState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0
