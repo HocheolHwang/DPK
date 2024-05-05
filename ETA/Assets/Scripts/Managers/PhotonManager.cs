@@ -97,9 +97,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 네트워크 연결을 위한 Connect 함수
     public void Connect()
     {
-
+        //PhotonNetwork.SerializationRate = 10;
+        //PhotonNetwork.PrecisionForFloatSynchronization = 0.1f;
+        //PhotonNetwork.SendRate = 60;
         // 임시 코드         
-        if(Managers.Player.GetNickName()==null)
+        if (Managers.Player.GetNickName()==null)
         Managers.Player.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
         //Managers.Player.SetNickName(Managers.Player.GetNickName());
         //Debug.Log(Managers.PlayerInfo.GetNickName());
