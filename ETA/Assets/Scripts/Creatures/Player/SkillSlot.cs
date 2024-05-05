@@ -102,7 +102,15 @@ public class SkillSlot : MonoBehaviour
             _currentSkill.StopCast();
         }
         // TODO: 직업이 여러개면 바꿔 주어야할 것
-        _currentSkill = gameObject.GetOrAddComponent<WarriorNormalAttackSkill>();
+        if (gameObject.name.Contains("Warrior"))
+        {
+            _currentSkill = gameObject.GetOrAddComponent<WarriorNormalAttackSkill>();
+        }
+        else if(gameObject.name.Contains("Archer"))
+        {
+            _currentSkill = gameObject.GetOrAddComponent<ArcherNormalAttackSkill>();
+        }
+        
         _currentSkill.Cast();
     }
 

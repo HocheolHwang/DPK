@@ -45,19 +45,19 @@ public class Dungeon_Scene : BaseScene
 
     }
 
-    public void InitPlayers()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            GameObject playerZone = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/PlayerZone", new Vector3(14.0f, 1.21f, 0f), Quaternion.Euler(0, 90, 0));
-            Camera.main.GetComponent<CameraController>()._player = playerZone;
-        }
-        else
-        {
+    //public void InitPlayers()
+    //{
+    //    if (PhotonNetwork.IsMasterClient)
+    //    {
+    //        GameObject playerZone = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/PlayerZone", new Vector3(14.0f, 1.21f, 0f), Quaternion.Euler(0, 90, 0));
+    //        Camera.main.GetComponent<CameraController>()._player = playerZone;
+    //    }
+    //    else
+    //    {
 
-        }
-        GameObject player = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Player", new Vector3(13.09f, 0.5f, 0f), new Quaternion());
-    }
+    //    }
+    //    GameObject player = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Player", new Vector3(13.09f, 0.5f, 0f), new Quaternion());
+    //}
 
 
 }

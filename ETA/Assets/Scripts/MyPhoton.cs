@@ -46,7 +46,24 @@ public class MyPhoton : MonoBehaviour
 
         if(loadCnt >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Player", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0,90,0)).GetComponent<PlayerController>();
+            string classCode = Managers.Player.GetClassCode();
+            if(classCode == "C001")
+            {
+                myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Warrior", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
+            }
+            else if(classCode == "C002")
+            {
+                myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Archer", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
+            }
+            else if(classCode == "C003")
+            {
+                myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Wizard", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
+            }
+            else
+            {
+                Debug.LogError("존재하지 않는 클래스 입니다.");
+            }
+
         }
     }
 

@@ -202,7 +202,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 682413861883561627}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: b04406949810a0a46b21e74416b63350, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 1
@@ -1221,9 +1221,8 @@ GameObject:
   - component: {fileID: 5940483213191967641}
   - component: {fileID: 6313804134409034079}
   - component: {fileID: 3166279337896487320}
-  - component: {fileID: 6743693739057174597}
   m_Layer: 6
-  m_Name: Player
+  m_Name: Warrior
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1444,26 +1443,9 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5272978459489026888}
-  - {fileID: 6743693739057174597}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6743693739057174597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3360680965622305865}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &3417425532124081283
 GameObject:
   m_ObjectHideFlags: 0
