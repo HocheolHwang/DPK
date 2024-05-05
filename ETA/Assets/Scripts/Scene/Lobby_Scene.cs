@@ -29,6 +29,7 @@ public class Lobby_Scene : BaseScene
         }
 
         Managers.Sound.Play("BackgroundMusic/Lobby");
+        // 이부분 다른곳으로 옮기기
         Debug.Log(PhotonNetwork.SerializationRate);
         PhotonNetwork.SerializationRate = 10;
         Debug.Log(PhotonNetwork.PrecisionForFloatSynchronization);
@@ -37,10 +38,17 @@ public class Lobby_Scene : BaseScene
         Debug.Log(PhotonNetwork.SendRate);
         PhotonNetwork.SendRate = 60;
 
+        
         SetUpMannequins();
-        mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
 
+        // 다시 들어 왔을떄는?
+        //mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
+        ChangeMannequin();
         //TMP
+
+        // 파티 유지할 경우, 아무것도 해주지 않아도됨
+        // 파티를 유지하지 않을 경우, 여기서 탈퇴 시킴
+
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();

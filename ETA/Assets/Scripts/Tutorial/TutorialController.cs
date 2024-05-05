@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,7 +72,11 @@ public class TutorialController : MonoBehaviour
             // Scene 이동 전에 모든 팝업 창 닫은 뒤 이동
             Managers.UI.CloseAllPopupUI();
             //SceneManager.LoadScene(nextSceneName);
+
+            // 방에서 나가기
+            if(PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
             Managers.Scene.LoadScene(nextSceneName);
+            
         }
     }
 }

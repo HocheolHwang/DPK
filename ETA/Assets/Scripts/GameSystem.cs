@@ -99,4 +99,15 @@ public class GameSystem : MonoBehaviour
 
     }
 
+
+
+    // 어차피 로비 오면 삭제할거 같은데 의미있나?
+    public void Clear()
+    {
+        loadCnt = 0;
+        characterCnt = 0;
+        finish = 0;
+        myController = null;
+    }
+
 }
