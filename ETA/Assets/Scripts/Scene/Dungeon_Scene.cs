@@ -20,7 +20,7 @@ public class Dungeon_Scene : BaseScene
         //Managers.Photon.Connect();
 
         //PhotonNetwork.Instantiate("Creatures/Player/Player.prefab", new Vector3(13.09f, 0.5f, 0f),new Quaternion());
-        MyPhoton mp = GameObject.FindObjectOfType<MyPhoton>();
+        GameSystem mp = GameObject.FindObjectOfType<GameSystem>();
         mp.SendLoadMsg();
 
         //if (PhotonNetwork.IsMasterClient)

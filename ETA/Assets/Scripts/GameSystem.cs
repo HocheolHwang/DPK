@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyPhoton : MonoBehaviour
+public class GameSystem : MonoBehaviour
 {
     public PhotonView PhotonView;
     int loadCnt = 0;
     int characterCnt = 0;
     int finish = 0;
+    public int currentDungeonNum;
     PlayerController myController;
     // Start is called before the first frame update
     void Start()
@@ -25,12 +26,44 @@ public class MyPhoton : MonoBehaviour
 
     public void ChangeSceneAllPlayer(Define.Scene scene)
     {
+        Debug.Log(scene);
+        int num = 0;
+        switch (scene)
+        {
+            case Define.Scene.DeepForest:
+                num = 1;
+                break;
+            case Define.Scene.ForgottenTemple:
+                num = 2;
+                break;
+            case Define.Scene.StarShardPlain:
+                num = 3;
+                break;
+        }
+
+        currentDungeonNum = num;
+        Debug.Log(currentDungeonNum);
         PhotonView.RPC("RPC_ChangeScene", RpcTarget.Others, scene);
     }
 
     [PunRPC]
     void RPC_ChangeScene(Define.Scene scene)
     {
+        int num = 0;
+        switch (scene)
+        {
+            case Define.Scene.DeepForest:
+                num = 1;
+                break;
+            case Define.Scene.ForgottenTemple:
+                num = 2;
+                break;
+            case Define.Scene.StarShardPlain:
+                num = 3;
+                break;
+        }
+
+        currentDungeonNum = num;
         Managers.Scene.LoadScene(scene);
     }
 
@@ -42,10 +75,17 @@ public class MyPhoton : MonoBehaviour
     [PunRPC]
     public void RPC_LoadedScene()
     {
+        // load된 사용자의 수
         loadCnt += 1;
 
+        // load된 사용자 수가 방 인원만큼되면
         if(loadCnt >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
+
+            // 게임을 시작하려고 합니다.
+            // 본인의 직업에 맞춰서 캐릭터를 생성합니다.
+            // 캐릭터를 생성하면 그것도 신호를 보내줘야함
+
             string classCode = Managers.Player.GetClassCode();
             if(classCode == "C001")
             {
@@ -87,8 +127,31 @@ public class MyPhoton : MonoBehaviour
         {
             myController.ChangeState(myController.MOVE_STATE);
             FindObjectOfType<PlayerZone>().Run();
+            Debug.Log(finish);
         }
 
     }
+
+    public void SendCurrentDungeon(int num)
+    {
+        PhotonView.RPC("RPC_SetCurrentDungeon", RpcTarget.Others, num);
+    }
+    [PunRPC]
+    public void RPC_SetCurrentDungeon(int num)
+    {
+        FindObjectOfType<Lobby_Scene>().currentDungeonNumber = num;
+        FindObjectOfType<Lobby_Popup_UI>().UpdateSelectedDungeon();
+    }
+
+    // 어차피 로비 오면 삭제할거 같은데 의미있나?
+    public void Clear()
+    {
+        loadCnt = 0;
+        characterCnt = 0;
+        finish = 0;
+        myController = null;
+    }
+
+    
 
 }

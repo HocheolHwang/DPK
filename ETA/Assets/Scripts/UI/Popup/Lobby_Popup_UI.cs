@@ -107,7 +107,12 @@ public class Lobby_Popup_UI : UI_Popup
     // 던전 선택 Popup UI 띄우기 메서드
     private void OpenDungeonSelect(PointerEventData data)
     {
-        if (Managers.Player.GetPartyLeader() || !PhotonNetwork.InRoom)
+        if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient)
+        {
+            // 파티원일 경우 던전 선택 불가 Popup UI를 띄움
+            Managers.UI.ShowPopupUI<Dungeon_Select_Unable_Popup_UI>("[Lobby]_Dungeon_Select_Unable_Popup_UI");
+        }
+        else
         {
             // 모든 Popup UI를 닫음
             CloseAllPopupUI();
@@ -115,25 +120,20 @@ public class Lobby_Popup_UI : UI_Popup
             // 파티장이거나 파티 미소속일 경우 던전 선택 Popup UI를 띄움
             Managers.UI.ShowPopupUI<Dungeon_Select_Popup_UI>("[Lobby]_Dungeon_Select_Popup_UI");
         }
-        else
-        {
-            // 파티원일 경우 던전 선택 불가 Popup UI를 띄움
-            Managers.UI.ShowPopupUI<Dungeon_Select_Unable_Popup_UI>("[Lobby]_Dungeon_Select_Unable_Popup_UI");
-        }
     }
 
     // 던전 입장 Popup UI 띄우기 메서드
     private void OpenDungeonEnter(PointerEventData data)
     {
-        if (Managers.Player.GetPartyLeader() || !PhotonNetwork.InRoom)
-        {
-            // 파티장이거나 파티 미소속일 경우 던전 입장 Popup UI를 띄움
-            Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
-        }
-        else
+        if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient)
         {
             // 파티원일 경우 던전 입장 불가 Popup UI를 띄움
             Managers.UI.ShowPopupUI<Dungeon_Enter_Unable_Popup_UI>("[Lobby]_Dungeon_Enter_Unable_Popup_UI");
+        }
+        else
+        {
+            // 파티장이거나 파티 미소속일 경우 던전 입장 Popup UI를 띄움
+            Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
         }
     }
 
@@ -171,10 +171,13 @@ public class Lobby_Popup_UI : UI_Popup
     }
 
     // 선택된 던전 업데이트 메서드
-    private void UpdateSelectedDungeon()
+    public void UpdateSelectedDungeon()
     {
         // 선택된 던전 번호를 가져옴
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
+        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
+
+        if(PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient) FindObjectOfType<GameSystem>().SendCurrentDungeon(selectedDungeonNumber);
 
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
         dungeonNameText.text = selectedDungeonNumber switch

@@ -158,8 +158,7 @@ public class NetworkManager : MonoBehaviour
             Debug.Log("Response: " + request.downloadHandler.text);
             CurClassDto data = JsonUtility.FromJson<CurClassDto>(request.downloadHandler.text);
 
-            // 직업 변화
-            //PlayerManager.GetInstance().SetClassCode(data.classCode);
+            // 직업 변화 
             callback?.Invoke(data);
         }
     }
