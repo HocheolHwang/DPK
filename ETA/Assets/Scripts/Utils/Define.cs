@@ -86,6 +86,7 @@ public class Define
         KnightG_PhaseAttack,
         Groggy,
         GroundCrash,
+        BlessingEffect,
         HealEffect,
         SwordWaveWhite,
         StoneSlash1,
