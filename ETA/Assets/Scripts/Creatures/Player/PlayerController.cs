@@ -73,7 +73,11 @@ public class PlayerController : BaseController
             Camera.main.GetComponent<CameraController>()._player = gameObject;
         }
         Debug.Log($"{photonView.IsMine}");
-        FindObjectOfType<MyPhoton>().SendCharacherInstantiatedMsg();
+
+
+        // 캐릭터가 다 생성 되었기 때문에 신호르 보내줍니다.
+        // "내 캐릭터는 완성 되었다"
+        FindObjectOfType<GameSystem>().SendCharacherInstantiatedMsg();
 
 
 

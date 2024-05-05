@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyPhoton : MonoBehaviour
+public class GameSystem : MonoBehaviour
 {
     public PhotonView PhotonView;
     int loadCnt = 0;
@@ -42,10 +42,17 @@ public class MyPhoton : MonoBehaviour
     [PunRPC]
     public void RPC_LoadedScene()
     {
+        // load된 사용자의 수
         loadCnt += 1;
 
+        // load된 사용자 수가 방 인원만큼되면
         if(loadCnt >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
+
+            // 게임을 시작하려고 합니다.
+            // 본인의 직업에 맞춰서 캐릭터를 생성합니다.
+            // 캐릭터를 생성하면 그것도 신호를 보내줘야함
+
             string classCode = Managers.Player.GetClassCode();
             if(classCode == "C001")
             {
@@ -87,6 +94,7 @@ public class MyPhoton : MonoBehaviour
         {
             myController.ChangeState(myController.MOVE_STATE);
             FindObjectOfType<PlayerZone>().Run();
+            Debug.Log(finish);
         }
 
     }

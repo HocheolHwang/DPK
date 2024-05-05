@@ -302,12 +302,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Managers.Player.SetPartyLeader(false);
-        Destroy(GameObject.FindObjectOfType<MyPhoton>());
+        Destroy(GameObject.FindObjectOfType<GameSystem>());
     }
     public override void OnConnectedToMaster()
     {
         isConnecting = true;
-        Debug.Log("OnConnectedToMaster");
+        Debug.Log("1. OnConnectedToMaster : 자동으로 로비로 입장");
         
         PhotonNetwork.JoinLobby();
     }
@@ -366,14 +366,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         // 방에 들어오자마자 닉네임 설정
-        if (PhotonNetwork.NickName == null)
-            PhotonNetwork.NickName = Managers.Player.GetNickName();
+        // TODO: 문제가 생기는지 확인
+        //if (PhotonNetwork.NickName == null)
+        //    PhotonNetwork.NickName = Managers.Player.GetNickName();
         
         if (PhotonNetwork.IsMasterClient) { 
             Managers.Player.SetPartyLeader(true);
-            GameObject MyPhoton = PhotonNetwork.Instantiate("Prefabs/MyPhoton", new Vector3(), new Quaternion());
-            MyPhoton.name = "MyPhoton";
-            DontDestroyOnLoad(MyPhoton);
+            GameObject gameSystem = PhotonNetwork.Instantiate("Prefabs/GameSystem", new Vector3(), new Quaternion());
+            gameSystem.name = "GameSystem";
+            DontDestroyOnLoad(gameSystem);
         }
         updatePlayerList();
         SetPlayerClass();

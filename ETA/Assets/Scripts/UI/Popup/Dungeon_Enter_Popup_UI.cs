@@ -92,8 +92,7 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         Managers.Scene.LoadScene(Define.Scene.MultiPlayTest);
 
         // 다른 애들도 가라고 RPC
-        FindObjectOfType<MyPhoton>().ChangeSceneAllPlayer(Define.Scene.MultiPlayTest);
-
+        FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(Define.Scene.MultiPlayTest);
     }
 
     // 선택된 던전 텍스트 업데이트 메서드

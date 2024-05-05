@@ -131,10 +131,10 @@ public class Login_Popup_UI : UI_Popup
             // 모든 Popup UI를 닫음
             CloseAllPopupUI();
 
-            Managers.Photon.Connect();
-            // 로그인 완료 Popup UI를 띄움
-            // 로비까지 들어가면 그때 띄워주기
-            //Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
+            // 포톤(서버)에 연결 (
+            Managers.Photon.Connect(); // 연결시 자동으로 Lobby로 가게됨;
+
+            // 현재 직업 정보를 요청함
             Managers.Network.CurrentClassCall(CurrentClass);
         }
         else if (message == "Database error.")
@@ -148,6 +148,7 @@ public class Login_Popup_UI : UI_Popup
         }
     }
 
+    // 현재 직업 정보 요청에 성공하면 실행됨
     private void CurrentClass(CurClassDto dto)
     {
         Managers.Player.SetExp(dto.currentExp);
