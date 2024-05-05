@@ -18,7 +18,7 @@ public class SummonSkill : MonoBehaviour
 
     private NavMeshAgent _agent;
 
-
+    [Header("사망, 소환 횟수 디버깅")]
     [SerializeField]  private int _bufferSummonCount = 0;
     [SerializeField]  private int _warriorSummonCount = 0;
     [SerializeField]  private int _bufferDeathCount = 0;                         // buffer와 warrior가 한 번씩 죽었을 경우, 글로벌에서 이를 감지하여 CLAP으로 전환, 단 공격 및 패턴 상태일 때는 안 됨
@@ -28,15 +28,15 @@ public class SummonSkill : MonoBehaviour
     public int BufferDeathCount { get => _bufferDeathCount; private set => _bufferDeathCount = value; }
     public int WarriorDeathCount { get => _warriorDeathCount; private set => _warriorDeathCount = value; }
 
+    private float _bufferDist = 6.0f;
+    private float _warriorDist = 3.0f;
+    public float BufferDist { get => _bufferDist; set => _bufferDist = value; }
+    public float WarriorDist { get => _warriorDist; set => _warriorDist = value; }
+
 
     private void Start()
     {
         _agent = gameObject.GetComponent<BaseController>().Agent;
-    }
-
-    private void Update()
-    {
-        
     }
 
     // ------------------------------------- Subscribe Action ------------------------------------------------
@@ -57,8 +57,8 @@ public class SummonSkill : MonoBehaviour
         _warriorSummonCount++;
 
         // 위치 세팅
-        Vector3 rootBack = gameObject.transform.TransformPoint(Vector3.back * _agent.stoppingDistance);
-        Vector3 rootLeft = gameObject.transform.TransformPoint(Vector3.left * _agent.stoppingDistance);
+        Vector3 rootBack = gameObject.transform.TransformPoint(Vector3.back * _bufferDist);
+        Vector3 rootLeft = gameObject.transform.TransformPoint(Vector3.left * _warriorDist);
         _buffer.transform.position = rootBack;
         _warrior.transform.position = rootLeft;
 

@@ -45,11 +45,14 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
         Stat = GetComponent<Stat>();
         photonView = GetComponent<PhotonView>();
 
+        // Stat 세팅
+        Agent.speed = Stat.MoveSpeed;
+
         SetOriginColor();
 
         Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
 
-        //StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인
+        StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인
     }
     protected virtual void Update()
     {
@@ -150,7 +153,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
         }
         else if (isCounter)
         {
-            if(PhotonNetwork.IsMasterClient) GimmickEvent();
+            if(PhotonNetwork.IsMasterClient) CounterEvent();
+            
         }
     }
 
@@ -158,7 +162,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
 
     }
 
-    public virtual void GimmickEvent()
+    public virtual void CounterEvent()
     {
         // 카운터, 히든 기믹 파훼 판단
     }

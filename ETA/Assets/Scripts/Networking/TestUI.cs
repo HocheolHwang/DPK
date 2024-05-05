@@ -18,8 +18,6 @@ public class TestUI : MonoBehaviour
 
     private void Update()
     {
-        Show();
-        ShowPartyLeader();
     }
     public void Post()
     {
@@ -57,7 +55,7 @@ public class TestUI : MonoBehaviour
     {
         //PhotonManager photon = gameObject.GetComponent<PhotonManager>();
 
-        Managers.Photon.MakeRoom();
+        Managers.Photon.JoinRandomRoom();
     }
     public void JoinRoom()
     {
@@ -80,6 +78,12 @@ public class TestUI : MonoBehaviour
     {
         Debug.Log(Managers.Player.GetExp());
         Managers.Player.AddExp(500);
+    }
+
+    public void ChangeJOB()
+    {
+        Managers.Player.SetClassCode("C002");
+        Managers.Photon.SetPlayerClass();
     }
 
     //// 테스트 로그인

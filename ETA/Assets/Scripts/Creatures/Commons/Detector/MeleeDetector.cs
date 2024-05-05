@@ -14,11 +14,12 @@ using static UnityEngine.GraphicsBuffer;
 public class MeleeDetector : MonoBehaviour, IDetector
 {
     [Header("Set Values from the Inspector")]
-    [SerializeField] public float DetectRange;
+    [SerializeField] private float _detectRange = 15.0f;
     [SerializeField] private float _attackRange;              // 근거리, 원거리, 일반과 보스 몬스터는 공격 사거리가 다르다.
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask TargetLayerMask;
 
+    public float DetectRange { get => _detectRange; set => _detectRange = value; }
     public float AttackRange { get => _attackRange; private set => _attackRange = value; }
     public Transform Target { get => _target; private set => _target = value; }
 
@@ -33,6 +34,8 @@ public class MeleeDetector : MonoBehaviour, IDetector
 
     private void OnDrawGizmos()
     {
+        if (!GetComponent<MeleeDetector>().enabled) return;
+
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
         if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, DetectRange);
@@ -72,8 +75,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
     public bool IsArriveToTarget()
     {
         if (_target == null) return false;
-        return Vector3.Distance(_target.position, transform.position) < _attackRange;
-        
+        return Vector3.Distance(_target.position, transform.position) <= _attackRange;
     }
 
     [PunRPC]

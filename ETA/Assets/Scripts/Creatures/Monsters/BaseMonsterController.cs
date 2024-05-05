@@ -36,10 +36,11 @@ public class BaseMonsterController : BaseController
 
     // ---------------------------------- Hit Counter Event ------------------------------------------
     // 카운터, 히든 기믹 파훼 판단
-    public override void GimmickEvent()
+    public override void CounterEvent()
     {
-        base.GimmickEvent();
+        base.CounterEvent();
         _isHitCounter = true;
+        // 카운터 맞았다는 이펙트 수행
     }
 
     IEnumerator InitCounter()

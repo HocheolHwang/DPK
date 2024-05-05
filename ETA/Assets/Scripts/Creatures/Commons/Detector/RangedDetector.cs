@@ -17,8 +17,8 @@ using static UnityEngine.GraphicsBuffer;
 public class RangedDetector : MonoBehaviour, IDetector
 {
     [Header("Set Values from the Inspector")]
-    [SerializeField] public float DetectRange;
-    [SerializeField] private float _attackRange;
+    [SerializeField] private float _detectRange = 18.0f;
+    [SerializeField] private float _attackRange = 14.0f;
     [SerializeField] private Transform _target;
     [SerializeField] public LayerMask TargetLayerMask;
     //[SerializeField] private PlayerController[] _players;
@@ -27,6 +27,7 @@ public class RangedDetector : MonoBehaviour, IDetector
     private float _waitSeconds;             // 기다린 시간
     private bool _isWaitComplete;           // 1.5초 기다렸나
 
+    public float DetectRange { get => _detectRange; set => _detectRange = value; }
     public float AttackRange { get => _attackRange; private set => _attackRange = value; }
     public Transform Target { get => _target; private set => _target = value; }
 
@@ -60,9 +61,11 @@ public class RangedDetector : MonoBehaviour, IDetector
 
     private void OnDrawGizmos()
     {
+        if (!GetComponent<RangedDetector>().enabled) return;
+
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, DetectRange);
+        if (Target == null ) Gizmos.DrawWireSphere(_ray.origin, _detectRange);
         else Gizmos.DrawWireSphere(_ray.origin, _attackRange);
     }
 
@@ -74,18 +77,20 @@ public class RangedDetector : MonoBehaviour, IDetector
         {
             yield return new WaitForSeconds(0.1f);
 
-            Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);
+            Collider[] enemies = Physics.OverlapSphere(transform.position, _detectRange, TargetLayerMask);
             if (enemies.Length == 0)
             {
                 _target = null;
             }
-            else if ( _hasMetTargetOne && _isWaitComplete )
+            
+            if ( _hasMetTargetOne && _isWaitComplete )
             {
                 // detectRange 안쪽과 attackRange 바깥쪽에 플레이어가 존재하도록 값을 세팅한다.
                 // 그래야 모든 플레이어를 감지할 수 있기 때문이다.
                 float farthestDist = 0;
                 foreach (Collider player in enemies)
                 {
+                    // player.GetComponent<Collider>().enabled
                     if (player.GetComponent<Stat>().Hp > 0)
                     {
                         float distToEnemy = Vector3.Distance(transform.position, player.transform.position);
@@ -130,6 +135,6 @@ public class RangedDetector : MonoBehaviour, IDetector
     public bool IsArriveToTarget()
     {
         if (_target == null) return false;
-        return Vector3.Distance(_target.position, transform.position) < _attackRange;
+        return Vector3.Distance(_target.position, transform.position) <= _attackRange;
     }
 }

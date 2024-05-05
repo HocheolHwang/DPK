@@ -14,11 +14,10 @@ public class MummyManController : BaseMonsterController
     public State THROW_STATE;
 
     public State CLAP_STATE;
-    // 돌아오는 상태 추가 -> 원래 자리를 저장하는 변수 필요, 멀리가는 패턴임을 bool 값으로 관리해서 true가 되면 현재 자리를 저장
-    public State BACK_LOCATION_STATE;
 
     public State SHOUTING_STATE;
     public State JUMP_STATE;
+    public State BACK_LOCATION_STATE;
 
     public State FORE_SHADOWING_STATE;
     public State RUSH_STATE;
@@ -66,9 +65,11 @@ public class MummyManController : BaseMonsterController
         ATTACK_STATE = new AttackState(this);
         // SOMMON
         CLAP_STATE = new ClapState(this);
+
+        SHOUTING_STATE = new ShoutingState(this);
+        JUMP_STATE = new JumpState(this);
         BACK_LOCATION_STATE = new BackLocationState(this);
-
-
+        RUSH_STATE = new RushState(this);
 
         // Global
         DIE_STATE = new DieState(this);

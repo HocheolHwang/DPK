@@ -10,7 +10,9 @@ public class Menu_Popup_UI : UI_Popup
     // 열거형 정의
     enum Buttons
     {
+        Close_Button,
         Open_Setting_Button,
+        Close_Setting_Button,
         Open_Load_Lobby_Button,
         Open_Game_Exit_Button,
         Cancel_Button
@@ -23,7 +25,9 @@ public class Menu_Popup_UI : UI_Popup
     }
 
     // UI 컴포넌트 바인딩 변수
+    private Button closeButton;
     private Button openSettingButton;
+    private Button closeSettingButton;
     private Button openLoadLobbyButton;
     private Button openGameExitButton;
     private Button cancelButton;
@@ -44,15 +48,23 @@ public class Menu_Popup_UI : UI_Popup
         Bind<Button>(typeof(Buttons));
         Bind<GameObject>(typeof(GameObjects));
 
-        // 세팅 열기 버튼 이벤트 등록
+        // 닫기 버튼 이벤트 등록
+        closeButton = GetButton((int)Buttons.Close_Button);
+        AddUIEvent(closeButton.gameObject, Cancel);
+
+        // 설정 띄우기 버튼 이벤트 등록
         openSettingButton = GetButton((int)Buttons.Open_Setting_Button);
         AddUIEvent(openSettingButton.gameObject, OpenSetting);
 
-        // 로비로 돌아가기 Popup UI 열기 버튼 이벤트 등록
+        // 설정 닫기 버튼 이벤트 등록
+        closeSettingButton = GetButton((int)Buttons.Close_Setting_Button);
+        AddUIEvent(closeSettingButton.gameObject, CloseSetting);
+
+        // 로비로 돌아가기 Popup UI 띄우기 버튼 이벤트 등록
         openLoadLobbyButton = GetButton((int)Buttons.Open_Load_Lobby_Button);
         AddUIEvent(openLoadLobbyButton.gameObject, OpenLoadLobbyScene);
 
-        // 게임 종료 Popup UI 열기 버튼 이벤트 등록
+        // 게임 종료 Popup UI 띄우기 버튼 이벤트 등록
         openGameExitButton = GetButton((int)Buttons.Open_Game_Exit_Button);
         AddUIEvent(openGameExitButton.gameObject, OpenGameExit);
 
@@ -63,7 +75,9 @@ public class Menu_Popup_UI : UI_Popup
 
         // 설정 패널 초기화 및 비활성화
         settingPanel = GetObject((int)GameObjects.Setting_Panel);
-        settingPanel.SetActive(false);
+
+        // 설정 닫기
+        CloseSetting();
 
         // 현재 Scene이 로비 Scene인지 확인
         loadLobbyButtonContinaer = GetObject((int)GameObjects.Load_Lobby_Button_Continaer);
@@ -79,17 +93,39 @@ public class Menu_Popup_UI : UI_Popup
 
     // ------------------------------ 메서드 정의 ------------------------------
 
-    // 설정 열기 메서드
+    // 설정 띄우기 메서드
     private void OpenSetting(PointerEventData data)
     {
+        // 버튼 교체
+        closeSettingButton.gameObject.SetActive(true);
+        openSettingButton.gameObject.SetActive(false);
+
+        // 설정 패널 띄우기
         settingPanel.SetActive(true);
+    }
+
+    // 설정 닫기 메서드
+    private void CloseSetting(PointerEventData data)
+    {
+        CloseSetting();
+    }
+
+    // 설정 닫기 메서드
+    private void CloseSetting()
+    {
+        // 버튼 교체
+        closeSettingButton.gameObject.SetActive(false);
+        openSettingButton.gameObject.SetActive(true);
+
+        // 설정 패널 닫기
+        settingPanel.SetActive(false);
     }
 
     // 로비로 돌아가기 Popup UI 띄우기 메서드
     private void OpenLoadLobbyScene(PointerEventData data)
     {
-        // 세팅 닫기
-        settingPanel.SetActive(false);
+        // 설정 닫기
+        CloseSetting();
 
         // 게임 종료 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Load_Lobby_Popup_UI>("[Dungeon]_Load_Lobby_Popup_UI");
@@ -98,8 +134,8 @@ public class Menu_Popup_UI : UI_Popup
     // 게임 종료 Popup UI 띄우기 메서드
     private void OpenGameExit(PointerEventData data)
     {
-        // 세팅 닫기
-        settingPanel.SetActive(false);
+        // 설정 닫기
+        CloseSetting();
 
         // 게임 종료 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Game_Exit_Popup_UI>("[Common]_Game_Exit_Popup_UI");

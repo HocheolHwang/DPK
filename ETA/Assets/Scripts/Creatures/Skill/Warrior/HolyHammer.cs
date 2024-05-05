@@ -28,13 +28,13 @@ public class HolyHammer : Skill
 
         // 대상과의 거리 계산
         float distanceToTarget = Vector3.Distance(hammerPrefab.transform.position, _skillSystem.TargetPosition);
-
         // 이동 속도 계산 (1초에 도달할 거리)
         float moveSpeed = 30f;
-
         // 대상까지 도달하기 위한 이동 시간 계산
         float moveTime = distanceToTarget / moveSpeed;
 
+        _animator.CrossFade("ATTACK4", 0.1f);
+        yield return new WaitForSeconds(0.1f);
         // 대상까지 이동하기
         float elapsedTime = 0f;
         while (elapsedTime < moveTime)
@@ -46,7 +46,6 @@ public class HolyHammer : Skill
         }
         // hammerPrefab.transform.position = _skillSystem.TargetPosition;
 
-        _animator.CrossFade("ATTACK4", 0.1f);
         Managers.Sound.Play("Skill/Crash");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);

@@ -1,7 +1,9 @@
+using KnightGStateItem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 동작의 끝에서는 IDLE 상태로 전환
 namespace MummyManStateItem
 {
     // -------------------------------------- IDLE ------------------------------------------------
@@ -41,6 +43,7 @@ namespace MummyManStateItem
     public class IdleBattleState : MummyManState
     {
         // CHASE -> IDLE BATTLE -> ATTACK
+        // CHASE -> IDLE BATTLE -> SHOUTING
         public IdleBattleState(MummyManController controller) : base(controller)
         {
         }
@@ -54,7 +57,19 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
-            if (IsStayForSeconds())
+            if (IsPreviousState())
+            {
+                _controller.ChangeState(_controller.BACK_LOCATION_STATE);
+            }
+            else if (_jumpTime >= _threadHoldJump)
+            {
+                _controller.ChangeState(_controller.JUMP_STATE);
+            }
+            else if (_shoutingTime >= _threadHoldShouting)
+            {
+                _controller.ChangeState(_controller.SHOUTING_STATE);
+            }
+            else if (IsStayForSeconds())
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
             }
@@ -70,7 +85,6 @@ namespace MummyManStateItem
     #region CHASE
     public class ChaseState : MummyManState
     {
-        // 몬스터끼리 뭉쳐지지 말고 경로에 몬스터가 있으면 피해서 이동하도록 수정
         public ChaseState(MummyManController controller) : base(controller)
         {
         }
@@ -87,12 +101,14 @@ namespace MummyManStateItem
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-            if (_detector.IsArriveToTarget())
+            else if (_detector.Target != null && _detector.IsArriveToTarget())
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
-
-            _agent.SetDestination(_detector.Target.position);
+            else
+            {
+                _agent.SetDestination(_detector.Target.position);
+            }
         }
 
         public override void Exit()
@@ -134,7 +150,6 @@ namespace MummyManStateItem
                 _animator.SetFloat("ThrowSpeed", 0.5f);
                 _animator.CrossFade(_animData.ThrowParamHash, 0.2f);
             }
-            _detector.Target.GetComponent<PlayerController>().TakeDamage(20);
         }
 
         public override void Execute()
@@ -204,12 +219,122 @@ namespace MummyManStateItem
         {
             _animTime += Time.deltaTime;
 
-            if (_animTime >=  _threadHold)
+            if (_animTime >= _threadHold)
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
         }
 
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- SHOUTING ------------------------------------------------
+    #region SHOUTING
+    public class ShoutingState : MummyManState
+    {
+        // 3초 동안 기절을 부여한다. -> hit box에 추가
+        public ShoutingState(MummyManController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            InitTime(_animData.ShoutingAnim.length);
+
+            _animator.SetFloat("ShoutingSpeed", 0.5f);
+            _animator.CrossFade(_animData.ShoutingParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            if (_animTime >= (_threadHold * 2))
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+            _shoutingTime = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- JUMP ------------------------------------------------
+    #region JUMP
+    public class JumpState : MummyManState
+    {
+        // 3초 동안 기절을 부여한다. -> hit box에 추가
+        public JumpState(MummyManController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            _agent.enabled = false;               // BACK_LOCATION에서 true
+
+            SetStartAndDestPos(_controller.transform.position, MonsterManager.Instance.GetCenterPos(_controller.transform));
+
+            InitTime(_animData.JumpAnim.length);
+            _animator.SetFloat("JumpSpeed", 0.5f);
+            _animator.CrossFade(_animData.JumpParamHash, 0.1f);
+
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            JumpToTarget(_animTime);
+            if (IsStayForSeconds((_threadHold * 2.0f) + 0.5f))
+            {
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+            _jumpTime = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- RUSH ------------------------------------------------
+    #region RUSH
+    public class RushState : MummyManState
+    {
+        public RushState(MummyManController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            SetStartAndDestPos(_controller.transform.position, _destPos);
+
+            // pattern 수행
+
+            InitTime(_animData.RushAnim.length);
+            _animator.SetFloat("RushSpeed", 0.5f);
+            _animator.CrossFade(_animData.RushParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            if (_animTime >= (_threadHold * 2.0f))
+            {
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
         public override void Exit()
         {
         }
@@ -227,14 +352,30 @@ namespace MummyManStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
+            _agent.enabled = false;
+
+            SetStartAndDestPos(_controller.transform.position, _startPos);
+
+            InitTime(_animData.JumpAnim.length);
+            _animator.SetFloat("JumpSpeed", 0.5f);
+            _animator.CrossFade(_animData.JumpParamHash, 0.1f);
+
         }
 
         public override void Execute()
         {
-            
+            _animTime += Time.deltaTime;
+
+            JumpToTarget(_animTime);
+
+            if (_animTime >= (_threadHold * 2.0f))
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
         }
         public override void Exit()
         {
+            _agent.enabled = true;
         }
     }
     #endregion
@@ -267,25 +408,42 @@ namespace MummyManStateItem
     #region GROGGY
     public class GroggyState : MummyManState
     {
+        ParticleSystem ps;
+        float groggyTime = 3.0f;
+
         public GroggyState(MummyManController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
+            ps = Managers.Effect.Play(Define.Effect.Groggy, _controller.transform);
+            ps.transform.SetParent(_controller.transform);
+            ps.transform.position = new Vector3(0, 3.0f, 0);
+
+            //if (_controller.PrevState is CounterEnableState)
+            //{
+            //    groggyTime = 3.0f;
+            //}
+            //else
+            //{
+            //    groggyTime = 1.0f;
+            //}
+
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
         }
 
         public override void Execute()
         {
-            if (IsStayForSeconds())
+            if (IsStayForSeconds(groggyTime))
             {
                 _controller.RevertToPrevState();
             }
         }
         public override void Exit()
         {
+            Managers.Effect.Stop(ps);
         }
     }
     #endregion
@@ -300,6 +458,12 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (_meetPlayer)
+            {
+                _shoutingTime += Time.deltaTime;
+                _jumpTime += Time.deltaTime;
+            }
+
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
             if (_controller.CurState == _controller.CLAP_STATE) return;

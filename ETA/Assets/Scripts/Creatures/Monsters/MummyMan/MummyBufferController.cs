@@ -50,6 +50,7 @@ public class MummyBufferController : BaseMonsterController
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
+        Detector.DetectRange *= 2;
         Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
         UnitType = Define.UnitType.MummyManBuffer;
     }

@@ -23,10 +23,10 @@ public class Sting : Skill
         yield return new WaitForSeconds(0.1f);
 
         // 대상과의 거리 계산
-        float distanceToTarget = Vector3.Distance(transform.position, _skillSystem.TargetPosition) - 2;
+        float distanceToTarget = Vector3.Distance(transform.position, _skillSystem.TargetPosition)-1f;
 
         // 이동 속도 계산 (1초에 도달할 거리)
-        float moveSpeed = 10f;
+        float moveSpeed = 25f;
 
         // 대상까지 도달하기 위한 이동 시간 계산
         float moveTime = distanceToTarget / moveSpeed;
@@ -41,13 +41,14 @@ public class Sting : Skill
             yield return null; // 한 프레임 대기
         }
         // ParticleSystem ps1 = Managers.Resource.Instantiate("Effect/SwordVolleyBlue").GetComponent<ParticleSystem>();
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
-        hitbox.transform.position = _skillSystem.TargetPosition;
         yield return new WaitForSeconds(0.2f);
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+        hitbox.SetUp(transform, Damage, -1, true);
+        hitbox.transform.position = _skillSystem.TargetPosition;
+        yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
         Managers.Sound.Play("Skill/TargetSkill");
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 }

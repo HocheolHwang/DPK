@@ -27,6 +27,7 @@ public class Dungeon_Scene : BaseScene
         //{
         //    PhotonNetwork.Instantiate("Prefabs/Creatures/Player/PlayerZone", new Vector3(16f, 0.5f, 0f), Quaternion.Euler(0,90,0));
         //}
+        Managers.Resource.Instantiate("MonsterManager").name = "@MonsterManager";
     }
     
     public override void Clear()

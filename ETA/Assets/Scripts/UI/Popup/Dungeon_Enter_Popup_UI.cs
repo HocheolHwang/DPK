@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -36,7 +35,7 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
 
-        // 돌아가기 버튼 이벤트 등록
+        // 취소하기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
@@ -54,7 +53,7 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
 
     // ------------------------------ 메서드 정의 ------------------------------
 
-    // 돌아가기 메서드
+    // 취소하기 메서드
     private void Cancel(PointerEventData data)
     {
         ClosePopupUI();
@@ -89,6 +88,7 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         //SceneManager.LoadScene(sceneName);
         // TMP
         //Managers.Scene.LoadScene(sceneName);
+
         Managers.Scene.LoadScene(Define.Scene.MultiPlayTest);
 
         // 다른 애들도 가라고 RPC
