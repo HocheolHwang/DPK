@@ -110,6 +110,14 @@ public class SkillSlot : MonoBehaviour
         {
             _currentSkill = gameObject.GetOrAddComponent<ArcherNormalAttackSkill>();
         }
+        else if (gameObject.name.Contains("Wizard"))
+        {
+            _currentSkill = gameObject.GetOrAddComponent<WizardNormalAttackSkill>();
+        }
+        else
+        {
+            Debug.Log("존재하지 않는 직업 입니다.");
+        }
         
         _currentSkill.Cast();
     }
