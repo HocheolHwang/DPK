@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -9,6 +10,7 @@ public class TestUI : MonoBehaviour
     public GameObject ShowObj;
     public GameObject partyLeader;
     NetworkManager req;
+    public Text roomname;
 
     private void Start()
     {
@@ -51,12 +53,6 @@ public class TestUI : MonoBehaviour
         req.HTTPCall("GET", "get");
     }
 
-    public void MakeRoom()
-    {
-        //PhotonManager photon = gameObject.GetComponent<PhotonManager>();
-
-        Managers.Photon.JoinRandomRoom();
-    }
     public void JoinRoom()
     {
         Managers.Photon.JoinRandomRoom();
@@ -84,6 +80,11 @@ public class TestUI : MonoBehaviour
     {
         Managers.Player.SetClassCode("C003");
         Managers.Photon.SetPlayerClass();
+    }
+
+    public void RoomMake()
+    {
+        Managers.Photon.MakeRoom(roomname.text);
     }
 
     //// 테스트 로그인

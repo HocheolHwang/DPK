@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Party_Item : MonoBehaviour
 {
@@ -25,6 +26,11 @@ public class Party_Item : MonoBehaviour
     // 파티 참가 확인 Popup UI 띄우기 메서드
     private void OpenPartyJoinConfirm()
     {
+        Transform partyInfo = gameObject.transform.GetChild(0);
+        Managers.Photon.RoomName = partyInfo.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+
+        Debug.Log($"{partyInfo.name} 클릭함");
+
         Managers.UI.ShowPopupUI<Party_Join_Confirm_Popup_UI>("[Lobby]_Party_Join_Confirm_Popup_UI");
     }
 }

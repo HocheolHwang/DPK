@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 public class Party_Join_Confirm_Popup_UI : UI_Popup
 {
     // ------------------------------ 변수 정의 ------------------------------
@@ -51,6 +52,7 @@ public class Party_Join_Confirm_Popup_UI : UI_Popup
     private void PartyJoin(PointerEventData data)
     {
         // TODO: 파티에 참가하는 코드 추가 필요
+        Managers.Photon.roomEnter();
 
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
