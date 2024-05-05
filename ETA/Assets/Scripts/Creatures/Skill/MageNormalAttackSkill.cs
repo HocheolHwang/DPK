@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WizardNormalAttackSkill : Skill
+public class MageNormalAttackSkill : Skill
 {
     protected override void Init()
     {

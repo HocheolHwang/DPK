@@ -110,9 +110,9 @@ public class SkillSlot : MonoBehaviour
         {
             _currentSkill = gameObject.GetOrAddComponent<ArcherNormalAttackSkill>();
         }
-        else if (gameObject.name.Contains("Wizard"))
+        else if (gameObject.name.Contains("Mage"))
         {
-            _currentSkill = gameObject.GetOrAddComponent<WizardNormalAttackSkill>();
+            _currentSkill = gameObject.GetOrAddComponent<MageNormalAttackSkill>();
         }
         else
         {
