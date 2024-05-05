@@ -62,7 +62,7 @@ public class PlayerController : BaseController
         
         if (photonView.IsMine)
         {
-            if(PhotonNetwork.IsMasterClient) _destination = GameObject.Find("FRONT_1").transform;
+            if(PhotonNetwork.IsMasterClient) _destination = GameObject.Find("FRONT_2").transform;
             else _destination = GameObject.Find("FRONT_3").transform;
             //ChangeState(MOVE_STATE);
             Managers.Input.KeyAction -= KeyEvent;
@@ -71,8 +71,6 @@ public class PlayerController : BaseController
             Managers.Input.MouseAction -= MouseEvent;
             Managers.Input.MouseAction += MouseEvent;
             Camera.main.GetComponent<CameraController>()._player = gameObject;
-
-            
         }
         Debug.Log($"{photonView.IsMine}");
         FindObjectOfType<MyPhoton>().SendCharacherInstantiatedMsg();

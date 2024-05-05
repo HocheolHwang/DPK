@@ -39,8 +39,17 @@ public class Lobby_Scene : BaseScene
 
         SetUpMannequins();
         mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
+
         //TMP
-        PhotonNetwork.JoinRandomOrCreateRoom();
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        else
+        {
+            PhotonNetwork.JoinRandomOrCreateRoom();
+        }
+        
     }
 
     public override void Clear()

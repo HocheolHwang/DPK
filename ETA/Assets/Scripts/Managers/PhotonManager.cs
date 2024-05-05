@@ -15,6 +15,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private bool isConnecting;
     private string roomName;
 
+
     // 던전 이름
     private string dungeonIndex;
 
@@ -298,6 +299,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     #region MonoBehaviourPunCallbacks callbacks
 
+    public override void OnLeftRoom()
+    {
+        Managers.Player.SetPartyLeader(false);
+        Destroy(GameObject.FindObjectOfType<MyPhoton>());
+    }
     public override void OnConnectedToMaster()
     {
         isConnecting = true;
