@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -51,7 +52,7 @@ public class Party_Leave_Popup_UI : UI_Popup
     private void PartyLeave(PointerEventData data)
     {
         // 파티 탈퇴
-        Managers.Photon.OnLeftRoom();
+        PhotonNetwork.LeaveRoom();
 
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();

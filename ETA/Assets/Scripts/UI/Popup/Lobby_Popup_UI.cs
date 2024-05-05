@@ -151,7 +151,7 @@ public class Lobby_Popup_UI : UI_Popup
     }
 
     // 파티 정보 업데이트 메서드
-    private void UpdatePartyInfo()
+    public void UpdatePartyInfo()
     {
         if (PhotonNetwork.InRoom)
         {
