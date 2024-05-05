@@ -75,7 +75,7 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
 
         // 선택된 던전 번호 가져오기
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
-
+        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
         // 선택된 던전 번호에 따라 다른 씬으로 이동
         Define.Scene sceneName = selectedDungeonNumber switch
         {
@@ -107,10 +107,10 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
     private void UpdateSelectedDungeon()
     {
         // 선택된 던전 번호 가져오기
-        int secidedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
-
+        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
+        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
-        dungeonEnterText.text = secidedDungeonNumber switch
+        dungeonEnterText.text = selectedDungeonNumber switch
         {
             1 => "[깊은 숲]에 입장하시겠습니까?",
             2 => "[잊혀진 신전]에 입장하시겠습니까?",

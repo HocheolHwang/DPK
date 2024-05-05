@@ -8,10 +8,14 @@ public class Lobby_Scene : BaseScene
     // 로비 마네킹 관리를 위한 리스트
     MannequinController[] mannequins = new MannequinController[3];
     public bool isSoloPlay;
+
+    public int currentDungeonNumber;
+
     private void Start()
     {
         // 첫 로그인 여부를 확인
         bool isFirstLogin = PlayerPrefs.GetInt("FirstLogin", 1) == 1;
+        currentDungeonNumber = 1; // 깊은 숲 설정
 
         if (Managers.Player.GetFirst() && isFirstLogin)
         {
@@ -91,7 +95,7 @@ public class Lobby_Scene : BaseScene
         Managers.Photon.SetPlayerClass();
 
 
-
+        // Popup 에서 생성하고 시작될 예정
         if (isSoloPlay)
         {
             FindObjectOfType<Dungeon_Enter_Popup_UI>().DungeonEnter(null);
@@ -142,6 +146,12 @@ public class Lobby_Scene : BaseScene
         }
 
         ChangeMannequin();
+    }
+
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        base.OnRoomPropertiesUpdate(propertiesThatChanged);
     }
 
     public override void OnLeftRoom()
