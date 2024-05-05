@@ -24,8 +24,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // current room
     private RoomInfo selectRoom;
 
-    // 로비 마네킹 관리를 위한 리스트
-    MannequinController[] mannequins = new MannequinController[3];
 
     #endregion
 
@@ -78,18 +76,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-        MannequinController[] treeMannequin = GameObject.FindObjectsOfType<MannequinController>();
+        //MannequinController[] treeMannequin = GameObject.FindObjectsOfType<MannequinController>();
 
-        Debug.Log(treeMannequin[0].index);
+        //Debug.Log(treeMannequin[0].index);
 
-        for(int i = 0; i<3; i++)
-          mannequins[treeMannequin[i].index] = treeMannequin[i];
+        //for(int i = 0; i<3; i++)
+        //  mannequins[treeMannequin[i].index] = treeMannequin[i];
 
 
         //mannequins[0].EnterPlayer("0", "C001");
         //mannequins[1].EnterPlayer("1", "C002");
         //mannequins[2].EnterPlayer("2", "C003");
     }
+
+
 
     #endregion
 
@@ -98,10 +98,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 네트워크 연결을 위한 Connect 함수
     public void Connect()
     {
+
         // 임시 코드         
         if(Managers.Player.GetNickName()==null)
         Managers.Player.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
-        Managers.Player.SetNickName(Managers.Player.GetNickName());
+        //Managers.Player.SetNickName(Managers.Player.GetNickName());
         //Debug.Log(Managers.PlayerInfo.GetNickName());
 
         if (isConnecting)
@@ -173,8 +174,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
             Managers.Player.SetPartyLeader(true);
 
-        mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
-
         PhotonNetwork.CreateRoom(roomName, room);
     }
 
@@ -187,12 +186,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void SetPlayerClass()
     {
             Debug.Log($"현재 직업은 {Managers.Player.GetClassCode()} 입니다.");
-        //if (PhotonNetwork.LocalPlayer.CustomProperties["CurClass"] == null)
-        {
             Debug.Log("새로 추가");
             ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable() { { "CurClass", Managers.Player.GetClassCode() } };
             PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
-        }
     }
 
     public void roomEnter()
@@ -217,37 +213,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomOrCreateRoom();
     }
 
-    public void ExitRoom()
-    {
-        // 방이 아니면 탈퇴 불가
-        if (!PhotonNetwork.InRoom) return;
-        // room -> Lobby
-        PhotonNetwork.LeaveRoom();
+    //public void ExitRoom()
+    //{
+    //    // 방이 아니면 탈퇴 불가
+    //    if (!PhotonNetwork.InRoom) return;
+    //    // room -> Lobby
+    //    PhotonNetwork.LeaveRoom();
 
-        mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
+    //    mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
         
-        mannequins[1].Init();
-        mannequins[2].Init();
+    //    mannequins[1].Init();
+    //    mannequins[2].Init();
 
-    }
-
-    public void ChangeMannequin()
-    {
-        Debug.Log("ghkfktyhuftyjrfyf  " + PhotonNetwork.PlayerList.Length + " + " + PhotonNetwork.CountOfPlayersInRooms);
-        for(int i = 0; i<3; i++)
-        {
-            mannequins[i].Init();
-        }
-
-        foreach(Photon.Realtime.Player player in PhotonNetwork.PlayerList)
-        {
-            if (player.CustomProperties["PlayerIndex"] == null || player.CustomProperties["CurClass"] == null) return;
-            Debug.Log(player.NickName);
-            Debug.Log((int)player.CustomProperties["PlayerIndex"]);
-            Debug.Log((string)player.CustomProperties["CurClass"]);
-            mannequins[(int)player.CustomProperties["PlayerIndex"]].EnterPlayer(player.NickName, (string)player.CustomProperties["CurClass"]);
-        }
-    }
+    //}
 
     // 방 리스트
     public List<RoomInfo> printList()
@@ -324,35 +302,35 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         isConnecting = true;
         Debug.Log("OnConnectedToMaster");
+        
         PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
+        Debug.Log("02. Joined Lobby");
         // 방장 해제
         Managers.Player.SetPartyLeader(false);
-
-        // TMP
-        PhotonNetwork.JoinRandomOrCreateRoom();
     }
 
     // 방 정보 저장
     public override void OnRoomListUpdate(List<RoomInfo> newRooms)
     {
-        foreach (RoomInfo rooom in newRooms)
+        foreach (RoomInfo room in newRooms)
         {
+            
             // 리스트에 방이 있는지 없는지 판단
             bool change = false;
             for (int i = 0; i < roomlist.Count; i++)
             {
                 // 지금 보고있는 방이 리스트에 있다.
-                if (roomlist[i].Name == rooom.Name)
+                if (roomlist[i].Name == room.Name)
                 {
                     // 풀방 아님
-                    if (rooom.PlayerCount != 0)
-                        roomlist[i] = rooom;    
+                    if (room.PlayerCount != 0)
+                        roomlist[i] = room;    
                     // no player, no open, no multy
-                    else if (rooom.PlayerCount == 0 || !rooom.IsOpen || !rooom.IsVisible)
+                    else if (room.PlayerCount == 0 || !room.IsOpen || !room.IsVisible)
                     {
                         roomlist.Remove(roomlist[i]);
                     }
@@ -364,8 +342,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             // 바꿀게 없다
             if (!change)
             {
-                if (rooom.PlayerCount != 0)
-                    roomlist.Add(rooom);
+                if (room.PlayerCount != 0)
+                    roomlist.Add(room);
             }
         }
 
@@ -384,22 +362,21 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 방에 들어오자마자 닉네임 설정
         if (PhotonNetwork.NickName == null)
             PhotonNetwork.NickName = Managers.Player.GetNickName();
-        updatePlayerList();
+        
         if (PhotonNetwork.IsMasterClient) { 
             Managers.Player.SetPartyLeader(true);
             GameObject MyPhoton = PhotonNetwork.Instantiate("Prefabs/MyPhoton", new Vector3(), new Quaternion());
             MyPhoton.name = "MyPhoton";
             DontDestroyOnLoad(MyPhoton);
         }
+        updatePlayerList();
         SetPlayerClass();
-        ChangeMannequin();
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         // 방 나간사람이 있는 경우 번호 갱신
         updatePlayerList();
-        ChangeMannequin();
     }
 
     // 마스터 클라이언트가 변경 되었을 때 호출
@@ -407,7 +384,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("하이");
             ExitGames.Client.Photon.Hashtable curProperties = PhotonNetwork.CurrentRoom.CustomProperties;
             // 방장 변경
             Managers.Player.SetPartyLeader(true);
@@ -420,24 +396,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         updatePlayerList();
-        ChangeMannequin();  
-    }
-
-    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-    {
-        foreach (DictionaryEntry entry in changedProps)
-        {
-              Debug.Log($"{targetPlayer.NickName}'s Property {entry.Key} changed to {entry.Value}");
-
-            if((string)entry.Key == "CurClass")
-            {
-                mannequins[(int)targetPlayer.CustomProperties["PlayerIndex"]].ClassUpdate((string)entry.Value);
-            }
-            if((string)entry.Key == "PlayerIndex")
-            {
-                mannequins[(int)entry.Value].SetNickName(targetPlayer.NickName);
-            }
-        }
     }
     #endregion
 }

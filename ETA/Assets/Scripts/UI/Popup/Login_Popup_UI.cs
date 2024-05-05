@@ -110,16 +110,10 @@ public class Login_Popup_UI : UI_Popup
             playerPassword = userPW.text,
         };
 
-        NetworkManager networkManager = FindObjectOfType<NetworkManager>();
-        if (networkManager != null)
-        {
+        //NetworkManager networkManager = FindObjectOfType<NetworkManager>();
+
             // 로그인 요청 호출 및 콜백 함수 전달
-            networkManager.SignInCall(signInDto, UpdateWarningText);
-        }
-        else
-        {
-            Debug.LogError("NetworkManager 인스턴스를 찾을 수 없습니다.");
-        }
+        Managers.Network.SignInCall(signInDto, UpdateWarningText);
     }
 
     // 로그인 시도 후 콜백 함수로 경고 텍스트 업데이트하는 메서드
@@ -137,9 +131,10 @@ public class Login_Popup_UI : UI_Popup
             // 모든 Popup UI를 닫음
             CloseAllPopupUI();
 
+            Managers.Photon.Connect();
             // 로그인 완료 Popup UI를 띄움
-            Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
-
+            // 로비까지 들어가면 그때 띄워주기
+            //Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
             Managers.Network.CurrentClassCall(CurrentClass);
         }
         else if (message == "Database error.")
@@ -155,7 +150,6 @@ public class Login_Popup_UI : UI_Popup
 
     private void CurrentClass(CurClassDto dto)
     {
-        Debug.Log(dto.playerLevel);
         Managers.Player.SetExp(dto.currentExp);
         Managers.Player.SetClassCode(dto.classCode);
         Managers.Player.SetLevel(dto.playerLevel);

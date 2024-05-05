@@ -15,4 +15,10 @@ public class Login_Scene : BaseScene
     {
         Debug.Log("Login Scene Clear");
     }
+
+    public override void OnJoinedLobby()
+    {
+        // 로그인 후 성공적으로 로비 입장시 UI가 뜬다.
+        Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
+    }
 }
