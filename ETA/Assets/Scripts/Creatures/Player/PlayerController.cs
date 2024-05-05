@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,9 +28,7 @@ public class PlayerController : BaseController
 
     public SkillSlot SkillSlot { get; set;}
 
-    
-
-
+    public static event Action OnPlayerDestroyed;
 
     private void Start()
     {
@@ -151,6 +150,9 @@ public class PlayerController : BaseController
 
     public override void DestroyEvent()
     {
+        // 플레이어 죽었을때 이벤트 발생
+        OnPlayerDestroyed?.Invoke();
+
         base.DestroyEvent();
         SkillSlot.Clear();
     }

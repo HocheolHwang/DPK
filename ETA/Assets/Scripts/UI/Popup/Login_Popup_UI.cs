@@ -14,6 +14,7 @@ public class Login_Popup_UI : UI_Popup
         Switch_Signup_Button,
         Game_Exit_Button
     }
+
     enum InputFields
     {
         ID_InputField,
@@ -157,7 +158,6 @@ public class Login_Popup_UI : UI_Popup
         Managers.Player.SetSkillPoint(dto.skillPoint);
     }
 
-    // 회원가입 Popup UI로 전환
     // 회원가입 Popup UI로 전환하는 메서드
     private void SwitchSignup(PointerEventData data)
     {

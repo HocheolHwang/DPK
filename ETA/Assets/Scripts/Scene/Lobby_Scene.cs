@@ -69,7 +69,7 @@ public class Lobby_Scene : BaseScene
         // TMP 임시 코드
         if (PhotonNetwork.InRoom == false)
         {
-            PhotonNetwork.JoinRandomOrCreateRoom();
+            //PhotonNetwork.JoinRandomOrCreateRoom();
         }
 
     }
