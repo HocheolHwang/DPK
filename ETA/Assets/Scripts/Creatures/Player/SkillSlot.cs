@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,7 +19,9 @@ public class SkillSlot : MonoBehaviour
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
-        GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
+        // 내 캐릭터만 UI에 연결하기
+        if(GetComponent<PhotonView>().IsMine) GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
+
 
         string[] loadedSkills = { "TargetSkill", "RangeSkill", "HoldSkill", "ImmediatelySkill", "GuardSkill"};
         for (int i = 0; i < loadedSkills.Length; i++)

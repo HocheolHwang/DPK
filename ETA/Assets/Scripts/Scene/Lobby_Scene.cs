@@ -34,13 +34,9 @@ public class Lobby_Scene : BaseScene
 
         Managers.Sound.Play("BackgroundMusic/Lobby");
         // 이부분 다른곳으로 옮기기
-        Debug.Log(PhotonNetwork.SerializationRate);
-        PhotonNetwork.SerializationRate = 10;
-        Debug.Log(PhotonNetwork.PrecisionForFloatSynchronization);
-        PhotonNetwork.PrecisionForFloatSynchronization = 0.1f;
-
-        Debug.Log(PhotonNetwork.SendRate);
-        PhotonNetwork.SendRate = 60;
+        //PhotonNetwork.SerializationRate = 10;
+        //PhotonNetwork.PrecisionForFloatSynchronization = 0.1f;
+        //PhotonNetwork.SendRate = 60;
 
         
         SetUpMannequins();
@@ -95,18 +91,25 @@ public class Lobby_Scene : BaseScene
         Managers.Photon.SetPlayerClass();
 
 
+
         // Popup 에서 생성하고 시작될 예정
         if (isSoloPlay)
         {
             FindObjectOfType<Dungeon_Enter_Popup_UI>().DungeonEnter(null);
+            return;
         }
+
+        FindObjectOfType<Lobby_Popup_UI>().UpdatePartyInfo();
+
+
     }
+
 
     public void SetUpMannequins()
     {
         MannequinController[] treeMannequin = GameObject.FindObjectsOfType<MannequinController>();
 
-        Debug.Log(treeMannequin[0].index);
+        //Debug.Log(treeMannequin[0].index);
 
         for (int i = 0; i < 3; i++)
             mannequins[treeMannequin[i].index] = treeMannequin[i];
@@ -122,9 +125,9 @@ public class Lobby_Scene : BaseScene
         foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
         {
             if (player.CustomProperties["PlayerIndex"] == null || player.CustomProperties["CurClass"] == null) return;
-            Debug.Log(player.NickName);
-            Debug.Log((int)player.CustomProperties["PlayerIndex"]);
-            Debug.Log((string)player.CustomProperties["CurClass"]);
+            //Debug.Log(player.NickName);
+            //Debug.Log((int)player.CustomProperties["PlayerIndex"]);
+            //Debug.Log((string)player.CustomProperties["CurClass"]);
             mannequins[(int)player.CustomProperties["PlayerIndex"]].EnterPlayer(player.NickName, (string)player.CustomProperties["CurClass"]);
         }
     }
@@ -156,9 +159,11 @@ public class Lobby_Scene : BaseScene
 
     public override void OnLeftRoom()
     {
+
         mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
         mannequins[1].Init();
         mannequins[2].Init();
+        FindObjectOfType<Lobby_Popup_UI>().UpdatePartyInfo();
     }
 
 }
