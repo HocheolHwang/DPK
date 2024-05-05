@@ -126,16 +126,7 @@ public class Signup_Popup_UI : UI_Popup
             playerPasswordCheck = userPWCheck.text,
         };
 
-        NetworkManager networkManager = FindObjectOfType<NetworkManager>();
-        if (networkManager != null)
-        {
-            // 회원가입 요청 호출
-            networkManager.SignUpCall(signUpDto, UpdateWarningText);
-        }
-        else
-        {
-            Debug.LogError("NetworkManager 인스턴스를 찾을 수 없습니다.");
-        }
+        Managers.Network.SignUpCall(signUpDto, UpdateWarningText);
     }
 
     // 회원가입 시도 후 콜백 함수로 경고 텍스트 업데이트하는 메서드
