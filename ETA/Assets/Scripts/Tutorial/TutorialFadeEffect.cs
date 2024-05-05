@@ -6,6 +6,8 @@ public class TutorialFadeEffect : TutorialBase
 {
     [SerializeField]
     private FadeEffect  fadeEffect;
+    [SerializeField]
+    private GameObject  uiElement;
 
     [SerializeField]
     private bool        isFadeIn = false;
@@ -13,6 +15,7 @@ public class TutorialFadeEffect : TutorialBase
 
     public override void Enter()
     {
+        uiElement.SetActive(true); // 페이드 시작 시 UI 활성화
         if ( isFadeIn == true )
         {
             fadeEffect.FadeIn(OnAfterFadeEffect);
@@ -38,5 +41,6 @@ public class TutorialFadeEffect : TutorialBase
 
     public override void Exit() 
     {
+        uiElement.SetActive(false); // 튜토리얼 종료 시 UI 비활성화
     }
 }
