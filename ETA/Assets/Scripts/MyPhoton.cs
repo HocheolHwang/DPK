@@ -57,7 +57,7 @@ public class MyPhoton : MonoBehaviour
             }
             else if(classCode == "C003")
             {
-                myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Wizard", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
+                myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Mage", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
             }
             else
             {

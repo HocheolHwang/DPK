@@ -273,7 +273,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
     void OnDestroy()
     {
+        // 등록된 이벤트 핸들러 해제
         KnightGController.OnBossDestroyed -= HandleBossDestroyed;
+        PlayerController.OnPlayerDestroyed -= HandlePlayerDestroyed;
 
         if (isTutorialScene)
         {
@@ -355,6 +357,9 @@ public class Dungeon_Popup_UI : UI_Popup
         playerTierText.text = isTutorialScene ? "던전처리기사 수험생" : "견습 던전처리기사";
         playerNicknameText.text = Managers.Player.GetNickName();
         playerHPSlider.value = 1;
+
+        // 플레이어 파괴 이벤트 핸들러 등록
+        PlayerController.OnPlayerDestroyed += HandlePlayerDestroyed;
     }
 
     // 게임 시간 업데이트 메서드
@@ -454,6 +459,13 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             player.isFinished = true;
         }
+    }
+
+    // 플레이어 사망 시 실행되는 메서드
+    private void HandlePlayerDestroyed()
+    {
+        // 던전 결과 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
     }
 
     // 채팅 Popup UI 띄우기 메서드

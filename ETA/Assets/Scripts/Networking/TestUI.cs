@@ -78,7 +78,7 @@ public class TestUI : MonoBehaviour
 
     public void ChangeJOB()
     {
-        Managers.Player.SetClassCode("C002");
+        Managers.Player.SetClassCode("C003");
         Managers.Photon.SetPlayerClass();
     }
 
