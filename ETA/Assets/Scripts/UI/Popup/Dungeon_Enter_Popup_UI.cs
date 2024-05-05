@@ -95,12 +95,15 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         // 선택된 던전 Scene으로 이동
         //SceneManager.LoadScene(sceneName);
         // TMP
+        FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(sceneName);
+        Debug.Log(sceneName);
         Managers.Scene.LoadScene(sceneName);
 
         //Managers.Scene.LoadScene(Define.Scene.MultiPlayTest);
 
         // 다른 애들도 가라고 RPC
-        FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(sceneName);
+        
+        
         //FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(Define.Scene.MultiPlayTest);
     }
 
