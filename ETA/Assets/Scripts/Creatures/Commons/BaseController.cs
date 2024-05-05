@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,11 +7,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public abstract class BaseController : MonoBehaviour, IDamageable
+public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservable
 {
     protected StateMachine _stateMachine;
     protected State _curState;
     protected State _prevState;
+    public PhotonView photonView;
+    protected Vector3 networkPosition;
+    protected Quaternion networkRotation;
 
     [Header("Common Property")]
     [SerializeField] public Define.UnitType UnitType;
@@ -39,6 +43,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         Agent = GetComponent<NavMeshAgent>();
         Detector = GetComponent<IDetector>();
         Stat = GetComponent<Stat>();
+        photonView = GetComponent<PhotonView>();
 
         // Stat 세팅
         Agent.speed = Stat.MoveSpeed;
@@ -60,7 +65,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         }
         else
         {
-            if(Stat.Shield <= 0 && _shieldEffect != null)
+            if (Stat.Shield <= 0 && _shieldEffect != null)
             {
                 Managers.Resource.Destroy(_shieldEffect.gameObject);
 
@@ -101,7 +106,16 @@ public abstract class BaseController : MonoBehaviour, IDamageable
     // ---------------------------------- IDamage ------------------------------------------
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
+        if (PhotonNetwork.IsMasterClient == false) return;
+        SendTakeDamageMsg(attackDamage, isCounter);
+
         // 최소 데미지 = 1
+        CalcDamage(attackDamage, isCounter);
+
+    }
+
+    public void CalcDamage(int attackDamage, bool isCounter)
+    {
         int damage = attackDamage - Stat.Defense;
         if (damage <= 1)
         {
@@ -127,7 +141,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable
 
         attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
         attackedDamage_ui.AttackedDamage = damage;
-        
+
         Stat.Hp -= damage;
         AttackedEvent();
 
@@ -139,12 +153,13 @@ public abstract class BaseController : MonoBehaviour, IDamageable
         }
         else if (isCounter)
         {
-            CounterEvent();
+            if(PhotonNetwork.IsMasterClient) CounterEvent();
+            
         }
     }
 
     public virtual void AttackedEvent() {
-        
+
     }
 
     public virtual void CounterEvent()
@@ -230,7 +245,45 @@ public abstract class BaseController : MonoBehaviour, IDamageable
                 yield break;
             }
         }
-        
-        
+
+
     }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        Debug.Log(stream.IsWriting);
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+            stream.SendNext(Agent.velocity);
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkRotation = (Quaternion)stream.ReceiveNext();
+            Agent.velocity = (Vector3)stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            //transform.position += Agent.velocity * lag;
+            networkPosition += (Agent.velocity * lag);
+        }
+    }
+
+    public void FixedUpdate()
+    {
+        if (!photonView.IsMine)
+        {
+            Debug.Log($"{gameObject.name}");
+            transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+        }
+    }
+
+    public void SendTakeDamageMsg(int attackDamage, bool isCounter)
+    {
+        photonView.RPC("RPC_TakeDamage", RpcTarget.Others, attackDamage, isCounter);
+    }
+
+
 }

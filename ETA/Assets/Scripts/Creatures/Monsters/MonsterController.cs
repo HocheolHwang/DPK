@@ -4,6 +4,7 @@ using UnityEngine;
 
 using MonsterStateItem;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class MonsterController : BaseMonsterController
 {
@@ -74,4 +75,67 @@ public class MonsterController : BaseMonsterController
                 break;
         }
     }
+
+    public void ChangeToIdleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToIdleState()
+    {
+        ChangeState(IDLE_STATE);
+    }
+
+    public void ChangeToIdleBattleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleBattleState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToIdleBattleState()
+    {
+        ChangeState(IDLE_BATTLE_STATE);
+    }
+
+    public void ChangeToChaseState()
+    {
+        photonView.RPC("RPC_ChangeToChaseState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToChaseState()
+    {
+        ChangeState(CHASE_STATE);
+    }
+
+    public void ChangeToAttackState()
+    {
+        photonView.RPC("RPC_ChangeToAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToAttackState()
+    {
+        ChangeState(ATTACK_STATE);
+    }
+
+    public void ChangeToDieState()
+    {
+        photonView.RPC("RPC_ChangeToDieState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToDieState()
+    {
+        ChangeState(DIE_STATE);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(int attackDamage, bool isCounter)
+    {
+        CalcDamage(attackDamage, isCounter);
+    }
+
+
 }

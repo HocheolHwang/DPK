@@ -66,7 +66,7 @@ public class TestUI : MonoBehaviour
         ShowObj.SetActive(PhotonNetwork.InRoom);
     }
     public void ExitRoom() {
-        Managers.Photon.ExitRoom();
+        //Managers.Photon.ExitRoom();
     }
 
     public void ShowPartyLeader()
