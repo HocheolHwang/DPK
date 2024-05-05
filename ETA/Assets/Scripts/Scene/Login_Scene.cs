@@ -35,6 +35,7 @@ public class Login_Scene : BaseScene
         {
             // 그냥 바로 게임시작 UI 띄워준다.
             // UI를 이용해서 입장 하자
+            Managers.UI.ClosePopupUI();
             Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
         }
     }
@@ -43,6 +44,7 @@ public class Login_Scene : BaseScene
     {
         // 첫 로그인 사용자가 로그인 씬에서 방까지 다 만들었을 경우에만 실행됨
         // UI를 이용해서 입장 하자
+        Managers.UI.ClosePopupUI();
         Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
     }
 }

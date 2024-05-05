@@ -42,8 +42,7 @@ public class GameSystem : MonoBehaviour
         }
 
         currentDungeonNum = num;
-        Debug.Log(currentDungeonNum);
-        PhotonView.RPC("RPC_ChangeScene", RpcTarget.Others, scene);
+        GetComponent<PhotonView>().RPC("RPC_ChangeScene", RpcTarget.Others, scene);
     }
 
     [PunRPC]
@@ -109,6 +108,7 @@ public class GameSystem : MonoBehaviour
 
     public void SendCharacherInstantiatedMsg()
     {
+        // 이게 내 화면에 캐릭터들이 다 완성되면 보냄
         characterCnt += 1;
         if (characterCnt >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
@@ -122,12 +122,15 @@ public class GameSystem : MonoBehaviour
     [PunRPC]
     public void RPC_CharacherInstantiated()
     {
+        // 캐릭터들이 다 로드된 클라이언트 갯수
         finish += 1;
         if (finish >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
             myController.ChangeState(myController.MOVE_STATE);
             FindObjectOfType<PlayerZone>().Run();
-            Debug.Log(finish);
+
+            FindObjectOfType<Dungeon_Popup_UI>().SetMembersInfo();
+
         }
 
     }

@@ -131,6 +131,7 @@ public class Login_Popup_UI : UI_Popup
 
             // 모든 Popup UI를 닫음
             CloseAllPopupUI();
+            //Managers.UI.ShowPopupUI<Login_Loading_Popup_UI>("[Dungeon]_Loading_Popup_UI");
 
             // 포톤(서버)에 연결 (
             Managers.Photon.Connect(); // 연결시 자동으로 Lobby로 가게됨;

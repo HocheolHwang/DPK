@@ -14,8 +14,8 @@ public class Util
     public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
     {
         Transform transform = FindChild<Transform>(go, name, recursive);
-        // ¸ğµç GameObject´Â TransformÀ» °¡Áø´Ù.
-        // TransformÀ» Ã£¾Æ¼­ ±×³à¼®ÀÇ gameObject¸¦ ¹İÈ¯ÇØÁØ´Ù.
+        // ëª¨ë“  GameObjectëŠ” Transformì„ ê°€ì§„ë‹¤.
+        // Transformì„ ì°¾ì•„ì„œ ê·¸ë…€ì„ì˜ gameObjectë¥¼ ë°˜í™˜í•´ì¤€ë‹¤.
 
         if (transform == null) return null;
 
@@ -32,8 +32,8 @@ public class Util
                 Transform transform = go.transform.GetChild(i);
                 if (string.IsNullOrEmpty(name) || transform.name == name)
                 {
-                    // tranformÀ» ÀÌ¿ëÇØ¼­ ÀÌ¸§¿¡ ¸Â´Â°Å Ã£À½
-                    // ±× transformÀÇ ½ÇÁ¦ GameObject¸¦ ¹İÈ¯ÇØ¼­ ¸®ÅÏ½ÃÄÑÁÖ´Â°Í
+                    // tranformì„ ì´ìš©í•´ì„œ ì´ë¦„ì— ë§ëŠ”ê±° ì°¾ìŒ
+                    // ê·¸ transformì˜ ì‹¤ì œ GameObjectë¥¼ ë°˜í™˜í•´ì„œ ë¦¬í„´ì‹œì¼œì£¼ëŠ”ê²ƒ
                     T component = transform.GetComponent<T>();
                     if (component != null) return component;
 
@@ -45,7 +45,7 @@ public class Util
             var tmp = go.GetComponentsInChildren<T>();
             foreach (T component in go.GetComponentsInChildren<T>())
             {
-                // nameÀ¸·Î ¾Æ¹«°Íµµ ¾È¹ŞÀ¸¸é type¿¡ ¸Â´Â°Å ÇÏ³ª ±×³É ¹İÈ¯ ÇØÁØ´Ù.
+                // nameìœ¼ë¡œ ì•„ë¬´ê²ƒë„ ì•ˆë°›ìœ¼ë©´ typeì— ë§ëŠ”ê±° í•˜ë‚˜ ê·¸ëƒ¥ ë°˜í™˜ í•´ì¤€ë‹¤.
                 if (string.IsNullOrEmpty(name) || component.name == name) return component;
             }
         }

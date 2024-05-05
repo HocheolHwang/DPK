@@ -72,6 +72,8 @@ public class Dungeon_Popup_UI : UI_Popup
     {
         Dungeon_Progress_Bar,
         Member_HP_Slider_1,
+        Member_HP_Slider_2,
+        Member_HP_Slider_3,
         Player_HP_Slider,
         Player_EXP_Slider,
         Boss_HP_Slider
@@ -96,6 +98,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI[] skillCooldownTexts = new TextMeshProUGUI[8];
     private Slider dungeonProgressBar;
     private Slider memberHPSlider1;
+    private Slider[] memberHPSliders = new Slider[3];
     private Slider bossHPSlider;
     private Slider playerHPSlider;
     private Slider playerEXPSlider;
@@ -110,6 +113,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
     // 게임 플레이어 및 보스 상태 변수
     public Stat playerStat;
+    public Stat[] playersStat = new Stat[3];
     public Stat bossStat;
 
     // 현재 Scene 상태 변수
@@ -251,6 +255,11 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             ResetCooldownUI(i);
         }
+
+
+        memberHPSliders[0] = GetSlider((int)Sliders.Member_HP_Slider_1);
+        memberHPSliders[1] = GetSlider((int)Sliders.Member_HP_Slider_2);
+        memberHPSliders[2] = GetSlider((int)Sliders.Member_HP_Slider_3);
     }
 
 
@@ -382,7 +391,7 @@ public class Dungeon_Popup_UI : UI_Popup
             playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
             playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
 
-            memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
+            //memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
         }
         else
         {
@@ -402,12 +411,26 @@ public class Dungeon_Popup_UI : UI_Popup
         }
 
 
+        if(playersStat[0] != null)
+        {
+            for(int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+            {
+                memberHPSliders[i].value = (float)playersStat[i].Hp / playersStat[i].MaxHp;
+            }
+        }
+
+
+        //
+
+
+
         if (bossStatus.activeSelf == false) return;
         // 보스 체력 업데이트
         if (bossStatus.activeSelf == false) return;
         bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
         bossHPSlider.value = (float)bossStat.Hp / bossStat.MaxHp;
     }
+
 
     // 던전 진행 슬라이더 업데이트 메서드
     public void UpdateProgress()
@@ -544,5 +567,27 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 남은 시간 / 스킬 쿨타임 비율에 따라 fllAmount 값 업데이트
         skillCooldownImages[skillIndex].fillAmount = remainingTime / cooldownTime;
+    }
+
+
+
+    public void SetMembersInfo()
+    {
+        PlayerController[] cons = FindObjectsOfType<PlayerController>();
+
+        foreach (var con in cons)
+        {
+            if(con.photonView.Owner.CustomProperties["PlayerIndex"] != null)
+            {
+                int index = (int)con.photonView.Owner.CustomProperties["PlayerIndex"];
+                playersStat[index] = con.Stat;
+            }
+            if(con.photonView.Owner.CustomProperties["CurClass"] != null)
+            {
+                string classCode = (string)con.photonView.Owner.CustomProperties["CurClass"];
+            }
+            
+
+        }
     }
 }
