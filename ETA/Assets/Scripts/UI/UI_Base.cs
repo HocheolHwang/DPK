@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
-
+using Photon.Pun;
 /// <summary>
 /// 모든 UI 컴포넌트의 기본 클래스
 /// UI 요소 바인딩과 이벤트 처리를 담당한다.
 /// </summary>
-public abstract class UI_Base : MonoBehaviour
+public abstract class UI_Base : MonoBehaviourPunCallbacks
 {
     // UI 요소를 저장하는 딕셔너리. 타입별로 구분됨
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();

@@ -12,8 +12,10 @@ public class Tutorial_Scene : BaseScene
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/Tutorial");
 
-        MyPhoton mp = GameObject.FindObjectOfType<MyPhoton>();
-        mp.SendLoadMsg();
+        
+        
+        GameSystem gameSystem = GameObject.FindObjectOfType<GameSystem>();
+        gameSystem.SendLoadMsg();// 씬을 다 옮겼다는 메세지
         //Managers.Photon.Connect();
 
     }

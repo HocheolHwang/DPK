@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public class Lobby_Popup_UI : UI_Popup
 {
@@ -107,6 +108,8 @@ public class Lobby_Popup_UI : UI_Popup
     // 던전 선택 Popup UI 띄우기 메서드
     private void OpenDungeonSelect(PointerEventData data)
     {
+        // 파티에 있는데 방장이 아니면
+        if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient) return;
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
 
@@ -117,6 +120,7 @@ public class Lobby_Popup_UI : UI_Popup
     // 던전 입장 Popup UI 띄우기 메서드
     private void OpenDungeonEnter(PointerEventData data)
     {
+        if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient) return;
         Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
     }
 
@@ -140,10 +144,13 @@ public class Lobby_Popup_UI : UI_Popup
     }
 
     // 선택된 던전 업데이트 메서드
-    private void UpdateSelectedDungeon()
+    public void UpdateSelectedDungeon()
     {
         // 선택된 던전 번호를 가져옴
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
+        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
+
+        if(PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient) FindObjectOfType<GameSystem>().SendCurrentDungeon(selectedDungeonNumber);
 
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
         dungeonNameText.text = selectedDungeonNumber switch

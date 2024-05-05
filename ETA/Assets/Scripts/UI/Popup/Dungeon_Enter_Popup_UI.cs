@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public class Dungeon_Enter_Popup_UI : UI_Popup
 {
@@ -60,14 +61,21 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
     }
 
     // 입장하기 메서드
-    private void DungeonEnter(PointerEventData data)
+    public void DungeonEnter(PointerEventData data)
     {
+        if(PhotonNetwork.InRoom == false)
+        {
+            FindObjectOfType<Lobby_Scene>().isSoloPlay = true;
+            Managers.Photon.MakeRoom("solo_" + Managers.Player.GetNickName());
+            return;
+
+        }
         // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
 
         // 선택된 던전 번호 가져오기
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
-
+        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
         // 선택된 던전 번호에 따라 다른 씬으로 이동
         Define.Scene sceneName = selectedDungeonNumber switch
         {
@@ -87,23 +95,23 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         // 선택된 던전 Scene으로 이동
         //SceneManager.LoadScene(sceneName);
         // TMP
-        //Managers.Scene.LoadScene(sceneName);
+        Managers.Scene.LoadScene(sceneName);
 
-        Managers.Scene.LoadScene(Define.Scene.MultiPlayTest);
+        //Managers.Scene.LoadScene(Define.Scene.MultiPlayTest);
 
         // 다른 애들도 가라고 RPC
-        FindObjectOfType<MyPhoton>().ChangeSceneAllPlayer(Define.Scene.MultiPlayTest);
-
+        FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(sceneName);
+        //FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(Define.Scene.MultiPlayTest);
     }
 
     // 선택된 던전 텍스트 업데이트 메서드
     private void UpdateSelectedDungeon()
     {
         // 선택된 던전 번호 가져오기
-        int secidedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
-
+        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
+        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
-        dungeonEnterText.text = secidedDungeonNumber switch
+        dungeonEnterText.text = selectedDungeonNumber switch
         {
             1 => "[깊은 숲]에 입장하시겠습니까?",
             2 => "[잊혀진 신전]에 입장하시겠습니까?",

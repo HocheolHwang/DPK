@@ -7,11 +7,15 @@ public class Lobby_Scene : BaseScene
 {
     // 로비 마네킹 관리를 위한 리스트
     MannequinController[] mannequins = new MannequinController[3];
+    public bool isSoloPlay;
+
+    public int currentDungeonNumber;
 
     private void Start()
     {
         // 첫 로그인 여부를 확인
         bool isFirstLogin = PlayerPrefs.GetInt("FirstLogin", 1) == 1;
+        currentDungeonNumber = 1; // 깊은 숲 설정
 
         if (Managers.Player.GetFirst() && isFirstLogin)
         {
@@ -29,6 +33,7 @@ public class Lobby_Scene : BaseScene
         }
 
         Managers.Sound.Play("BackgroundMusic/Lobby");
+        // 이부분 다른곳으로 옮기기
         Debug.Log(PhotonNetwork.SerializationRate);
         PhotonNetwork.SerializationRate = 10;
         Debug.Log(PhotonNetwork.PrecisionForFloatSynchronization);
@@ -37,25 +42,36 @@ public class Lobby_Scene : BaseScene
         Debug.Log(PhotonNetwork.SendRate);
         PhotonNetwork.SendRate = 60;
 
+        
         SetUpMannequins();
-        mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
 
-        if (!Managers.Photon.IsConnecting)
-        {
-            Managers.Photon.Connect();
-            return;
-        }
+        // 다시 들어 왔을떄는?
+        //mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
 
-        //TMP
         if (PhotonNetwork.InRoom)
-        {
-            PhotonNetwork.LeaveRoom();
-        }
+            ChangeMannequin();
         else
+        {
+            // 캐릭터 바꿀때 마다 이거 또 해줘야할듯
+            mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
+            mannequins[1].Init();
+            mannequins[2].Init();
+        }
+
+
+        // 파티 유지할 경우, GameSystem 초기화 시킴
+        GameSystem gameSystem = FindObjectOfType<GameSystem>();
+        if (gameSystem != null)
+        {
+            gameSystem.Clear();
+        }
+
+        // TMP 임시 코드
+        if (PhotonNetwork.InRoom == false)
         {
             //PhotonNetwork.JoinRandomOrCreateRoom();
         }
-        
+
     }
 
     public override void Clear()
@@ -66,8 +82,24 @@ public class Lobby_Scene : BaseScene
 
     public override void OnJoinedRoom()
     {
-        
-        
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Managers.Player.SetPartyLeader(true);
+            GameObject gameSystem = PhotonNetwork.Instantiate("Prefabs/GameSystem", new Vector3(), new Quaternion());
+            gameSystem.name = "GameSystem";
+            DontDestroyOnLoad(gameSystem);
+        }
+
+        Managers.Photon.updatePlayerList();
+        Managers.Photon.SetPlayerClass();
+
+
+        // Popup 에서 생성하고 시작될 예정
+        if (isSoloPlay)
+        {
+            FindObjectOfType<Dungeon_Enter_Popup_UI>().DungeonEnter(null);
+        }
     }
 
     public void SetUpMannequins()
@@ -114,6 +146,12 @@ public class Lobby_Scene : BaseScene
         }
 
         ChangeMannequin();
+    }
+
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        base.OnRoomPropertiesUpdate(propertiesThatChanged);
     }
 
     public override void OnLeftRoom()
