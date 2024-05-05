@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using TMPro;
+using Photon.Realtime;
+using System.Collections.Generic;
 public class Party_Join_Popup_UI : UI_Popup
 {
     // ------------------------------ 변수 정의 ------------------------------
@@ -47,6 +49,8 @@ public class Party_Join_Popup_UI : UI_Popup
         cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
+
+        UpdatePartyList();
     }
 
 
@@ -57,7 +61,6 @@ public class Party_Join_Popup_UI : UI_Popup
     {
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
-
         // 파티 참가 Popup UI를 띄움 (새로고침)
         Managers.UI.ShowPopupUI<Party_Join_Popup_UI>("[Lobby]_Party_Join_Popup_UI");
     }
@@ -91,5 +94,51 @@ public class Party_Join_Popup_UI : UI_Popup
 
         // 로비 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
+    }
+
+
+
+    // 현재 파티 리스트 업데이트
+    public void UpdatePartyList()
+    {
+        // Managers.Resource.Load<GameObject>();
+
+        List<RoomInfo> roomlist = Managers.Photon.roomlist;
+
+        for (int i = 0; i < roomlist.Count; i++)
+        {
+            GameObject partyPrefab= Managers.Resource.Instantiate("UI/SubItem/Party_Item");
+            Transform partyInfo = partyPrefab.transform.GetChild(0);
+
+            string roomName = roomlist[i].Name;
+            int lastIndex = roomName.LastIndexOf("`");
+
+            if (lastIndex != -1)
+                roomName = roomName.Substring(0, lastIndex);
+            // 방 이름, 지역, 방장, 인원 수
+            partyInfo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = roomName;
+            // 지역
+
+            // 선택된 던전 번호를 가져옴
+            int selectedDungeonNumber = roomlist[i].CustomProperties["dungeonIndex"]==null? 1 : (int)roomlist[i].CustomProperties["dungeonIndex"];
+
+            // 선택된 던전 번호에 따라 다른 텍스트를 설정
+            string dungeonName = selectedDungeonNumber switch
+            {
+                1 => "깊은 숲",
+                2 => "잊혀진 신전",
+                3 => "별의 조각 평원",
+                _ => "알 수 없는 던전입니다."
+            };
+
+            partyInfo.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = dungeonName;
+            // 방장
+            partyInfo.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = (string)roomlist[i].CustomProperties["partyLeader"];
+            // 인원 수
+            string number = roomlist[i].PlayerCount + " / " + roomlist[i].MaxPlayers.ToString();
+            partyInfo.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = number;
+            // 파티 컨테이너에 배치
+            partyPrefab.transform.SetParent(gameObject.transform.Find("Party_Participation_Content_Container/Scroll View/Viewport/Content"));
+        }
     }
 }

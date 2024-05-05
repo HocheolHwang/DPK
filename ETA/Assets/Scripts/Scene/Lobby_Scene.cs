@@ -40,6 +40,12 @@ public class Lobby_Scene : BaseScene
         SetUpMannequins();
         mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
 
+        if (!Managers.Photon.IsConnecting)
+        {
+            Managers.Photon.Connect();
+            return;
+        }
+
         //TMP
         if (PhotonNetwork.InRoom)
         {
@@ -47,7 +53,7 @@ public class Lobby_Scene : BaseScene
         }
         else
         {
-            PhotonNetwork.JoinRandomOrCreateRoom();
+            //PhotonNetwork.JoinRandomOrCreateRoom();
         }
         
     }

@@ -17,13 +17,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 
     // 던전 이름
-    private string dungeonIndex;
+    private int dungeonIndex;
 
     // room list -use> update, print room
-    List<RoomInfo> roomlist = new List<RoomInfo>();
+    public List<RoomInfo> roomlist = new List<RoomInfo>();
 
     // current room
-    private RoomInfo selectRoom;
+    public RoomInfo selectRoom;
 
 
     #endregion
@@ -39,16 +39,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         set { roomName = value; }
         get {
-            roomName = selectRoom.Name;
-            int lastIndex = selectRoom.Name.LastIndexOf("`");
-            if (lastIndex != -1)
-                roomName = roomName.Substring(0, lastIndex);
+
+            
             return roomName;
         }
     }
 
     // 현재 선택된 던전 번호
-    public string DungeonIndex
+    public int DungeonIndex
     {
         set { 
             dungeonIndex = value;
@@ -137,8 +135,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         if (partyLeader == null)
             partyLeader = "방장";
-
-        if (partyLeader == null || roomName == null) return;
+        if (roomName == null)
+            roomName = "파티";
+        //if (partyLeader == null || roomName == null) return;
 
         RoomOptions room = new RoomOptions();
         room.MaxPlayers = maxplayersPerRoom;
@@ -160,7 +159,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         int seed = (int)System.DateTime.Now.Ticks;
         // 생성된 방 이름 + ` + 시드 값
         roomName = roomName + "`" + seed;
-
+        dungeonIndex = PlayerPrefs.GetInt("SelectedDungeonNumber", 1); 
         // 로비에 Properties 등록해야 로비에서 설정 확인 가능
         room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "partyLeader", partyLeader }, { "seed", seed }, { "roomID", guidString }, { "dungeonIndex", dungeonIndex } };
         room.CustomRoomPropertiesForLobby = new string[] { "partyLeader", "seed", "roomID", "dungeonIndex" };
@@ -169,12 +168,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //Debug.Log("makeeeeeeeeeeeeeeee : " + roomInfo);
 
         //Managers.Network.CreatePartyCall(partyData);
+        // 방장 체크
         Managers.Player.SetPartyLeader(true);
 
-        // 방장여부 체크
-        if (PhotonNetwork.IsMasterClient)
-            Managers.Player.SetPartyLeader(true);
-
+        
         PhotonNetwork.CreateRoom(roomName, room);
     }
 
@@ -199,6 +196,26 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         if (nickname == null) return;
 
+        foreach (RoomInfo newRoom in roomlist)
+        {
+            Debug.Log(roomName);
+            Debug.Log(newRoom.Name);
+            string newRoomName = newRoom.Name;
+            int lastIndex = newRoomName.LastIndexOf("`");
+
+            if (lastIndex != -1)
+                newRoomName = newRoomName.Substring(0, lastIndex);
+
+
+            if (newRoomName == roomName)
+            {
+                selectRoom = newRoom;
+                break;
+            }
+        }
+
+        
+        Debug.Log(" 머가없냐 " + selectRoom.Name);
         if (selectRoom.MaxPlayers <= selectRoom.PlayerCount)
         {
             // 방에 모든 사람이 들어가면 더 이상 들어갈 수 없음
@@ -377,6 +394,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
         updatePlayerList();
         SetPlayerClass();
+
+        Debug.Log("방 입장");
+        Debug.Log($"방 이름 : {PhotonNetwork.CurrentRoom.Name} \n 파티장 : {(string)PhotonNetwork.CurrentRoom.CustomProperties["partyLeader"]} " +
+            $"\n 방 id : {(string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"]} \n 던전 id : {(int)PhotonNetwork.CurrentRoom.CustomProperties["dungeonIndex"]} ");
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
