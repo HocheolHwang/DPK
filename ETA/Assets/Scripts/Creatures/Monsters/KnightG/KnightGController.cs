@@ -217,7 +217,7 @@ public class KnightGController : BaseMonsterController
     [PunRPC]
     void RPC_ChangeToPhaseAttackIngState()
     {
-        ChangeState(PHASE_ATTACK_ING_STATE);
+        ChangeState(PHASE_ATTACK_ING_STATE, true);
     }
 
     public void ChangeToGroggyState()
