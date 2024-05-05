@@ -9,6 +9,7 @@ public class GameSystem : MonoBehaviour
     int loadCnt = 0;
     int characterCnt = 0;
     int finish = 0;
+    public int currentDungeonNum;
     PlayerController myController;
     // Start is called before the first frame update
     void Start()
@@ -25,12 +26,44 @@ public class GameSystem : MonoBehaviour
 
     public void ChangeSceneAllPlayer(Define.Scene scene)
     {
+        Debug.Log(scene);
+        int num = 0;
+        switch (scene)
+        {
+            case Define.Scene.DeepForest:
+                num = 1;
+                break;
+            case Define.Scene.ForgottenTemple:
+                num = 2;
+                break;
+            case Define.Scene.StarShardPlain:
+                num = 3;
+                break;
+        }
+
+        currentDungeonNum = num;
+        Debug.Log(currentDungeonNum);
         PhotonView.RPC("RPC_ChangeScene", RpcTarget.Others, scene);
     }
 
     [PunRPC]
     void RPC_ChangeScene(Define.Scene scene)
     {
+        int num = 0;
+        switch (scene)
+        {
+            case Define.Scene.DeepForest:
+                num = 1;
+                break;
+            case Define.Scene.ForgottenTemple:
+                num = 2;
+                break;
+            case Define.Scene.StarShardPlain:
+                num = 3;
+                break;
+        }
+
+        currentDungeonNum = num;
         Managers.Scene.LoadScene(scene);
     }
 
@@ -118,5 +151,7 @@ public class GameSystem : MonoBehaviour
         finish = 0;
         myController = null;
     }
+
+    
 
 }

@@ -301,7 +301,8 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 선택된 던전 번호를 가져옴
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
-        
+        selectedDungeonNumber = FindObjectOfType<GameSystem>().currentDungeonNum;
+
         // 튜토리얼 Scene일 경우, 선택된 던전 번호를 0으로 설정
         if (isTutorialScene) selectedDungeonNumber = 0;
 
@@ -413,6 +414,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
             // 체크 포인트 통과 시 받는 경험치 증가
             int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
+            selectedDungeonNumber = FindObjectOfType<GameSystem>().currentDungeonNum;
             currentExp += (10 * (5* selectedDungeonNumber)) * currentCheckpointIndex;
 
             // 체크포인트 인덱스에 따라 진행바를 업데이트
@@ -438,7 +440,8 @@ public class Dungeon_Popup_UI : UI_Popup
     {
         // 보스 클리어
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
-        if(selectedDungeonNumber!= 0)
+        selectedDungeonNumber = FindObjectOfType<GameSystem>().currentDungeonNum;
+        if (selectedDungeonNumber!= 0)
         {
             currentExp += (10 * (5 * selectedDungeonNumber)) * currentCheckpointIndex;
             SummaryExp();
@@ -472,6 +475,7 @@ public class Dungeon_Popup_UI : UI_Popup
     public void SummaryExp()
     {
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
+        selectedDungeonNumber = FindObjectOfType<GameSystem>().currentDungeonNum;
 
         // 현재 던전 경험치
         currentExp = ((selectedDungeonNumber-1) * 5) * 10;
