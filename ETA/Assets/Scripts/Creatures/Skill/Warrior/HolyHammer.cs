@@ -10,6 +10,7 @@ public class HolyHammer : Skill
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(3, 3, 3);
+        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/HolyHammer.png");
     }
     public override IEnumerator StartSkillCast()
     {

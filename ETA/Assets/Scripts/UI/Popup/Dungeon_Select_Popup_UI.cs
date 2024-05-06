@@ -17,6 +17,8 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         Select_DeepForest_Button,
         Select_ForgottenTemple_Button,
         Select_StarShardPlain_Button,
+        Select_Test_1_Button,
+        Select_Test_2_Button,
         Cancel_Button,
         Dungeon_Select_Button
     }
@@ -34,6 +36,8 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     private Button selectDeepForestButton;
     private Button selectForgottenTempleButton;
     private Button selectStarShardPlainButton;
+    private Button selectTest1Button;
+    private Button selectTest2Button;
     private Button cancelButton;
     private Button dungeonSelectButton;
     private TextMeshProUGUI selectedDungeonText;
@@ -86,6 +90,18 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         // 별의 조각 평원 선택 버튼 이벤트 등록
         selectStarShardPlainButton = GetButton((int)Buttons.Select_StarShardPlain_Button);
         AddUIEvent(selectStarShardPlainButton.gameObject, SelectStarShardPlain);
+
+
+        // @@@@@@@@@@@@@@@@@@@@ 임시 버튼 @@@@@@@@@@@@@@@@@@@@
+        // Test 1 선택 버튼 이벤트 등록
+        selectTest1Button = GetButton((int)Buttons.Select_Test_1_Button);
+        AddUIEvent(selectTest1Button.gameObject, SelectTest1);
+
+        // Test 2 선택 버튼 이벤트 등록
+        selectTest2Button = GetButton((int)Buttons.Select_Test_2_Button);
+        AddUIEvent(selectTest2Button.gameObject, SelectTest2);
+        // @@@@@@@@@@@@@@@@@@@@ 임시 버튼 @@@@@@@@@@@@@@@@@@@@
+
 
         // 돌아가기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
@@ -164,6 +180,24 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         UpdateSelectedDungeon();
     }
 
+
+    // @@@@@@@@@@@@@@@@@@@@ 임시 버튼 @@@@@@@@@@@@@@@@@@@@
+    // Test 1 선택 메서드
+    private void SelectTest1(PointerEventData data)
+    {
+        FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 4;
+        UpdateSelectedDungeon();
+    }
+
+    // Test 2 선택 메서드
+    private void SelectTest2(PointerEventData data)
+    {
+        FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 5;
+        UpdateSelectedDungeon();
+    }
+    // @@@@@@@@@@@@@@@@@@@@ 임시 버튼 @@@@@@@@@@@@@@@@@@@@
+
+
     // 취소하기 메서드
     private void Cancel(PointerEventData data)
     {
@@ -199,6 +233,8 @@ public class Dungeon_Select_Popup_UI : UI_Popup
             1 => "선택된 던전: [깊은 숲]",
             2 => "선택된 던전: [잊혀진 신전]",
             3 => "선택된 던전: [별의 조각 평원]",
+            4 => "선택된 던전: [Test 1]",
+            5 => "선택된 던전: [Test 2]",
             _ => "알 수 없는 던전입니다."
         };
     }

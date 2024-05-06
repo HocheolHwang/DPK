@@ -9,6 +9,7 @@ public class TelekineticSwords : Skill
         SetCoolDownTime(7);
         Damage = 10;
         base.Init();
+        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/TelekineticSwords.png");
     }
 
     public override IEnumerator StartSkillCast()

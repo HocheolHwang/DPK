@@ -10,6 +10,7 @@ public class SwordWave : Skill
         Damage = 30;
         skillRange = new Vector3(2, 2, 2);
         base.Init();
+        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/SwordWave.png");
     }
 
     public override IEnumerator StartSkillCast()
