@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Realtime;
-using System.Collections.Generic;
+
 public class Party_Join_Popup_UI : UI_Popup
 {
     // ------------------------------ 변수 정의 ------------------------------

@@ -20,17 +20,23 @@ public class Dungeon_Popup_UI : UI_Popup
 
     enum GameObjects
     {
+        // 던전 아이콘
         Tutorial_Icon,
         DeepForest_Icon,
         ForgottenTemple_Icon,
         StarShardPlain_Icon,
+
+        // 보스 상태
         Boss_Status,
-        Player_HP_Image,
-        Player_Shield_Image
+
+        // 플레이어 상태
+        Player_HP_Bar,
+        Player_Shield_Bar
     }
 
     enum Images
     {
+        // 스킬 쿨타임
         Skill_1_Cooldown_Image,
         Skill_2_Cooldown_Image,
         Skill_3_Cooldown_Image,
@@ -51,15 +57,29 @@ public class Dungeon_Popup_UI : UI_Popup
 
     enum Texts
     {
+        // 던전 상태
         Dungeon_Tier_Text,
         Dungeon_Name_Text,
         Time_Text,
+
+        // 파티원 상태
+        Member_Level_Text_1,
+        Member_Level_Text_2,
+        Member_Level_Text_3,
         Member_Nickname_Text_1,
+        Member_Nickname_Text_2,
+        Member_Nickname_Text_3,
+
+        // 플레이어 상태
         Player_Tier_Text,
         Player_Nickname_Text,
         Player_HP_Text,
+
+        // 보스 상태
         Boss_Name_Text,
         Boss_HP_Text,
+
+        // 스킬 쿨타임
         Skill_1_Cooldown_Text,
         Skill_2_Cooldown_Text,
         Skill_3_Cooldown_Text,
@@ -72,12 +92,18 @@ public class Dungeon_Popup_UI : UI_Popup
 
     enum Sliders
     {
+        // 던전 상태
         Dungeon_Progress_Bar,
+
+        // 파티원 상태
         Member_HP_Slider_1,
         Member_HP_Slider_2,
         Member_HP_Slider_3,
-        Player_HP_Slider,
+
+        // 플레이어 상태
         Player_EXP_Slider,
+
+        // 보스 상태
         Boss_HP_Slider
     }
 
@@ -86,14 +112,15 @@ public class Dungeon_Popup_UI : UI_Popup
     private Button openMenuButton;
     private GameObject[] dungeonIcons = new GameObject[4];
     private GameObject bossStatus;
-    private GameObject playerHPImage;
-    private GameObject playerShieldImage;
+    private GameObject playerHPBar;
+    private GameObject playerShieldBar;
     private Image[] skillCooldownImages = new Image[8];
     private Image[] skillUnableImages = new Image[8];
     private TextMeshProUGUI dungeonTierText;
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI timeText;
-    private TextMeshProUGUI memberNicknameText1;
+    private TextMeshProUGUI[] memberLevelTexts = new TextMeshProUGUI[3];
+    private TextMeshProUGUI[] memberNicknameTexts = new TextMeshProUGUI[3];
     private TextMeshProUGUI playerTierText;
     private TextMeshProUGUI playerNicknameText;
     private TextMeshProUGUI playerHPText;
@@ -101,10 +128,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI bossHPText;
     private TextMeshProUGUI[] skillCooldownTexts = new TextMeshProUGUI[8];
     private Slider dungeonProgressBar;
-    private Slider memberHPSlider1;
     private Slider[] memberHPSliders = new Slider[3];
     private Slider bossHPSlider;
-    private Slider playerHPSlider;
     private Slider playerEXPSlider;
 
     // 게임 위치 및 진행 상태 변수
@@ -119,6 +144,9 @@ public class Dungeon_Popup_UI : UI_Popup
     public Stat playerStat;
     public Stat[] playersStat = new Stat[3];
     public Stat bossStat;
+
+    // 선택된 던전 번호
+    private int selectedDungeonNumber;
 
     // 현재 Scene 상태 변수
     private bool isTutorialScene;
@@ -173,6 +201,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // --------------- 던전 정보 UI 초기화 ---------------
 
+        // 선택된 던전 번호 초기화
+        selectedDungeonNumber = FindObjectOfType<GameSystem>().currentDungeonNum;
+
         // 체크포인트 초기화
         checkpoints = GameObject.Find("CheckPoints");
 
@@ -215,23 +246,22 @@ public class Dungeon_Popup_UI : UI_Popup
         // --------------- 파티원 및 플레이어 정보 UI 초기화 ---------------
 
         // 파티원 정보 초기화
-        memberNicknameText1 = GetText((int)Texts.Member_Nickname_Text_1);
-        memberHPSlider1 = GetSlider((int)Sliders.Member_HP_Slider_1);
+        for (int i = 0; i < 3; i++)
+        {
+            memberLevelTexts[i] = GetText((int)Texts.Member_Level_Text_1 + i);
+            memberNicknameTexts[i] = GetText((int)Texts.Member_Nickname_Text_1 + i);
+            memberHPSliders[i] = GetSlider((int)Sliders.Member_HP_Slider_1 + i);
+        }
 
         // 플레이어 정보 초기화
-        playerHPImage = GetObject((int)GameObjects.Player_HP_Image);
-        playerShieldImage = GetObject((int)GameObjects.Player_Shield_Image);
-
-
-
-
+        playerHPBar = GetObject((int)GameObjects.Player_HP_Bar);
+        playerShieldBar = GetObject((int)GameObjects.Player_Shield_Bar);
         playerTierText = GetText((int)Texts.Player_Tier_Text);
         playerNicknameText = GetText((int)Texts.Player_Nickname_Text);
         playerHPText = GetText((int)Texts.Player_HP_Text);
-        playerHPSlider = GetSlider((int)Sliders.Player_HP_Slider);
         playerEXPSlider = GetSlider((int)Sliders.Player_EXP_Slider);
 
-        // 파티원 및 플레이어 정보 업데이트
+        // 플레이어 정보 업데이트
         UpdatePlayerInfo();
 
         // 플레이어 게임 오브젝트 태그 이용해 찾기
@@ -265,11 +295,6 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             ResetCooldownUI(i);
         }
-
-
-        memberHPSliders[0] = GetSlider((int)Sliders.Member_HP_Slider_1);
-        memberHPSliders[1] = GetSlider((int)Sliders.Member_HP_Slider_2);
-        memberHPSliders[2] = GetSlider((int)Sliders.Member_HP_Slider_3);
     }
 
 
@@ -320,10 +345,6 @@ public class Dungeon_Popup_UI : UI_Popup
             Debug.LogError("'checkpoints' 오브젝트를 찾을 수 없습니다.");
         }
 
-        // 선택된 던전 번호를 가져옴
-        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
-        selectedDungeonNumber = FindObjectOfType<GameSystem>().currentDungeonNum;
-
         // 튜토리얼 Scene일 경우, 선택된 던전 번호를 0으로 설정
         if (isTutorialScene) selectedDungeonNumber = 0;
 
@@ -368,17 +389,12 @@ public class Dungeon_Popup_UI : UI_Popup
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
     }
 
-    // 파티원 및 플레이어 정보 업데이트 메서드
+    // 파티원 정보 업데이트 메서드
     private void UpdatePlayerInfo()
     {
-        // 파티원 닉네임 및 HP 슬라이더 설정
-        memberNicknameText1.text = Managers.Player.GetNickName();
-        memberHPSlider1.value = 1;
-
         // 플레이어 등급, 닉네임 및 HP 슬라이더 설정
         playerTierText.text = isTutorialScene ? "던전처리기사 수험생" : "견습 던전처리기사";
         playerNicknameText.text = Managers.Player.GetNickName();
-        playerHPSlider.value = 1;
 
         // 플레이어 파괴 이벤트 핸들러 등록
         PlayerController.OnPlayerDestroyed += HandlePlayerDestroyed;
@@ -396,35 +412,38 @@ public class Dungeon_Popup_UI : UI_Popup
     // HP 업데이트 메서드
     public void UpdateHP()
     {
+        // 체력바와 실드바의 RectTransform을 참조
+        RectTransform hpRectTransform = playerHPBar.GetComponent<RectTransform>();
+        RectTransform shieldRectTransform = playerShieldBar.GetComponent<RectTransform>();
+
         // 체력 및 실드 비율
-        float total = playerStat.Shield + playerStat.MaxHp;
+        float total = Mathf.Max(playerStat.Hp + playerStat.Shield, playerStat.MaxHp);
         float hpScale = playerStat.Hp / total;
         float shieldScale = playerStat.Shield / total;
 
-        // 체력바와 실드바의 RectTransform을 참조
-        RectTransform hpRectTransform = playerHPImage.GetComponent<RectTransform>();
-        RectTransform shieldRectTransform = playerShieldImage.GetComponent<RectTransform>();
-
         // 체력바 최대 길이
-        float totalLength = 300.0f;
+        float maxLength = 294.0f;
 
         // sizeDelta의 x 값을 조절하여 너비를 설정
-        hpRectTransform.sizeDelta = new Vector2(hpScale * totalLength, hpRectTransform.sizeDelta.y);
-        shieldRectTransform.sizeDelta = new Vector2(shieldScale * totalLength, shieldRectTransform.sizeDelta.y);
+        hpRectTransform.sizeDelta = new Vector2(hpScale * maxLength, hpRectTransform.sizeDelta.y);
+        shieldRectTransform.sizeDelta = new Vector2(shieldScale * maxLength, shieldRectTransform.sizeDelta.y);
 
 
-        // 체력 업데이트
+        // 플레이어 체력 업데이트
         if (playerStat != null)
         {
-            playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
-            playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
-
-            //memberHPSlider1.value = (float)playerStat.Hp / playerStat.MaxHp;
+            if (playerStat.Shield > 0)
+            {
+                playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp} (+{playerStat.Shield})";
+            }
+            else
+            {
+                playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
+            }
         }
         else
         {
             GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-            Debug.Log(playerObjects);
 
             foreach (var playerObj in playerObjects)
             {
@@ -434,11 +453,10 @@ public class Dungeon_Popup_UI : UI_Popup
                     playerStat = playerObj.GetComponent<Stat>();
                     break;
                 }
-
             }
         }
 
-
+        // 파티원 체력 업데이트
         if(playersStat[0] != null)
         {
             for(int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
@@ -447,18 +465,11 @@ public class Dungeon_Popup_UI : UI_Popup
             }
         }
 
-
-        //
-
-
-
-        if (bossStatus.activeSelf == false) return;
         // 보스 체력 업데이트
         if (bossStatus.activeSelf == false) return;
         bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
         bossHPSlider.value = (float)bossStat.Hp / bossStat.MaxHp;
     }
-
 
     // 던전 진행 슬라이더 업데이트 메서드
     public void UpdateProgress()
@@ -469,8 +480,6 @@ public class Dungeon_Popup_UI : UI_Popup
             currentCheckpointIndex++;
 
             // 체크 포인트 통과 시 받는 경험치 증가
-            int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
-            selectedDungeonNumber = FindObjectOfType<GameSystem>().currentDungeonNum;
             currentExp += (10 * (5* selectedDungeonNumber)) * currentCheckpointIndex;
 
             // 체크포인트 인덱스에 따라 진행바를 업데이트
@@ -495,8 +504,6 @@ public class Dungeon_Popup_UI : UI_Popup
     private void HandleBossDestroyed()
     {
         // 보스 클리어
-        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
-        selectedDungeonNumber = FindObjectOfType<GameSystem>().currentDungeonNum;
         if (selectedDungeonNumber!= 0)
         {
             currentExp += (10 * (5 * selectedDungeonNumber)) * currentCheckpointIndex;
@@ -537,9 +544,6 @@ public class Dungeon_Popup_UI : UI_Popup
     // 경험치 리포트 메서드
     public void SummaryExp()
     {
-        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 0);
-        selectedDungeonNumber = FindObjectOfType<GameSystem>().currentDungeonNum;
-
         // 현재 던전 경험치
         currentExp = ((selectedDungeonNumber-1) * 5) * 10;
 
@@ -597,8 +601,7 @@ public class Dungeon_Popup_UI : UI_Popup
         skillCooldownImages[skillIndex].fillAmount = remainingTime / cooldownTime;
     }
 
-
-
+    // 파티원 상태 및 클래스 업데이트 메서드 
     public void SetMembersInfo()
     {
         PlayerController[] cons = FindObjectsOfType<PlayerController>();
@@ -614,8 +617,6 @@ public class Dungeon_Popup_UI : UI_Popup
             {
                 string classCode = (string)con.photonView.Owner.CustomProperties["CurClass"];
             }
-            
-
         }
     }
 }

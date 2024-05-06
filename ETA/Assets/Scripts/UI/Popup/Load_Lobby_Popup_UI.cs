@@ -51,18 +51,17 @@ public class Load_Lobby_Popup_UI : UI_Popup
     // 로비로 돌아가기 메서드
     private void LoadLobby(PointerEventData data)
     {
+        // 파티 탈퇴 메서드 호출
         PhotonNetwork.LeaveRoom();
-        
-
     }
 
-    public override void OnLeftRoom() // 파티 탈퇴를 하고 나면 씬 전환
+    // 파티 탈퇴 후 호출되는 콜백 메서드
+    public override void OnLeftRoom()
     {
         // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
 
         // 로비 Scene으로 이동
-
         Managers.Scene.LoadScene(Define.Scene.Lobby);
     }
 }
