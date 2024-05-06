@@ -16,17 +16,9 @@ public class Dungeon_Scene : BaseScene
         Managers.Sound.Play("BackgroundMusic/DeepForest");
         Managers.UI.ShowPopupUI<Fade_Effect_UI>("[Common]_Fade_Effect_UI");
 
-        //Managers.Photon.OnEnterDungeon += InitPlayers;
-        //Managers.Photon.Connect();
-
-        //PhotonNetwork.Instantiate("Creatures/Player/Player.prefab", new Vector3(13.09f, 0.5f, 0f),new Quaternion());
         GameSystem mp = GameObject.FindObjectOfType<GameSystem>();
         mp.SendLoadMsg();
 
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    PhotonNetwork.Instantiate("Prefabs/Creatures/Player/PlayerZone", new Vector3(16f, 0.5f, 0f), Quaternion.Euler(0,90,0));
-        //}
         Managers.Resource.Instantiate("MonsterManager").name = "@MonsterManager";
     }
     
@@ -37,27 +29,13 @@ public class Dungeon_Scene : BaseScene
 
     private void Update()
     {
-        if(playerZone == null)
-        {
-            PlayerZone playerZone = FindObjectOfType<PlayerZone>();
-            if(playerZone != null) Camera.main.GetComponent<CameraController>()._player = playerZone.gameObject;
-        }
+        //if(playerZone == null)
+        //{
+        //    PlayerZone playerZone = FindObjectOfType<PlayerZone>();
+        //    if(playerZone != null) Camera.main.GetComponent<CameraController>()._player = playerZone.gameObject;
+        //}
 
     }
-
-    //public void InitPlayers()
-    //{
-    //    if (PhotonNetwork.IsMasterClient)
-    //    {
-    //        GameObject playerZone = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/PlayerZone", new Vector3(14.0f, 1.21f, 0f), Quaternion.Euler(0, 90, 0));
-    //        Camera.main.GetComponent<CameraController>()._player = playerZone;
-    //    }
-    //    else
-    //    {
-
-    //    }
-    //    GameObject player = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Player", new Vector3(13.09f, 0.5f, 0f), new Quaternion());
-    //}
 
 
 }
