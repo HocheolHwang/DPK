@@ -23,7 +23,7 @@ public class SkillSlot : MonoBehaviour
         if(GetComponent<PhotonView>().IsMine) GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
 
 
-        string[] loadedSkills = { "TargetSkill", "RangeSkill", "HoldSkill", "ImmediatelySkill", "GuardSkill"};
+        string[] loadedSkills = { "TargetSkill", "ArrowShower", "HoldSkill", "ImmediatelySkill", "GuardSkill",};
         for (int i = 0; i < loadedSkills.Length; i++)
         {
             string skillName = loadedSkills[i];
