@@ -66,7 +66,7 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         if(PhotonNetwork.InRoom == false)
         {
             FindObjectOfType<Lobby_Scene>().isSoloPlay = true;
-            Managers.Photon.MakeRoom("solo_" + Managers.Player.GetNickName());
+            Managers.Photon.MakeRoom(Managers.Player.GetNickName() + "의 파티");
             return;
 
         }

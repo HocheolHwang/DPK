@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -50,10 +51,18 @@ public class Load_Lobby_Popup_UI : UI_Popup
     // 로비로 돌아가기 메서드
     private void LoadLobby(PointerEventData data)
     {
+        PhotonNetwork.LeaveRoom();
+        
+
+    }
+
+    public override void OnLeftRoom() // 파티 탈퇴를 하고 나면 씬 전환
+    {
         // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
 
         // 로비 Scene으로 이동
+
         Managers.Scene.LoadScene(Define.Scene.Lobby);
     }
 }

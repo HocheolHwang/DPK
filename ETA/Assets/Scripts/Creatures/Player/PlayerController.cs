@@ -61,15 +61,14 @@ public class PlayerController : BaseController
         
         if (photonView.IsMine)
         {
-            if(PhotonNetwork.IsMasterClient) _destination = GameObject.Find("FRONT_2").transform;
-            else _destination = GameObject.Find("FRONT_3").transform;
+            SetPosition();
             //ChangeState(MOVE_STATE);
             Managers.Input.KeyAction -= KeyEvent;
             Managers.Input.KeyAction += KeyEvent;
 
             Managers.Input.MouseAction -= MouseEvent;
             Managers.Input.MouseAction += MouseEvent;
-            Camera.main.GetComponent<CameraController>()._player = gameObject;
+            
         }
         Debug.Log($"{photonView.IsMine}");
 
@@ -81,6 +80,84 @@ public class PlayerController : BaseController
 
 
 
+
+    }
+
+    private void SetPosition()
+    {
+        int frontCnt = 0;
+        int backCnt = 0;
+
+        int myIndex = -1;
+        bool isFront = true;
+        foreach(var player in PhotonNetwork.PlayerList)
+        {
+            if(player.CustomProperties.TryGetValue("CurClass", out object val))
+            {
+                string classCode = (string)val;
+                switch (classCode)
+                {
+                    case "C001":
+                        frontCnt += 1;
+                        if (player.IsLocal)
+                        {
+                            myIndex = frontCnt;
+                            isFront = true;
+                        }
+                        break;
+                    case "C002":
+                    case "C003":
+                        if (player.IsLocal)
+                        {
+                            myIndex = backCnt;
+                            isFront = false;
+                        }
+                        backCnt += 1;
+                        break;
+                }
+
+
+            }
+        }
+
+        int totalNum = isFront ? frontCnt : backCnt;
+        string pos = isFront ? "FRONT_" : "BACK_";
+
+        if(totalNum == 1)
+        {
+            pos += "2";
+        }
+        else if(totalNum == 2)
+        {
+            switch (myIndex)
+            {
+                case 1:
+                    pos += "1";
+                    break;
+                case 2:
+                    pos += "3";
+                    break;
+            }
+        }
+        else if(totalNum == 3)
+        {
+            switch (myIndex)
+            {
+                case 1:
+                    pos += "1";
+                    break;
+                case 2:
+                    pos += "2";
+                    break;
+                case 3:
+                    pos += "3";
+                    break;
+            }
+        }
+
+        _destination = GameObject.Find(pos).transform;
+        transform.position = _destination.position;
+        Camera.main.GetComponent<CameraController>()._player = _destination.gameObject;
 
     }
 

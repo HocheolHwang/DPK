@@ -48,10 +48,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 현재 선택된 던전 번호
     public int DungeonIndex
     {
-        set { 
+        set {
+            if (dungeonIndex == value) return;
             dungeonIndex = value;
 
-            if (PhotonNetwork.InRoom)
+            if (PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient)
             {
                 ExitGames.Client.Photon.Hashtable curProperties = PhotonNetwork.CurrentRoom.CustomProperties;
                 // 던전 세팅
@@ -160,8 +161,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 시드 생성
         int seed = (int)System.DateTime.Now.Ticks;
         // 생성된 방 이름 + ` + 시드 값
-        roomName = roomName + "`" + seed;
-        dungeonIndex = PlayerPrefs.GetInt("SelectedDungeonNumber", 1); 
+        //roomName = roomName + "`" + seed;
+        //dungeonIndex = PlayerPrefs.GetInt("SelectedDungeonNumber", 1); 
+        if(FindObjectOfType<Lobby_Scene>() != null)
+        {
+            dungeonIndex = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
+        }
+        else
+        {
+            dungeonIndex = 0;
+        }
+        
         // 로비에 Properties 등록해야 로비에서 설정 확인 가능
         room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "partyLeader", partyLeader }, { "seed", seed }, { "roomID", guidString }, { "dungeonIndex", dungeonIndex } };
         room.CustomRoomPropertiesForLobby = new string[] { "partyLeader", "seed", "roomID", "dungeonIndex" };
@@ -186,7 +196,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void SetPlayerClass()
     {
             Debug.Log($"현재 직업은 {Managers.Player.GetClassCode()} 입니다.");
-            Debug.Log("새로 추가");
             ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable() { { "CurClass", Managers.Player.GetClassCode() } };
             PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
     }
@@ -232,20 +241,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRandomOrCreateRoom();
     }
-
-    //public void ExitRoom()
-    //{
-    //    // 방이 아니면 탈퇴 불가
-    //    if (!PhotonNetwork.InRoom) return;
-    //    // room -> Lobby
-    //    PhotonNetwork.LeaveRoom();
-
-    //    mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
-        
-    //    mannequins[1].Init();
-    //    mannequins[2].Init();
-
-    //}
 
     // 방 리스트
     public List<RoomInfo> printList()

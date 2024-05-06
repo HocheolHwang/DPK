@@ -54,10 +54,17 @@ public class Party_Leave_Popup_UI : UI_Popup
         // 파티 탈퇴
         PhotonNetwork.LeaveRoom();
 
+
+    }
+
+    public override void OnLeftRoom() // 파티 탈퇴하고 나면 처리
+    {
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
 
         // 로비 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
     }
+
+
 }
