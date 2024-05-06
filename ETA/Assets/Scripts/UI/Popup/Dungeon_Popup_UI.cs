@@ -24,7 +24,9 @@ public class Dungeon_Popup_UI : UI_Popup
         DeepForest_Icon,
         ForgottenTemple_Icon,
         StarShardPlain_Icon,
-        Boss_Status
+        Boss_Status,
+        Player_HP_Image,
+        Player_Shield_Image
     }
 
     enum Images
@@ -84,6 +86,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private Button openMenuButton;
     private GameObject[] dungeonIcons = new GameObject[4];
     private GameObject bossStatus;
+    private GameObject playerHPImage;
+    private GameObject playerShieldImage;
     private Image[] skillCooldownImages = new Image[8];
     private Image[] skillUnableImages = new Image[8];
     private TextMeshProUGUI dungeonTierText;
@@ -215,6 +219,12 @@ public class Dungeon_Popup_UI : UI_Popup
         memberHPSlider1 = GetSlider((int)Sliders.Member_HP_Slider_1);
 
         // 플레이어 정보 초기화
+        playerHPImage = GetObject((int)GameObjects.Player_HP_Image);
+        playerShieldImage = GetObject((int)GameObjects.Player_Shield_Image);
+
+
+
+
         playerTierText = GetText((int)Texts.Player_Tier_Text);
         playerNicknameText = GetText((int)Texts.Player_Nickname_Text);
         playerHPText = GetText((int)Texts.Player_HP_Text);
@@ -384,9 +394,25 @@ public class Dungeon_Popup_UI : UI_Popup
     // HP 업데이트 메서드
     public void UpdateHP()
     {
-        // 체력 업데이트
+        // 체력 및 실드 비율
+        float total = playerStat.Shield + playerStat.MaxHp;
+        float hpScale = playerStat.Hp / total;
+        float shieldScale = playerStat.Shield / total;
 
-        if(playerStat != null)
+        // 체력바와 실드바의 RectTransform을 참조
+        RectTransform hpRectTransform = playerHPImage.GetComponent<RectTransform>();
+        RectTransform shieldRectTransform = playerShieldImage.GetComponent<RectTransform>();
+
+        // 체력바 최대 길이
+        float totalLength = 300.0f;
+
+        // sizeDelta의 x 값을 조절하여 너비를 설정
+        hpRectTransform.sizeDelta = new Vector2(hpScale * totalLength, hpRectTransform.sizeDelta.y);
+        shieldRectTransform.sizeDelta = new Vector2(shieldScale * totalLength, shieldRectTransform.sizeDelta.y);
+
+
+        // 체력 업데이트
+        if (playerStat != null)
         {
             playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
             playerHPSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
