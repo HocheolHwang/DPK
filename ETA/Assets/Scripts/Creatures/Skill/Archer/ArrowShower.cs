@@ -11,6 +11,7 @@ public class ArrowShower : Skill
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(7, 7, 7);
+        //RangeType = Define.RangeType.Square;
     }
     public override IEnumerator StartSkillCast()
     {
