@@ -41,6 +41,8 @@ public class Define
         DeepForest,
         ForgottenTemple,
         StarShardPlain,
+        TestDungeon01,
+        TestDungeon02,
         MultiPlayTest
     }
     public enum UIEvent
