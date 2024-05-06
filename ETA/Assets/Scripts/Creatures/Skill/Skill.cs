@@ -16,6 +16,7 @@ public abstract class Skill : MonoBehaviour
     public Define.SkillType SkillType = Define.SkillType.Target;
     public int Damage = 50;
     public Vector3 skillRange;
+    public Define.RangeType RangeType;
 
     private Coroutine _currentCoroutine;
     public float ElapsedTime { get { return Time.time - _lastExcuteTime; } }

@@ -24,6 +24,7 @@ public class SkillSystem : MonoBehaviour
     GameObject rangeObject;
 
     public Vector3 SkillRange = new Vector3(0,0,0);
+    public Define.RangeType RangeType;
 
 
     public Vector3 TargetPosition;
@@ -136,7 +137,10 @@ public class SkillSystem : MonoBehaviour
                 Cursor.SetCursor(skillCursor, Vector2.zero, CursorMode.Auto);
                 currentCursor = CursorType.Range;
                 rangeObject.gameObject.SetActive(true);
-                rangeObject.gameObject.transform.localScale = new Vector3(SkillRange.x, 0.01f, SkillRange.z);
+                rangeObject.transform.GetChild(0).gameObject.SetActive(false);
+                rangeObject.transform.GetChild(1).gameObject.SetActive(false);
+                rangeObject.transform.GetChild((int)RangeType).gameObject.SetActive(true);
+                rangeObject.gameObject.transform.localScale = new Vector3(SkillRange.x, 0.0001f, SkillRange.z);
                 targetingGo.gameObject.SetActive(false);
             }
 

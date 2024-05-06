@@ -11,7 +11,12 @@ public class Define
         Range,
         Holding,
         Immediately
+    }
 
+    public enum RangeType
+    {
+        Round,
+        Square
     }
     public enum SkillKey
     {

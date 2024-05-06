@@ -55,6 +55,7 @@ public class SkillSlot : MonoBehaviour
             case Define.SkillType.Range:
                 SkillSystem.currentType = Define.SkillType.Range;
                 SkillSystem.SkillRange = current.skillRange;
+                SkillSystem.RangeType = current.RangeType;
                 break;
             case Define.SkillType.Holding:
                 SkillSystem.currentType = Define.SkillType.Holding;
