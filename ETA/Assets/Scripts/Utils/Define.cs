@@ -98,6 +98,7 @@ public class Define
         WhirlwindEffect1,
         WhirlwindEffect2,
         Porin_Attack,
+        WindShield,
         MaxCount
     }
 }
