@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Meteor : Skill
 {
-    private Coroutine blessingCoroutine;
+    private Coroutine meteorCoroutine;
     protected override void Init()
     {
         SetCoolDownTime(1);
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(5, 5, 5);
-        Damage = 100;
+        RangeType = Define.RangeType.Round;
+        Damage = 200;
         skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/HolyHammer.png");
     }
     public override IEnumerator StartSkillCast()
@@ -20,7 +21,7 @@ public class Meteor : Skill
         Managers.Sound.Play("Skill/Holy");
 
         yield return new WaitForSeconds(2.0f);
-        blessingCoroutine = StartCoroutine(MeteorCoroutine());
+        meteorCoroutine = StartCoroutine(MeteorCoroutine());
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 
