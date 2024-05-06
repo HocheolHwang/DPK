@@ -58,7 +58,6 @@ public class After_Login_Popup_UI : UI_Popup
             PlayerPrefs.Save();
 
             // 튜토리얼 Scene으로 이동
-            
             Managers.Scene.LoadScene(Define.Scene.Tutorial); // Room에 들어온 상태일거기 때문에 입장해도 된다.
         }
         else
