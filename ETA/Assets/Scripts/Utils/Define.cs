@@ -93,6 +93,8 @@ public class Define
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
         Groggy,
+        FireTrail,
+        Explosion,
         GroundCrash,
         BlessingEffect,
         HealEffect,
