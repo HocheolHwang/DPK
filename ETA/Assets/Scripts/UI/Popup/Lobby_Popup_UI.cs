@@ -25,7 +25,6 @@ public class Lobby_Popup_UI : UI_Popup
         Party_Name_Text,
         Dungeon_Name_Text,
         Party_Size_Text,
-
     }
 
     enum Images
