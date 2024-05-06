@@ -25,6 +25,9 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
     private Button dungeonEnterButton;
     private TextMeshProUGUI dungeonEnterText;
 
+    // 선택된 던전 번호
+    private int selectedDungeonNumber;
+
 
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
@@ -35,6 +38,9 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         // 바인딩
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
+
+        // 선택된 던전 번호 초기화
+        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
 
         // 취소하기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
@@ -67,16 +73,11 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         {
             FindObjectOfType<Lobby_Scene>().isSoloPlay = true;
             Managers.Photon.MakeRoom(Managers.Player.GetNickName() + "의 파티");
-            Debug.Log("@@@@@@@@@@@@@@");
             return;
         }
 
         // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
-
-        // 선택된 던전 번호 가져오기
-        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
-        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
 
         // 선택된 던전 번호에 따라 다른 씬으로 이동
         Define.Scene sceneName = selectedDungeonNumber switch
@@ -106,16 +107,12 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
 
         // 다른 애들도 가라고 RPC
         
-        
         // FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(Define.Scene.MultiPlayTest);
     }
 
     // 선택된 던전 텍스트 업데이트 메서드
     private void UpdateSelectedDungeon()
     {
-        // 선택된 던전 번호 가져오기
-        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
-        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
         dungeonEnterText.text = selectedDungeonNumber switch
         {

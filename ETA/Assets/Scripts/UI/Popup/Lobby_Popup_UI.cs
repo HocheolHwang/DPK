@@ -25,7 +25,6 @@ public class Lobby_Popup_UI : UI_Popup
         Party_Name_Text,
         Dungeon_Name_Text,
         Party_Size_Text,
-
     }
 
     enum Images
@@ -159,7 +158,6 @@ public class Lobby_Popup_UI : UI_Popup
     // 메뉴 Popup UI 띄우기 메서드
     private void OpenMenu(PointerEventData data)
     {
-        Debug.Log($"@@@@@@@@@@@@@{PhotonNetwork.InRoom}%%%%%%%%%%%%%%");
         Managers.UI.ShowPopupUI<Menu_Popup_UI>("[Common]_Menu_Popup_UI");
     }
 
@@ -168,7 +166,7 @@ public class Lobby_Popup_UI : UI_Popup
     {
         if (PhotonNetwork.InRoom)
         {
-            // 파티 참가 상태일 경우 참가 버튼 비활성화 및 탈퇴 버튼 활성화
+            // 파티 참가 상태일 경우
             openPartyJoinButton.gameObject.SetActive(false);
             openPartyLeaveButton.gameObject.SetActive(true);
             partyNameText.text = $"{PhotonNetwork.CurrentRoom.Name}";
@@ -177,26 +175,20 @@ public class Lobby_Popup_UI : UI_Popup
         }
         else
         {
-            // 파티 미참가 상태일 경우 참가 버튼 활성화 및 탈퇴 버튼 비활성화
-            
+            // 파티 미참가 상태일 경우
             openPartyJoinButton.gameObject.SetActive(true);
             openPartyLeaveButton.gameObject.SetActive(false);
             partyInfoImage.gameObject.SetActive(false);
-
         }
 
         memberNicknameText1.text = Managers.Player.GetNickName();
-        //partyNameText.text = $"{Managers.Player.GetNickName()}의 파티";
-
-        
     }
 
     // 선택된 던전 업데이트 메서드
     public void UpdateSelectedDungeon()
     {
         // 선택된 던전 번호를 가져옴
-        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
-        selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
+        int selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
 
         if (PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient)
         {

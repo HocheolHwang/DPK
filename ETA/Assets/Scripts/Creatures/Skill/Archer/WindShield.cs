@@ -10,7 +10,7 @@ public class WindShield : Skill
         SetCoolDownTime(2);
         SkillType = Define.SkillType.Immediately;
         base.Init();
-        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Guard.png");
+        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Archer/WindShield.png");
     }
 
     public override IEnumerator StartSkillCast()

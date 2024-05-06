@@ -17,6 +17,8 @@ public class Opening_Popup_UI : UI_Popup
     // UI 컴포넌트 바인딩 변수
     private Button skipButton;
 
+
+    // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
     {
         // 기본 초기화
@@ -30,6 +32,9 @@ public class Opening_Popup_UI : UI_Popup
         AddUIEvent(skipButton.gameObject, GoToLogin);
         AddUIKeyEvent(skipButton.gameObject, () => GoToLogin(null), KeyCode.Return);
     }
+
+
+    // ------------------------------ 메서드 정의 ------------------------------
 
     private void GoToLogin(PointerEventData data)
     {
