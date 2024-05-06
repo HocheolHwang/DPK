@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameSystem : MonoBehaviour
+public class GameSystem : MonoBehaviourPunCallbacks
 {
     public PhotonView PhotonView;
     int loadCnt = 0;
@@ -12,9 +12,13 @@ public class GameSystem : MonoBehaviour
     public int currentDungeonNum;
     PlayerController myController;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         PhotonView = GetComponent<PhotonView>();
+    }
+    void Start()
+    {
+        
         DontDestroyOnLoad(gameObject);
     }
 
@@ -137,7 +141,7 @@ public class GameSystem : MonoBehaviour
 
     public void SendCurrentDungeon(int num)
     {
-        PhotonView.RPC("RPC_SetCurrentDungeon", RpcTarget.Others, num);
+        GetComponent<PhotonView>().RPC("RPC_SetCurrentDungeon", RpcTarget.Others, num);
     }
     [PunRPC]
     public void RPC_SetCurrentDungeon(int num)

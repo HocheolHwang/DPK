@@ -23,7 +23,14 @@ public class Lobby_Popup_UI : UI_Popup
     {
         Member_Nickname_Text_1,
         Party_Name_Text,
-        Dungeon_Name_Text
+        Dungeon_Name_Text,
+        Party_Size_Text,
+
+    }
+
+    enum Images
+    {
+        Party_Info
     }
 
     // UI 컴포넌트 바인딩 변수
@@ -36,6 +43,8 @@ public class Lobby_Popup_UI : UI_Popup
     private TextMeshProUGUI memberNicknameText1;
     private TextMeshProUGUI partyNameText;
     private TextMeshProUGUI dungeonNameText;
+    private TextMeshProUGUI partySizeText;
+    private Image partyInfoImage;
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -47,6 +56,7 @@ public class Lobby_Popup_UI : UI_Popup
         // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
+        Bind<Image>(typeof(Images));
 
         // 파티 참가 Popup UI 띄우기 버튼 이벤트 등록
         openPartyJoinButton = GetButton((int)Buttons.Open_Party_Join_Button);
@@ -75,6 +85,9 @@ public class Lobby_Popup_UI : UI_Popup
         AddUIKeyEvent(openMenuButton.gameObject, () => OpenMenu(null), KeyCode.Escape);
 
         // 파티 정보 업데이트
+        partyInfoImage = GetImage((int)Images.Party_Info);
+        partyInfoImage.gameObject.SetActive(false);
+        partySizeText = GetText((int)Texts.Party_Size_Text);
         memberNicknameText1 = GetText((int)Texts.Member_Nickname_Text_1);
         partyNameText = GetText((int)Texts.Party_Name_Text);
         UpdatePartyInfo();
@@ -158,16 +171,24 @@ public class Lobby_Popup_UI : UI_Popup
             // 파티 참가 상태일 경우 참가 버튼 비활성화 및 탈퇴 버튼 활성화
             openPartyJoinButton.gameObject.SetActive(false);
             openPartyLeaveButton.gameObject.SetActive(true);
+            partyNameText.text = $"{PhotonNetwork.CurrentRoom.Name}";
+            partySizeText.text = $"{PhotonNetwork.PlayerList.Length} / 3";
+            partyInfoImage.gameObject.SetActive(true);
         }
         else
         {
             // 파티 미참가 상태일 경우 참가 버튼 활성화 및 탈퇴 버튼 비활성화
+            
             openPartyJoinButton.gameObject.SetActive(true);
             openPartyLeaveButton.gameObject.SetActive(false);
+            partyInfoImage.gameObject.SetActive(false);
+
         }
 
         memberNicknameText1.text = Managers.Player.GetNickName();
-        partyNameText.text = $"{Managers.Player.GetNickName()}의 파티";
+        //partyNameText.text = $"{Managers.Player.GetNickName()}의 파티";
+
+        
     }
 
     // 선택된 던전 업데이트 메서드

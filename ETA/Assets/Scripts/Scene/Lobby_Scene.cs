@@ -16,7 +16,7 @@ public class Lobby_Scene : BaseScene
         // 첫 로그인 여부를 확인
         bool isFirstLogin = PlayerPrefs.GetInt("FirstLogin", 1) == 1;
         currentDungeonNumber = 1; // 깊은 숲 설정
-        Managers.Photon.DungeonIndex = 1;
+        //Managers.Photon.DungeonIndex = 1;
 
         if (Managers.Player.GetFirst() && isFirstLogin)
         {
@@ -34,17 +34,11 @@ public class Lobby_Scene : BaseScene
         }
 
         Managers.Sound.Play("BackgroundMusic/Lobby");
-        // 이부분 다른곳으로 옮기기
-        //PhotonNetwork.SerializationRate = 10;
-        //PhotonNetwork.PrecisionForFloatSynchronization = 0.1f;
-        //PhotonNetwork.SendRate = 60;
 
         
         SetUpMannequins();
 
         // 다시 들어 왔을떄는?
-        //mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
-
         if (PhotonNetwork.InRoom)
             ChangeMannequin();
         else
@@ -114,6 +108,10 @@ public class Lobby_Scene : BaseScene
 
     }
 
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        FindObjectOfType<Lobby_Popup_UI>().UpdatePartyInfo();
+    }
 
     public void SetUpMannequins()
     {

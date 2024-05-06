@@ -161,7 +161,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 시드 생성
         int seed = (int)System.DateTime.Now.Ticks;
         // 생성된 방 이름 + ` + 시드 값
-        roomName = roomName + "`" + seed;
+        //roomName = roomName + "`" + seed;
         //dungeonIndex = PlayerPrefs.GetInt("SelectedDungeonNumber", 1); 
         if(FindObjectOfType<Lobby_Scene>() != null)
         {
@@ -196,7 +196,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void SetPlayerClass()
     {
             Debug.Log($"현재 직업은 {Managers.Player.GetClassCode()} 입니다.");
-            Debug.Log("새로 추가");
             ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable() { { "CurClass", Managers.Player.GetClassCode() } };
             PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
     }
