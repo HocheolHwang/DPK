@@ -340,6 +340,8 @@ public class Dungeon_Popup_UI : UI_Popup
             1 => ("초급 던전", "깊은 숲", dungeonIcons[1]),
             2 => ("중급 던전", "잊혀진 신전", dungeonIcons[2]),
             3 => ("고급 던전", "별의 조각 평원", dungeonIcons[3]),
+            4 => ("테스트 던전", "Test 1", dungeonIcons[3]),
+            5 => ("테스트 던전", "Test 2", dungeonIcons[3]),
             _ => ("튜토리얼 던전", "던전처리기사 실기 시험장", dungeonIcons[0])
         };
 
