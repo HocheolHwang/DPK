@@ -67,15 +67,17 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         {
             FindObjectOfType<Lobby_Scene>().isSoloPlay = true;
             Managers.Photon.MakeRoom(Managers.Player.GetNickName() + "의 파티");
+            Debug.Log("@@@@@@@@@@@@@@");
             return;
-
         }
+
         // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
 
         // 선택된 던전 번호 가져오기
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
         selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
+
         // 선택된 던전 번호에 따라 다른 씬으로 이동
         Define.Scene sceneName = selectedDungeonNumber switch
         {
@@ -93,18 +95,17 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         }
 
         // 선택된 던전 Scene으로 이동
-        //SceneManager.LoadScene(sceneName);
         // TMP
         FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(sceneName);
-        Debug.Log(sceneName);
+        Debug.Log($"이동할 Scene은? {sceneName}");
         Managers.Scene.LoadScene(sceneName);
 
-        //Managers.Scene.LoadScene(Define.Scene.MultiPlayTest);
+        // Managers.Scene.LoadScene(Define.Scene.MultiPlayTest);
 
         // 다른 애들도 가라고 RPC
         
         
-        //FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(Define.Scene.MultiPlayTest);
+        // FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(Define.Scene.MultiPlayTest);
     }
 
     // 선택된 던전 텍스트 업데이트 메서드
