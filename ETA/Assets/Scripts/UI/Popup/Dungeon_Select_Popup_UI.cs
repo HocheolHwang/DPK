@@ -41,6 +41,9 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     // 현재 던전 정보 변수
     private int existingDungeonNumber;
 
+    // 선택된 던전 번호
+    private int selectedDungeonNumber;
+
 
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
@@ -53,7 +56,6 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         Bind<Button>(typeof(Buttons));
 
         // 현재 던전 정보를 저장
-        existingDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
         existingDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
 
         // 파티 참가 Popup UI 띄우기 버튼 이벤트 등록
@@ -144,8 +146,6 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     // 깊은 숲 선택 메서드
     private void SelectDeepForest(PointerEventData data)
     {
-        PlayerPrefs.SetInt("SelectedDungeonNumber", 1);
-        PlayerPrefs.Save();
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 1;
         UpdateSelectedDungeon();
     }
@@ -153,8 +153,6 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     // 잊혀진 신전 선택 메서드
     private void SelectForgottenTemple(PointerEventData data)
     {
-        PlayerPrefs.SetInt("SelectedDungeonNumber", 2);
-        PlayerPrefs.Save();
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 2;
         UpdateSelectedDungeon();
     }
@@ -162,8 +160,6 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     // 별의 조각 평원 선택 메서드
     private void SelectStarShardPlain(PointerEventData data)
     {
-        PlayerPrefs.SetInt("SelectedDungeonNumber", 3);
-        PlayerPrefs.Save();
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 3;
         UpdateSelectedDungeon();
     }
@@ -172,9 +168,6 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     private void Cancel(PointerEventData data)
     {
         // 취소할 경우 기존 선택된 던전 정보로 저장
-        PlayerPrefs.SetInt("SelectedDungeonNumber", existingDungeonNumber);
-        PlayerPrefs.Save();
-
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = existingDungeonNumber;
 
         // 파티 참가 Popup UI를 닫음
@@ -197,13 +190,8 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     // 선택된 던전 업데이트 메서드
     public void UpdateSelectedDungeon()
     {
-        
-
         // 선택된 던전 번호를 가져옴
-        int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
         selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
-
-        
 
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
         selectedDungeonText.text = selectedDungeonNumber switch
