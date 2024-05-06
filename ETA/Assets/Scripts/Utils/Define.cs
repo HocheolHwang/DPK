@@ -93,6 +93,7 @@ public class Define
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
         Groggy,
+        SpikeIce,
         FireTrail,
         Explosion,
         GroundCrash,
