@@ -11,6 +11,7 @@ public class HoldSkill : Skill
         base.Init();
         SkillType = Define.SkillType.Holding;
         skillRange = new Vector3(7,7,7);
+        CollavoSkillName = "test";
     }
     public override IEnumerator StartSkillCast()
     {
