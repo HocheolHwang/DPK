@@ -9,6 +9,7 @@ public class Sting : Skill
         SetCoolDownTime(1);
         Damage = 50;
         base.Init();
+        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Sting.png");
     }
 
     public override IEnumerator StartSkillCast()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Skill : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public abstract class Skill : MonoBehaviour
     protected float _lastExcuteTime;
     protected float _cooldownTime;
 
+    public Image skillIcon;
     public Define.SkillType SkillType = Define.SkillType.Target;
     public int Damage = 50;
     public Vector3 skillRange;
