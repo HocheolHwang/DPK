@@ -11,6 +11,7 @@ public class GroundCrash : Skill
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
+        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/GroundCrash.png");
     }
 
     public override IEnumerator StartSkillCast()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Whirlwind : Skill
+public class WhirlWind : Skill
 {
     protected override void Init()
     {
@@ -10,6 +10,7 @@ public class Whirlwind : Skill
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(5, 5, 5);
+        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Whirlwind.png");
     }
 
     public override IEnumerator StartSkillCast()
