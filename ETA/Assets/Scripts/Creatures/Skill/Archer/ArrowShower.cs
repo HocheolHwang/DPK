@@ -11,6 +11,7 @@ public class ArrowShower : Skill
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(7, 7, 7);
+        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Archer/ArrowShower.png");
     }
     public override IEnumerator StartSkillCast()
     {
