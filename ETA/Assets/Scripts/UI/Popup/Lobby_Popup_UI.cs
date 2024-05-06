@@ -177,7 +177,11 @@ public class Lobby_Popup_UI : UI_Popup
         int selectedDungeonNumber = PlayerPrefs.GetInt("SelectedDungeonNumber", 1);
         selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
 
-        if(PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient) FindObjectOfType<GameSystem>().SendCurrentDungeon(selectedDungeonNumber);
+        if (PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient)
+        {
+            FindObjectOfType<GameSystem>().SendCurrentDungeon(selectedDungeonNumber);
+            Managers.Photon.DungeonIndex = selectedDungeonNumber;
+        }
 
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
         dungeonNameText.text = selectedDungeonNumber switch

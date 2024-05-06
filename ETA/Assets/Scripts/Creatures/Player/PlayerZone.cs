@@ -52,14 +52,12 @@ public class PlayerZone : MonoBehaviour
 
     void moveFront()
     {
-        Debug.Log("move");
         Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(2,1,6), new Quaternion(), TargetLayerMask);
         if (enemies.Length <= 0)
         {
             _delta += Time.deltaTime / 2;
             _delta = _delta >= 1.0f ? 1.0f : _delta;
             transform.position += transform.forward * Time.deltaTime * currentSpeed * _delta;
-            Debug.Log($"move {currentSpeed}");
         }
         else
         {

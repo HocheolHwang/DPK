@@ -16,6 +16,7 @@ public class Lobby_Scene : BaseScene
         // 첫 로그인 여부를 확인
         bool isFirstLogin = PlayerPrefs.GetInt("FirstLogin", 1) == 1;
         currentDungeonNumber = 1; // 깊은 숲 설정
+        Managers.Photon.DungeonIndex = 1;
 
         if (Managers.Player.GetFirst() && isFirstLogin)
         {
@@ -86,6 +87,14 @@ public class Lobby_Scene : BaseScene
             gameSystem.name = "GameSystem";
             DontDestroyOnLoad(gameSystem);
         }
+        else
+        {
+            if(PhotonNetwork.CurrentRoom.CustomProperties["dungeonIndex"] != null)
+            {
+                currentDungeonNumber = (int)PhotonNetwork.CurrentRoom.CustomProperties["dungeonIndex"];
+            }
+            
+        }
 
         Managers.Photon.updatePlayerList();
         Managers.Photon.SetPlayerClass();
@@ -100,6 +109,7 @@ public class Lobby_Scene : BaseScene
         }
 
         FindObjectOfType<Lobby_Popup_UI>().UpdatePartyInfo();
+        FindObjectOfType<Lobby_Popup_UI>().UpdateSelectedDungeon();
 
 
     }
@@ -152,9 +162,9 @@ public class Lobby_Scene : BaseScene
     }
 
 
+
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
-        base.OnRoomPropertiesUpdate(propertiesThatChanged);
     }
 
     public override void OnLeftRoom()
