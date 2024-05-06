@@ -191,24 +191,11 @@ namespace PlayerStates
             if (_playerController.photonView.IsMine) _playerController.ChangeToCollavoState();
             _playerController.SkillSlot.CastCollavoSkill(_playerController._usingSkill);
 
-            //_animator.CrossFade("SKILL2", 0.05f);
-            //Collider[] enemies = Physics.OverlapSphere(_playerController.transform.position, 6.0f, LayerMask.GetMask("Monster"));
-
-            //foreach (Collider enemy in enemies)
-            //{
-            //    enemy.GetComponent<MonsterController>().TakeDamage(50);
-            //}
-
 
         }
 
         public override void Execute()
         {
-            //tmp += Time.deltaTime;
-            //if (tmp > 1.5f)
-            //{
-            //    _playerController.ChangeState(_playerController.MOVE_STATE);
-            //}
             base.Execute();
         }
 
@@ -269,37 +256,33 @@ namespace PlayerStates
             _chargeEffect = Managers.Resource.Instantiate("Effect/SwordChargeUp").GetComponent<ParticleSystem>();
             _chargeEffect.transform.position = _playerController.transform.position + _playerController.transform.up;
             _chargeEffect.Play();
+
+            GameObject.FindObjectOfType<CollavoSystem>().AddCurrentSkill(_playerController, _playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
         }
 
         public override void Execute()
         {
-            // 홀딩 중에는 다른 스킬 못쓰게 막아야한다.
-            //if (currentSkill != _playerController._usingSkill)
-            //{
-            //    // 다른 키 누름
-            //    return;
-            //}
-            // 3초뒤 풀림
-
             if (_playerController.photonView.IsMine == false) return;
             GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = (Time.time - startTime) / 3.0f;
 
             if (Time.time - startTime >= 3.0f)
             {
+                GameObject.FindObjectOfType<CollavoSystem>().RemoveCurrentSkill(_playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
                 _playerController.ChangeState(_playerController.SKILL_STATE);
+                return;
             }
 
             if (Input.anyKey)
             {
                 Debug.Log("홀딩 중입니다.");
-                
-                // UI 조정
             }
             else // 키를 떄면?
             {
-                
-                _playerController.ChangeState(_playerController.COLLAVO_STATE);
-                
+                //_playerController.ChangeState(_playerController.COLLAVO_STATE);
+                GameObject.FindObjectOfType<CollavoSystem>().RemoveCurrentSkill(_playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
+                _playerController.ChangeState(_playerController.SKILL_STATE);
+                return;
+
             }
         }
 

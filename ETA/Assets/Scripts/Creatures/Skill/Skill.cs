@@ -19,6 +19,8 @@ public abstract class Skill : MonoBehaviour
     public float ElapsedTime { get { return Time.time - _lastExcuteTime; } }
     public float CooldownTime { get { return _cooldownTime; } set { _cooldownTime = value; } }
 
+    public string CollavoSkillName;
+
 
     // Start is called before the first frame update
     void Start()
