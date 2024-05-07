@@ -498,7 +498,7 @@ public class Dungeon_Popup_UI : UI_Popup
     public void UpdateHP()
     {
         // 플레이어 체력바 업데이트
-        UpdateHealthAndShieldBars(playerHPBar, playerShieldBar, playerStat, 294);
+        
 
         // 플레이어 체력 업데이트
         if (playerStat != null)
@@ -511,6 +511,8 @@ public class Dungeon_Popup_UI : UI_Popup
             {
                 playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
             }
+
+            UpdateHealthAndShieldBars(playerHPBar, playerShieldBar, playerStat, 294);
         }
         else
         {

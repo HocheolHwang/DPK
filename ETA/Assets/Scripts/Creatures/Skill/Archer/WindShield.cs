@@ -21,8 +21,9 @@ public class WindShield : Skill
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/GuardSkill");
         
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.9f);
         Managers.Effect.Stop(ps);
+        yield return new WaitForSeconds(0.1f);
 
         _controller.ChangeState(_controller.MOVE_STATE);
     }
