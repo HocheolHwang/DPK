@@ -107,6 +107,7 @@ public class Define
         WhirlwindEffect2,
         Porin_Attack,
         WindShield,
+        ArrowStab,
         MaxCount
     }
 }
