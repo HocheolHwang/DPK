@@ -52,7 +52,7 @@ public class PlayerZone : MonoBehaviour
 
     void moveFront()
     {
-        Collider[] enemies = Physics.OverlapBox(transform.position, new Vector3(2,1,6), new Quaternion(), TargetLayerMask);
+        Collider[] enemies = Physics.OverlapBox(transform.position - transform.forward * 3, new Vector3(2,1,6), Quaternion.Euler(0,90,0), TargetLayerMask);
         if (enemies.Length <= 0)
         {
             _delta += Time.deltaTime / 2;
