@@ -62,7 +62,7 @@ public class Lobby_Scene : BaseScene
         {
             //PhotonNetwork.JoinRandomOrCreateRoom();
         }
-
+        if (Managers.Photon.IsConnecting && PhotonNetwork.InRoom ) Managers.Photon.OpenRoom();
     }
 
     public override void Clear()

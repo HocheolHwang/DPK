@@ -348,6 +348,7 @@ public class Dungeon_Popup_UI : UI_Popup
         }
 
         expResult = false;
+        Managers.Photon.CloseRoom();
     }
 
     //public void PartyEnter()

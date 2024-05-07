@@ -322,6 +322,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             idx++;
         }
     }
+
+    public void CloseRoom()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+    }
+
+    public void OpenRoom()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        PhotonNetwork.CurrentRoom.IsOpen = true;
+        PhotonNetwork.CurrentRoom.IsVisible = true;
+    }
     // #endregion
 
     #region MonoBehaviourPunCallbacks callbacks
@@ -351,7 +365,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo room in newRooms)
         {
-            
+            Debug.Log($"{room.Name} 방 변경");
             // 리스트에 방이 있는지 없는지 판단
             bool change = false;
             for (int i = 0; i < roomlist.Count; i++)
