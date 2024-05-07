@@ -11,7 +11,7 @@ public class ArrowStab : Skill
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
-        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Archer/ArrowStab.png");
+        //skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Archer/ArrowStab.png");
     }
 
     public override IEnumerator StartSkillCast()
