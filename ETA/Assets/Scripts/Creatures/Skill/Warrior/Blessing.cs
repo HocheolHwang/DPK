@@ -12,7 +12,7 @@ public class Blessing : Skill
         SetCoolDownTime(15);
         SkillType = Define.SkillType.Immediately;
         base.Init();
-        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Blessing.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Blessing.png");
     }
 
     public override IEnumerator StartSkillCast()

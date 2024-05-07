@@ -11,10 +11,10 @@ public class IceBone : Skill
         SetCoolDownTime(1);
         base.Init();
         SkillType = Define.SkillType.Range;
-        skillRange = new Vector3(1, 1, 1);
+        skillRange = new Vector3(1, 3, 1);
         RangeType = Define.RangeType.Round;
         Damage = 15;
-        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/HolyHammer.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/HolyHammer.png");
     }
     public override IEnumerator StartSkillCast()
     {
@@ -43,7 +43,7 @@ public class IceBone : Skill
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
-        hitbox.transform.position = _skillSystem.TargetPosition + randomPosition;
+        hitbox.transform.position = _skillSystem.TargetPosition + randomPosition - transform.up;
         hitbox.transform.localScale = skillRange;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.SpikeIce, hitbox.transform);
         Managers.Sound.Play("Skill/TargetSkill");
