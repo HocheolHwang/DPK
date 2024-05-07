@@ -63,6 +63,10 @@ public class Lobby_Scene : BaseScene
             //PhotonNetwork.JoinRandomOrCreateRoom();
         }
 
+        ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.LocalPlayer.CustomProperties;
+        properties["currentScene"] = Define.Scene.Lobby;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
+
     }
 
     public override void Clear()
@@ -91,7 +95,7 @@ public class Lobby_Scene : BaseScene
         }
 
         Managers.Photon.updatePlayerList();
-        Managers.Photon.SetPlayerClass();
+        //Managers.Photon.SetPlayerClass();
 
 
 
