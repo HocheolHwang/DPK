@@ -59,7 +59,7 @@ public class Chat_Popup_UI : UI_Popup
         chatMessage = Get<TMP_InputField>((int)InputFields.Chat_InputField);
 
         // PhotonChat 컴포넌트 찾기 및 참조
-        chat = GameObject.Find("@Scene").GetComponent<PhotonChat>();
+        chat = GameObject.FindAnyObjectByType<PhotonChat>();
         chat.chatUI = this;
 
         // Chat_InputField에 포커스 설정
