@@ -101,7 +101,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.SendRate = 60;
         // 임시 코드         
         if (Managers.Player.GetNickName()==null)
-        Managers.Player.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
+            Managers.Player.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
         //Managers.Player.SetNickName(Managers.Player.GetNickName());
         //Debug.Log(Managers.PlayerInfo.GetNickName());
 
@@ -183,6 +183,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         
         PhotonNetwork.CreateRoom(roomName, room);
+    }
+
+    // 새로운 UUID 업데이트
+    public void UpdateUUID()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 새로운 유니크 아이디(UID)를 생성하고 이를 문자열로 변환
+            Guid newGuid = Guid.NewGuid();  // 새 GUID 생성
+            string guidString = newGuid.ToString();  // GUID를 문자열로 변환
+            ExitGames.Client.Photon.Hashtable curProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+            curProperties["roomID"] = guidString;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(curProperties);
+        }
     }
 
     public void ClickRoom(int roomNumber)
