@@ -6,7 +6,7 @@ public class Blessing : Skill
 {
     private Coroutine blessingCoroutine;
     private ParticleSystem ps;
-    
+
     protected override void Init()
     {
         SetCoolDownTime(15);
@@ -22,6 +22,10 @@ public class Blessing : Skill
         ps = Managers.Effect.Play(Define.Effect.BlessingEffect, gameObject.transform);
         _controller.Stat.Defense += 10;
         Debug.Log($"Defense: {_controller.Stat.Defense}");
+
+        // 파티클 시스템을 캐릭터의 자식으로 설정
+        if (ps != null)
+            ps.transform.SetParent(gameObject.transform);
 
         // 방어력 증가를 시작하고, 일정 시간 후에 감소시키는 코루틴을 시작합니다.
         blessingCoroutine = StartCoroutine(BlessingCoroutine());
