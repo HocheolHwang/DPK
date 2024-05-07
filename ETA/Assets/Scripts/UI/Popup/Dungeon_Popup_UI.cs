@@ -93,6 +93,7 @@ public class Dungeon_Popup_UI : UI_Popup
         Player_Level_Text,
 
         // 보스 상태
+        Boss_Level_Text,
         Boss_Name_Text,
         Boss_HP_Text,
 
@@ -144,6 +145,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI playerNicknameText;
     private TextMeshProUGUI playerHPText;
     private TextMeshProUGUI playerLevelText;
+    private TextMeshProUGUI bossLevelText;
     private TextMeshProUGUI bossNameText;
     private TextMeshProUGUI bossHPText;
     private TextMeshProUGUI[] skillCooldownTexts = new TextMeshProUGUI[8];
@@ -258,7 +260,8 @@ public class Dungeon_Popup_UI : UI_Popup
         bossStatus = GetObject((int)GameObjects.Boss_Status);
         bossStatus.SetActive(false);
 
-        // 보스 이름 및 HP 텍스트, HP 슬라이더 초기화
+        // 보스 정보 초기화
+        bossLevelText = GetText((int)Texts.Boss_Level_Text);
         bossNameText = GetText((int)Texts.Boss_Name_Text);
         bossHPText = GetText((int)Texts.Boss_HP_Text);
         bossHPSlider = GetSlider((int)Sliders.Boss_HP_Slider);
@@ -431,6 +434,15 @@ public class Dungeon_Popup_UI : UI_Popup
     {
         // 보스 HP 슬라이더 설정
         bossHPSlider.value = 1;
+
+        // 보스 레벨 텍스트 설정
+        bossLevelText.text = selectedDungeonNumber switch
+        {
+            1 => "Lv. 5",
+            2 => "Lv. 12",
+            3 => "Lv. 20",
+            _ => "Lv. 2"
+        };
 
         // 보스 파괴 이벤트 핸들러 등록
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
