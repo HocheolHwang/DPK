@@ -36,6 +36,8 @@ public class ArrowStab : Skill
         yield return new WaitForSeconds(1.0f);
         //Managers.Resource.Destroy(ps.gameObject);
         Managers.Effect.Stop(ps);
+
+        yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 }
