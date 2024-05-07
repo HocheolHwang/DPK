@@ -10,7 +10,22 @@ public class NetworkManager : MonoBehaviour
     //string baseUrl = "https://localhost:8080/api/v1/";
     string baseUrl = "https://k10e207.p.ssafy.io/api/v1/";
 
-    IEnumerator SendWebRequest(UnityWebRequest request, Action callback = null)
+    IEnumerator SendWebRequest(UnityWebRequest request)
+    {
+        yield return request.SendWebRequest();
+
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Request Error] {request.error}\n{request.downloadHandler.text}");
+        }
+        else
+        {
+            Debug.Log(request.result);
+            Debug.Log("Response: " + request.downloadHandler.text);
+        }
+    }
+    IEnumerator SendPartyRequest(UnityWebRequest request, Action callback = null)
     {
         yield return request.SendWebRequest();
 
@@ -25,7 +40,7 @@ public class NetworkManager : MonoBehaviour
             Debug.Log("Response: " + request.downloadHandler.text);
 
             if(callback != null)
-            callback?.Invoke();
+                callback?.Invoke();
         }
     }
 
@@ -213,7 +228,7 @@ public class NetworkManager : MonoBehaviour
     public void CreatePartyCall(PartyReqDto dto, Action callback)
     {
         string partyData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "party", partyData), callback));
+        StartCoroutine(SendPartyRequest(CreateRequest("POST", "party", partyData), callback));
     }
 
     // 파티 참가 요청
@@ -255,6 +270,7 @@ public class NetworkManager : MonoBehaviour
     // 플레이어 경험치 변화량 전송
     public void EXPStatisticsCall(EXPStatisticsReqDto dto)
     {
+        Debug.Log("경험치 변화 있나??");
         string expData = JsonUtility.ToJson(dto);
         StartCoroutine(SendWebRequest(CreateRequest("PUT", "player/exp", expData)));
     }
