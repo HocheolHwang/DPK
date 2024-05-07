@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservable
+public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IPunObservable
 {
     protected StateMachine _stateMachine;
     protected State _curState;
@@ -102,6 +102,19 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
             Handles.Label(transform.position, label, style);
         }
 #endif
+    }
+
+    // --------------------------------- IBuffStat -----------------------------------------
+    
+    public virtual void GetShield(int amount)
+    {
+        Stat.Shield += amount;
+    }
+
+    public virtual void RemoveShield(int amount)
+    {
+        Stat.Shield -= amount;
+        if (Stat.Shield < 0) Stat.Shield = 0;
     }
 
     // ---------------------------------- IDamage ------------------------------------------
@@ -223,17 +236,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IPunObservabl
             renderer.material.SetColor("_BaseColor", Color.white);
             renderer.material.color = _originalColors[i];
         }
-    }
-
-    public void GetShield(int amount)
-    {
-        Stat.Shield += amount;
-    }
-
-    public void RemoveShield(int amount)
-    {
-        Stat.Shield -= amount;
-        if (Stat.Shield < 0) Stat.Shield = 0;
     }
 
 
