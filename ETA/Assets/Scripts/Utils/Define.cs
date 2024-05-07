@@ -86,6 +86,7 @@ public class Define
     public enum Effect
     {
         WarriorNormalAttackEffect,
+        ArcherNormalAttackEffect,
         KnightG_CounterEnable,
         KnightG_CounterAttack,
         KnightG_TwoSkillEnergy,

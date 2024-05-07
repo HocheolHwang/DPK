@@ -1407,6 +1407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentType: 0
   SkillRange: {x: 0, y: 0, z: 0}
+  RangeType: 0
   TargetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &6313804134409034079
 MonoBehaviour:
@@ -1424,6 +1425,7 @@ MonoBehaviour:
   SkillType: 0
   Damage: 25
   skillRange: {x: 0, y: 0, z: 0}
+  RangeType: 0
   CollavoSkillName: 
 --- !u!114 &3166279337896487320
 MonoBehaviour:
