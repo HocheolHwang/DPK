@@ -686,7 +686,15 @@ public class Dungeon_Popup_UI : UI_Popup
 
                     // 파티 멤버 정보 업데이트
                     partyMembers[i].gameObject.SetActive(true);
-                    memberLevelTexts[i].text = $"Lv. {(int)member.CustomProperties["PlayerLevel"]}";
+                    if(player.CustomProperties["PlayerLevel"] != null)
+                    {
+                        memberLevelTexts[i].text = $"Lv. {(int)member.CustomProperties["PlayerLevel"]}";
+                    }
+                    else
+                    {
+                        memberLevelTexts[i].text = $"Lv. {1}";
+                    }
+                    
                     memberNicknameTexts[i].text = PhotonNetwork.PlayerList[i].NickName;
 
                     // 클래스 아이콘 업데이트
