@@ -62,7 +62,7 @@ public class PlayerController : BaseController
         if (photonView.IsMine)
         {
             // 테스트를 할땐 주석 처리 하기!
-            SetPosition();
+            //SetPosition();
 
             //ChangeState(MOVE_STATE);
             Managers.Input.KeyAction -= KeyEvent;
