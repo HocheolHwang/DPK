@@ -7,8 +7,6 @@ using Photon.Realtime;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-
-
     #region private fields
     private string gameVersion = "1";
     private byte maxplayersPerRoom = 3;
@@ -195,9 +193,21 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 현재 플레이어 직업 저장
     public void SetPlayerClass()
     {
-            Debug.Log($"현재 직업은 {Managers.Player.GetClassCode()} 입니다.");
-            ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable() { { "CurClass", Managers.Player.GetClassCode() } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
+        Debug.Log($"현재 직업은 {Managers.Player.GetClassCode()} 입니다. 현재 레벨은 {Managers.Player.GetLevel()} 입니다.");
+        ExitGames.Client.Photon.Hashtable currentProperties = PhotonNetwork.LocalPlayer.CustomProperties;
+        currentProperties["CurClass"] = Managers.Player.GetClassCode();
+        currentProperties["PlayerLevel"] = Managers.Player.GetLevel();
+        //ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable() { { "CurClass", Managers.Player.GetClassCode() }, { "PlayerLevel ", Managers.Player.GetLevel() } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(currentProperties);
+    }
+    // 현재 플레이어 레벨 저장
+    public void SetPlayerLevel()
+    {
+        Debug.Log($"현재 레벨은 {Managers.Player.GetLevel()} 입니다.");
+        ExitGames.Client.Photon.Hashtable currentProperties = PhotonNetwork.LocalPlayer.CustomProperties;
+        currentProperties["PlayerLevel"] = Managers.Player.GetLevel();
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(currentProperties);
     }
 
     public void roomEnter()

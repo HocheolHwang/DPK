@@ -118,7 +118,7 @@ public class PlayerManager
                 curExp -= needExp;
                 playerLevel++;
                 needExp = CalculateExpRequirement(playerLevel);
-
+                Managers.Photon.SetPlayerLevel();
                 Debug.Log("Cur Level : " + playerLevel);
             }
             else
