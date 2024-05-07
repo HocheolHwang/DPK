@@ -159,7 +159,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 시드 생성
         int seed = (int)System.DateTime.Now.Ticks;
         // 생성된 방 이름 + ` + 시드 값
-        //roomName = roomName + "`" + seed;
+        roomName = roomName + "`" + seed;
         //dungeonIndex = PlayerPrefs.GetInt("SelectedDungeonNumber", 1); 
         if(FindObjectOfType<Lobby_Scene>() != null)
         {
@@ -171,7 +171,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
         
         // 로비에 Properties 등록해야 로비에서 설정 확인 가능
-        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "partyLeader", partyLeader }, { "seed", seed }, { "roomID", guidString }, { "dungeonIndex", dungeonIndex } };
+        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "partyLeader", partyLeader }, { "seed", seed }, { "roomID", guidString }, { "dungeonIndex", DungeonIndex } };
         room.CustomRoomPropertiesForLobby = new string[] { "partyLeader", "seed", "roomID", "dungeonIndex" };
 
         //string roomInfo =  "\n partyLeader : " + room.CustomRoomProperties["partyLeader"] + "\n dungeon : " + room.CustomRoomProperties["dungeonIndex"] + "\n" + room.CustomRoomProperties["ispassword"] + " / " + room.CustomRoomProperties["password"];
@@ -183,6 +183,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         
         PhotonNetwork.CreateRoom(roomName, room);
+    }
+
+    public string ConvertRoomName(string newRoomName)
+    {
+        int lastIndex = newRoomName.LastIndexOf("`");
+
+        if (lastIndex != -1)
+            newRoomName = newRoomName.Substring(0, lastIndex);
+        return newRoomName;
     }
 
     // 새로운 UUID 업데이트
@@ -235,13 +244,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             Debug.Log(roomName);
             Debug.Log(newRoom.Name);
-            string newRoomName = newRoom.Name;
-            int lastIndex = newRoomName.LastIndexOf("`");
-
-            if (lastIndex != -1)
-                newRoomName = newRoomName.Substring(0, lastIndex);
-
-
+            string newRoomName = ConvertRoomName(newRoom.Name);
             if (newRoomName == roomName)
             {
                 selectRoom = newRoom;
@@ -275,10 +278,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             ExitGames.Client.Photon.Hashtable has = room.CustomProperties;
 
             // 마지막 ` 이후 시드값을 제외하고 출력
-            string printRoomName = room.Name;
-            int lastIndex = printRoomName.LastIndexOf("`");
-            if (lastIndex != -1)
-                printRoomName = printRoomName.Substring(0, lastIndex);
+            string printRoomName = ConvertRoomName(room.Name);
             idx++;
         }
 
