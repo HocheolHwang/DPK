@@ -111,6 +111,7 @@ public class Define
         Porin_Attack,
         WindShield,
         ArrowStab,
+        RapidArrowShot,
         MaxCount
     }
 }

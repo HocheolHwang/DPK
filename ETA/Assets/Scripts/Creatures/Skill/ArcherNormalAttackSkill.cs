@@ -69,6 +69,7 @@ public class ArcherNormalAttackSkill : Skill
         Managers.Resource.Destroy(hitbox.gameObject);
         Managers.Resource.Destroy(ps.gameObject);
 
+        yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 }

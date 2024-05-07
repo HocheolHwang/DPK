@@ -42,6 +42,8 @@ public class ForestSpirit : Skill
 
         yield return new WaitForSeconds(0.8f);
         Managers.Resource.Destroy(ps01.gameObject);
+
+        yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 }

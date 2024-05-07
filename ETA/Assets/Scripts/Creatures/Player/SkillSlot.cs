@@ -23,7 +23,7 @@ public class SkillSlot : MonoBehaviour
         if(GetComponent<PhotonView>().IsMine) GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
 
 
-        string[] loadedSkills = { "ArrowBomb", "ArrowShower", "ArrowStab", "WindShield", "ForestSpirit" };
+        string[] loadedSkills = { "ArrowBomb", "ArrowShower", "RapidArrow", "WindShield", "ForestSpirit" };
         for (int i = 0; i < loadedSkills.Length; i++)
         {
             string skillName = loadedSkills[i];
