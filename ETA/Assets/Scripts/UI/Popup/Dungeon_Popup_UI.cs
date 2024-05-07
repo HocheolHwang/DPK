@@ -686,7 +686,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
                     // 파티 멤버 정보 업데이트
                     partyMembers[i].gameObject.SetActive(true);
-                    if(player.CustomProperties["PlayerLevel"] != null)
+                    if(member.CustomProperties["PlayerLevel"] != null)
                     {
                         memberLevelTexts[i].text = $"Lv. {(int)member.CustomProperties["PlayerLevel"]}";
                     }
