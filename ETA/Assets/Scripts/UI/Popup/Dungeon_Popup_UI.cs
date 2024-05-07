@@ -90,6 +90,7 @@ public class Dungeon_Popup_UI : UI_Popup
         Player_Tier_Text,
         Player_Nickname_Text,
         Player_HP_Text,
+        Player_Level_Text,
 
         // 보스 상태
         Boss_Name_Text,
@@ -142,6 +143,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI playerTierText;
     private TextMeshProUGUI playerNicknameText;
     private TextMeshProUGUI playerHPText;
+    private TextMeshProUGUI playerLevelText;
     private TextMeshProUGUI bossNameText;
     private TextMeshProUGUI bossHPText;
     private TextMeshProUGUI[] skillCooldownTexts = new TextMeshProUGUI[8];
@@ -293,6 +295,7 @@ public class Dungeon_Popup_UI : UI_Popup
         playerTierText = GetText((int)Texts.Player_Tier_Text);
         playerNicknameText = GetText((int)Texts.Player_Nickname_Text);
         playerHPText = GetText((int)Texts.Player_HP_Text);
+        playerLevelText = GetText((int)Texts.Player_Level_Text);
         playerEXPSlider = GetSlider((int)Sliders.Player_EXP_Slider);
 
         // 플레이어 정보 업데이트
@@ -436,9 +439,13 @@ public class Dungeon_Popup_UI : UI_Popup
     // 파티원 정보 업데이트 메서드
     private void UpdatePlayerInfo()
     {
-        // 플레이어 등급, 닉네임 및 HP 슬라이더 설정
+        // 플레이어 등급, 닉네임 및 레벨 설정
         playerTierText.text = isTutorialScene ? "던전처리기사 수험생" : "견습 던전처리기사";
         playerNicknameText.text = Managers.Player.GetNickName();
+        playerLevelText.text = $"Lv. {Managers.Player.GetLevel()}";
+
+        // 플레이어 경험치 설정
+        playerEXPSlider.value = 0;
 
         // 플레이어 파괴 이벤트 핸들러 등록
         PlayerController.OnPlayerDestroyed += HandlePlayerDestroyed;
