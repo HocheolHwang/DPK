@@ -15,7 +15,8 @@ public class PlayerZone : MonoBehaviour
 
     [SerializeField] public PlayerController playerController;
     float _delta;
-
+    private Ray _ray;
+    public Vector3 DetectRange = new Vector3(14,1,6);
 
     void Start()
     {
@@ -50,9 +51,17 @@ public class PlayerZone : MonoBehaviour
         isStarted = true;
     }
 
+
+    private void OnDrawGizmos()
+    {
+        _ray.origin = transform.position;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawCube(transform.position - transform.forward * 7, DetectRange);
+    }
     void moveFront()
     {
-        Collider[] enemies = Physics.OverlapBox(transform.position - transform.forward * 3, new Vector3(2,1,6), Quaternion.Euler(0,90,0), TargetLayerMask);
+        Collider[] enemies = Physics.OverlapBox(transform.position - transform.forward * 7, DetectRange / 2, Quaternion.Euler(0,0,0), TargetLayerMask);
+
         if (enemies.Length <= 0)
         {
             _delta += Time.deltaTime / 2;
