@@ -17,14 +17,20 @@ public class WindShield : Skill
     {
         _animator.CrossFade("GUARD", 0.05f);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindShield, gameObject.transform);
+        StartCoroutine(Evasion(1.0f));
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/GuardSkill");
-        _controller.GetShield(100);
+        
         yield return new WaitForSeconds(1.0f);
-
-        _controller.RemoveShield(100);
         Managers.Effect.Stop(ps);
 
         _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+    IEnumerator Evasion(float duration)
+    {
+        _controller.Evasion = true;
+        yield return new WaitForSeconds(duration);
+        _controller.Evasion = false;
     }
 }
