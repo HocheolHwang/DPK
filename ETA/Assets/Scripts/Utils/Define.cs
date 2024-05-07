@@ -86,6 +86,7 @@ public class Define
     public enum Effect
     {
         WarriorNormalAttackEffect,
+        ArcherNormalAttackEffect,
         KnightG_CounterEnable,
         KnightG_CounterAttack,
         KnightG_TwoSkillEnergy,
@@ -107,6 +108,7 @@ public class Define
         WhirlwindEffect2,
         Porin_Attack,
         WindShield,
+        ArrowStab,
         MaxCount
     }
 }

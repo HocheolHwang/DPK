@@ -11,6 +11,7 @@ public abstract class Skill : MonoBehaviour
     protected SkillSystem _skillSystem;
     protected float _lastExcuteTime;
     protected float _cooldownTime;
+    protected float _createTime;
 
     public Image skillIcon;
     public Define.SkillType SkillType = Define.SkillType.Target;

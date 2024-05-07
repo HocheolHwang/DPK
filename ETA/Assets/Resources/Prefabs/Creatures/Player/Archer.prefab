@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 5
+  _detectRange: 15
   _attackRange: 5
   _target: {fileID: 0}
   TargetLayerMask:
@@ -205,6 +205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentType: 0
   SkillRange: {x: 0, y: 0, z: 0}
+  RangeType: 0
   TargetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2388191667828383127
 MonoBehaviour:
@@ -241,9 +242,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f1a9353ab822448bf29b11e75f7c35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 0}
   SkillType: 1
   Damage: 50
   skillRange: {x: 0, y: 0, z: 0}
+  RangeType: 0
+  CollavoSkillName: 
+  _duration: 1.5
+  _speed: 20
+  _upLoc: 1
 --- !u!1001 &321249661624657191
 PrefabInstance:
   m_ObjectHideFlags: 0
