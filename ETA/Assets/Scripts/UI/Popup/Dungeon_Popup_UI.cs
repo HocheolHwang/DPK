@@ -346,7 +346,7 @@ public class Dungeon_Popup_UI : UI_Popup
         UpdateHP();
 
         // 스킬 쿨타임 업데이트
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
             UpdateCooldownUI(i);
         }
@@ -615,6 +615,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private void UpdateCooldownUI(int skillIndex)
     {
         if (skillSlot == null) return; 
+
         float cooldownTime = skillSlot.Skills[skillIndex].CooldownTime;
         float elapsedTime = skillSlot.Skills[skillIndex].ElapsedTime;
 
@@ -659,7 +660,15 @@ public class Dungeon_Popup_UI : UI_Popup
 
                     // 파티 멤버 정보 업데이트
                     partyMembers[i].gameObject.SetActive(true);
-                    memberLevelTexts[i].text = $"Lv. {(int)player.CustomProperties["PlayerLevel"]}";
+                    if(player.CustomProperties["PlayerLevel"] != null)
+                    {
+                        memberLevelTexts[i].text = $"Lv. {(int)player.CustomProperties["PlayerLevel"]}";
+                    }
+                    else
+                    {
+                        memberLevelTexts[i].text = $"Lv. {1}";
+                    }
+                    
                     memberNicknameTexts[i].text = PhotonNetwork.PlayerList[i].NickName;
 
                     // 클래스 아이콘 업데이트
