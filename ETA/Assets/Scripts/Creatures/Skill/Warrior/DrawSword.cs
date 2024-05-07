@@ -11,7 +11,7 @@ public class DrawSword : Skill
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
-        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/DrawSword.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/DrawSword.png");
     }
 
     public override IEnumerator StartSkillCast()

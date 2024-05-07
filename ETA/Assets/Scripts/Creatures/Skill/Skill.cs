@@ -13,7 +13,7 @@ public abstract class Skill : MonoBehaviour
     protected float _cooldownTime;
     protected float _createTime;
 
-    public Image skillIcon;
+    public Sprite skillIcon;
     public Define.SkillType SkillType = Define.SkillType.Target;
     public int Damage = 50;
     public Vector3 skillRange;

@@ -10,7 +10,7 @@ public class Massacre : Skill
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(7, 7, 7);
-        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Massacre.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Massacre.png");
     }
 
     public override IEnumerator StartSkillCast()

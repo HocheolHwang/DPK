@@ -9,7 +9,7 @@ public class Guard : Skill
         SetCoolDownTime(2);
         SkillType = Define.SkillType.Immediately;
         base.Init();
-        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Guard.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Guard.png");
     }
 
     public override IEnumerator StartSkillCast()

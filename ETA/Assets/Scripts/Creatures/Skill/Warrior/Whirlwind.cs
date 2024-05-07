@@ -10,7 +10,7 @@ public class WhirlWind : Skill
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(5, 5, 5);
-        skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Whirlwind.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Whirlwind.png");
     }
 
     public override IEnumerator StartSkillCast()
