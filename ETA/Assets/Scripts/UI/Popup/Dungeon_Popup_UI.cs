@@ -154,6 +154,9 @@ public class Dungeon_Popup_UI : UI_Popup
     // 현재 누적된 경험치
     private int currentExp = 0;
 
+    // 경험치
+    private bool expResult = false;
+
     // 스킬 슬롯
     public SkillSlot skillSlot;
 
@@ -296,8 +299,7 @@ public class Dungeon_Popup_UI : UI_Popup
             ResetCooldownUI(i);
         }
 
-        // 파티 생성 요청 전송
-        //Managers.Photon.SendRoomLog(PartyEnter);
+        expResult = false;
     }
 
     //public void PartyEnter()
@@ -558,12 +560,16 @@ public class Dungeon_Popup_UI : UI_Popup
     // 경험치 리포트 메서드
     public void SummaryExp(string message)
     {
+        if (expResult) return;
+        expResult = true;
         if (currentExp == 0) return;
-        Debug.Log("머선일이냐 진짜");
-        // 던전 난이도 보상
-        if(selectedDungeonNumber > 1)
-        currentExp = (selectedDungeonNumber * 5) * currentExp;
 
+        currentExp += 10;
+
+        // 던전 난이도 보상
+        if (selectedDungeonNumber > 1)
+            currentExp = ((selectedDungeonNumber-1) * 5) * currentExp;
+        
         // 경험치 합산
         Managers.Player.AddExp(currentExp);
         EXPStatisticsReqDto dto = new EXPStatisticsReqDto();
