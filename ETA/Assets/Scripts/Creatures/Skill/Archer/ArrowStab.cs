@@ -7,7 +7,7 @@ public class ArrowStab : Skill
     protected override void Init()
     {
         SetCoolDownTime(2);
-        Damage = 20;
+        Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
