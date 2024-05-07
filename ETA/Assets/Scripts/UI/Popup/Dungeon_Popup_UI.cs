@@ -357,7 +357,7 @@ public class Dungeon_Popup_UI : UI_Popup
         UpdateHP();
 
         // 스킬 쿨타임 업데이트
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 8; i++)
         {
             UpdateCooldownUI(i);
         }
@@ -478,7 +478,7 @@ public class Dungeon_Popup_UI : UI_Popup
     }
 
     // HP와 실드 업데이트 메서드
-    public void UpdateHealthAndShieldBars(GameObject hpBar, GameObject shieldBar, Stat stat, float maxLength)
+    public static void UpdateHealthAndShieldBars(GameObject hpBar, GameObject shieldBar, Stat stat, float maxLength)
     {
         // 체력바와 실드바의 RectTransform을 참조
         RectTransform hpRectTransform = hpBar.GetComponent<RectTransform>();
@@ -641,7 +641,7 @@ public class Dungeon_Popup_UI : UI_Popup
     // 스킬 쿨타임 UI 업데이트 메서드
     private void UpdateCooldownUI(int skillIndex)
     {
-        if (skillSlot == null) return; 
+        if (skillSlot == null || skillSlot.Skills[skillIndex] == null) return;
         float cooldownTime = skillSlot.Skills[skillIndex].CooldownTime;
         float elapsedTime = skillSlot.Skills[skillIndex].ElapsedTime;
 
