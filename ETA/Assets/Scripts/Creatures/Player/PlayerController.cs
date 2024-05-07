@@ -125,7 +125,7 @@ public class PlayerController : BaseController
         int totalNum = isFront ? frontCnt : backCnt;
         string pos = isFront ? "FRONT_" : "BACK_";
 
-        if(totalNum == 1)
+        if(totalNum == 1 || totalNum == 0)
         {
             pos += "2";
         }
@@ -157,6 +157,7 @@ public class PlayerController : BaseController
             }
         }
 
+        Debug.Log(pos);
         _destination = GameObject.Find(pos).transform;
         transform.position = _destination.position;
         Camera.main.GetComponent<CameraController>()._player = _destination.gameObject;
