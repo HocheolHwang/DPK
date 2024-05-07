@@ -268,7 +268,6 @@ GameObject:
   - component: {fileID: 157182885887453997}
   - component: {fileID: 6394328159706182345}
   - component: {fileID: 6460234129826568812}
-  - component: {fileID: 1178052168558424646}
   m_Layer: 5
   m_Name: '[Lobby]_Character_Select_Popup_UI'
   m_TagString: Untagged
@@ -361,18 +360,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1178052168558424646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1497264639093478386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91af7a299cb996844a32e23c3a870e27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1848454279956483699
 GameObject:
   m_ObjectHideFlags: 0
