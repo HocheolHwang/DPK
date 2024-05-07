@@ -205,6 +205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentType: 0
   SkillRange: {x: 0, y: 0, z: 0}
+  RangeType: 0
   TargetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &-7910020264550295268
 MonoBehaviour:
@@ -241,9 +242,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0ae2782dfae8d44a898904f703f22d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 0}
   SkillType: 1
   Damage: 50
   skillRange: {x: 0, y: 0, z: 0}
+  RangeType: 0
+  CollavoSkillName: 
 --- !u!1001 &8345211140607448447
 PrefabInstance:
   m_ObjectHideFlags: 0
