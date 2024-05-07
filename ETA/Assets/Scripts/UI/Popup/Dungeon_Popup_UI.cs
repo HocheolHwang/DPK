@@ -31,7 +31,15 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 플레이어 상태
         Player_HP_Bar,
-        Player_Shield_Bar
+        Player_Shield_Bar,
+
+        // 파티원 상태
+        Member_HP_Bar_1,
+        Member_HP_Bar_2,
+        Member_HP_Bar_3,
+        Member_Shield_Bar_1,
+        Member_Shield_Bar_2,
+        Member_Shield_Bar_3
     }
 
     enum Images
@@ -90,8 +98,10 @@ public class Dungeon_Popup_UI : UI_Popup
         Player_Tier_Text,
         Player_Nickname_Text,
         Player_HP_Text,
+        Player_Level_Text,
 
         // 보스 상태
+        Boss_Level_Text,
         Boss_Name_Text,
         Boss_HP_Text,
 
@@ -111,11 +121,6 @@ public class Dungeon_Popup_UI : UI_Popup
         // 던전 상태
         Dungeon_Progress_Bar,
 
-        // 파티원 상태
-        Member_HP_Slider_1,
-        Member_HP_Slider_2,
-        Member_HP_Slider_3,
-
         // 플레이어 상태
         Player_EXP_Slider,
 
@@ -130,6 +135,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private GameObject bossStatus;
     private GameObject playerHPBar;
     private GameObject playerShieldBar;
+    private GameObject[] memberHPBars = new GameObject[3];
+    private GameObject[] memberShieldBars = new GameObject[3];
     private Image[] partyMembers = new Image[3];
     private Image[][] partyMemberIcons = new Image[3][];
     private Image[] skillCooldownImages = new Image[8];
@@ -142,11 +149,12 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI playerTierText;
     private TextMeshProUGUI playerNicknameText;
     private TextMeshProUGUI playerHPText;
+    private TextMeshProUGUI playerLevelText;
+    private TextMeshProUGUI bossLevelText;
     private TextMeshProUGUI bossNameText;
     private TextMeshProUGUI bossHPText;
     private TextMeshProUGUI[] skillCooldownTexts = new TextMeshProUGUI[8];
     private Slider dungeonProgressBar;
-    private Slider[] memberHPSliders = new Slider[3];
     private Slider bossHPSlider;
     private Slider playerEXPSlider;
 
@@ -256,7 +264,8 @@ public class Dungeon_Popup_UI : UI_Popup
         bossStatus = GetObject((int)GameObjects.Boss_Status);
         bossStatus.SetActive(false);
 
-        // 보스 이름 및 HP 텍스트, HP 슬라이더 초기화
+        // 보스 정보 초기화
+        bossLevelText = GetText((int)Texts.Boss_Level_Text);
         bossNameText = GetText((int)Texts.Boss_Name_Text);
         bossHPText = GetText((int)Texts.Boss_HP_Text);
         bossHPSlider = GetSlider((int)Sliders.Boss_HP_Slider);
@@ -279,7 +288,8 @@ public class Dungeon_Popup_UI : UI_Popup
             partyMembers[i] = GetImage((int)Images.Party_Member_1 + i);
             memberLevelTexts[i] = GetText((int)Texts.Member_Level_Text_1 + i);
             memberNicknameTexts[i] = GetText((int)Texts.Member_Nickname_Text_1 + i);
-            memberHPSliders[i] = GetSlider((int)Sliders.Member_HP_Slider_1 + i);
+            memberHPBars[i] = GetObject((int)GameObjects.Member_HP_Bar_1 + i);
+            memberShieldBars[i] = GetObject((int)GameObjects.Member_Shield_Bar_1 + i);
 
             // 클래스 아이콘
             partyMemberIcons[0][i] = GetImage((int)Images.Warrior_Icon_1 + i);
@@ -293,6 +303,7 @@ public class Dungeon_Popup_UI : UI_Popup
         playerTierText = GetText((int)Texts.Player_Tier_Text);
         playerNicknameText = GetText((int)Texts.Player_Nickname_Text);
         playerHPText = GetText((int)Texts.Player_HP_Text);
+        playerLevelText = GetText((int)Texts.Player_Level_Text);
         playerEXPSlider = GetSlider((int)Sliders.Player_EXP_Slider);
 
         // 플레이어 정보 업데이트
@@ -346,7 +357,7 @@ public class Dungeon_Popup_UI : UI_Popup
         UpdateHP();
 
         // 스킬 쿨타임 업데이트
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 8; i++)
         {
             UpdateCooldownUI(i);
         }
@@ -429,6 +440,15 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 HP 슬라이더 설정
         bossHPSlider.value = 1;
 
+        // 보스 레벨 텍스트 설정
+        bossLevelText.text = selectedDungeonNumber switch
+        {
+            1 => "Lv. 5",
+            2 => "Lv. 12",
+            3 => "Lv. 20",
+            _ => "Lv. 2"
+        };
+
         // 보스 파괴 이벤트 핸들러 등록
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
     }
@@ -436,9 +456,13 @@ public class Dungeon_Popup_UI : UI_Popup
     // 파티원 정보 업데이트 메서드
     private void UpdatePlayerInfo()
     {
-        // 플레이어 등급, 닉네임 및 HP 슬라이더 설정
+        // 플레이어 등급, 닉네임 및 레벨 설정
         playerTierText.text = isTutorialScene ? "던전처리기사 수험생" : "견습 던전처리기사";
         playerNicknameText.text = Managers.Player.GetNickName();
+        playerLevelText.text = $"Lv. {Managers.Player.GetLevel()}";
+
+        // 플레이어 경험치 설정
+        playerEXPSlider.value = 0;
 
         // 플레이어 파괴 이벤트 핸들러 등록
         PlayerController.OnPlayerDestroyed += HandlePlayerDestroyed;
@@ -453,25 +477,28 @@ public class Dungeon_Popup_UI : UI_Popup
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    // HP와 실드 업데이트 메서드
+    public static void UpdateHealthAndShieldBars(GameObject hpBar, GameObject shieldBar, Stat stat, float maxLength)
+    {
+        // 체력바와 실드바의 RectTransform을 참조
+        RectTransform hpRectTransform = hpBar.GetComponent<RectTransform>();
+        RectTransform shieldRectTransform = shieldBar.GetComponent<RectTransform>();
+
+        // 체력 및 실드 비율 계산
+        float total = Mathf.Max(stat.Hp + stat.Shield, stat.MaxHp);
+        float hpScale = stat.Hp / total;
+        float shieldScale = stat.Shield / total;
+
+        // 체력바와 실드바의 너비 설정
+        hpRectTransform.sizeDelta = new Vector2(hpScale * maxLength, hpRectTransform.sizeDelta.y);
+        shieldRectTransform.sizeDelta = new Vector2(shieldScale * maxLength, shieldRectTransform.sizeDelta.y);
+    }
+
     // HP 업데이트 메서드
     public void UpdateHP()
     {
-        // 체력바와 실드바의 RectTransform을 참조
-        RectTransform hpRectTransform = playerHPBar.GetComponent<RectTransform>();
-        RectTransform shieldRectTransform = playerShieldBar.GetComponent<RectTransform>();
-
-        // 체력 및 실드 비율
-        float total = Mathf.Max(playerStat.Hp + playerStat.Shield, playerStat.MaxHp);
-        float hpScale = playerStat.Hp / total;
-        float shieldScale = playerStat.Shield / total;
-
-        // 체력바 최대 길이
-        float maxLength = 294.0f;
-
-        // sizeDelta의 x 값을 조절하여 너비를 설정
-        hpRectTransform.sizeDelta = new Vector2(hpScale * maxLength, hpRectTransform.sizeDelta.y);
-        shieldRectTransform.sizeDelta = new Vector2(shieldScale * maxLength, shieldRectTransform.sizeDelta.y);
-
+        // 플레이어 체력바 업데이트
+        UpdateHealthAndShieldBars(playerHPBar, playerShieldBar, playerStat, 294);
 
         // 플레이어 체력 업데이트
         if (playerStat != null)
@@ -505,7 +532,7 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             for(int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
             {
-                memberHPSliders[i].value = (float)playersStat[i].Hp / playersStat[i].MaxHp;
+                UpdateHealthAndShieldBars(memberHPBars[i], memberShieldBars[i], playersStat[i], 220);
             }
         }
 
@@ -614,8 +641,7 @@ public class Dungeon_Popup_UI : UI_Popup
     // 스킬 쿨타임 UI 업데이트 메서드
     private void UpdateCooldownUI(int skillIndex)
     {
-        if (skillSlot == null) return; 
-
+        if (skillSlot == null || skillSlot.Skills[skillIndex] == null) return;
         float cooldownTime = skillSlot.Skills[skillIndex].CooldownTime;
         float elapsedTime = skillSlot.Skills[skillIndex].ElapsedTime;
 
@@ -656,13 +682,13 @@ public class Dungeon_Popup_UI : UI_Popup
             {
                 if (i < PhotonNetwork.PlayerList.Length)
                 {
-                    Photon.Realtime.Player player = PhotonNetwork.PlayerList[i];
+                    Photon.Realtime.Player member = PhotonNetwork.PlayerList[i];
 
                     // 파티 멤버 정보 업데이트
                     partyMembers[i].gameObject.SetActive(true);
                     if(player.CustomProperties["PlayerLevel"] != null)
                     {
-                        memberLevelTexts[i].text = $"Lv. {(int)player.CustomProperties["PlayerLevel"]}";
+                        memberLevelTexts[i].text = $"Lv. {(int)member.CustomProperties["PlayerLevel"]}";
                     }
                     else
                     {
@@ -672,7 +698,7 @@ public class Dungeon_Popup_UI : UI_Popup
                     memberNicknameTexts[i].text = PhotonNetwork.PlayerList[i].NickName;
 
                     // 클래스 아이콘 업데이트
-                    UpdateClassIcon(i, (string)player.CustomProperties["CurClass"]);
+                    UpdateClassIcon(i, (string)member.CustomProperties["CurClass"]);
                 }
                 else
                 {
