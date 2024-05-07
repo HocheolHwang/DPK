@@ -180,6 +180,9 @@ public class Dungeon_Popup_UI : UI_Popup
     // 현재 누적된 경험치
     private int currentExp = 0;
 
+    // 경험치
+    private bool expResult = false;
+
     // 스킬 슬롯
     public SkillSlot skillSlot;
 
@@ -343,7 +346,15 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             ResetCooldownUI(i);
         }
+
+        expResult = false;
     }
+
+    //public void PartyEnter()
+    //{
+    //    photonView.RPC("Managers.Photon.SendRoomEnterLog", RpcTarget.All);
+    //    //Managers.Photon.SendRoomEnterLog();
+    //}
 
 
     // ------------------------------ 유니티 생명주기 메서드 ------------------------------
@@ -551,7 +562,7 @@ public class Dungeon_Popup_UI : UI_Popup
             currentCheckpointIndex++;
 
             // 체크 포인트 통과 시 받는 경험치 증가
-            currentExp += (10 * (5* selectedDungeonNumber)) * currentCheckpointIndex;
+            currentExp += 10 * currentCheckpointIndex;
 
             // 체크포인트 인덱스에 따라 진행바를 업데이트
             dungeonProgressBar.value = (float) currentCheckpointIndex / totalCheckpoints;
@@ -577,8 +588,8 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 클리어
         if (selectedDungeonNumber!= 0)
         {
-            currentExp += (10 * (5 * selectedDungeonNumber)) * currentCheckpointIndex;
-            SummaryExp();
+            currentExp += 10 * currentCheckpointIndex;
+            SummaryExp(dungeonNameText.text + "던전 클리어");
         }
 
         // 던전 결과 Popup UI를 띄움
@@ -598,6 +609,11 @@ public class Dungeon_Popup_UI : UI_Popup
     {
         // 던전 결과 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
+        
+        if (selectedDungeonNumber != 0)
+        {
+            SummaryExp(dungeonNameText.text + "던전에서 사망");
+        }
     }
 
     // 채팅 Popup UI 띄우기 메서드
@@ -613,11 +629,18 @@ public class Dungeon_Popup_UI : UI_Popup
     }
 
     // 경험치 리포트 메서드
-    public void SummaryExp()
+    public void SummaryExp(string message)
     {
-        // 현재 던전 경험치
-        currentExp = ((selectedDungeonNumber-1) * 5) * 10;
+        if (expResult) return;
+        expResult = true;
+        if (currentExp == 0) return;
 
+        currentExp += 10;
+
+        // 던전 난이도 보상
+        if (selectedDungeonNumber > 1)
+            currentExp = ((selectedDungeonNumber-1) * 5) * currentExp;
+        
         // 경험치 합산
         Managers.Player.AddExp(currentExp);
         EXPStatisticsReqDto dto = new EXPStatisticsReqDto();
@@ -625,9 +648,10 @@ public class Dungeon_Popup_UI : UI_Popup
         dto.currentExp = Managers.Player.GetExp();
         dto.classCode = Managers.Player.GetClassCode();
         dto.playerLevel = Managers.Player.GetLevel();
-        dto.reason = dungeonNameText.text + "던전 클리어";
+        dto.reason = message;
         dto.expDelta = currentExp;
         Managers.Network.EXPStatisticsCall(dto);
+        currentExp = 0;
     }
 
     // 쿨타임 UI 초기화 메서드

@@ -100,7 +100,6 @@ public class PlayerManager
         }
     }
 
-
     public void AddExp(long exp)
     {
         this.curExp += exp;
@@ -195,6 +194,10 @@ public class PlayerManager
     public long GetExp()
     {
         return curExp;
+    }
+    public int GetNeedExp()
+    {
+        return CalculateExpRequirement(playerLevel); ;
     }
     public int GetLevel()
     {

@@ -25,6 +25,24 @@ public class NetworkManager : MonoBehaviour
             Debug.Log("Response: " + request.downloadHandler.text);
         }
     }
+    IEnumerator SendPartyRequest(UnityWebRequest request, Action callback = null)
+    {
+        yield return request.SendWebRequest();
+
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Request Error] {request.error}\n{request.downloadHandler.text}");
+        }
+        else
+        {
+            Debug.Log(request.result);
+            Debug.Log("Response: " + request.downloadHandler.text);
+
+            if(callback != null)
+                callback?.Invoke();
+        }
+    }
 
     // 회원가입
     IEnumerator SignUpRequest(UnityWebRequest request, Action<string> callback)
@@ -207,10 +225,10 @@ public class NetworkManager : MonoBehaviour
     }
 
     // 파티 생성 요청
-    public void CreatePartyCall(PartyReqDto dto)
+    public void CreatePartyCall(PartyReqDto dto, Action callback)
     {
         string partyData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "party", partyData)));
+        StartCoroutine(SendPartyRequest(CreateRequest("POST", "party", partyData), callback));
     }
 
     // 파티 참가 요청
@@ -252,6 +270,7 @@ public class NetworkManager : MonoBehaviour
     // 플레이어 경험치 변화량 전송
     public void EXPStatisticsCall(EXPStatisticsReqDto dto)
     {
+        Debug.Log("경험치 변화 있나??");
         string expData = JsonUtility.ToJson(dto);
         StartCoroutine(SendWebRequest(CreateRequest("PUT", "player/exp", expData)));
     }
@@ -262,7 +281,7 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(CurrentClassRequest(CreateRequest("GET", "class/current"), callback));
     }
 
-    // 직업 불러오기
+    // 직업 저장하기
     public void SelectClassCall(ClassReqDto dto)
     {
         string classData = JsonUtility.ToJson(dto);
