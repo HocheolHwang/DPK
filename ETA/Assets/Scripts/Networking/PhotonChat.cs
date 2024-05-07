@@ -22,6 +22,7 @@ public class PhotonChat : MonoBehaviour
     {
         photonView = gameObject.GetComponent<PhotonView>();
 
+        gameObject.AddComponent<SendRoomLog>();
     }
 
     // 채팅창 활성화 되어 있을 시 메세지를 보내는 메서드

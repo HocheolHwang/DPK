@@ -295,7 +295,16 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             ResetCooldownUI(i);
         }
+
+        // 파티 생성 요청 전송
+        //Managers.Photon.SendRoomLog(PartyEnter);
     }
+
+    //public void PartyEnter()
+    //{
+    //    photonView.RPC("Managers.Photon.SendRoomEnterLog", RpcTarget.All);
+    //    //Managers.Photon.SendRoomEnterLog();
+    //}
 
 
     // ------------------------------ 유니티 생명주기 메서드 ------------------------------
@@ -507,7 +516,7 @@ public class Dungeon_Popup_UI : UI_Popup
         if (selectedDungeonNumber!= 0)
         {
             currentExp += (10 * (5 * selectedDungeonNumber)) * currentCheckpointIndex;
-            SummaryExp();
+            SummaryExp(dungeonNameText.text + "던전 클리어");
         }
 
         // 던전 결과 Popup UI를 띄움
@@ -527,6 +536,12 @@ public class Dungeon_Popup_UI : UI_Popup
     {
         // 던전 결과 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
+        // 보스 클리어
+        if (selectedDungeonNumber != 0)
+        {
+            currentExp += (10 * (5 * selectedDungeonNumber)) * currentCheckpointIndex;
+            SummaryExp(dungeonNameText.text + "던전에서 사망");
+        }
     }
 
     // 채팅 Popup UI 띄우기 메서드
@@ -542,7 +557,7 @@ public class Dungeon_Popup_UI : UI_Popup
     }
 
     // 경험치 리포트 메서드
-    public void SummaryExp()
+    public void SummaryExp(string message)
     {
         // 현재 던전 경험치
         currentExp = ((selectedDungeonNumber-1) * 5) * 10;
@@ -554,7 +569,7 @@ public class Dungeon_Popup_UI : UI_Popup
         dto.currentExp = Managers.Player.GetExp();
         dto.classCode = Managers.Player.GetClassCode();
         dto.playerLevel = Managers.Player.GetLevel();
-        dto.reason = dungeonNameText.text + "던전 클리어";
+        dto.reason = message;
         dto.expDelta = currentExp;
         Managers.Network.EXPStatisticsCall(dto);
     }

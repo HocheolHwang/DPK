@@ -273,7 +273,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     // 던전 들어갈 때 부르기
     // 방장만 파티 생성
-    public void SendRoomLog()
+    public void SendRoomLog(Action callback)
     {
         if (!PhotonNetwork.IsMasterClient) return;
         PartyReqDto dto = new PartyReqDto();
@@ -281,18 +281,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
         dto.partyTitle = PhotonNetwork.CurrentRoom.Name;
 
-        Managers.Network.CreatePartyCall(dto);
-    }
-
-    // 던전 들어갈 때 부르기
-    // 모두 파티에 등록
-    public void SendRoomEnterLog()
-    {
-        PartyReqDto dto = new PartyReqDto();
-
-        dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
-
-        Managers.Network.EnterPartyCall(dto);
+        Managers.Network.CreatePartyCall(dto, callback);
     }
 
     // 파티 구성이 바뀌면 내번호도 바뀔 수 있음

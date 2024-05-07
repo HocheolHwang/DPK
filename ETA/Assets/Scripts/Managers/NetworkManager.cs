@@ -10,7 +10,7 @@ public class NetworkManager : MonoBehaviour
     //string baseUrl = "https://localhost:8080/api/v1/";
     string baseUrl = "https://k10e207.p.ssafy.io/api/v1/";
 
-    IEnumerator SendWebRequest(UnityWebRequest request)
+    IEnumerator SendWebRequest(UnityWebRequest request, Action callback = null)
     {
         yield return request.SendWebRequest();
 
@@ -23,6 +23,9 @@ public class NetworkManager : MonoBehaviour
         {
             Debug.Log(request.result);
             Debug.Log("Response: " + request.downloadHandler.text);
+
+            if(callback != null)
+            callback?.Invoke();
         }
     }
 
@@ -207,10 +210,10 @@ public class NetworkManager : MonoBehaviour
     }
 
     // 파티 생성 요청
-    public void CreatePartyCall(PartyReqDto dto)
+    public void CreatePartyCall(PartyReqDto dto, Action callback)
     {
         string partyData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "party", partyData)));
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "party", partyData), callback));
     }
 
     // 파티 참가 요청
@@ -262,7 +265,7 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(CurrentClassRequest(CreateRequest("GET", "class/current"), callback));
     }
 
-    // 직업 불러오기
+    // 직업 저장하기
     public void SelectClassCall(ClassReqDto dto)
     {
         string classData = JsonUtility.ToJson(dto);
