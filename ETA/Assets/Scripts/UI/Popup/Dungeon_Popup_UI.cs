@@ -534,7 +534,6 @@ public class Dungeon_Popup_UI : UI_Popup
     // 플레이어 사망 시 실행되는 메서드
     private void HandlePlayerDestroyed()
     {
-        Debug.Log("크아아아아ㅏㄱ 이거 두번 쓰냐??");
         // 던전 결과 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
         
