@@ -91,7 +91,7 @@ public class Lobby_Scene : BaseScene
         }
 
         Managers.Photon.updatePlayerList();
-        Managers.Photon.SetPlayerClass();
+        //Managers.Photon.SetPlayerClass();
 
 
 

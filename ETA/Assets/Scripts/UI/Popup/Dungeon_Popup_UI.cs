@@ -465,7 +465,7 @@ public class Dungeon_Popup_UI : UI_Popup
         playerEXPSlider.value = 0;
 
         // 플레이어 파괴 이벤트 핸들러 등록
-        PlayerController.OnPlayerDestroyed += HandlePlayerDestroyed;
+        //PlayerController.OnPlayerDestroyed += HandlePlayerDestroyed;
     }
 
     // 게임 시간 업데이트 메서드
@@ -594,7 +594,7 @@ public class Dungeon_Popup_UI : UI_Popup
     }
 
     // 플레이어 사망 시 실행되는 메서드
-    private void HandlePlayerDestroyed()
+    public void HandlePlayerDestroyed()
     {
         // 던전 결과 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
@@ -686,7 +686,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
                     // 파티 멤버 정보 업데이트
                     partyMembers[i].gameObject.SetActive(true);
-                    if(player.CustomProperties["PlayerLevel"] != null)
+                    if(member.CustomProperties["PlayerLevel"] != null)
                     {
                         memberLevelTexts[i].text = $"Lv. {(int)member.CustomProperties["PlayerLevel"]}";
                     }
