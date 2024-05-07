@@ -21,7 +21,15 @@ public class Lobby_Popup_UI : UI_Popup
 
     enum Texts
     {
+        // 파티원 상태
+        Member_Level_Text_1,
+        Member_Level_Text_2,
+        Member_Level_Text_3,
         Member_Nickname_Text_1,
+        Member_Nickname_Text_2,
+        Member_Nickname_Text_3,
+
+        // 파티 정보
         Party_Name_Text,
         Dungeon_Name_Text,
         Party_Size_Text,
@@ -29,6 +37,9 @@ public class Lobby_Popup_UI : UI_Popup
 
     enum Images
     {
+        Party_Member_1,
+        Party_Member_2,
+        Party_Member_3,
         Party_Info
     }
 
@@ -39,12 +50,16 @@ public class Lobby_Popup_UI : UI_Popup
     private Button openDungeonEnterButton;
     private Button openChatButton;
     private Button openMenuButton;
-    private TextMeshProUGUI memberNicknameText1;
+    private TextMeshProUGUI[] memberLevelTexts = new TextMeshProUGUI[3];
+    private TextMeshProUGUI[] memberNicknameTexts = new TextMeshProUGUI[3];
     private TextMeshProUGUI partyNameText;
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI partySizeText;
+    private Image[] partyMembers = new Image[3];
     private Image partyInfoImage;
 
+    // 파티원 수
+    private int partySize = PhotonNetwork.PlayerList.Length;
 
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
@@ -83,17 +98,38 @@ public class Lobby_Popup_UI : UI_Popup
         AddUIEvent(openMenuButton.gameObject, OpenMenu);
         AddUIKeyEvent(openMenuButton.gameObject, () => OpenMenu(null), KeyCode.Escape);
 
-        // 파티 정보 업데이트
+        // 파티 정보 초기화
         partyInfoImage = GetImage((int)Images.Party_Info);
-        partyInfoImage.gameObject.SetActive(false);
-        partySizeText = GetText((int)Texts.Party_Size_Text);
-        memberNicknameText1 = GetText((int)Texts.Member_Nickname_Text_1);
         partyNameText = GetText((int)Texts.Party_Name_Text);
+        partySizeText = GetText((int)Texts.Party_Size_Text);
+
+        // 파티원 정보 초기화
+        for (int i = 0; i < 3; i++)
+        {
+            partyMembers[i] = GetImage((int)Images.Party_Member_1 + i);
+            memberLevelTexts[i] = GetText((int)Texts.Member_Level_Text_1 + i);
+            memberNicknameTexts[i] = GetText((int)Texts.Member_Nickname_Text_1 + i);
+        }
+
+        // 파티 정보 업데이트
         UpdatePartyInfo();
 
         // 선택된 던전 업데이트
         dungeonNameText = GetText((int)Texts.Dungeon_Name_Text);
         UpdateSelectedDungeon();
+    }
+
+
+    // ------------------------------ 유니티 생명주기 메서드 ------------------------------
+
+    private void Update()
+    {
+        // 파티원 수가 바뀌면 파티 정보 UI 및 파티원 수 업데이트
+        if (partySize != PhotonNetwork.PlayerList.Length)
+        {
+            UpdatePartyInfo();
+            partySize = PhotonNetwork.PlayerList.Length;
+        }
     }
 
 
@@ -164,24 +200,50 @@ public class Lobby_Popup_UI : UI_Popup
     // 파티 정보 업데이트 메서드
     public void UpdatePartyInfo()
     {
-        if (PhotonNetwork.InRoom)
+        if (PhotonNetwork.InRoom) // 파티 참가 상태일 경우
         {
-            // 파티 참가 상태일 경우
+            // 파티 참가 버튼 비활성화 및 탈퇴 버튼 활성화
             openPartyJoinButton.gameObject.SetActive(false);
             openPartyLeaveButton.gameObject.SetActive(true);
+
+            // 파티 정보 활성화 및 업데이트
+            partyInfoImage.gameObject.SetActive(true);
             partyNameText.text = $"{PhotonNetwork.CurrentRoom.Name}";
             partySizeText.text = $"{PhotonNetwork.PlayerList.Length} / 3";
-            partyInfoImage.gameObject.SetActive(true);
+
+            // 파티 멤버 정보 업데이트
+            for (int i = 0; i < partyMembers.Length; i++)
+            {
+                if (i < PhotonNetwork.PlayerList.Length)
+                {
+                    partyMembers[i].gameObject.SetActive(true);
+                    memberLevelTexts[i].text = $"Lv. {0}";
+                    memberNicknameTexts[i].text = PhotonNetwork.PlayerList[i].NickName;
+                }
+                else
+                {
+                    partyMembers[i].gameObject.SetActive(false);
+                }
+            }
         }
-        else
+        else // 파티 미참가 상태일 경우
         {
-            // 파티 미참가 상태일 경우
+            // 파티 참가 버튼 활성화 및 탈퇴 버튼 비활성화
             openPartyJoinButton.gameObject.SetActive(true);
             openPartyLeaveButton.gameObject.SetActive(false);
-            partyInfoImage.gameObject.SetActive(false);
-        }
 
-        memberNicknameText1.text = Managers.Player.GetNickName();
+            // 파티 정보 비활성화
+            partyInfoImage.gameObject.SetActive(false);
+
+            // 첫 번째 파티 멤버 정보 업데이트
+            partyMembers[0].gameObject.SetActive(true);
+            memberLevelTexts[0].text = $"Lv. {Managers.Player.GetLevel()}";
+            memberNicknameTexts[0].text = Managers.Player.GetNickName();
+
+            // 나머지 파티 멤버 정보 비활성화
+            partyMembers[1].gameObject.SetActive(false);
+            partyMembers[2].gameObject.SetActive(false);
+        }
     }
 
     // 선택된 던전 업데이트 메서드
