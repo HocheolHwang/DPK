@@ -40,6 +40,15 @@ public class Lobby_Popup_UI : UI_Popup
         Party_Member_1,
         Party_Member_2,
         Party_Member_3,
+        Warrior_Icon_1,
+        Acher_Icon_1,
+        Mage_Icon_1,
+        Warrior_Icon_2,
+        Acher_Icon_2,
+        Mage_Icon_2,
+        Warrior_Icon_3,
+        Acher_Icon_3,
+        Mage_Icon_3,
         Party_Info
     }
 
@@ -56,6 +65,9 @@ public class Lobby_Popup_UI : UI_Popup
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI partySizeText;
     private Image[] partyMembers = new Image[3];
+    private Image[] member1Icons = new Image[3];
+    private Image[] member2Icons = new Image[3];
+    private Image[] member3Icons = new Image[3];
     private Image partyInfoImage;
 
     // 파티원 수
@@ -106,9 +118,15 @@ public class Lobby_Popup_UI : UI_Popup
         // 파티원 정보 초기화
         for (int i = 0; i < 3; i++)
         {
+            // 파티원 정보
             partyMembers[i] = GetImage((int)Images.Party_Member_1 + i);
             memberLevelTexts[i] = GetText((int)Texts.Member_Level_Text_1 + i);
             memberNicknameTexts[i] = GetText((int)Texts.Member_Nickname_Text_1 + i);
+
+            // 클래스 아이콘
+            member1Icons[i] = GetImage((int)Images.Warrior_Icon_1 + i);
+            member2Icons[i] = GetImage((int)Images.Warrior_Icon_2 + i);
+            member3Icons[i] = GetImage((int)Images.Warrior_Icon_3 + i);
         }
 
         // 파티 정보 업데이트
