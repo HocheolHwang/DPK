@@ -33,7 +33,7 @@ public class ArcherNormalAttackSkill : Skill
         yield return new WaitForSeconds(_createTime);
 
         yield return new WaitForSeconds(0.1f);
-        Managers.Sound.Play("Skill/NormalAttack");
+        Managers.Sound.Play("Skill/ArrowShot");
         
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
