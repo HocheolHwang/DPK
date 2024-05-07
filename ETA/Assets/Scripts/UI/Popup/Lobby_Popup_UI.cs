@@ -37,9 +37,12 @@ public class Lobby_Popup_UI : UI_Popup
 
     enum Images
     {
+        // 파티원 상태
         Party_Member_1,
         Party_Member_2,
         Party_Member_3,
+
+        // 파티원 클래스 아이콘
         Warrior_Icon_1,
         Acher_Icon_1,
         Mage_Icon_1,
@@ -49,6 +52,8 @@ public class Lobby_Popup_UI : UI_Popup
         Warrior_Icon_3,
         Acher_Icon_3,
         Mage_Icon_3,
+
+        // 파티 정보
         Party_Info
     }
 
@@ -65,9 +70,7 @@ public class Lobby_Popup_UI : UI_Popup
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI partySizeText;
     private Image[] partyMembers = new Image[3];
-    private Image[] member1Icons = new Image[3];
-    private Image[] member2Icons = new Image[3];
-    private Image[] member3Icons = new Image[3];
+    private Image[][] partyMemberIcons = new Image[3][];
     private Image partyInfoImage;
 
     // 파티원 수
@@ -115,6 +118,11 @@ public class Lobby_Popup_UI : UI_Popup
         partyNameText = GetText((int)Texts.Party_Name_Text);
         partySizeText = GetText((int)Texts.Party_Size_Text);
 
+        // 파티원 아이콘 초기화
+        partyMemberIcons[0] = new Image[3];
+        partyMemberIcons[1] = new Image[3];
+        partyMemberIcons[2] = new Image[3];
+
         // 파티원 정보 초기화
         for (int i = 0; i < 3; i++)
         {
@@ -124,9 +132,9 @@ public class Lobby_Popup_UI : UI_Popup
             memberNicknameTexts[i] = GetText((int)Texts.Member_Nickname_Text_1 + i);
 
             // 클래스 아이콘
-            member1Icons[i] = GetImage((int)Images.Warrior_Icon_1 + i);
-            member2Icons[i] = GetImage((int)Images.Warrior_Icon_2 + i);
-            member3Icons[i] = GetImage((int)Images.Warrior_Icon_3 + i);
+            partyMemberIcons[0][i] = GetImage((int)Images.Warrior_Icon_1 + i);
+            partyMemberIcons[1][i] = GetImage((int)Images.Warrior_Icon_2 + i);
+            partyMemberIcons[2][i] = GetImage((int)Images.Warrior_Icon_3 + i);
         }
 
         // 파티 정보 업데이트
@@ -234,12 +242,19 @@ public class Lobby_Popup_UI : UI_Popup
             {
                 if (i < PhotonNetwork.PlayerList.Length)
                 {
+                    Photon.Realtime.Player player = PhotonNetwork.PlayerList[i];
+
+                    // 파티 멤버 정보 업데이트
                     partyMembers[i].gameObject.SetActive(true);
-                    memberLevelTexts[i].text = $"Lv. {0}";
+                    memberLevelTexts[i].text = $"Lv. {(int)player.CustomProperties["PlayerLevel"]}";
                     memberNicknameTexts[i].text = PhotonNetwork.PlayerList[i].NickName;
+
+                    // 클래스 아이콘 업데이트
+                    UpdateClassIcon(i, (string)player.CustomProperties["CurClass"]);
                 }
                 else
                 {
+                    // 나머지 파티 멤버 정보 비활성화
                     partyMembers[i].gameObject.SetActive(false);
                 }
             }
@@ -253,14 +268,44 @@ public class Lobby_Popup_UI : UI_Popup
             // 파티 정보 비활성화
             partyInfoImage.gameObject.SetActive(false);
 
-            // 첫 번째 파티 멤버 정보 업데이트
+            // 플레이어 정보 업데이트
             partyMembers[0].gameObject.SetActive(true);
             memberLevelTexts[0].text = $"Lv. {Managers.Player.GetLevel()}";
             memberNicknameTexts[0].text = Managers.Player.GetNickName();
 
+            // 클래스 아이콘 업데이트
+            UpdateClassIcon(0, Managers.Player.GetClassCode());
+
             // 나머지 파티 멤버 정보 비활성화
             partyMembers[1].gameObject.SetActive(false);
             partyMembers[2].gameObject.SetActive(false);
+        }
+    }
+
+    // 아이콘 업데이트 메서드
+    private void UpdateClassIcon(int memberIndex, string classCode)
+    {
+        // 모든 아이콘을 비활성화
+        for (int i = 0; i < partyMemberIcons[memberIndex].Length; i++)
+        {
+            partyMemberIcons[memberIndex][i].gameObject.SetActive(false);
+        }
+
+        // 클래스 코드에 따라 해당 아이콘만 활성화
+        switch (classCode)
+        {
+            case "C001":
+                partyMemberIcons[memberIndex][0].gameObject.SetActive(true);
+                break;
+            case "C002":
+                partyMemberIcons[memberIndex][1].gameObject.SetActive(true);
+                break;
+            case "C003":
+                partyMemberIcons[memberIndex][2].gameObject.SetActive(true);
+                break;
+            default:
+                Debug.Log("알 수 없는 클래스 코드: " + classCode);
+                break;
         }
     }
 

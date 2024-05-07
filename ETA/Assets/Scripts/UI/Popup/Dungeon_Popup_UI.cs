@@ -36,6 +36,22 @@ public class Dungeon_Popup_UI : UI_Popup
 
     enum Images
     {
+        // 파티원 상태
+        Party_Member_1,
+        Party_Member_2,
+        Party_Member_3,
+
+        // 파티원 클래스 아이콘
+        Warrior_Icon_1,
+        Acher_Icon_1,
+        Mage_Icon_1,
+        Warrior_Icon_2,
+        Acher_Icon_2,
+        Mage_Icon_2,
+        Warrior_Icon_3,
+        Acher_Icon_3,
+        Mage_Icon_3,
+
         // 스킬 쿨타임
         Skill_1_Cooldown_Image,
         Skill_2_Cooldown_Image,
@@ -114,6 +130,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private GameObject bossStatus;
     private GameObject playerHPBar;
     private GameObject playerShieldBar;
+    private Image[] partyMembers = new Image[3];
+    private Image[][] partyMemberIcons = new Image[3][];
     private Image[] skillCooldownImages = new Image[8];
     private Image[] skillUnableImages = new Image[8];
     private TextMeshProUGUI dungeonTierText;
@@ -156,6 +174,10 @@ public class Dungeon_Popup_UI : UI_Popup
 
     // 스킬 슬롯
     public SkillSlot skillSlot;
+
+    // 파티원 수
+    private int partySize = PhotonNetwork.PlayerList.Length;
+
 
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
@@ -245,12 +267,24 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // --------------- 파티원 및 플레이어 정보 UI 초기화 ---------------
 
+        // 파티원 아이콘 초기화
+        partyMemberIcons[0] = new Image[3];
+        partyMemberIcons[1] = new Image[3];
+        partyMemberIcons[2] = new Image[3];
+
         // 파티원 정보 초기화
         for (int i = 0; i < 3; i++)
         {
+            // 파티원 정보
+            partyMembers[i] = GetImage((int)Images.Party_Member_1 + i);
             memberLevelTexts[i] = GetText((int)Texts.Member_Level_Text_1 + i);
             memberNicknameTexts[i] = GetText((int)Texts.Member_Nickname_Text_1 + i);
             memberHPSliders[i] = GetSlider((int)Sliders.Member_HP_Slider_1 + i);
+
+            // 클래스 아이콘
+            partyMemberIcons[0][i] = GetImage((int)Images.Warrior_Icon_1 + i);
+            partyMemberIcons[1][i] = GetImage((int)Images.Warrior_Icon_2 + i);
+            partyMemberIcons[2][i] = GetImage((int)Images.Warrior_Icon_3 + i);
         }
 
         // 플레이어 정보 초기화
@@ -263,6 +297,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 플레이어 정보 업데이트
         UpdatePlayerInfo();
+
+        // 파티 정보 업데이트
+        UpdatePartyInfo();
 
         // 플레이어 게임 오브젝트 태그 이용해 찾기
         GameObject playerObject = GameObject.FindWithTag("Player");
@@ -312,6 +349,13 @@ public class Dungeon_Popup_UI : UI_Popup
         for (int i = 0; i < 5; i++)
         {
             UpdateCooldownUI(i);
+        }
+
+        // 파티원 수가 바뀌면 파티 정보 UI 및 파티원 수 업데이트
+        if (partySize != PhotonNetwork.PlayerList.Length)
+        {
+            UpdatePartyInfo();
+            partySize = PhotonNetwork.PlayerList.Length;
         }
     }
 
@@ -599,6 +643,76 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 남은 시간 / 스킬 쿨타임 비율에 따라 fllAmount 값 업데이트
         skillCooldownImages[skillIndex].fillAmount = remainingTime / cooldownTime;
+    }
+
+    // 파티 정보 업데이트 메서드
+    public void UpdatePartyInfo()
+    {
+        if (PhotonNetwork.InRoom) // 파티 참가 상태일 경우
+        {
+            // 파티 멤버 정보 업데이트
+            for (int i = 0; i < partyMembers.Length; i++)
+            {
+                if (i < PhotonNetwork.PlayerList.Length)
+                {
+                    Photon.Realtime.Player player = PhotonNetwork.PlayerList[i];
+
+                    // 파티 멤버 정보 업데이트
+                    partyMembers[i].gameObject.SetActive(true);
+                    memberLevelTexts[i].text = $"Lv. {(int)player.CustomProperties["PlayerLevel"]}";
+                    memberNicknameTexts[i].text = PhotonNetwork.PlayerList[i].NickName;
+
+                    // 클래스 아이콘 업데이트
+                    UpdateClassIcon(i, (string)player.CustomProperties["CurClass"]);
+                }
+                else
+                {
+                    // 나머지 파티 멤버 정보 비활성화
+                    partyMembers[i].gameObject.SetActive(false);
+                }
+            }
+        }
+        else // 파티 미참가 상태일 경우
+        {
+            // 플레이어 정보 업데이트
+            partyMembers[0].gameObject.SetActive(true);
+            memberLevelTexts[0].text = $"Lv. {Managers.Player.GetLevel()}";
+            memberNicknameTexts[0].text = Managers.Player.GetNickName();
+
+            // 클래스 아이콘 업데이트
+            UpdateClassIcon(0, Managers.Player.GetClassCode());
+
+            // 나머지 파티 멤버 정보 비활성화
+            partyMembers[1].gameObject.SetActive(false);
+            partyMembers[2].gameObject.SetActive(false);
+        }
+    }
+
+    // 아이콘 업데이트 메서드
+    private void UpdateClassIcon(int memberIndex, string classCode)
+    {
+        // 모든 아이콘을 비활성화
+        for (int i = 0; i < partyMemberIcons[memberIndex].Length; i++)
+        {
+            partyMemberIcons[memberIndex][i].gameObject.SetActive(false);
+        }
+
+        // 클래스 코드에 따라 해당 아이콘만 활성화
+        switch (classCode)
+        {
+            case "C001":
+                partyMemberIcons[memberIndex][0].gameObject.SetActive(true);
+                break;
+            case "C002":
+                partyMemberIcons[memberIndex][1].gameObject.SetActive(true);
+                break;
+            case "C003":
+                partyMemberIcons[memberIndex][2].gameObject.SetActive(true);
+                break;
+            default:
+                Debug.Log("알 수 없는 클래스 코드: " + classCode);
+                break;
+        }
     }
 
     // 파티원 상태 및 클래스 업데이트 메서드 
