@@ -60,18 +60,35 @@ public class Character_Selection_Confirm_Popup_UI : UI_Popup
         // 선택된 캐릭터 코드로 ClassReqDto 객체를 생성
         ClassReqDto dto = new ClassReqDto();
         dto.classCode = selectedClassCode;
-        Managers.Network.SelectClassCall(dto);
-        Managers.Player.SetClassCode(selectedClassCode);
-        Managers.Photon.SetPlayerClass();
+        Managers.Network.SelectClassCall(dto, SelectClass);
 
+        //UpdateUI();
+    }
 
+    void UpdateUI()
+    {
         if(PhotonNetwork.InRoom == false) FindObjectOfType<Lobby_Scene>().ChangeMannequin();
-
 
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
 
         // 로비 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
+
+    }
+
+    public void SelectClass()
+    {
+        Managers.Network.CurrentClassCall(SetClass);
+    }
+
+    public void SetClass(CurClassDto dto)
+    {
+        Managers.Player.SetClassCode(dto.classCode);
+        Managers.Player.SetLevel(dto.playerLevel);
+        Managers.Player.SetExp(dto.currentExp);
+
+        Managers.Photon.SetPlayerClass();
+        UpdateUI();
     }
 }
