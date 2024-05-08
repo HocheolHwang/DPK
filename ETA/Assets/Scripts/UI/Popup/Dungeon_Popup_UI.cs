@@ -614,8 +614,12 @@ public class Dungeon_Popup_UI : UI_Popup
     // 플레이어 사망 시 실행되는 메서드
     public void HandlePlayerDestroyed()
     {
-        // 던전 결과 Popup UI를 띄움
-        Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
+        // 플레이어 체력이 0 이하일 때
+        if (playerStat.Hp <= 0)
+        {
+            // 던전 결과 Popup UI를 띄움
+            Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
+        }
         
         if (selectedDungeonNumber != 0)
         {
