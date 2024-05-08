@@ -106,6 +106,27 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
 
     // --------------------------------- IBuffStat -----------------------------------------
     
+    public virtual void IncreaseHp(int amount)
+    {
+        Stat.Hp += amount;
+    }
+
+    public virtual void DecreaseHp(int amount)
+    {
+        Stat.Hp -= amount;
+        if (Stat.Hp < 0) Stat.Hp = 0;
+    }
+
+    public virtual void IncreaseDefense(int amount)
+    {
+        Stat.Defense += amount;
+    }
+
+    public virtual void DecreaseDefense(int amount)
+    {
+        Stat.Defense -= amount;
+    }
+
     public virtual void GetShield(int amount)
     {
         Stat.Shield += amount;
