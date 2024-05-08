@@ -11,6 +11,7 @@ public class Protection : Skill
         SetCoolDownTime(1);
         SkillType = Define.SkillType.Immediately;
         base.Init();
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Protection.png");
     }
 
     public override IEnumerator StartSkillCast()

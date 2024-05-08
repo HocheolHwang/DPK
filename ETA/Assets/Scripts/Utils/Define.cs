@@ -102,6 +102,7 @@ public class Define
         AuraChargeRed,
         SpikeIce,
         FireTrail,
+        BloodExplosion,
         Explosion,
         GroundCrash,
         BlessingEffect,
