@@ -50,10 +50,48 @@ public class OutlineSelection : MonoBehaviour
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             }
         }
-        else
+
+        // Selection
+        if (Input.GetMouseButtonDown(0))
         {
-            // 오브젝트 위에 없을 때 기본 커서로 복원
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            if (highlight)
+            {
+                if (selection != null)
+                {
+                    DisableOutline(selection);
+                }
+                selection = highlight;
+                EnableOutline(selection);
+
+                // 선택된 오브젝트에 따라 다른 Popup UI 띄움
+                switch (highlight.name)
+                {
+                    case "Character_Selection":
+                        Managers.UI.ShowPopupUI<Character_Select_Popup_UI>("[Lobby]_Character_Select_Popup_UI");
+                        break;
+                    case "Spell_Enchant":
+                        // Managers.UI.ShowPopupUI<Spell_Enchant_Popup_UI>("[Lobby]_Spell_Enchant_Popup_UI");
+                        break;
+                    case "Leader_Board":
+                        // Managers.UI.ShowPopupUI<Leader_Board_Popup_UI>("[Lobby]_Leader_Board_Popup_UI");
+                        break;
+                    default:
+                        break;
+                }
+
+                highlight = null;
+
+                // 오브젝트 위에 없을 때 기본 커서로 복원
+                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            }
+            else
+            {
+                if (selection)
+                {
+                    DisableOutline(selection);
+                    selection = null;
+                }
+            }
         }
     }
 
