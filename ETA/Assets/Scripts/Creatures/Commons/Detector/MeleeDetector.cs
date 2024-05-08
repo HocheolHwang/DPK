@@ -28,7 +28,8 @@ public class MeleeDetector : MonoBehaviour, IDetector
     private void Start()
     {
         _target = null;
-        if (GetComponent<PhotonView>().IsMine) StartCoroutine(UpdateTarget());
+        if (GetComponent<PhotonView>().IsMine)
+            StartCoroutine(UpdateTarget());
 
     }
 
@@ -65,7 +66,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
                 {
                     closeDist = distToEnemy;
                     Target = enemy.transform;
-                    int viewId= Target.GetComponent<PhotonView>().ViewID;
+                    int viewId = Target.GetComponent<PhotonView>().ViewID;
                     gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
                 }
             }
@@ -74,6 +75,14 @@ public class MeleeDetector : MonoBehaviour, IDetector
 
     public bool IsArriveToTarget()
     {
+        if (_target == null) return false;
+        return Vector3.Distance(_target.position, transform.position) <= _attackRange;
+    }
+
+    public bool IsArriveToTarget(Transform target, float attackRange)
+    {
+        _target = target;
+        _attackRange = attackRange;
         if (_target == null) return false;
         return Vector3.Distance(_target.position, transform.position) <= _attackRange;
     }

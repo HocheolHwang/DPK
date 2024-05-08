@@ -22,11 +22,11 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
-            if (!_meetPlayer && _detector.Target != null) // 첫 조우 때 CLAP으로 시작
+            if (!_meetPlayer && _target != null) // 첫 조우 때 CLAP으로 시작
             {
                 _controller.ChangeState(_controller.CLAP_STATE);
             }
-            else if (_detector.Target != null)
+            else if (_target != null)
             {
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
@@ -97,17 +97,17 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
-            if (_detector.Target == null)
+            if (_target == null)
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-            else if (_detector.Target != null && _detector.IsArriveToTarget())
+            else if (_target != null && _detector.IsArriveToTarget(_target, _attackRange))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
             else
             {
-                _agent.SetDestination(_detector.Target.position);
+                _agent.SetDestination(_target.position);
             }
         }
 

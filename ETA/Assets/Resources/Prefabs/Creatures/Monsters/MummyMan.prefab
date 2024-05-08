@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detectRange: 15
-  _attackRange: 4
+  _attackRange: 2.5
   _target: {fileID: 0}
   TargetLayerMask:
     serializedVersion: 2
@@ -364,7 +364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd5f0e5c9be13f4d99c3539caea0a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitType: 8
+  photonView: {fileID: 0}
+  UnitType: 9
   Animator: {fileID: 0}
   Agent: {fileID: 0}
   Stat: {fileID: 0}

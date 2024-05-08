@@ -18,6 +18,7 @@ public class MummyManState : State
     protected static float _threadHoldJump = 30.5f;
 
     protected static Transform _target;
+    protected static float _attackRange;
     protected static Vector3 _startPos;
     protected static Vector3 _destPos;
 
@@ -37,12 +38,12 @@ public class MummyManState : State
     #region ATTACK FUNCTIONS
     protected void ControlChangeState() // 근접 + 3타 중간에 있는 상태 전환 조건
     {
-        if (_detector.Target == null)
+        if (_target == null)
         {
             _controller.ChangeState(_controller.IDLE_STATE);
         }
 
-        if (_detector.IsArriveToTarget())
+        if (_detector.IsArriveToTarget(_target, _attackRange))
         {
             _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
         }
@@ -130,6 +131,10 @@ public class MummyManState : State
 
             // ChangeState - Rush
         }
+        else if (IsDeadBuffer())
+        {
+
+        }
     }
 
     protected void SetDetector()
@@ -148,6 +153,7 @@ public class MummyManState : State
 
             _agent.stoppingDistance = _detector.AttackRange;
             _target = _detector.Target;
+            _attackRange = _detector.AttackRange;
         }
         else
         {
@@ -157,6 +163,7 @@ public class MummyManState : State
 
             _agent.stoppingDistance = _detector.AttackRange;
             _target = _detector.Target;
+            _attackRange = _detector.AttackRange;
         }
     }
 
@@ -178,9 +185,20 @@ public class MummyManState : State
 
     private bool IsDeadWarrior()
     {
-        if (_meetPlayer && (_summonSkill.BufferDeathCount == MaxSummonCount))
+        if (_meetPlayer && (_summonSkill.WarriorDeathCount == MaxSummonCount))
         {
             Debug.Log("Execute -Warrior DIE Event-");
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsDeadBuffer()
+    {
+        if (_meetPlayer && (_summonSkill.BufferDeathCount == MaxSummonCount))
+        {
+            Debug.Log("Execute -Buffer DIE Event-");
             return true;
         }
 

@@ -60,6 +60,7 @@ public class MummyBufferController : BaseMonsterController
     {
         // 죽었을 경우 보내는 ACTION
         OnDeath?.Invoke();
+        Debug.Log("Buffer Die");
 
         base.DestroyEvent();
     }
