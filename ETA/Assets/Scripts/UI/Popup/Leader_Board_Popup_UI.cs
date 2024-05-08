@@ -2,20 +2,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Character_Select_Popup_UI : UI_Popup
+public class Leader_Board_Popup_UI : UI_Popup
 {
     // ------------------------------ 변수 정의 ------------------------------
 
     // 열거형 정의
     enum Buttons
     {
-        Cancel_Button,
-        Save_Button
+        Cancel_Button
     }
 
     // UI 컴포넌트 바인딩 변수
     private Button cancelButton;
-    private Button saveButton;
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -31,11 +29,6 @@ public class Character_Select_Popup_UI : UI_Popup
         cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
-
-        // 저장하기 버튼 이벤트 등록
-        saveButton = GetButton((int)Buttons.Save_Button);
-        AddUIEvent(saveButton.gameObject, SaveCharacter);
-        AddUIKeyEvent(saveButton.gameObject, () => SaveCharacter(null), KeyCode.Return);
     }
 
 
@@ -45,17 +38,5 @@ public class Character_Select_Popup_UI : UI_Popup
     private void Cancel(PointerEventData data)
     {
         ClosePopupUI();
-    }
-
-    // 저장하기 메서드
-    private void SaveCharacter(PointerEventData data)
-    {
-        // TODO: 저장하는 코드 추가 필요
-
-        // 모든 Popup UI를 닫음
-        CloseAllPopupUI();
-
-        // 로비 Popup UI를 띄움
-        Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
     }
 }
