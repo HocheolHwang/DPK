@@ -103,6 +103,8 @@ public class Define
         AuraChargeBlue,
         AuraChargeGreen,
         AuraChargeRed,
+        Thunder1,
+        Thunder2,
         SpikeIce,
         FireTrail,
         BloodExplosion,
