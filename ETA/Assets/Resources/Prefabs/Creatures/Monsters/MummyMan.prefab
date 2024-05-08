@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: -7887648138693454644}
   - component: {fileID: 1770780272972965906}
   - component: {fileID: 3694731791571937186}
+  - component: {fileID: 345270223321798369}
   m_Layer: 7
   m_Name: MummyMan
   m_TagString: Monster
@@ -370,6 +371,7 @@ MonoBehaviour:
   Agent: {fileID: 0}
   Stat: {fileID: 0}
   _isHitCounter: 0
+  StoneSpawned: {fileID: 8937324602648669133}
 --- !u!114 &3694731791571937186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +390,18 @@ MonoBehaviour:
   _warriorSummonCount: 0
   _bufferDeathCount: 0
   _warriorDeathCount: 0
+--- !u!114 &345270223321798369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640021385561637830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 879c6e400348cce42b87ae26c1ef0a93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &703396583548552387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,7 +1480,8 @@ Transform:
   m_LocalPosition: {x: -0.12384194, y: 0, z: -0.000000013038516}
   m_LocalScale: {x: -0.99999994, y: -0.9999999, z: -0.99999994}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3518821749187757964}
   m_Father: {fileID: 2212719440999476908}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6032324646178818454
@@ -2111,6 +2126,37 @@ Transform:
   m_Children:
   - {fileID: 6957993517857609002}
   m_Father: {fileID: 3159079221126917445}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8937324602648669133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3518821749187757964}
+  m_Layer: 7
+  m_Name: StoneSpawned
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3518821749187757964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8937324602648669133}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4537472392512611134}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9143682787962784633
 GameObject:

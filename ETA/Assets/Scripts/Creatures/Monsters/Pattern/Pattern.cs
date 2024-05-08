@@ -54,4 +54,11 @@ public abstract class Pattern : MonoBehaviour ,IPattern
     }
 
     public abstract IEnumerator StartPatternCast();
+
+    public Vector3 DirectionToTarget(Vector3 curPos)
+    {
+        Vector3 targetPos = _controller.Detector.Target.position;
+        Vector3 dirToTarget = targetPos - curPos;
+        return dirToTarget.normalized;
+    }
 }

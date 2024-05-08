@@ -36,8 +36,7 @@ namespace MummyWarriorStateItem
     #region IDLE_BATTLE
     public class IdleBattleState : MummyWarriorState
     {
-        private const float _threadHoldWindMill = 5.0f;
-        // CHASE -> IDLE BATTLE -> ATTACK, WIND_MILL
+        private const float _threadHoldWindMill = 15.0f;
         public IdleBattleState(MummyWarriorController controller) : base(controller)
         {
         }
@@ -117,6 +116,8 @@ namespace MummyWarriorStateItem
             InitTime(_animData.AttackAnim.length);
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
             _animator.CrossFade(_animData.AttackParamHash, 0.2f);
+
+            StartCast((int)EMummyWarriorPattern.MeleeAutoAttack);
         }
 
         public override void Execute()
@@ -159,6 +160,8 @@ namespace MummyWarriorStateItem
             InitTime(_animData.WindMillAnim.length);
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.WindMillParamHash, 0.1f);
+
+            StartCast((int)EMummyWarriorPattern.WindMill);
         }
 
         public override void Execute()

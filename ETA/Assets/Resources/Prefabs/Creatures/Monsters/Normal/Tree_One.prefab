@@ -363,6 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86cc2e01477d23642b72d4eb2b4b9830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
   UnitType: 2
   Animator: {fileID: 0}
   Agent: {fileID: 0}
@@ -451,7 +452,9 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -4329878021343399747}
+  - {fileID: -5997565244245011523}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

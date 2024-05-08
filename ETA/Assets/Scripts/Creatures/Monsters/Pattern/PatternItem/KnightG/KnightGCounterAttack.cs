@@ -38,7 +38,7 @@ public class KnightGCounterAttackPattern : Pattern
         ps.GetComponent<AudioSource>().Play();
         ps.transform.position = hitbox.transform.position;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
         yield return new WaitForSeconds(ps.main.duration);

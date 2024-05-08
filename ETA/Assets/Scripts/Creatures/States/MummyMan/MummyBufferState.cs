@@ -2,7 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 각 상태 클래스의 중복 코드를 막기 위함
+
+enum EBufferPattern
+{
+    RangedAutoAttack = 0,
+    MAX_LEN
+}
+
 public class MummyBufferState : State
 {
     protected static float _buffTime;

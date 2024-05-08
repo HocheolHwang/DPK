@@ -2,7 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 각 상태 클래스의 중복 코드를 막기 위함
+enum EMummyWarriorPattern
+{
+    MeleeAutoAttack = 0,
+    WindMill,
+    MAX_LEN
+}
+
 public class MummyWarriorState : State
 {
     protected static float _windMillTime;
