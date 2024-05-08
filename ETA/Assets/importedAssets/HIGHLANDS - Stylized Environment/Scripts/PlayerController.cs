@@ -10,6 +10,7 @@ namespace Highlands
         //Variables for footstep system list
         [System.Serializable]
         public class GroundLayer
+
         {
             public string layerName;
             public Texture2D[] groundTextures;

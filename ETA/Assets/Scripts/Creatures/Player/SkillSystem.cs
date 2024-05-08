@@ -132,6 +132,7 @@ public class SkillSystem : MonoBehaviour
 
         if (raycastHit)
         {
+            rangeObject.gameObject.transform.localScale = new Vector3(SkillRange.x, 0.0001f, SkillRange.z);
             if (currentCursor != CursorType.Range)
             {
                 Cursor.SetCursor(skillCursor, Vector2.zero, CursorMode.Auto);
@@ -140,7 +141,6 @@ public class SkillSystem : MonoBehaviour
                 rangeObject.transform.GetChild(0).gameObject.SetActive(false);
                 rangeObject.transform.GetChild(1).gameObject.SetActive(false);
                 rangeObject.transform.GetChild((int)RangeType).gameObject.SetActive(true);
-                rangeObject.gameObject.transform.localScale = new Vector3(SkillRange.x, 0.0001f, SkillRange.z);
                 targetingGo.gameObject.SetActive(false);
             }
 
