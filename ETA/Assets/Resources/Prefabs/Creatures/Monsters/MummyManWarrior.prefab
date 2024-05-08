@@ -1104,6 +1104,7 @@ GameObject:
   - component: {fileID: -872932245970546950}
   - component: {fileID: 1245111619745573614}
   - component: {fileID: 2969820035003128348}
+  - component: {fileID: 2948318583464203561}
   m_Layer: 7
   m_Name: MummyManWarrior
   m_TagString: Monster
@@ -1294,6 +1295,18 @@ MonoBehaviour:
   attackAnim: {fileID: 1827226128182048838, guid: 6fd391e0aa3b6ec49bc553c9b8019f40, type: 3}
   windMillParamName: WIND_MILL
   windMillAnim: {fileID: 1827226128182048838, guid: f616c4b38f043b84aaddf2e76daaac74, type: 3}
+--- !u!114 &2948318583464203561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081131588909657924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159e46f765ce64447bc39d981f24ebe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5161381609229084737
 GameObject:
   m_ObjectHideFlags: 0
