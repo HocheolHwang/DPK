@@ -13,7 +13,7 @@ public class Meteor : Skill
         skillRange = new Vector3(5, 5, 5);
         RangeType = Define.RangeType.Round;
         Damage = 200;
-        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/HolyHammer.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Meteor.png");
     }
     public override IEnumerator StartSkillCast()
     {

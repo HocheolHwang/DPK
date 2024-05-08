@@ -82,6 +82,38 @@ public class TestUI : MonoBehaviour
         Managers.Photon.SetPlayerClass();
     }
 
+    public void DungeonRank()
+    {
+        Managers.Network.DungeonRankCall("1", PrintRank);
+    }
+    public void PrintRank(DungeonRankListResDto dto)
+    {
+        Debug.Log(dto.rankingList.Length);
+
+        foreach(DungeonResDto rank in dto.rankingList)
+        {
+            string partyMember = "";
+            foreach (string playername in rank.playerList) partyMember += " " + playername;
+
+
+            Debug.Log($"{rank.partyTitle} / {partyMember} / {rank.clearTime}");
+        }
+    }
+
+    public void PlayerRank()
+    {
+        Managers.Network.PlayerRankCall(10, PrintPlayerRank);
+    }
+
+    public void PrintPlayerRank(PlayerRankResDto dto)
+    {
+        foreach (PlayerRank rank in dto.rankingList)
+        {
+            Debug.Log($"{rank.nickname} / {rank.playerLevel} / {rank.className}");
+        }
+    }
+    
+
     public void RoomMake()
     {
         Managers.Photon.MakeRoom(roomname.text);

@@ -17,6 +17,7 @@ public abstract class Skill : MonoBehaviour
     public Define.SkillType SkillType = Define.SkillType.Target;
     public int Damage = 50;
     public Vector3 skillRange;
+    public Vector3 CollavoSkillRange;
     public Define.RangeType RangeType;
 
     private Coroutine _currentCoroutine;

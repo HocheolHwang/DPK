@@ -102,6 +102,7 @@ public class Define
         AuraChargeRed,
         SpikeIce,
         FireTrail,
+        BloodExplosion,
         Explosion,
         GroundCrash,
         BlessingEffect,
@@ -118,6 +119,7 @@ public class Define
         RapidArrowShot,
         Mummy_RangedAttack,
         Mummy_RangedHit,
+        WindBall,
         MaxCount
     }
 }
