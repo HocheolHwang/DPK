@@ -82,7 +82,6 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
             {
                 
                 Define.Scene currentScene = (Define.Scene)obj;
-                Debug.Log(currentScene);
                 if (currentScene != Define.Scene.Lobby)
                 {
                     Debug.Log("로비에 없는 플레이어가 있습니다.");
@@ -114,7 +113,7 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         // 선택된 던전 Scene으로 이동
         // TMP
         FindObjectOfType<GameSystem>().ChangeSceneAllPlayer(sceneName);
-        Debug.Log($"이동할 Scene은? {sceneName}");
+        //Debug.Log($"이동할 Scene은? {sceneName}");
         Managers.Scene.LoadScene(sceneName);
 
         // Managers.Scene.LoadScene(Define.Scene.MultiPlayTest);

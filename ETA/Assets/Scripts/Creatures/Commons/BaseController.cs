@@ -167,7 +167,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
         Stat.Hp -= damage;
         AttackedEvent();
 
-        Debug.Log($"{gameObject.name} has taken {damage} damage.");
+        //Debug.Log($"{gameObject.name} has taken {damage} damage.");
         if (Stat.Hp <= 0)
         {
             Stat.Hp = 0;

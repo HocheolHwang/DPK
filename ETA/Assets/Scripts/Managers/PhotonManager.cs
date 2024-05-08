@@ -39,7 +39,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         get {
 
             
-            return roomName;
+            return ConvertRoomName(roomName);
         }
     }
 
@@ -194,6 +194,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         return newRoomName;
     }
 
+    public void SendDungeonEnd(string ClearTimeText, bool cleared)
+    {
+        // 보내야하는 시간은 int
+        string[] splitTime = ClearTimeText.Split(":");
+
+        int minute = int.Parse(splitTime[0]);
+        int second = int.Parse(splitTime[1]);
+        int clearTime = (minute * 60) + second;
+        Debug.Log($"{minute}분 {second} 초 : {(minute * 60) + second}");
+
+        if (!PhotonNetwork.IsMasterClient) return;
+        DungeonReqDto dto = new DungeonReqDto();
+        dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
+        dto.dungeonCode = "D00" + DungeonIndex;
+        dto.cleared = cleared;
+        dto.clearTime = clearTime;
+        Managers.Network.EndDungeonCall(dto);
+
+       UpdateUUID();
+    }
+
     // 새로운 UUID 업데이트
     public void UpdateUUID()
     {
@@ -293,7 +314,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PartyReqDto dto = new PartyReqDto();
 
         dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
-        dto.partyTitle = PhotonNetwork.CurrentRoom.Name;
+        dto.partyTitle = RoomName;
 
         Managers.Network.CreatePartyCall(dto, callback);
     }
@@ -304,7 +325,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         int idx = 0;
         foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
         {
-             Debug.Log(idx + " : " + player.NickName);
             if (player.IsLocal)
             {
                 Managers.Player.SetIndex(idx);
@@ -422,9 +442,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 
 
-        Debug.Log("방 입장");
-        Debug.Log($"방 이름 : {PhotonNetwork.CurrentRoom.Name} \n 파티장 : {(string)PhotonNetwork.CurrentRoom.CustomProperties["partyLeader"]} " +
-            $"\n 방 id : {(string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"]} \n 던전 id : {(int)PhotonNetwork.CurrentRoom.CustomProperties["dungeonIndex"]} ");
+        //Debug.Log("방 입장");
+        //Debug.Log($"방 이름 : {PhotonNetwork.CurrentRoom.Name} \n 파티장 : {(string)PhotonNetwork.CurrentRoom.CustomProperties["partyLeader"]} " +
+            //$"\n 방 id : {(string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"]} \n 던전 id : {(int)PhotonNetwork.CurrentRoom.CustomProperties["dungeonIndex"]} ");
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)

@@ -21,8 +21,8 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(request.result);
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log(request.result);
+            //Debug.Log("Response: " + request.downloadHandler.text);
         }
     }
     IEnumerator SendPartyRequest(UnityWebRequest request, Action callback = null)
@@ -36,8 +36,8 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(request.result);
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log(request.result);
+            //Debug.Log("Response: " + request.downloadHandler.text);
 
             if(callback != null)
                 callback?.Invoke();
@@ -186,8 +186,8 @@ public class NetworkManager : MonoBehaviour
     {
         UnityWebRequest request = new UnityWebRequest(baseUrl + path, method);
 
-        Debug.Log(baseUrl + path);
-        Debug.Log(json);
+        //Debug.Log(baseUrl + path);
+        //Debug.Log(json);
         request.downloadHandler = new DownloadHandlerBuffer();
         if (json != null)
         {
@@ -239,16 +239,16 @@ public class NetworkManager : MonoBehaviour
     }
     
     // 던전 결과 전송
-    public void EnterDungeonCall(DungeonReqDto dto)
+    public void EndDungeonCall(DungeonReqDto dto)
     {
         string partyData = JsonUtility.ToJson(dto);
         StartCoroutine(SendWebRequest(CreateRequest("POST", "dungeon/end", partyData)));
     }
 
     // 던전 결과 랭크
-    public void EnterDungeonCall(string dungeonCode, Action<DungeonRankListResDto> callback)
+    public void DungeonRankCall(string dungeonCode, Action<DungeonRankListResDto> callback)
     {
-        StartCoroutine(DungeonRankRequest(CreateRequest("GET", "dungeon/rank?dungeon-code="+dungeonCode), callback));
+        StartCoroutine(DungeonRankRequest(CreateRequest("GET", "dungeon/rank?dungeon-code=D00"+dungeonCode), callback));
     }
 
     // 플레이어 랭킹
