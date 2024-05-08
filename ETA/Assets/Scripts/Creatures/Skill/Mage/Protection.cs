@@ -32,17 +32,20 @@ public class Protection : Skill
 
     private IEnumerator ProtectionCoroutine()
     {
-        BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
-        buffbox.SetUp(transform, 100);
-        buffbox.transform.position = gameObject.transform.position;
-        Debug.Log($"buffbox position: {buffbox.transform.position}");
-        buffbox.transform.localScale = new Vector3(10, 5, 10);
+        BuffBox buffbox1 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
+        buffbox1.SetUp(transform, 100, BuffBox.stat.Shield);
+        buffbox1.transform.position = gameObject.transform.position;
+        buffbox1.transform.localScale = new Vector3(10, 5, 10);
+        yield return new WaitForSeconds(0.1f);
+        Managers.Resource.Destroy(buffbox1.gameObject);
 
         yield return new WaitForSeconds(5.0f);
         Debug.Log($"Defense: {_controller.Stat.Shield}");
+        BuffBox buffbox2 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
+        buffbox2.SetUp(transform, -100, BuffBox.stat.Shield);
+        buffbox2.transform.position = gameObject.transform.position;
+        buffbox2.transform.localScale = new Vector3(10, 5, 10);
         if (ps != null)
             Managers.Effect.Stop(ps);
-        if (_controller.Stat.Shield != 0)
-            _controller.RemoveShield(100);
     }
 }
