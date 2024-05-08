@@ -13,6 +13,6 @@ import java.util.Optional;
 
 public interface DungeonLogRepository extends JpaRepository<DungeonLogEntity, DungeonLogId> {
 
-    List<DungeonLogEntity> findTop3ByDungeonOrderByClearTimeAscCreatedAtAsc(DungeonEntity dungeon);
+    List<DungeonLogEntity> findTop3ByDungeonAndIsClearedTrueOrderByClearTimeAscCreatedAtAsc(DungeonEntity dungeon);
 
 }
