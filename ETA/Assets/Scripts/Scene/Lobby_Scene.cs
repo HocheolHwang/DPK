@@ -130,9 +130,18 @@ public class Lobby_Scene : BaseScene
 
     public void ChangeMannequin()
     {
+        Debug.Log("Change 마네킹");
         for (int i = 0; i < 3; i++)
         {
             mannequins[i].Init();
+        }
+
+        if(PhotonNetwork.InRoom == false)
+        {
+            mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
+            mannequins[1].Init();
+            mannequins[2].Init();
+            return;
         }
 
         foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
@@ -147,6 +156,8 @@ public class Lobby_Scene : BaseScene
 
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
+
+        Debug.Log("누군가 직업 바뀜");
         foreach (DictionaryEntry entry in changedProps)
         {
             Debug.Log($"{targetPlayer.NickName}'s Property {entry.Key} changed to {entry.Value}");

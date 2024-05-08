@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -62,6 +63,10 @@ public class Character_Selection_Confirm_Popup_UI : UI_Popup
         Managers.Network.SelectClassCall(dto);
         Managers.Player.SetClassCode(selectedClassCode);
         Managers.Photon.SetPlayerClass();
+
+
+        if(PhotonNetwork.InRoom == false) FindObjectOfType<Lobby_Scene>().ChangeMannequin();
+
 
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
