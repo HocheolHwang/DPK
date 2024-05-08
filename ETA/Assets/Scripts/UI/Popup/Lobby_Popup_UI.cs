@@ -234,7 +234,7 @@ public class Lobby_Popup_UI : UI_Popup
 
             // 파티 정보 활성화 및 업데이트
             partyInfoImage.gameObject.SetActive(true);
-            partyNameText.text = $"{PhotonNetwork.CurrentRoom.Name}";
+            partyNameText.text = $"{Managers.Photon.ConvertRoomName(PhotonNetwork.CurrentRoom.Name)}";
             partySizeText.text = $"{PhotonNetwork.PlayerList.Length} / 3";
 
             // 파티 멤버 정보 업데이트
