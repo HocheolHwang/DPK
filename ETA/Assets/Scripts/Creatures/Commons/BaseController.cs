@@ -53,7 +53,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
 
         Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
 
-        StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인
+        // --------------------------------- DIE TEST -------------------------------------
+        //StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인
     }
     protected virtual void Update()
     {
@@ -239,25 +240,24 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
     }
 
 
+    // --------------------------------- DIE TEST -------------------------------------
     // TakeDamage를 통해서만 DestoryObject를 수행할 수 있기 때문에 TEST를 위한 함수 추가
-    IEnumerator TestDie()
-    {
-        Debug.Log($"------------- TEST DIE --------------");
-        Debug.Log($"------------- TEST SUMMON SKILL - DespawnAll --------------");
+    //IEnumerator TestDie()
+    //{
+    //    Debug.Log($"------------- TEST DIE --------------");
+    //    Debug.Log($"------------- TEST SUMMON SKILL - DespawnAll --------------");
 
-        while (true)
-        {
-            yield return new WaitForSeconds(0.1f);
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(0.1f);
 
-            if (Stat.Hp <= 0)
-            {
-                TakeDamage(Stat.MaxHp + Stat.Defense);
-                yield break;
-            }
-        }
-
-
-    }
+    //        if (Stat.Hp <= 0)
+    //        {
+    //            TakeDamage(Stat.MaxHp + Stat.Defense);
+    //            yield break;
+    //        }
+    //    }
+    //}
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

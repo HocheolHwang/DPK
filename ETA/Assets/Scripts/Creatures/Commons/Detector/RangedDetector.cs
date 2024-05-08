@@ -137,4 +137,12 @@ public class RangedDetector : MonoBehaviour, IDetector
         if (_target == null) return false;
         return Vector3.Distance(_target.position, transform.position) <= _attackRange;
     }
+
+    public bool IsArriveToTarget(Transform target, float attackRange)
+    {
+        _target = target;
+        _attackRange = attackRange;
+        if (_target == null) return false;
+        return Vector3.Distance(_target.position, transform.position) <= _attackRange;
+    }
 }
