@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarFishInfo : PatternInfo
+public class KraKeInfo : PatternInfo
 {    protected override void Init()
     {
         base.Init();
 
-        PatternList.Add(gameObject.GetOrAddComponent<StarFishAutoAttack>());
+        PatternList.Add(gameObject.GetOrAddComponent<KrakeAutoAttack>());
     }
 }

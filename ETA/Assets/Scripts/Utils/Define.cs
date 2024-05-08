@@ -48,7 +48,8 @@ public class Define
         StarShardPlain,
         TestDungeon01,
         TestDungeon02,
-        MultiPlayTest
+        MultiPlayTest,
+        Test
     }
     public enum UIEvent
     {
