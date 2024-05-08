@@ -56,11 +56,12 @@ public class Character_Selection_Confirm_Popup_UI : UI_Popup
     // 저장하기 메서드
     public void SaveChanges(PointerEventData data)
     {
-        Debug.Log($"{selectedClassCode}@@@@@@@@@@@@@@@@@@@@");
         // 선택된 캐릭터 코드로 ClassReqDto 객체를 생성
         ClassReqDto dto = new ClassReqDto();
         dto.classCode = selectedClassCode;
         Managers.Network.SelectClassCall(dto);
+        Managers.Player.SetClassCode(selectedClassCode);
+        Managers.Photon.SetPlayerClass();
 
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
