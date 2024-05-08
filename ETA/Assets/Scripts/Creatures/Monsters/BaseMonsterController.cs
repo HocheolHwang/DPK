@@ -48,12 +48,12 @@ public class BaseMonsterController : BaseController
         while (true)
         {
             yield return new WaitForSeconds(0.15f);
+            // counter 맞고 0.15초 뒤에 맞았다는 상태를 초기화
             if (_isHitCounter)
             {
                 
                 _isHitCounter = false;
             }
         }
-        // counter 맞고 0.15초 뒤에 맞았다는 상태를 초기화
     }
 }

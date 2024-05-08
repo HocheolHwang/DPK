@@ -477,7 +477,7 @@ namespace KnightGStateItem
     public class GroggyState : KnightGState
     {
         ParticleSystem ps;
-        float groggyTime;
+        float groggyTime = 0;
         public GroggyState(KnightGController controller) : base(controller)
         {
         }
@@ -489,14 +489,15 @@ namespace KnightGStateItem
             ps.transform.SetParent(_controller.transform);
             ps.transform.position = new Vector3(0, 3.0f, 0);
 
-            Debug.Log(_controller.PrevState);
+            
+            // 보스는 카운터 이외의 공격에는 그로기 상태에 빠지지 않는다.
             if (_controller.PrevState is CounterEnableState)
             {
                 groggyTime = 3.0f;
             }
             else
             {
-                groggyTime = 1.0f;
+                groggyTime = 0;
             }
 
             _agent.velocity = Vector3.zero;

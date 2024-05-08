@@ -52,6 +52,7 @@ namespace MummyManStateItem
         {
             _agent.velocity = Vector3.zero;
             LookAtEnemy();
+            DeadWarriorEvent();
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
@@ -60,6 +61,14 @@ namespace MummyManStateItem
             if (IsPreviousState())
             {
                 _controller.ChangeState(_controller.BACK_LOCATION_STATE);
+            }
+            else if (IsSommoningMonster())
+            {
+                SommonMonsterEvent();
+            }
+            else if (IsDeadBuffer())
+            {
+                _controller.ChangeState(_controller.FORE_SHADOWING_STATE);
             }
             else if (_jumpTime >= _threadHoldJump)
             {
@@ -253,7 +262,11 @@ namespace MummyManStateItem
         {
             _animTime += Time.deltaTime;
 
-            if (_animTime >= (_threadHold * 2))
+            if (_animTime >= (_threadHold * 2) && (_controller.PrevState is ForeShadowingState))
+            {
+                _controller.ChangeState(_controller.RUSH_STATE);
+            }
+            else if (_animTime >= (_threadHold * 2))
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
@@ -313,6 +326,8 @@ namespace MummyManStateItem
     #region RUSH
     public class RushState : MummyManState
     {
+        Vector3 destination;
+
         public RushState(MummyManController controller) : base(controller)
         {
         }
@@ -320,13 +335,14 @@ namespace MummyManStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
+            destination = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
 
-            SetStartAndDestPos(_controller.transform.position, _destPos);
+            SetStartAndDestPos(_controller.transform.position, destination);
 
             // pattern 수행
 
             InitTime(_animData.RushAnim.length);
-            _animator.SetFloat("RushSpeed", 0.5f);
+            _animator.SetFloat("RushSpeed", 2.0f);
             _animator.CrossFade(_animData.RushParamHash, 0.1f);
         }
 
@@ -334,7 +350,9 @@ namespace MummyManStateItem
         {
             _animTime += Time.deltaTime;
 
-            if (_animTime >= (_threadHold * 2.0f))
+            JumpToTarget(_animTime);
+
+            if (IsStayForSeconds(CalcTimeToDest(destination)))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
@@ -365,10 +383,46 @@ namespace MummyManStateItem
         {
             if (IsStayForSeconds(_threadHold))
             {
-                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+                _controller.ChangeState(_controller.IDLE_STATE);
             }
         }
 
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- FORE_SHADOWING : COUNTER ENABLE ------------------------------------------------
+    #region FORE_SHADOWING
+    public class ForeShadowingState : MummyManState
+    {
+        public ForeShadowingState(MummyManController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.ForeShadowingAnim.length);
+            _animator.SetFloat("ForeShadowingSpeed", 0.5f);
+            _animator.CrossFade(_animData.ForeShadowingParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            if (_controller.IsHitCounter)
+            {
+                _controller.ChangeState(_controller.GROGGY_STATE);
+            }
+            else if (_animTime >= _threadHold * 2.0f)
+            {
+                _controller.ChangeState(_controller.SHOUTING_STATE);
+            }
+        }
         public override void Exit()
         {
         }
@@ -443,7 +497,7 @@ namespace MummyManStateItem
     public class GroggyState : MummyManState
     {
         ParticleSystem ps;
-        float groggyTime = 3.0f;
+        float groggyTime = 0f;
 
         public GroggyState(MummyManController controller) : base(controller)
         {
@@ -455,14 +509,14 @@ namespace MummyManStateItem
             ps.transform.SetParent(_controller.transform);
             ps.transform.position = new Vector3(0, 3.0f, 0);
 
-            //if (_controller.PrevState is CounterEnableState)
-            //{
-            //    groggyTime = 3.0f;
-            //}
-            //else
-            //{
-            //    groggyTime = 1.0f;
-            //}
+            if (_controller.PrevState is ForeShadowingState)
+            {
+                groggyTime = 3.0f;
+            }
+            else
+            {
+                groggyTime = 0;
+            }
 
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
@@ -500,7 +554,6 @@ namespace MummyManStateItem
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
-            if (_controller.CurState == _controller.CLAP_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
             CheckGlobal();
