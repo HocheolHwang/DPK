@@ -385,7 +385,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo room in newRooms)
         {
-            Debug.Log($"{room.Name} 방 변경");
             // 리스트에 방이 있는지 없는지 판단
             bool change = false;
             for (int i = 0; i < roomlist.Count; i++)

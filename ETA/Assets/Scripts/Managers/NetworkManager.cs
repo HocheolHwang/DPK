@@ -248,7 +248,8 @@ public class NetworkManager : MonoBehaviour
     // 던전 결과 랭크
     public void DungeonRankCall(string dungeonCode, Action<DungeonRankListResDto> callback)
     {
-        StartCoroutine(DungeonRankRequest(CreateRequest("GET", "dungeon/rank?dungeon-code=D00"+dungeonCode), callback));
+        Debug.Log("dungeon/rank?dungeon-code=D00" + dungeonCode);
+        StartCoroutine(DungeonRankRequest(CreateRequest("GET", "dungeon/ranking?dungeon-code=D00"+dungeonCode), callback));
     }
 
     // 플레이어 랭킹
