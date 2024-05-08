@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class ArcherNormalAttackSkill : Skill
 {
@@ -34,7 +36,18 @@ public class ArcherNormalAttackSkill : Skill
 
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/ArrowShot");
-        
+        Managers.Coroutine.Run(ShotArrow());
+
+        yield return new WaitForSeconds(_duration+ 0.1f);
+        _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+    IEnumerator ShotArrow()
+    {
+        Vector3 rootForward = transform.TransformDirection(Vector3.forward);
+        Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
+        Vector3 objectLoc = transform.position + rootForward + rootUp;
+
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.localScale = skillRange;
@@ -68,8 +81,5 @@ public class ArcherNormalAttackSkill : Skill
         }
         Managers.Resource.Destroy(hitbox.gameObject);
         Managers.Resource.Destroy(ps.gameObject);
-
-        yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
     }
 }

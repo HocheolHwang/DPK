@@ -22,8 +22,22 @@ public class SkillSlot : MonoBehaviour
         // 내 캐릭터만 UI에 연결하기
         if(GetComponent<PhotonView>().IsMine) GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
 
+        string[] loadedSkills = null;
+        // TMP
+        switch (Managers.Player.GetClassCode())
+        {
+            case "C001": // 워리어
+                loadedSkills = new string[] { "ArrowBomb", "ArrowShower", "RapidArrow", "WindShield", "ForestSpirit" };
+                break;
+            case "C002": // 아처
+                loadedSkills = new string[]{ "ArrowBomb", "ArrowShower", "RapidArrow", "WindShield", "ForestSpirit" };
+                break;
+            case "C003": // 메이지
+                loadedSkills = new string[] { "ArrowBomb", "ArrowShower", "RapidArrow", "WindShield", "ForestSpirit" };
+                break;
+        }
 
-        string[] loadedSkills = { "ArrowBomb", "ArrowShower", "RapidArrow", "WindShield", "ForestSpirit" };
+        
         for (int i = 0; i < loadedSkills.Length; i++)
         {
             string skillName = loadedSkills[i];

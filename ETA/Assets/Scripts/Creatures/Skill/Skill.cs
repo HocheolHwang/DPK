@@ -50,7 +50,7 @@ public abstract class Skill : MonoBehaviour
     public void Cast()
     {
         _lastExcuteTime = Time.time;
-        _currentCoroutine = StartCoroutine(StartSkillCast());
+        _currentCoroutine = Managers.Coroutine.Run(StartSkillCast());
     }
 
     public void CollavoCast()
@@ -73,7 +73,8 @@ public abstract class Skill : MonoBehaviour
     public void StopCast()
     {
         if (_currentCoroutine == null) return;
-        StopCoroutine(_currentCoroutine);
+        Managers.Coroutine.Stop(_currentCoroutine);
+        
     }
 
 
