@@ -14,6 +14,13 @@ public class Dungeon_Scene : BaseScene
     private void Start()
     {
         //totalPlayerCnt = PhotonNetwork.PlayerList.Length;
+
+    }
+
+    protected override void Init()
+    {
+        base.Init();
+        Debug.Log("나는 첫째");
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/DeepForest");
         Managers.UI.ShowPopupUI<Fade_Effect_UI>("[Common]_Fade_Effect_UI");
@@ -27,7 +34,7 @@ public class Dungeon_Scene : BaseScene
         properties["currentScene"] = Define.Scene.Unknown;
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
     }
-    
+
     public override void Clear()
     {
         Debug.Log("Dungeon Scene Clear");

@@ -15,6 +15,7 @@ public abstract class BaseScene : MonoBehaviourPunCallbacks
 
     protected virtual void Init()
     {
+        Debug.Log("나는 부모");
         Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
 
         if(obj == null)
