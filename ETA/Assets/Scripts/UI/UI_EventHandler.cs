@@ -62,8 +62,6 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
         OnDropHandler.Invoke(eventData);
     }
 
-
-
     public void OnPointerClick(PointerEventData eventData)
     {
         if (OnClickHandler == null) return;
