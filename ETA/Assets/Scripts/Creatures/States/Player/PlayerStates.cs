@@ -302,7 +302,6 @@ namespace PlayerStates
 
         public override void Execute()
         {
-            return;
             if (_playerController.photonView.IsMine == false) return;
             if (_playerController.CurState is DieState) return;
 
