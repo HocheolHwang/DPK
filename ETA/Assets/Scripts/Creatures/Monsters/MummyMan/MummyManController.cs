@@ -7,6 +7,9 @@ using MummyManStateItem;
 
 public class MummyManController : BaseMonsterController
 {
+    [Header("RightHand")]
+    [SerializeField] public GameObject StoneSpawned;
+
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;

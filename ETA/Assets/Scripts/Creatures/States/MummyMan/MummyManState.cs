@@ -5,6 +5,12 @@ using System.ComponentModel.Design.Serialization;
 using System.Data;
 using UnityEngine;
 
+enum EMummyManPattern
+{
+    RangedAutoAttack        = 0,
+    MAX_LEN
+}
+
 public class MummyManState : State
 {
     protected static bool _meetPlayer;                     // 플레이어와 첫 조우 여부
@@ -222,4 +228,10 @@ public class MummyManState : State
         }
     }
     #endregion
+
+    // ------------------------------ Pattern Functions ----------------------------
+    protected void StartCast(int patternIdx)
+    {
+        _controller.PatternInfo.PatternList[patternIdx].Cast();
+    }
 }

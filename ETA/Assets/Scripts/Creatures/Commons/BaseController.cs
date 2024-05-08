@@ -54,7 +54,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
         Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
 
         // --------------------------------- DIE TEST -------------------------------------
-        //StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인
+        StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인
     }
     protected virtual void Update()
     {
@@ -121,7 +121,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
     // ---------------------------------- IDamage ------------------------------------------
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
-        if (PhotonNetwork.IsMasterClient == false) return;
+        //if (PhotonNetwork.IsMasterClient == false) return;
         SendTakeDamageMsg(attackDamage, isCounter);
 
         // 최소 데미지 = 1
@@ -282,17 +282,17 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
 
     public void FixedUpdate()
     {
-        if (!photonView.IsMine)
-        {
-            Debug.Log($"{gameObject.name}");
-            transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
-        }
+        //if (!photonView.IsMine)
+        //{
+        //    Debug.Log($"{gameObject.name}");
+        //    transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);
+        //    transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+        //}
     }
 
     public void SendTakeDamageMsg(int attackDamage, bool isCounter)
     {
-        photonView.RPC("RPC_TakeDamage", RpcTarget.Others, attackDamage, isCounter);
+        //photonView.RPC("RPC_TakeDamage", RpcTarget.Others, attackDamage, isCounter);
     }
 
 

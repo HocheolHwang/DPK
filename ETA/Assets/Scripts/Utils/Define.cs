@@ -116,6 +116,8 @@ public class Define
         WindShield,
         ArrowStab,
         RapidArrowShot,
+        Mummy_RangedAttack,
+        Mummy_RangedHit,
         MaxCount
     }
 }

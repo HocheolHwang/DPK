@@ -158,6 +158,8 @@ namespace MummyManStateItem
                 InitTime(_animData.ThrowAnim.length);
                 _animator.SetFloat("ThrowSpeed", 0.5f);
                 _animator.CrossFade(_animData.ThrowParamHash, 0.2f);
+
+                StartCast((int)EMummyManPattern.RangedAutoAttack);
             }
         }
 
