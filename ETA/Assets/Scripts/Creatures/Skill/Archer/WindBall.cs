@@ -13,8 +13,8 @@ public class WindBall : Skill
         SkillType = Define.SkillType.Holding;
         skillRange = new Vector3(5, 5, 5);
         CollavoSkillRange = new Vector3(10, 10, 10);
-        //skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Archer/ArrowStab.png");
-        CollavoSkillName = "test";
+        //skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Archer/WindBall.png");
+        CollavoSkillName = "Cyclone";
     }
 
     public override IEnumerator StartSkillCast()
@@ -52,7 +52,9 @@ public class WindBall : Skill
         ParticleSystem ps1 = Managers.Resource.Instantiate("Effect/CollavoWindBall").GetComponent<ParticleSystem>();
         ps1.transform.position = transform.position;
         ps1.Play();
+        yield return new WaitForSeconds(1.0f);
 
+        Managers.Effect.Stop(ps1);
         yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
