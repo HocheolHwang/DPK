@@ -55,23 +55,45 @@ public class Character_Selection_Confirm_Popup_UI : UI_Popup
     }
 
     // 저장하기 메서드
-    public void SaveChanges(PointerEventData data)
+    private void SaveChanges(PointerEventData data)
     {
-        // 선택된 캐릭터 코드로 ClassReqDto 객체를 생성
-        ClassReqDto dto = new ClassReqDto();
-        dto.classCode = selectedClassCode;
-        Managers.Network.SelectClassCall(dto);
-        Managers.Player.SetClassCode(selectedClassCode);
-        Managers.Photon.SetPlayerClass();
+        // 선택된 캐릭터 코드로 ClassReqDto 객체 생성 및 네트워크 호출
+        ClassReqDto dto = new ClassReqDto { classCode = selectedClassCode };
+        Managers.Network.SelectClassCall(dto, SelectClass);
+    }
 
-
-        if(PhotonNetwork.InRoom == false) FindObjectOfType<Lobby_Scene>().ChangeMannequin();
-
+    // UI 업데이트 메서드
+    private void UpdateUI()
+    {
+        // 방에 속해 있지 않다면 로비 씬의 마네킹 변경
+        if (!PhotonNetwork.InRoom) FindObjectOfType<Lobby_Scene>().ChangeMannequin();
 
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
 
         // 로비 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
+    }
+
+    // 클래스 선택 콜백 메서드
+    private void SelectClass()
+    {
+        // 현재 클래스 정보 요청
+        Managers.Network.CurrentClassCall(SetClass);
+    }
+
+    // 클래스 설정 콜백 메서드
+    private void SetClass(CurClassDto dto)
+    {
+        // 플레이어 데이터 설정
+        Managers.Player.SetClassCode(dto.classCode);
+        Managers.Player.SetLevel(dto.playerLevel);
+        Managers.Player.SetExp(dto.currentExp);
+
+        // 플레이어 클래스 설정
+        Managers.Photon.SetPlayerClass();
+
+        // UI 업데이트
+        UpdateUI();
     }
 }
