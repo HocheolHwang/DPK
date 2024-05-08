@@ -70,6 +70,7 @@ public class MummyManController : BaseMonsterController
         JUMP_STATE = new JumpState(this);
         BACK_LOCATION_STATE = new BackLocationState(this);
         RUSH_STATE = new RushState(this);
+        WIND_MILL_STATE = new WindMillState(this);
 
         // Global
         DIE_STATE = new DieState(this);

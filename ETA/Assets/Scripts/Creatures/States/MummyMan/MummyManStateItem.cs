@@ -292,9 +292,13 @@ namespace MummyManStateItem
         {
             _animTime += Time.deltaTime;
             JumpToTarget(_animTime);
-            if (IsStayForSeconds((_threadHold * 2.0f) + 0.5f))
+            if (_isRangedAttack && IsStayForSeconds((_threadHold * 2.0f) + 0.5f))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+            else if (!_isRangedAttack && IsStayForSeconds((_threadHold * 2.0f)))
+            {
+                _controller.ChangeState(_controller.WIND_MILL_STATE);
             }
         }
 
@@ -335,6 +339,36 @@ namespace MummyManStateItem
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- WIND_MILL ------------------------------------------------
+    #region WIND_MILL
+    public class WindMillState : MummyManState
+    {
+        public WindMillState(MummyManController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.WindMillAnim.length);
+            _animator.CrossFade(_animData.WindMillParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            if (IsStayForSeconds(_threadHold))
+            {
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+
         public override void Exit()
         {
         }

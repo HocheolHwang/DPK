@@ -15,7 +15,7 @@ public class MummyManState : State
     protected static float _shoutingTime;
     protected static float _threadHoldShouting = 14.0f;
     protected static float _jumpTime;
-    protected static float _threadHoldJump = 30.5f;
+    protected static float _threadHoldJump = 5f;        // 30.5초
 
     protected static Transform _target;
     protected static float _attackRange;
@@ -87,10 +87,10 @@ public class MummyManState : State
     public bool IsPreviousState()
     {
         // wind mill 추가
-
+        
         if (_controller.PrevState == _controller.JUMP_STATE) return true;
         if (_controller.PrevState == _controller.RUSH_STATE) return true;
-        // if (_controller.PrevState == _controller.) return true;
+        if (_controller.PrevState == _controller.WIND_MILL_STATE) return true;
 
         return false;
     }
@@ -128,12 +128,10 @@ public class MummyManState : State
         {
             // Change Attack Mode
             _isRangedAttack = false;
-
-            // ChangeState - Rush
         }
         else if (IsDeadBuffer())
         {
-
+            // ChangeState - Rush
         }
     }
 
