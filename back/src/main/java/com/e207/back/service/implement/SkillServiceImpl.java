@@ -1,7 +1,10 @@
 package com.e207.back.service.implement;
 
 import com.e207.back.dto.ResponseDto;
+import com.e207.back.dto.common.LoadedSkill;
+import com.e207.back.dto.request.LoadSkillsRequestDto;
 import com.e207.back.dto.request.SaveLearnedSkillsRequestDto;
+import com.e207.back.dto.response.LoadSkillsResponseDto;
 import com.e207.back.dto.response.SaveLearnedSkillsResponseDto;
 import com.e207.back.entity.ClassEntity;
 import com.e207.back.entity.LearnedSkillEntity;
@@ -17,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,5 +70,43 @@ public class SkillServiceImpl implements SkillService {
             return ResponseDto.databaseError();
         }
         return SaveLearnedSkillsResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super LoadSkillsResponseDto> loadSkills(LoadSkillsRequestDto dto) {
+        List<LoadedSkill> skills = new ArrayList<>();
+        List<LoadedSkill> commonSkills = new ArrayList<>();
+        try{
+            CustomUserDetails customUserDetails = CustomUserDetails.LoadUserDetails();
+            String playerId = customUserDetails.getPlayerId();
+            List<LearnedSkillEntity> list = learnedSkillRepository.findByPlayerPlayerIdAndActive(playerId, true);
+            list.forEach((e) -> {
+                LoadedSkill skill = new LoadedSkill();
+                skill.setIndex(e.getSkillSlot());
+                skill.setClassCode(e.getClassEntity().getClassCode());
+                skill.setSkillCode(e.getSkill().getSkillCode());
+                skill.setSkillName(e.getSkill().getSkillName());
+                skills.add(skill);
+            });
+
+            // 공통 스킬
+            list = learnedSkillRepository.findByPlayerPlayerIdAndClassEntityClassCode(playerId, "C000");
+            list.forEach((e) ->{
+                LoadedSkill skill = new LoadedSkill();
+                skill.setIndex(-1);
+                skill.setClassCode(e.getClassEntity().getClassCode());
+                skill.setSkillCode(e.getSkill().getSkillCode());
+                skill.setSkillName(e.getSkill().getSkillName());
+                commonSkills.add(skill);
+
+            });
+
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return LoadSkillsResponseDto.success(skills,commonSkills);
     }
 }

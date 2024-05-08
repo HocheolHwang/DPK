@@ -13,4 +13,6 @@ public interface LearnedSkillRepository extends JpaRepository<LearnedSkillEntity
 
     List<LearnedSkillEntity> findByPlayerPlayerIdAndClassEntityClassCode(String playerId, String classCode);
     Optional<LearnedSkillEntity> findByPlayerPlayerIdAndSkillSkillCode(String playerId,String skillCode);
+
+    List<LearnedSkillEntity> findByPlayerPlayerIdAndActive(String playerId, boolean active);
 }
