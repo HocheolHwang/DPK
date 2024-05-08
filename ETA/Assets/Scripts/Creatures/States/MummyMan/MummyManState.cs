@@ -228,10 +228,4 @@ public class MummyManState : State
         }
     }
     #endregion
-
-    // ------------------------------ Pattern Functions ----------------------------
-    protected void StartCast(int patternIdx)
-    {
-        _controller.PatternInfo.PatternList[patternIdx].Cast();
-    }
 }

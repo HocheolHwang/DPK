@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MummyManRangedAutoAttack : Pattern
+public class MummyBufferRangedAutoAttack : Pattern
 {
     [Header("개발 편의성")]
     [SerializeField] float _duration = 1.5f;
@@ -16,9 +16,8 @@ public class MummyManRangedAutoAttack : Pattern
     {
         base.Init();
 
-        rightHandPos = GetComponent<MummyManController>().StoneSpawned.transform;
+        rightHandPos = GetComponent<MummyBufferController>().StoneSpawned.transform;
         _createTime = 1f;
-        _patternDmg = 5;
     }
 
     public override IEnumerator StartPatternCast()
@@ -31,7 +30,7 @@ public class MummyManRangedAutoAttack : Pattern
         yield return new WaitForSeconds(_createTime);   // throw the stone
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _attackDamage + _patternDmg, penetration, false, _duration);
+        hitbox.SetUp(transform, _attackDamage, penetration, false, _duration);
         hitbox.GetComponent<SphereCollider>().radius = _hitboxRadius;
 
         ps.transform.SetParent(null);
@@ -68,21 +67,4 @@ public class MummyManRangedAutoAttack : Pattern
         Managers.Resource.Destroy(ps.gameObject);
         Managers.Resource.Destroy(hitbox.gameObject);
     }
-
-    //float timer = 0;
-    //float gravity = 9.8f;
-    //Vector3 dir = DirectionToTarget(ps.transform.position);
-    //Vector3 startVelocity = dir * _speed + Vector3.up * _upLoc;
-
-    //    while (timer <= _duration)
-    //    {
-    //        //Vector3 moveStep = dir * _speed * Time.deltaTime;
-    //        float curTime = timer;
-    //Vector3 moveStep = startVelocity * curTime + 0.5f * Vector3.down * gravity * curTime * curTime;
-    //Vector3 nextPos = ps.transform.position + moveStep;
-
-    //hitbox.transform.position = nextPos;
-    //        ps.transform.position = nextPos;
-
-    //        timer += Time.deltaTime;
 }
