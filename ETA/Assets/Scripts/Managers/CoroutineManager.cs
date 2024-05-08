@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class CoroutineManager:MonoBehaviour
 {
-    public void Init(Managers parent)
+
+    public Coroutine Run(IEnumerator coroutine)
     {
+        return StartCoroutine(coroutine);
     }
 
-    public void Run(IEnumerator coroutine)
+    public void Stop(Coroutine co)
     {
-        StartCoroutine(coroutine);
+        StopCoroutine(co);
     }
 }
