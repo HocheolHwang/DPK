@@ -39,7 +39,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         get {
 
             
-            return roomName;
+            return ConvertRoomName(roomName);
         }
     }
 
@@ -194,6 +194,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         return newRoomName;
     }
 
+    public void SendDungeonEnd(string ClearTimeText, bool cleared)
+    {
+        // 보내야하는 시간은 int
+        string[] splitTime = ClearTimeText.Split(":");
+
+        int minute = int.Parse(splitTime[0]);
+        int second = int.Parse(splitTime[1]);
+        int clearTime = (minute * 60) + second;
+        Debug.Log($"{minute}분 {second} 초 : {(minute * 60) + second}");
+
+        if (!PhotonNetwork.IsMasterClient) return;
+        DungeonReqDto dto = new DungeonReqDto();
+        dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
+        dto.dungeonCode = "D00" + DungeonIndex;
+        dto.cleared = cleared;
+        dto.clearTime = clearTime;
+        Managers.Network.EndDungeonCall(dto);
+
+       UpdateUUID();
+    }
+
     // 새로운 UUID 업데이트
     public void UpdateUUID()
     {
@@ -293,7 +314,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PartyReqDto dto = new PartyReqDto();
 
         dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
-        dto.partyTitle = PhotonNetwork.CurrentRoom.Name;
+        dto.partyTitle = RoomName;
 
         Managers.Network.CreatePartyCall(dto, callback);
     }

@@ -597,6 +597,8 @@ public class Dungeon_Popup_UI : UI_Popup
             SummaryExp(dungeonNameText.text + "던전 클리어");
         }
 
+        Managers.Photon.SendDungeonEnd(timeText.text, true);
+
         // 던전 결과 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
 
@@ -619,6 +621,8 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             SummaryExp(dungeonNameText.text + "던전에서 사망");
         }
+
+        Managers.Photon.SendDungeonEnd(timeText.text, false);
     }
 
     // 채팅 Popup UI 띄우기 메서드
