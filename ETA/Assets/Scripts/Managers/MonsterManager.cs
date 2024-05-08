@@ -44,7 +44,7 @@ public class MonsterManager : MonoBehaviour
         //Debug.Log("Monster Manager 생성");
     }
 
-    // --------------------------- Center Distance From Players ----------------------------------
+    // --------------------------- Get the Destination using the players ----------------------------------
     public Vector3 GetCenterPos(Transform monster)
     {
         List<GameObject> list = ExistPlayerList;
