@@ -21,8 +21,8 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(request.result);
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log(request.result);
+            //Debug.Log("Response: " + request.downloadHandler.text);
         }
     }
     IEnumerator SendPartyRequest(UnityWebRequest request, Action callback = null)
@@ -36,8 +36,8 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(request.result);
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log(request.result);
+            //Debug.Log("Response: " + request.downloadHandler.text);
 
             if(callback != null)
                 callback?.Invoke();
@@ -186,8 +186,8 @@ public class NetworkManager : MonoBehaviour
     {
         UnityWebRequest request = new UnityWebRequest(baseUrl + path, method);
 
-        Debug.Log(baseUrl + path);
-        Debug.Log(json);
+        //Debug.Log(baseUrl + path);
+        //Debug.Log(json);
         request.downloadHandler = new DownloadHandlerBuffer();
         if (json != null)
         {

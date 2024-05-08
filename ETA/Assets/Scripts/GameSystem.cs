@@ -30,7 +30,6 @@ public class GameSystem : MonoBehaviourPunCallbacks
 
     public void ChangeSceneAllPlayer(Define.Scene scene)
     {
-        Debug.Log(scene);
         int num = 0;
         switch (scene)
         {
@@ -107,6 +106,8 @@ public class GameSystem : MonoBehaviourPunCallbacks
                 Debug.LogError("존재하지 않는 클래스 입니다.");
             }
 
+            
+
         }
     }
 
@@ -135,6 +136,14 @@ public class GameSystem : MonoBehaviourPunCallbacks
 
             FindObjectOfType<Dungeon_Popup_UI>().SetMembersInfo();
 
+
+            //var cons = FindObjectsOfType<PlayerController>();
+            //foreach(var c in cons)
+            //{
+            //    Managers.UI.MakeWorldSpaceUI<UI_CharacterNickName>(c.gameObject.transform);
+
+            //}
+            
         }
 
     }

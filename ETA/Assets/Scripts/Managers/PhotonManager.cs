@@ -304,7 +304,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         int idx = 0;
         foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
         {
-             Debug.Log(idx + " : " + player.NickName);
             if (player.IsLocal)
             {
                 Managers.Player.SetIndex(idx);
@@ -422,9 +421,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 
 
-        Debug.Log("방 입장");
-        Debug.Log($"방 이름 : {PhotonNetwork.CurrentRoom.Name} \n 파티장 : {(string)PhotonNetwork.CurrentRoom.CustomProperties["partyLeader"]} " +
-            $"\n 방 id : {(string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"]} \n 던전 id : {(int)PhotonNetwork.CurrentRoom.CustomProperties["dungeonIndex"]} ");
+        //Debug.Log("방 입장");
+        //Debug.Log($"방 이름 : {PhotonNetwork.CurrentRoom.Name} \n 파티장 : {(string)PhotonNetwork.CurrentRoom.CustomProperties["partyLeader"]} " +
+            //$"\n 방 id : {(string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"]} \n 던전 id : {(int)PhotonNetwork.CurrentRoom.CustomProperties["dungeonIndex"]} ");
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)

@@ -54,11 +54,16 @@ public class PlayerController : BaseController
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
         // TODO : 번호에 따른 목적지 변경 해줘야함
+
+        UI_CharacterNickName ui = Managers.UI.MakeWorldSpaceUI<UI_CharacterNickName>(transform);
+        ui.NickName = photonView.Owner.NickName;
+        
+
         
 
         //ChangeState(IDLE_STATE);
-        
-        
+
+
         if (photonView.IsMine)
         {
             // 테스트를 할땐 주석 처리 하기!
@@ -72,14 +77,12 @@ public class PlayerController : BaseController
             Managers.Input.MouseAction += MouseEvent;
             
         }
-        Debug.Log($"{photonView.IsMine}");
+        //Debug.Log($"{photonView.IsMine}");
 
 
         // 캐릭터가 다 생성 되었기 때문에 신호르 보내줍니다.
         // "내 캐릭터는 완성 되었다"
         FindObjectOfType<GameSystem>().SendCharacherInstantiatedMsg();
-
-
 
 
 
@@ -162,8 +165,8 @@ public class PlayerController : BaseController
             }
         }
 
-        Debug.Log(totalNum);
-        Debug.Log(pos);
+        //Debug.Log(totalNum);
+        //Debug.Log(pos);
         _destination = GameObject.Find(pos).transform;
         transform.position = _destination.position;
         Camera.main.GetComponent<CameraController>()._player = _destination.gameObject;

@@ -30,11 +30,9 @@ public class UI_AttackedDamage : UI_Base
             showedText = "Miss";
         Get<TextMeshProUGUI>((int)Texts.AttackedDamageText).text = showedText;
         Transform parent = transform.parent;
-        transform.position = parent.position + Vector3.up * (parent.GetComponent<Collider>().bounds.size.y);
+        transform.position = parent.position + Vector3.up * ((parent.GetComponent<Collider>().bounds.size.y) + 0.3f);
         _startTime = Time.time;
         Destroy(gameObject, _duration);
-
-
 
     }
 

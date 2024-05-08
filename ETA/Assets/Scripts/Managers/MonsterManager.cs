@@ -41,7 +41,7 @@ public class MonsterManager : MonoBehaviour
     private void Start()
     {
         _existPlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        Debug.Log("Monster Manager 생성");
+        //Debug.Log("Monster Manager 생성");
     }
 
     // --------------------------- Center Distance From Players ----------------------------------
