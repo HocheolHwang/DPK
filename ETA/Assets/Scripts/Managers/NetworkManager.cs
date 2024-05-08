@@ -286,7 +286,7 @@ public class NetworkManager : MonoBehaviour
     public void SelectClassCall(ClassReqDto dto)
     {
         string classData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "class/select")));
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "class/select", classData)));
     }
 }
 

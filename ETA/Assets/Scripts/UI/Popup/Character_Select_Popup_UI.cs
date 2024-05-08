@@ -50,12 +50,7 @@ public class Character_Select_Popup_UI : UI_Popup
     // 저장하기 메서드
     private void SaveCharacter(PointerEventData data)
     {
-        // TODO: 저장하는 코드 추가 필요
-
-        // 모든 Popup UI를 닫음
-        CloseAllPopupUI();
-
-        // 로비 Popup UI를 띄움
-        Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
+        // 캐릭터 선택 확인 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Character_Selection_Confirm_Popup_UI>("[Lobby]_Character_Selection_Confirm_Popup_UI");
     }
 }
