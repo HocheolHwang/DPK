@@ -63,12 +63,40 @@ public class MonsterManager : MonoBehaviour
         return sumPos / list.Count;
     }
 
+    public Vector3 GetBackPosPlayer(Transform monster)
+    {
+        List<GameObject> list = ExistPlayerList;
+        if (list == null || list.Count == 0)
+        {
+            return Vector3.zero;
+        }
+
+        Vector3 backPos = Vector3.zero;
+
+        float maxDist = float.MinValue;
+        foreach (GameObject player in list)
+        {
+            float prevDist = maxDist;
+            maxDist = Mathf.Max(Vector3.Distance(monster.position, player.transform.position), maxDist);
+            if (prevDist != maxDist)
+            {
+                backPos = player.transform.position;
+            }
+        }
+        Debug.Log($"Target Pos : {backPos}");
+        return backPos;
+    }
+
     #region Setter/Getter
     public List<GameObject> ExistPlayerList
     {
         get
         {
             _existPlayerList.RemoveAll(player => player.GetComponent<Stat>().Hp <= 0);
+            foreach (GameObject player in _existPlayerList)
+            {
+                Debug.Log($"exist player: {player.name}");
+            }
             return _existPlayerList;
         }
     }

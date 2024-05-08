@@ -9,9 +9,8 @@ public class MummyManState : State
 {
     protected static bool _meetPlayer;                     // 플레이어와 첫 조우 여부
     protected static bool _isRangedAttack = true;          // 원거리 디텍터를 활성화한 상태
-    protected static int _rushTrigger = 1;                 // 원거리 몬스터가 죽으면 -1
+    protected static bool _isRush;                         // Rush Pattern 수행
     protected const int MaxSummonCount = 1;                // 첫 조우 이후에 Buffer와 Warrior가 살아날 수 있는 횟수
-    protected const int RushThreadHold = 0;                // 0이면 Rush 패턴 수행
     
 
     protected static float _shoutingTime;
@@ -59,19 +58,7 @@ public class MummyManState : State
     // -------------------------- IDLE_BATTLE FUNCTIONS -----------------------------------
     #region IDLE_BATTLE FUNCTIONS
 
-    protected void CheckSommonedMonster()
-    {
-        // 둘 다 한 번씩 죽었을 때, 한 번 더 살려낸다.
-        if (IsSummoningMonster())
-        {
-            if ((_controller.CurState == _controller.IDLE_STATE) || (_controller.CurState == _controller.IDLE_BATTLE_STATE) || (_controller.CurState == _controller.CHASE_STATE))
-                _controller.ChangeState(_controller.CLAP_STATE);
-        }
-
-        DeadWarriorEvent();
-        DeadBufferEvent();
-    }
-    private bool IsSummoningMonster()
+    protected bool IsSommoningMonster()
     {
         // 플레이어를 만났고
         if (_meetPlayer)
@@ -87,7 +74,17 @@ public class MummyManState : State
         return false;
     }
 
-    private void DeadWarriorEvent()
+    protected void SommonMonsterEvent()
+    {
+        // 둘 다 한 번씩 죽었을 때, 한 번 더 살려낸다.
+        if (IsSommoningMonster())
+        {
+            if ((_controller.CurState == _controller.IDLE_STATE) || (_controller.CurState == _controller.IDLE_BATTLE_STATE) || (_controller.CurState == _controller.CHASE_STATE))
+                _controller.ChangeState(_controller.CLAP_STATE);
+        }
+    }
+
+    protected void DeadWarriorEvent()
     {
         if (_meetPlayer && (_summonSkill.WarriorDeathCount == MaxSummonCount))
         {
@@ -96,13 +93,14 @@ public class MummyManState : State
         }
     }
 
-    private void DeadBufferEvent()
+    protected bool IsDeadBuffer()
     {
-        if (_meetPlayer && (_summonSkill.BufferDeathCount == MaxSummonCount))
+        if (_meetPlayer && (_summonSkill.BufferDeathCount == MaxSummonCount) && !_isRush)
         {
-            _rushTrigger--;
-            return;
+            _isRush = true;
+            return true;
         }
+        return false;
     }
     #endregion
 
@@ -145,6 +143,29 @@ public class MummyManState : State
         if (_controller.PrevState == _controller.WIND_MILL_STATE) return true;
 
         return false;
+    }
+
+    public float CalcTimeToDest(Vector3 Destination)
+    {
+        float moveSpeed = _controller.Stat.MoveSpeed;
+        if (moveSpeed <= 0.1f)
+        {
+            Debug.Log($"{_controller.gameObject.name}의 속도({moveSpeed})가 0.1f보다 낮습니다.");
+            return -1;
+        }
+        else if (moveSpeed > 8.0f)
+        {
+            moveSpeed = 8.0f;
+        }
+
+        float remainDist = Vector3.Distance(Destination, _controller.transform.position);
+        if (remainDist < 5.0f)
+        {
+            remainDist = 5.0f;
+        }
+
+        float timeToDest = remainDist / moveSpeed;
+        return timeToDest;
     }
 
     // pattern에서 이동 구현
