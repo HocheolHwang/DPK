@@ -76,6 +76,20 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
             return;
         }
 
+        foreach(var player in PhotonNetwork.PlayerList)
+        {
+            if(player.CustomProperties.TryGetValue("currentScene", out object obj))
+            {
+                
+                Define.Scene currentScene = (Define.Scene)obj;
+                Debug.Log(currentScene);
+                if (currentScene != Define.Scene.Lobby)
+                {
+                    Debug.Log("로비에 없는 플레이어가 있습니다.");
+                    return;
+                }
+            }
+        }
         // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
 

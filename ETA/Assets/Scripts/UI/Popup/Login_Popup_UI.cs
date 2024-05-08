@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using ExitGames.Client.Photon;
 
 public class Login_Popup_UI : UI_Popup
 {
@@ -157,6 +158,8 @@ public class Login_Popup_UI : UI_Popup
         Managers.Player.SetClassCode(dto.classCode);
         Managers.Player.SetLevel(dto.playerLevel);
         Managers.Player.SetSkillPoint(dto.skillPoint);
+
+        Managers.Photon.SetPlayerClass();
     }
 
     // 회원가입 Popup UI로 전환하는 메서드

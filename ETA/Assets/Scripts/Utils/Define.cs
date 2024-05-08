@@ -69,6 +69,8 @@ public class Define
     {
         // ------------------- 플레이어 -----------------------
         Player = 0,
+        // ------------------- 소환수 ----------------------- 
+        ForestSpirit,
         // ------------------- 일반 몬스터 -----------------------
         Boar,
         Tree,
@@ -94,6 +96,10 @@ public class Define
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
         Groggy,
+        AuraChargeYellow,
+        AuraChargeBlue,
+        AuraChargeGreen,
+        AuraChargeRed,
         SpikeIce,
         FireTrail,
         Explosion,
@@ -109,6 +115,7 @@ public class Define
         Porin_Attack,
         WindShield,
         ArrowStab,
+        RapidArrowShot,
         MaxCount
     }
 }

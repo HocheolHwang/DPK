@@ -477,7 +477,7 @@ public class Dungeon_Popup_UI : UI_Popup
         playerEXPSlider.value = 0;
 
         // 플레이어 파괴 이벤트 핸들러 등록
-        PlayerController.OnPlayerDestroyed += HandlePlayerDestroyed;
+        //PlayerController.OnPlayerDestroyed += HandlePlayerDestroyed;
     }
 
     // 게임 시간 업데이트 메서드
@@ -510,7 +510,7 @@ public class Dungeon_Popup_UI : UI_Popup
     public void UpdateHP()
     {
         // 플레이어 체력바 업데이트
-        UpdateHealthAndShieldBars(playerHPBar, playerShieldBar, playerStat, 294);
+        
 
         // 플레이어 체력 업데이트
         if (playerStat != null)
@@ -523,6 +523,8 @@ public class Dungeon_Popup_UI : UI_Popup
             {
                 playerHPText.text = $"{playerStat.Hp} / {playerStat.MaxHp}";
             }
+
+            UpdateHealthAndShieldBars(playerHPBar, playerShieldBar, playerStat, 294);
         }
         else
         {
@@ -606,7 +608,7 @@ public class Dungeon_Popup_UI : UI_Popup
     }
 
     // 플레이어 사망 시 실행되는 메서드
-    private void HandlePlayerDestroyed()
+    public void HandlePlayerDestroyed()
     {
         // 던전 결과 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");

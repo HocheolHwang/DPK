@@ -62,7 +62,7 @@ public class PlayerController : BaseController
         if (photonView.IsMine)
         {
             // 테스트를 할땐 주석 처리 하기!
-            SetPosition();
+            //SetPosition();
 
             //ChangeState(MOVE_STATE);
             Managers.Input.KeyAction -= KeyEvent;
@@ -83,6 +83,11 @@ public class PlayerController : BaseController
 
 
 
+    }
+
+    private void OnDestroy()
+    {
+        FindObjectOfType<Dungeon_Scene>().AnyOneDied();
     }
 
     private void SetPosition()
@@ -133,10 +138,10 @@ public class PlayerController : BaseController
         {
             switch (myIndex)
             {
-                case 1:
+                case 0:
                     pos += "1";
                     break;
-                case 2:
+                case 1:
                     pos += "3";
                     break;
             }
@@ -145,18 +150,19 @@ public class PlayerController : BaseController
         {
             switch (myIndex)
             {
-                case 1:
+                case 0:
                     pos += "1";
                     break;
-                case 2:
+                case 1:
                     pos += "2";
                     break;
-                case 3:
+                case 2:
                     pos += "3";
                     break;
             }
         }
 
+        Debug.Log(totalNum);
         Debug.Log(pos);
         _destination = GameObject.Find(pos).transform;
         transform.position = _destination.position;
@@ -242,6 +248,9 @@ public class PlayerController : BaseController
         base.AttackedEvent();
         Managers.Sound.Play("Player/Attacked");
     }
+
+    
+
 
     /// <summary>
     /// 다른 컴포넌트로 옮겨야 할듯

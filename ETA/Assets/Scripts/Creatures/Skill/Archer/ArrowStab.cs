@@ -6,7 +6,7 @@ public class ArrowStab : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(2);
+        SetCoolDownTime(1);
         Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Immediately;
@@ -36,6 +36,8 @@ public class ArrowStab : Skill
         yield return new WaitForSeconds(1.0f);
         //Managers.Resource.Destroy(ps.gameObject);
         Managers.Effect.Stop(ps);
+
+        yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 }
