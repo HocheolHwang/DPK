@@ -77,6 +77,10 @@ public class Define
         Porin,
         Shaga,
         Butterfly,
+        Starfish,
+        Krake,
+        Puffe,
+        Octopus,
         // ------------------- 보스 몬스터 -----------------------
         FlowerDryad,
         KnightG,
