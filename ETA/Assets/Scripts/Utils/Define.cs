@@ -120,6 +120,10 @@ public class Define
         WindShield,
         ArrowStab,
         RapidArrowShot,
+        MummyWarrior_WindMill,
+        Mummy_RangedAttack,
+        Mummy_RangedHit,
+        Mummy_WindMill,
         WindBall,
         MaxCount
     }

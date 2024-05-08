@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class PorinAutoAttack : Pattern
 {
-    [Header("원하는 이펙트 이름을 넣으세요 - 디버깅")]
-    [SerializeField] string _effectName;
-
     [Header("개발 편의성")]
     [SerializeField] float _duration = 1.5f;
     [SerializeField] float _speed = 14.0f;

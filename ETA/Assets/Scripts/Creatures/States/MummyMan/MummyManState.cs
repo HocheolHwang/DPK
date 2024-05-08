@@ -5,6 +5,13 @@ using System.ComponentModel.Design.Serialization;
 using System.Data;
 using UnityEngine;
 
+enum EMummyManPattern
+{
+    RangedAutoAttack        = 0,
+    MeleeAutoAttack,
+    MAX_LEN
+}
+
 public class MummyManState : State
 {
     protected static bool _meetPlayer;                     // 플레이어와 첫 조우 여부
