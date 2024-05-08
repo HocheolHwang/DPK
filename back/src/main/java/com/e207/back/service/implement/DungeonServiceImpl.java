@@ -57,7 +57,7 @@ public class DungeonServiceImpl implements DungeonService {
         List<DungeonRankingDto> list = new ArrayList<>();
         try{
             Optional<DungeonEntity> dungeon = dungeonRepository.findById(dto.getDungeonCode());
-            List<DungeonLogEntity> entities = dungeonLogRepository.findTop3ByDungeonOrderByClearTimeAscCreatedAtAsc(dungeon.get());
+            List<DungeonLogEntity> entities = dungeonLogRepository.findTop3ByDungeonAndIsClearedTrueOrderByClearTimeAscCreatedAtAsc(dungeon.get());
 
             entities.forEach((e) -> {
                 DungeonRankingDto ranking = new DungeonRankingDto();
