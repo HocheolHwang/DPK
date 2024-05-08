@@ -57,6 +57,8 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            CheckSommonedMonster();
+
             if (IsPreviousState())
             {
                 _controller.ChangeState(_controller.BACK_LOCATION_STATE);
