@@ -24,15 +24,15 @@ public class SkillSlot : MonoBehaviour
 
         string[] loadedSkills = null;
         // TMP
-        switch (Managers.Player.GetClassCode())
+        switch (gameObject.name.Replace("(Clone)",""))
         {
-            case "C001": // 워리어
+            case "Warrior": // 워리어
                 loadedSkills = new string[] { "WindBall", "WindSlash", "RapidArrow", "WindShield", "ForestSpirit" };
                 break;
-            case "C002": // 아처
+            case "Archer": // 아처
                 loadedSkills = new string[]{ "WindBall", "WindSlash", "ArrowBomb", "RapidArrow", "WindShield", "ForestSpirit" };
                 break;
-            case "C003": // 메이지
+            case "Mage": // 메이지
                 loadedSkills = new string[] { "ArrowBomb", "ArrowShower", "RapidArrow", "WindShield", "ForestSpirit" };
                 break;
         }
