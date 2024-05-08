@@ -55,8 +55,8 @@ public class PlayerController : BaseController
 
         // TODO : 번호에 따른 목적지 변경 해줘야함
 
-        UI_CharacterNickName ui = Managers.UI.MakeWorldSpaceUI<UI_CharacterNickName>(transform);
-        ui.NickName = photonView.Owner.NickName;
+        //UI_CharacterNickName ui = Managers.UI.MakeWorldSpaceUI<UI_CharacterNickName>(transform);
+        //ui.NickName = photonView.Owner.NickName;
         
 
         

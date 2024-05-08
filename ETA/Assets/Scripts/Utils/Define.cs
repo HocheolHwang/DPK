@@ -117,6 +117,7 @@ public class Define
         WindShield,
         ArrowStab,
         RapidArrowShot,
+        WindBall,
         MaxCount
     }
 }

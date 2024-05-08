@@ -27,10 +27,10 @@ public class SkillSlot : MonoBehaviour
         switch (Managers.Player.GetClassCode())
         {
             case "C001": // 워리어
-                loadedSkills = new string[] { "ArrowBomb", "ArrowShower", "RapidArrow", "WindShield", "ForestSpirit" };
+                loadedSkills = new string[] { "WindBall", "HoldSkill", "RapidArrow", "WindShield", "ForestSpirit" };
                 break;
             case "C002": // 아처
-                loadedSkills = new string[]{ "ArrowBomb", "ArrowShower", "RapidArrow", "WindShield", "ForestSpirit" };
+                loadedSkills = new string[]{ "WindBall", "HoldSkill", "ArrowBomb", "RapidArrow", "WindShield", "ForestSpirit" };
                 break;
             case "C003": // 메이지
                 loadedSkills = new string[] { "ArrowBomb", "ArrowShower", "RapidArrow", "WindShield", "ForestSpirit" };
