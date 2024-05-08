@@ -11,5 +11,6 @@ public class MummyManInfo : PatternInfo
     {
         base.Init();
         PatternList.Add(gameObject.GetOrAddComponent<MummyManRangedAutoAttack>());
+        PatternList.Add(gameObject.GetOrAddComponent<MummyManMeleeAutoAttack>());
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine;
 enum EMummyManPattern
 {
     RangedAutoAttack        = 0,
+    MeleeAutoAttack,
     MAX_LEN
 }
 
