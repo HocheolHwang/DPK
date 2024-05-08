@@ -387,7 +387,7 @@ namespace MummyManStateItem
         {
             if (IsStayForSeconds(_threadHold))
             {
-                _controller.ChangeState(_controller.IDLE_STATE);
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
 

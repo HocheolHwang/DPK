@@ -74,7 +74,7 @@ public class KnightGTwoSkillAttack : Pattern
         hitbox.transform.SetParent(parent);
         hitbox.transform.localPosition = objectLoc;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
     }
 }
