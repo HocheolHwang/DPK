@@ -62,6 +62,7 @@ public class Lobby_Scene : BaseScene
         {
             //PhotonNetwork.JoinRandomOrCreateRoom();
         }
+        if (Managers.Photon.IsConnecting && PhotonNetwork.InRoom ) Managers.Photon.OpenRoom();
 
         ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["currentScene"] = Define.Scene.Lobby;
