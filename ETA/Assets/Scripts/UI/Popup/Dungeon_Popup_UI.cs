@@ -348,6 +348,8 @@ public class Dungeon_Popup_UI : UI_Popup
         }
 
         expResult = false;
+
+        FindObjectOfType<PhotonChat>().gameObject.AddComponent<SendRoomLog>();
         Managers.Photon.CloseRoom();
     }
 
@@ -474,7 +476,7 @@ public class Dungeon_Popup_UI : UI_Popup
         playerLevelText.text = $"Lv. {Managers.Player.GetLevel()}";
 
         // 플레이어 경험치 설정
-        playerEXPSlider.value = 0;
+        playerEXPSlider.value = (Managers.Player.GetExp() / (float)Managers.Player.GetNeedExp());
 
         // 플레이어 파괴 이벤트 핸들러 등록
         //PlayerController.OnPlayerDestroyed += HandlePlayerDestroyed;
@@ -595,6 +597,8 @@ public class Dungeon_Popup_UI : UI_Popup
             SummaryExp(dungeonNameText.text + "던전 클리어");
         }
 
+        Managers.Photon.SendDungeonEnd(timeText.text, true);
+
         // 던전 결과 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
 
@@ -617,6 +621,8 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             SummaryExp(dungeonNameText.text + "던전에서 사망");
         }
+
+        Managers.Photon.SendDungeonEnd(timeText.text, false);
     }
 
     // 채팅 Popup UI 띄우기 메서드
