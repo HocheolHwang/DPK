@@ -15,6 +15,7 @@ public class Character_Select : MonoBehaviour
 
     // 캐릭터 정보
     private Image[] characterBackgrounds = new Image[3];
+    private Image[] classIcons = new Image[3];
     private Image[] hpItems = new Image[5];
     private Image[] apItems = new Image[5];
     private Image[] dpItems = new Image[5];
@@ -64,6 +65,11 @@ public class Character_Select : MonoBehaviour
         characterBackgrounds[0] = GameObject.Find("Warrior_Background").GetComponent<Image>();
         characterBackgrounds[1] = GameObject.Find("Archer_Background").GetComponent<Image>();
         characterBackgrounds[2] = GameObject.Find("Mage_Background").GetComponent<Image>();
+
+        // 클래스 아이콘 오브젝트 연결
+        classIcons[0] = GameObject.Find("Warrior_Class_Icon").GetComponent<Image>();
+        classIcons[1] = GameObject.Find("Archer_Class_Icon").GetComponent<Image>();
+        classIcons[2] = GameObject.Find("Mage_Class_Icon").GetComponent<Image>();
 
         // 캐릭터 스텟 이미지 오브젝트 연결
         for (int i = 0; i < 5; i++)
@@ -204,6 +210,11 @@ public class Character_Select : MonoBehaviour
         characterBackgrounds[0].gameObject.SetActive(className == "Warrior");
         characterBackgrounds[1].gameObject.SetActive(className == "Archer");
         characterBackgrounds[2].gameObject.SetActive(className == "Mage");
+
+        // 클래스 아이콘 이미지 업데이트
+        classIcons[0].gameObject.SetActive(className == "Warrior");
+        classIcons[1].gameObject.SetActive(className == "Archer");
+        classIcons[2].gameObject.SetActive(className == "Mage");
 
         // HP 아이템 활성화
         int activeHpItems = hp / 50;
