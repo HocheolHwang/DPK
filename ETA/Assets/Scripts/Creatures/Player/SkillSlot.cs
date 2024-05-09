@@ -31,10 +31,10 @@ public class SkillSlot : MonoBehaviour
         switch (gameObject.name.Replace("(Clone)",""))
         {
             case "Warrior": // 워리어
-                loadedSkills = new string[] { "WhirlWind", "HolyHammer", "DrawSword", "WindSlash", "Guard" };
+                loadedSkills = new string[] { "WhirlWind", "HolyHammer", "DrawSword", "WindSlash", "Guard", "Blessing" };
                 break;
             case "Archer": // 아처
-                loadedSkills = new string[]{ "ArrowShower", "RapidArrow", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "LightningShot", "ForestSpirit" };
+                loadedSkills = new string[]{ "ArrowShower", "RapidArrow", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "ForestSpirit", "LightningShot" };
                 break;
             case "Mage": // 메이지
                 loadedSkills = new string[] { "Thunder", "Meteor", "IceBone", "BloodBoom", "Heal", "Protection" };
