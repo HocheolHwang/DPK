@@ -119,10 +119,10 @@ public class SkillSlot : MonoBehaviour
 
     public void NormalAttack()
     {
-        if (_currentSkill != null)
-        {
-            _currentSkill.StopCast();
-        }
+        //if (_currentSkill != null)
+        //{
+        //    _currentSkill.StopCast();
+        //}
         // TODO: 직업이 여러개면 바꿔 주어야할 것
         if (gameObject.name.Contains("Warrior"))
         {
