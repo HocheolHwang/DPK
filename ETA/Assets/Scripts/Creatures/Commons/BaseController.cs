@@ -106,10 +106,11 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
     }
 
     // --------------------------------- IBuffStat -----------------------------------------
-    
+
     public virtual void IncreaseHp(int amount)
     {
-        Stat.Hp += amount;
+        if (Stat.Hp < Stat.MaxHp)
+            Stat.Hp += amount;
     }
 
     public virtual void DecreaseHp(int amount)
@@ -165,7 +166,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
             damage = 1;
         }
 
-        
+
 
         if (Stat.Shield >= damage)
         {
@@ -196,12 +197,13 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
         }
         else if (isCounter)
         {
-            if(PhotonNetwork.IsMasterClient) CounterEvent();
-            
+            if (PhotonNetwork.IsMasterClient) CounterEvent();
+
         }
     }
 
-    public virtual void AttackedEvent() {
+    public virtual void AttackedEvent()
+    {
 
     }
 
