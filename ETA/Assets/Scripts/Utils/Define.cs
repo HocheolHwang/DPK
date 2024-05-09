@@ -120,6 +120,8 @@ public class Define
         BlessingEffect,
         HealEffect,
         SwordWaveWhite,
+        SlashWideBlue,
+        SwordVolleyBlue,
         StoneSlash1,
         StoneSlash2,
         SurfaceExplosionDirtStone,
@@ -149,6 +151,11 @@ public class Define
         ForestSpiritSpawn,
         WindSlash,
         CounteredEffect_Blue,
+        CollavoCyclone,
+        CollavoCycloneShot,
+        CollavoBlackHole,
+        Gravity01,
+        Gravity02,
         MaxCount
     }
 }

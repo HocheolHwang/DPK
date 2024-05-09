@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HolyHammer : Skill
 {
+    private Coroutine holyhammerCoroutine;
+
     protected override void Init()
     {
         SetCoolDownTime(4);
@@ -16,6 +18,15 @@ public class HolyHammer : Skill
     {
         _animator.CrossFade("BUFF1", 0.1f);
         Managers.Sound.Play("Skill/Holy");
+
+        holyhammerCoroutine = StartCoroutine(HolyHammerCoroutine());
+
+        yield return new WaitForSeconds(1.8f);
+        _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+    private IEnumerator HolyHammerCoroutine()
+    {
         // Hammer prefab을 읽어오고 생성
         GameObject hammerPrefab = Managers.Resource.Instantiate("Effect/Hammer");
         // Hammer prefab을 타겟 위치로 이동
@@ -52,13 +63,11 @@ public class HolyHammer : Skill
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SurfaceExplosionDirtStone, hitbox.transform);
-        yield return new WaitForSeconds(0.01f);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SurfaceExplosionDirtStone, 2.0f, hitbox.transform);
+        yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
         yield return new WaitForSeconds(0.8f);
-        Managers.Effect.Stop(ps);
         Managers.Resource.Destroy(hammerPrefab.gameObject);
-        _controller.ChangeState(_controller.MOVE_STATE);
     }
 }

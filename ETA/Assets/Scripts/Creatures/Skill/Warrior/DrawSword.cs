@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DrawSword : Skill
 {
+    private Coroutine drawswordCoroutine;
+
     protected override void Init()
     {
         SetCoolDownTime(2);
@@ -24,14 +26,21 @@ public class DrawSword : Skill
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
 
-        ParticleSystem ps = Managers.Resource.Instantiate("Effect/SlashWideBlue").GetComponent<ParticleSystem>();
-        ps.transform.position = gameObject.transform.position + transform.up;
-        
-        ps.Play();
+        drawswordCoroutine = StartCoroutine(DrawSwordCoroutine());
+
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
         yield return new WaitForSeconds(1.0f);
-        Managers.Resource.Destroy(ps.gameObject);
         _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+
+
+    private IEnumerator DrawSwordCoroutine()
+    {
+        HitBox hiddenbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+        hiddenbox.transform.position = gameObject.transform.position + transform.up;
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SlashWideBlue, 2.0f, hiddenbox.transform);
+        yield return new WaitForSeconds(0.1f);
     }
 }
