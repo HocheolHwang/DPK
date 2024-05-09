@@ -23,8 +23,8 @@ public class CollavoSystem : MonoBehaviour
             _currentSkills.Remove(skillName);
             ChangeToCollavoState(controller);
             ChangeToCollavoState(player);
-            ParticleSystem ps0 = Managers.Resource.Instantiate("Effect/CycloneUIEffect").GetComponent<ParticleSystem>();
-            ps0.Play();
+
+            
         }
         else // 없음
         {
