@@ -28,8 +28,6 @@ public class MummyManRush : Pattern
         destToTarget.y = _controller.transform.position.y;
         float duration = CalcTimeToDest(destToTarget);
 
-        Debug.Log($"speed: {_controller.Stat.MoveSpeed} | destToTarget: {destToTarget} | duration: {duration}");
-
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, _attackDamage + _patternDmg / 3, -1, false, duration);
         hitbox.transform.localScale = _patternRange;
@@ -37,13 +35,13 @@ public class MummyManRush : Pattern
         hitbox.transform.position = Pos;
 
         // EFFECT
-        ParticleSystem rushingPS = Managers.Effect.Play(Define.Effect.Mummy_Rushing, transform);
+        ParticleSystem rushingPS = Managers.Effect.Play(Define.Effect.Mummy_Rushing, duration, transform);
         rushingPS.transform.SetParent(_controller.transform);
         rushingPS.transform.position = Pos;
 
         yield return new WaitForSeconds(duration);
         Managers.Resource.Destroy(hitbox.gameObject);
-        Managers.Effect.Stop(rushingPS);
+        //Managers.Effect.Stop(rushingPS);
 
         // HIT BOX
         hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
@@ -51,14 +49,14 @@ public class MummyManRush : Pattern
         hitbox.GetComponent<SphereCollider>().radius = 6.0f;
         hitbox.transform.position = _controller.transform.position;
         // EFFECT
-        ParticleSystem rushEndPS = Managers.Effect.Play(Define.Effect.Mummy_RushEnd, transform);
+        ParticleSystem rushEndPS = Managers.Effect.Play(Define.Effect.Mummy_RushEnd, 0, transform);
         rushEndPS.transform.position = _controller.transform.position;
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
-        yield return new WaitForSeconds(rushEndPS.main.duration);
-        Managers.Effect.Stop(rushEndPS);
+        //yield return new WaitForSeconds(rushEndPS.main.duration);
+        //Managers.Effect.Stop(rushEndPS);
     }
 
     private float CalcTimeToDest(Vector3 Destination)

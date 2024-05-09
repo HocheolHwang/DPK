@@ -354,8 +354,6 @@ namespace MummyManStateItem
 
             destination = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
             destination.y = _controller.transform.position.y;
-            HitBox hit = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-            hit.transform.position = destination;
 
             SetStartAndDestPos(_controller.transform.position, destination);
 

@@ -11,6 +11,7 @@ public class MummyManShouting : Pattern
     [SerializeField] float _intervalTime;       // hitbox가 생성되는 간격
 
     private MummyManAnimationData _data;
+    private Coroutine[] cos;
 
     public override void Init()
     {
@@ -22,6 +23,8 @@ public class MummyManShouting : Pattern
 
         _data = GetComponent<MummyManAnimationData>();
         _intervalTime = _data.ShoutingAnim.length / 2;
+
+        cos = new Coroutine[2];
     }
 
     public override IEnumerator StartPatternCast()
@@ -33,28 +36,33 @@ public class MummyManShouting : Pattern
         yield return new WaitForSeconds(_createTime);
         Managers.Sound.Play("Sounds/Monster/Mummy/MummyShouting2_SND", Define.Sound.Effect);
 
-        StartCoroutine(CreateShouting(_attackDamage + _patternDmg, Pos, duration));
+        cos[0] = StartCoroutine(CreateShouting(_attackDamage + _patternDmg, Pos, duration));
 
         yield return new WaitForSeconds(_intervalTime);
-        StartCoroutine(CreateShouting(_attackDamage + _patternDmg, Pos, duration));
+        cos[1] = StartCoroutine(CreateShouting(_attackDamage + _patternDmg, Pos, duration));
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(10.0f);
+        //foreach (var c in cos)
+        //{
+        //    StopCoroutine(c);
+        //}
     }
 
     IEnumerator CreateShouting(int attackDMG, Vector3 Pos, float duration)
     {
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Mummy_Shouting, transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Mummy_Shouting, duration, transform);
         ps.transform.position = Pos;
         yield return new WaitForSeconds(0.3f);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, attackDMG, -1, false, ps.main.duration);
+        hitbox.SetUp(transform, attackDMG, -1, false, duration);
         hitbox.transform.localScale = _patternRange;
         hitbox.transform.rotation = ps.transform.rotation;
         hitbox.transform.position = Pos;
 
         float timer = 0;
-        while (timer <= duration)
+        // timer가 duration만큼 증가하지 않는 경우가 있다.
+        while (timer <= duration - 0.5f)
         {
             Vector3 moveStep = hitbox.transform.forward * _speed * Time.deltaTime;
             hitbox.transform.position += moveStep;
@@ -66,6 +74,6 @@ public class MummyManShouting : Pattern
             yield return null;
         }
         Managers.Resource.Destroy(hitbox.gameObject);
-        Managers.Effect.Stop(ps);
+        //Managers.Effect.Stop(ps);
     }
 }
