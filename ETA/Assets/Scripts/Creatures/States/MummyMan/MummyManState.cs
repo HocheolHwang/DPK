@@ -6,7 +6,6 @@ using System.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
-// shouting, rush
 enum EMummyManPattern
 {
     RangedAutoAttack        = 0,
@@ -15,6 +14,8 @@ enum EMummyManPattern
     Jump,
     Shouting,
     Rush,
+    CounterEnable,
+    Buff,
     MAX_LEN
 }
 

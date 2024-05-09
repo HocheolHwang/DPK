@@ -418,6 +418,8 @@ namespace MummyManStateItem
 
     // -------------------------------------- FORE_SHADOWING : COUNTER ENABLE ------------------------------------------------
     #region FORE_SHADOWING
+    // 버프 수치(HP 10% 회복, ATK += 10, DEF += 5, TIME: 30초 )
+    // COUNTER ENABLE
     public class ForeShadowingState : MummyManState
     {
         public ForeShadowingState(MummyManController controller) : base(controller)
@@ -431,6 +433,8 @@ namespace MummyManStateItem
             InitTime(_animData.ForeShadowingAnim.length);
             _animator.SetFloat("ForeShadowingSpeed", 0.5f);
             _animator.CrossFade(_animData.ForeShadowingParamHash, 0.1f);
+
+            StartCast((int)EMummyManPattern.CounterEnable);
         }
 
         public override void Execute()
@@ -448,6 +452,8 @@ namespace MummyManStateItem
         }
         public override void Exit()
         {
+            // 여기서 Buff 부여
+            StartCast((int)EMummyManPattern.Buff);
         }
     }
     #endregion

@@ -63,9 +63,9 @@ public class SummonSkill : MonoBehaviour
         _warrior.transform.position = rootLeft;
 
         // 이펙트( Stop Action - Destroy )
-        ParticleSystem warriorPS = Managers.Effect.Play(Define.Effect.Mummy_Clap, transform);
+        ParticleSystem warriorPS = Managers.Effect.Play(Define.Effect.Mummy_Clap, 0, transform);
         warriorPS.transform.position = _warrior.transform.position;
-        ParticleSystem bufferPS = Managers.Effect.Play(Define.Effect.Mummy_Clap, transform);
+        ParticleSystem bufferPS = Managers.Effect.Play(Define.Effect.Mummy_Clap, 0, transform);
         bufferPS.transform.position = _buffer.transform.position;
 
         // 방향 세팅

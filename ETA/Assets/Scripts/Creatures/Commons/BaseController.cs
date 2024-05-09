@@ -51,7 +51,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
         SetOriginColor();
 
-        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+        //Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
 
         // --------------------------------- DIE TEST -------------------------------------
         StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인

@@ -98,14 +98,16 @@ public class Define
         WarriorNormalAttackEffect,
         ArcherNormalAttackEffect,
         // ------------------------ KnightG ------------------------------
-        KnightG_CounterEnable,
         KnightG_CounterAttack,
         KnightG_TwoSkillEnergy,
         KnightG_TwoSkillAttack,
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
         // ------------------------ KnightG ------------------------------
+        // ------------------------ Common  ------------------------------
+        CounterEnable,
         Groggy,
+        // ------------------------ Common  ------------------------------
         EnergyNovaBlue,
         EnergyNovaGreen,
         AuraChargeYellow,

@@ -51,7 +51,7 @@ public class KnightGCounterEnable : Pattern
         _hitbox.transform.position = objectLoc;
 
         
-        _ps = Managers.Effect.Play(Define.Effect.KnightG_CounterEnable, 0, _controller.transform);
+        _ps = Managers.Effect.Play(Define.Effect.CounterEnable, 0, _controller.transform);
         _ps.transform.position = _hitbox.transform.position;
         ParticleSystem.MainModule _psMainModule = _ps.main;
         _psMainModule.startLifetime = _animData.CounterEnableAnim.length * 4.0f;
@@ -60,7 +60,7 @@ public class KnightGCounterEnable : Pattern
 
         // 시전 도중에 카운터 스킬을 맞으면 hit box와 effect가 사라지고, sound가 발생
         float timer = 0;
-        while (timer < _duration)
+        while (timer <= _duration)
         {
             if (_kcontroller.IsHitCounter)
             {
