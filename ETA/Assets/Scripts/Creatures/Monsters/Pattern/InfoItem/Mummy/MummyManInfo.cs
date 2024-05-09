@@ -8,6 +8,7 @@ using UnityEngine;
 /// 2. RangedAttack: ATK + P_ATK(5)
 /// 3. WindMill: ATK + P_ATK(20)
 /// 4. Jump: ATK + P_ATK(40)
+/// 5. Shouting: ATK + P_ATK(20)
 /// </summary>
 public class MummyManInfo : PatternInfo
 {
@@ -18,5 +19,6 @@ public class MummyManInfo : PatternInfo
         PatternList.Add(gameObject.GetOrAddComponent<MummyManMeleeAutoAttack>());
         PatternList.Add(gameObject.GetOrAddComponent<MummyManWindMill>());
         PatternList.Add(gameObject.GetOrAddComponent<MummyManJump>());
+        PatternList.Add(gameObject.GetOrAddComponent<MummyManShouting>());
     }
 }

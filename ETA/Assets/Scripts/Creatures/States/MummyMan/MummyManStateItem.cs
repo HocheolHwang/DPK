@@ -23,17 +23,12 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
-            Debug.Log($"Target: {_target} | AttackRange: {_attackRange} | IsMeet? {_meetPlayer}");
-
-
             if (!_meetPlayer && _target != null) // 첫 조우 때 CLAP으로 시작
             {
-                Debug.Log($"IDLE TO CLAP");
                 _controller.ChangeState(_controller.CLAP_STATE);
             }
             else if (_target != null)
             {
-                Debug.Log($"IDLE TO CHASE");
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
         }
@@ -272,6 +267,8 @@ namespace MummyManStateItem
 
             _animator.SetFloat("ShoutingSpeed", 0.5f);
             _animator.CrossFade(_animData.ShoutingParamHash, 0.1f);
+
+            StartCast((int)EMummyManPattern.Shouting);
         }
 
         public override void Execute()

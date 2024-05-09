@@ -12,6 +12,7 @@ enum EMummyManPattern
     MeleeAutoAttack,
     WindMill,
     Jump,
+    Shouting,
     MAX_LEN
 }
 
@@ -24,9 +25,9 @@ public class MummyManState : State
     
 
     protected static float _shoutingTime;
-    protected static float _threadHoldShouting = 14.0f;
+    protected static float _threadHoldShouting = 5.0f;    // 14초
     protected static float _jumpTime;
-    protected static float _threadHoldJump = 5.5f;        // 30.5초
+    protected static float _threadHoldJump = 30.5f;        // 30.5초
 
     protected static Transform _target;
     protected static float _attackRange;
