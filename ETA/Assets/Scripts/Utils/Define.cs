@@ -148,6 +148,7 @@ public class Define
         CollavoWindBall,
         ForestSpiritSpawn,
         WindSlash,
+        CounteredEffect_Blue,
         MaxCount
     }
 }

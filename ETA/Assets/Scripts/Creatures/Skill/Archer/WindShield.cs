@@ -16,7 +16,7 @@ public class WindShield : Skill
     public override IEnumerator StartSkillCast()
     {
         _animator.CrossFade("GUARD", 0.05f);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindShield, gameObject.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindShield, 1.0f, gameObject.transform);
         StartCoroutine(Evasion(1.0f));
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/GuardSkill");

@@ -65,7 +65,7 @@ public class KnightGCounterEnable : Pattern
             if (_kcontroller.IsHitCounter)
             {
                 Managers.Resource.Destroy(_hitbox.gameObject);
-                Managers.Effect.Stop(_ps);
+                //Managers.Effect.Stop(_ps);
                 Managers.Sound.Play("Monster/CounterEnable_SND", Define.Sound.Effect);
                 yield break;
             }
