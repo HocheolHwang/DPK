@@ -103,8 +103,7 @@ public class Define
         KnightG_TwoSkillAttack,
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
-        // ------------------------ KnightG ------------------------------
-        // ------------------------ Common  ------------------------------
+        // ------------------------ Common ------------------------------
         CounterEnable,
         Groggy,
         // ------------------------ Common  ------------------------------

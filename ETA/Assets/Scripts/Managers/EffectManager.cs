@@ -16,6 +16,7 @@ public class EffectManager
             Managers.Pool.CreatePool(go);
 
             _effectPrefabs[i] = go;
+            Debug.Log($"_effectPrefabs[i]: {_effectPrefabs[i]}");
             _effectQuaternion[i] = go.transform.rotation;
         }
 
