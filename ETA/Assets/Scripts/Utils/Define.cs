@@ -140,6 +140,7 @@ public class Define
         Mummy_Shouting,
         WindBall,
         CycloneUIEffect,
+        LightningShot,
         MaxCount
     }
 }

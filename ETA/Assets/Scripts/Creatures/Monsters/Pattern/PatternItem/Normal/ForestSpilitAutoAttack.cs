@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ForestSpilitAutoAttack : Pattern
 {
-    [Header("원하는 이펙트 이름을 넣으세요 - 디버깅")]
-    [SerializeField] string _effectName;
-
     [Header("개발 편의성")]
     [SerializeField] float _hitboxForwardLoc = 0.7f;
     [SerializeField] Vector3 _hitboxRange = new Vector3(1f, 1f, 1.3f);
