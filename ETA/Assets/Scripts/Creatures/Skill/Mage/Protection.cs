@@ -5,7 +5,6 @@ using UnityEngine;
 public class Protection : Skill
 {
     private Coroutine protectionCoroutine;
-    private ParticleSystem ps;
     protected override void Init()
     {
         SetCoolDownTime(1);
@@ -18,20 +17,18 @@ public class Protection : Skill
     {
         _animator.CrossFade("SKILL5", 0.1f);
         Managers.Sound.Play("Skill/Heal");
-        ps = Managers.Effect.Play(Define.Effect.EnergyNovaBlue, gameObject.transform);
 
         protectionCoroutine = StartCoroutine(ProtectionCoroutine());
 
-        yield return new WaitForSeconds(1.2f);
-        if (ps != null)
-            Managers.Effect.Stop(ps);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1.3f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 
 
     private IEnumerator ProtectionCoroutine()
     {
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.EnergyNovaBlue, 2.0f, gameObject.transform);
+        
         BuffBox buffbox1 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
         buffbox1.SetUp(transform, 100, BuffBox.stat.Shield);
         buffbox1.transform.position = gameObject.transform.position;
