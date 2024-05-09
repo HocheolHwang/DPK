@@ -21,7 +21,7 @@ public class LightningShot : Skill
         _animator.CrossFade("SKILL2", 0.1f);
         yield return new WaitForSeconds(0.6f);
         Managers.Sound.Play("Skill/ArrowStab");
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.LightningShot, gameObject.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.LightningShot, 1.0f, gameObject.transform);
         ps.transform.position = gameObject.transform.position + transform.up;
         ps.Play();
 
@@ -36,7 +36,7 @@ public class LightningShot : Skill
         Managers.Resource.Destroy(hitbox.gameObject);
         yield return new WaitForSeconds(1.0f);
         //Managers.Resource.Destroy(ps.gameObject);
-        Managers.Effect.Stop(ps);
+        //Managers.Effect.Stop(ps);
 
         yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);

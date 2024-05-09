@@ -11,13 +11,13 @@ public class CollavoSystem : MonoBehaviour
     {
 
         //TMP
-        //_currentSkills.Add("Cyclone", null);
+        _currentSkills.Add("Cyclone", null);
     }
 
     public void AddCurrentSkill(PlayerController controller, string skillName)
     {
         //if (PhotonNetwork.IsMasterClient == false) return;
-        if(_currentSkills.TryGetValue(skillName, out PlayerController player)) // 있음
+        if (_currentSkills.TryGetValue(skillName, out PlayerController player)) // 있음
         {
             if (player.gameObject.name == controller.name) return;
             _currentSkills.Remove(skillName);
@@ -41,10 +41,10 @@ public class CollavoSystem : MonoBehaviour
 
     public void RemoveCurrentSkill(string skillName)
     {
-        return;
+        //return;
         Debug.Log($"Remove {skillName}");
         if (skillName == null) return;
-        if(_currentSkills.ContainsKey(skillName)) _currentSkills.Remove(skillName);
+        if (_currentSkills.ContainsKey(skillName)) _currentSkills.Remove(skillName);
     }
 
     public void Clear()

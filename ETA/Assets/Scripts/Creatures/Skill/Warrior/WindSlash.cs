@@ -26,14 +26,15 @@ public class WindSlash : Skill
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
 
-        ParticleSystem ps = Managers.Resource.Instantiate("Effect/WindSlash").GetComponent<ParticleSystem>();
+        //ParticleSystem ps = Managers.Resource.Instantiate("Effect/WindSlash").GetComponent<ParticleSystem>();
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindSlash, 1.0f, gameObject.transform);
         ps.transform.position = gameObject.transform.position + transform.up;
 
-        ps.Play();
+        //ps.Play();
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
         yield return new WaitForSeconds(1.0f);
-        Managers.Resource.Destroy(ps.gameObject);
+        //Managers.Resource.Destroy(ps.gameObject);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 

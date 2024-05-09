@@ -30,15 +30,15 @@ public class WindBall : Skill
 
         //ParticleSystem ps = Managers.Resource.Instantiate("Effect/ArrowStab").GetComponent<ParticleSystem>();
         yield return new WaitForSeconds(0.2f);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindBall, gameObject.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindBall, 1.0f, gameObject.transform);
         ps.transform.position = gameObject.transform.position + transform.up;
 
-        ps.Play();
+        //ps.Play();
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
         yield return new WaitForSeconds(1.0f);
         //Managers.Resource.Destroy(ps.gameObject);
-        Managers.Effect.Stop(ps);
+        //Managers.Effect.Stop(ps);
 
         yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
@@ -49,12 +49,14 @@ public class WindBall : Skill
         _animator.CrossFade("SKILL6", 0.1f);
         yield return new WaitForSeconds(0.5f);
 
-        ParticleSystem ps1 = Managers.Resource.Instantiate("Effect/CollavoWindBall").GetComponent<ParticleSystem>();
+        //ParticleSystem ps1 = Managers.Resource.Instantiate("Effect/CollavoWindBall").GetComponent<ParticleSystem>();
+        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.CollavoWindBall, 1.0f, gameObject.transform);
+
         ps1.transform.position = transform.position;
-        ps1.Play();
+        //ps1.Play();
         yield return new WaitForSeconds(1.0f);
 
-        Managers.Effect.Stop(ps1);
+        //Managers.Effect.Stop(ps1);
         yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }

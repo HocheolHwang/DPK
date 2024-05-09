@@ -141,6 +141,13 @@ public class Define
         WindBall,
         CycloneUIEffect,
         LightningShot,
+        ArrowShower,
+        RapidArrowHit,
+        RapidArrowCharge,
+        ArrowBomb,
+        CollavoWindBall,
+        ForestSpiritSpawn,
+        WindSlash,
         MaxCount
     }
 }
