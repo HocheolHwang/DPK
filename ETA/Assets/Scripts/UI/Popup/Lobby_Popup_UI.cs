@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -183,8 +184,8 @@ public class Lobby_Popup_UI : UI_Popup
     {
         if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient)
         {
-            // 파티원일 경우 던전 선택 불가 Popup UI를 띄움
-            Managers.UI.ShowPopupUI<Dungeon_Select_Unable_Popup_UI>("[Lobby]_Dungeon_Select_Unable_Popup_UI");
+            // 파티원일 경우 Coroutine을 시작하여 경고 Popup UI를 띄움
+            StartCoroutine(ShowWarningPopupCoroutine("던전 선택 불가", "던전 선택은 파티장만 가능합니다."));
         }
         else
         {
@@ -201,14 +202,27 @@ public class Lobby_Popup_UI : UI_Popup
     {
         if (PhotonNetwork.InRoom && !PhotonNetwork.IsMasterClient)
         {
-            // 파티원일 경우 던전 입장 불가 Popup UI를 띄움
-            Managers.UI.ShowPopupUI<Dungeon_Enter_Unable_Popup_UI>("[Lobby]_Dungeon_Enter_Unable_Popup_UI");
+            // 파티원일 경우 Coroutine을 시작하여 경고 Popup UI를 띄움
+            StartCoroutine(ShowWarningPopupCoroutine("던전 입장 불가", "던전 입장은 파티장만 가능합니다."));
         }
         else
         {
             // 파티장이거나 파티 미소속일 경우 던전 입장 Popup UI를 띄움
             Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
         }
+    }
+
+    // 경고 문구 업데이트 코루틴
+    private IEnumerator ShowWarningPopupCoroutine(string title, string message)
+    {
+        // 경고 Popup UI를 띄움
+        var warningPopup = Managers.UI.ShowPopupUI<Warning_Popup_UI>("[Lobby]_Warning_Popup_UI");
+
+        // 프레임을 넘겨서 UI가 완전히 열릴 시간을 줌
+        yield return null;
+
+        // 매개변수로 받은 텍스트를 사용하여 팝업이 열린 이후에 텍스트를 설정
+        warningPopup.SetWarningText(title, message);
     }
 
     // 채팅 Popup UI 띄우기 메서드
