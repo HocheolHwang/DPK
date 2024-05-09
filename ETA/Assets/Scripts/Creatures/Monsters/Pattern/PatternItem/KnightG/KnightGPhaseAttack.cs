@@ -37,17 +37,16 @@ public class KnightGPhaseAttack : Pattern
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
 
-        StartCoroutine(expandCollider(objectLoc));
+        Managers.Coroutine.Run(expandCollider(objectLoc));
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.KnightG_PhaseAttack, _controller.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.KnightG_PhaseAttack, 0, _controller.transform);
         Managers.Sound.Play("Monster/KnightG/KnightGPhaseAttack_SND", Define.Sound.Effect);
         ps.transform.position = hitbox.transform.position;
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
-        yield return new WaitForSeconds(ps.main.duration);
-        Managers.Resource.Destroy(ps.gameObject);
+
     }
 
     private IEnumerator expandCollider(Vector3 loc)
