@@ -10,7 +10,7 @@ public class CollavoSystem : MonoBehaviour
     {
 
         //TMP
-        //_currentSkills.Add("test", null);
+        _currentSkills.Add("Cyclone", null);
     }
 
     public void AddCurrentSkill(PlayerController controller, string skillName)

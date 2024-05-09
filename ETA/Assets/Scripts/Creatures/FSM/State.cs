@@ -66,4 +66,11 @@ public abstract class State : IState
         dir.y = _animator.transform.position.y;
         _animator.transform.LookAt(dir);
     }
+
+    // ------------------------------ Pattern Functions ----------------------------
+    protected void StartCast(int patternIdx)
+    {
+        BaseMonsterController controller = _animator.GetComponent<BaseMonsterController>();
+        controller.PatternInfo.PatternList[patternIdx].Cast();
+    }
 }

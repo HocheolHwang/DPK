@@ -25,6 +25,23 @@ public class NetworkManager : MonoBehaviour
             //Debug.Log("Response: " + request.downloadHandler.text);
         }
     }
+    IEnumerator SelectClassRequest(UnityWebRequest request, Action callback)
+    {
+        yield return request.SendWebRequest();
+
+        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Request Error] {request.error}\n{request.downloadHandler.text}");
+        }
+        else
+        {
+            //Debug.Log(request.result);
+            //Debug.Log("Response: " + request.downloadHandler.text);
+            callback?.Invoke();
+
+        }
+    }
     IEnumerator SendPartyRequest(UnityWebRequest request, Action callback = null)
     {
         yield return request.SendWebRequest();
@@ -283,10 +300,10 @@ public class NetworkManager : MonoBehaviour
     }
 
     // 직업 저장하기
-    public void SelectClassCall(ClassReqDto dto)
+    public void SelectClassCall(ClassReqDto dto, Action callback)
     {
         string classData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "class/select")));
+        StartCoroutine(SelectClassRequest(CreateRequest("POST", "class/select", classData), callback));
     }
 }
 

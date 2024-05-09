@@ -55,6 +55,9 @@ public class Define
     {
         Click,
         Drag,
+        BeginDrag,
+        EndDrag,
+        Drop,
     }
     public enum MouseEvent
     {
@@ -105,8 +108,11 @@ public class Define
         AuraChargeBlue,
         AuraChargeGreen,
         AuraChargeRed,
+        Thunder1,
+        Thunder2,
         SpikeIce,
         FireTrail,
+        BloodExplosion,
         Explosion,
         GroundCrash,
         BlessingEffect,
@@ -123,6 +129,11 @@ public class Define
         RapidArrowShot,
         MagicSphereBlue,
         DarknessSlash,
+        MummyWarrior_WindMill,
+        Mummy_RangedAttack,
+        Mummy_RangedHit,
+        Mummy_WindMill,
+        WindBall,
         MaxCount
     }
 }

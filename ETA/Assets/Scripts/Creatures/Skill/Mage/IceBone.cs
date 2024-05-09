@@ -14,7 +14,7 @@ public class IceBone : Skill
         skillRange = new Vector3(1, 3, 1);
         RangeType = Define.RangeType.Round;
         Damage = 15;
-        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/HolyHammer.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/IceBone.png");
     }
     public override IEnumerator StartSkillCast()
     {

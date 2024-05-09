@@ -36,7 +36,7 @@ public class KnightGSecondAutoAttack : Pattern
 
         Managers.Sound.Play("Monster/KnightG/KnightGSecondAutoAttack_SND", Define.Sound.Effect);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
     }
 }

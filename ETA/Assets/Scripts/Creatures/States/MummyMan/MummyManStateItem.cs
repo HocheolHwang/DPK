@@ -151,6 +151,8 @@ namespace MummyManStateItem
                 _threadHold = _attackLen * 2 + _windMillLen;
                 InitTime(_threadHold);
                 _animator.CrossFade(_animData.AttackParamHash, 0.2f);
+
+                StartCast((int)EMummyManPattern.MeleeAutoAttack);
             }
             // 원거리 디텍터를 착용한 상태( 초기 공격 수단 )
             else
@@ -158,6 +160,8 @@ namespace MummyManStateItem
                 InitTime(_animData.ThrowAnim.length);
                 _animator.SetFloat("ThrowSpeed", 0.5f);
                 _animator.CrossFade(_animData.ThrowParamHash, 0.2f);
+
+                StartCast((int)EMummyManPattern.RangedAutoAttack);
             }
         }
 
@@ -383,7 +387,7 @@ namespace MummyManStateItem
         {
             if (IsStayForSeconds(_threadHold))
             {
-                _controller.ChangeState(_controller.IDLE_STATE);
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
 

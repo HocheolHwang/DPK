@@ -55,4 +55,9 @@ public class HitBox : MonoBehaviour
         yield return new WaitForSeconds(duration);
         gameObject.SetActive(false);
     }
+
+    public void SetActiveCollider()
+    {
+        gameObject.SetActive(true);
+    }
 }

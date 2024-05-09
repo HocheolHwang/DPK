@@ -73,7 +73,7 @@ public class OutlineSelection : MonoBehaviour
                         // Managers.UI.ShowPopupUI<Spell_Enchant_Popup_UI>("[Lobby]_Spell_Enchant_Popup_UI");
                         break;
                     case "Leader_Board":
-                        // Managers.UI.ShowPopupUI<Leader_Board_Popup_UI>("[Lobby]_Leader_Board_Popup_UI");
+                        Managers.UI.ShowPopupUI<Leader_Board_Popup_UI>("[Lobby]_Leader_Board_Popup_UI");
                         break;
                     default:
                         break;
