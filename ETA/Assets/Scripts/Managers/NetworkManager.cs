@@ -78,8 +78,8 @@ public class NetworkManager : MonoBehaviour
         else
         {
             // 회원가입 성공
-            Debug.Log(request.result);
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log(request.result);
+            //Debug.Log("Response: " + request.downloadHandler.text);
 
             // 성공 메세지 전달
             callback?.Invoke(message.message);
@@ -190,7 +190,7 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log("Response: " + request.downloadHandler.text);
             CurClassDto data = JsonUtility.FromJson<CurClassDto>(request.downloadHandler.text);
 
             // 직업 변화 
@@ -208,7 +208,7 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log("Response: " + request.downloadHandler.text);
 
             // 직업 변화 
             callback?.Invoke();
@@ -224,7 +224,7 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log("Response: " + request.downloadHandler.text);
             SkillResDto data = JsonUtility.FromJson<SkillResDto>(request.downloadHandler.text);
 
             // 직업 변화 
@@ -299,7 +299,7 @@ public class NetworkManager : MonoBehaviour
     // 던전 결과 랭크
     public void DungeonRankCall(string dungeonCode, Action<DungeonRankListResDto> callback)
     {
-        Debug.Log("dungeon/rank?dungeon-code=D00" + dungeonCode);
+        //Debug.Log("dungeon/rank?dungeon-code=D00" + dungeonCode);
         StartCoroutine(DungeonRankRequest(CreateRequest("GET", "dungeon/ranking?dungeon-code=D00"+dungeonCode), callback));
     }
 
@@ -322,7 +322,7 @@ public class NetworkManager : MonoBehaviour
     // 플레이어 경험치 변화량 전송
     public void EXPStatisticsCall(EXPStatisticsReqDto dto)
     {
-        Debug.Log("경험치 변화 있나??");
+        //Debug.Log("경험치 변화 있나??");
         string expData = JsonUtility.ToJson(dto);
         StartCoroutine(SendWebRequest(CreateRequest("PUT", "player/exp", expData)));
     }

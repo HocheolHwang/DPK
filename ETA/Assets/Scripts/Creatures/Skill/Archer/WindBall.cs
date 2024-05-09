@@ -21,24 +21,27 @@ public class WindBall : Skill
     {
         _animator.CrossFade("COLLAVO", 0.1f);
         yield return new WaitForSeconds(0.1f);
-        Managers.Sound.Play("Skill/ArrowStab");
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, false);
-        //hitbox.transform.position = gameObject.transform.position + transform.forward;
-        hitbox.transform.position = _skillSystem.TargetPosition;
-        hitbox.transform.localScale = skillRange;
+        //Managers.Sound.Play("Skill/ArrowStab");
+        //HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+        //hitbox.SetUp(transform, Damage, -1, false);
+        ////hitbox.transform.position = gameObject.transform.position + transform.forward;
+        //hitbox.transform.position = _skillSystem.TargetPosition;
+        //hitbox.transform.localScale = skillRange;
 
-        //ParticleSystem ps = Managers.Resource.Instantiate("Effect/ArrowStab").GetComponent<ParticleSystem>();
-        yield return new WaitForSeconds(0.2f);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindBall, gameObject.transform);
-        ps.transform.position = gameObject.transform.position + transform.up;
+        ////ParticleSystem ps = Managers.Resource.Instantiate("Effect/ArrowStab").GetComponent<ParticleSystem>();
+        //yield return new WaitForSeconds(0.2f);
+        //ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindBall, 1.0f, gameObject.transform);
+        //ps.transform.position = gameObject.transform.position + transform.up;
 
-        ps.Play();
-        yield return new WaitForSeconds(0.1f);
-        Managers.Resource.Destroy(hitbox.gameObject);
+        ////ps.Play();
+        //yield return new WaitForSeconds(0.1f);
+        //Managers.Resource.Destroy(hitbox.gameObject);
+
+        Managers.Coroutine.Run(WindBallCoroutine());
+
         yield return new WaitForSeconds(1.0f);
         //Managers.Resource.Destroy(ps.gameObject);
-        Managers.Effect.Stop(ps);
+        //Managers.Effect.Stop(ps);
 
         yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
@@ -49,13 +52,44 @@ public class WindBall : Skill
         _animator.CrossFade("SKILL6", 0.1f);
         yield return new WaitForSeconds(0.5f);
 
-        ParticleSystem ps1 = Managers.Resource.Instantiate("Effect/CollavoWindBall").GetComponent<ParticleSystem>();
-        ps1.transform.position = transform.position;
-        ps1.Play();
-        yield return new WaitForSeconds(1.0f);
+        //ParticleSystem ps1 = Managers.Resource.Instantiate("Effect/CollavoWindBall").GetComponent<ParticleSystem>();
+        //ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.CollavoWindBall, 1.0f, gameObject.transform);
 
-        Managers.Effect.Stop(ps1);
+        //ps1.transform.position = transform.position;
+        //ps1.Play();
+
+        Managers.Coroutine.Run(WindBallCollavoCoroutine());
+
+        //yield return new WaitForSeconds(1.0f);
+
+        //Managers.Effect.Stop(ps1);
         yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+    IEnumerator WindBallCoroutine()
+    {
+        Managers.Sound.Play("Skill/ArrowStab");
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+        hitbox.SetUp(transform, Damage, -1, false);
+        //hitbox.transform.position = gameObject.transform.position + transform.forward;
+        hitbox.transform.position = _skillSystem.TargetPosition;
+        hitbox.transform.localScale = skillRange;
+
+        //ParticleSystem ps = Managers.Resource.Instantiate("Effect/ArrowStab").GetComponent<ParticleSystem>();
+        yield return new WaitForSeconds(0.2f);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindBall, 1.0f, gameObject.transform);
+        ps.transform.position = gameObject.transform.position + transform.up;
+
+        //ps.Play();
+        yield return new WaitForSeconds(0.1f);
+        Managers.Resource.Destroy(hitbox.gameObject);
+    }
+
+    IEnumerator WindBallCollavoCoroutine()
+    {
+        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.CollavoWindBall, 1.5f, gameObject.transform);
+        ps1.transform.position = transform.position;
+        yield return new WaitForSeconds(1.0f);
     }
 }

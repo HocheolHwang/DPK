@@ -5,7 +5,6 @@ using UnityEngine;
 public class Blessing : Skill
 {
     private Coroutine blessingCoroutine;
-    private ParticleSystem ps;
 
     protected override void Init()
     {
@@ -19,15 +18,6 @@ public class Blessing : Skill
     {
         _animator.CrossFade("BUFF2", 0.1f);
         Managers.Sound.Play("Skill/Heal");
-        ps = Managers.Effect.Play(Define.Effect.BlessingEffect, gameObject.transform);
-        _controller.Stat.Defense += 10;
-        Debug.Log($"Defense: {_controller.Stat.Defense}");
-
-        // 파티클 시스템을 캐릭터의 자식으로 설정
-        if (ps != null)
-            ps.transform.SetParent(gameObject.transform);
-
-        // 방어력 증가를 시작하고, 일정 시간 후에 감소시키는 코루틴을 시작합니다.
         blessingCoroutine = StartCoroutine(BlessingCoroutine());
 
         yield return new WaitForSeconds(0.5f);
@@ -36,13 +26,36 @@ public class Blessing : Skill
 
     private IEnumerator BlessingCoroutine()
     {
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BlessingEffect, 5.0f, gameObject.transform);
+        if (ps != null)
+            ps.transform.SetParent(gameObject.transform);
+
+        _controller.IncreaseDefense(10);
+
+        // 방어력 증가 후 일정 시간 대기
+        yield return new WaitForSeconds(5.0f);
+        _controller.DecreaseDefense(10);
+
+        // 이전 코드
+        /*
+        BuffBox buffbox1 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
+        buffbox1.SetUp(transform, 10, BuffBox.stat.Defense);
+        buffbox1.transform.position = gameObject.transform.position;
+        buffbox1.transform.localScale = new Vector3(1, 3, 1);
+        yield return new WaitForSeconds(0.1f);
+        Managers.Resource.Destroy(buffbox1.gameObject);
+
         // 방어력 증가 후 일정 시간 대기
         yield return new WaitForSeconds(5.0f);
 
         // 방어력 감소 및 파티클 중지
-        _controller.Stat.Defense -= 10;
+        BuffBox buffbox2 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
+        buffbox2.SetUp(transform, -10, BuffBox.stat.Defense);
+        buffbox2.transform.position = gameObject.transform.position;
+        buffbox2.transform.localScale = new Vector3(1, 3, 1);
+        yield return new WaitForSeconds(0.1f);
+        Managers.Resource.Destroy(buffbox2.gameObject);
         Debug.Log($"Defense: {_controller.Stat.Defense}");
-        if (ps != null)
-            Managers.Effect.Stop(ps);
+        */
     }
 }

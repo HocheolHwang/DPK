@@ -30,7 +30,7 @@ public class KnightGTwoSkillAttack : Pattern
 
         // first
         yield return new WaitForSeconds(_createTime);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.KnightG_TwoSkillAttack, _controller.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.KnightG_TwoSkillAttack, 0, _controller.transform);
         ps.transform.position = loc;
 
         Vector3 locMidLeft = new Vector3(-0.7f, 0, 1.2f);
@@ -52,8 +52,8 @@ public class KnightGTwoSkillAttack : Pattern
         _coroutineList[4] = StartCoroutine(CreateHitbox(ps.transform, locLastMid));
         _coroutineList[5] = StartCoroutine(CreateHitbox(ps.transform, locLastRight));
 
-        yield return new WaitForSeconds(ps.main.duration);
-        Managers.Resource.Destroy(ps.gameObject);
+        //yield return new WaitForSeconds(ps.main.duration);
+        //Managers.Resource.Destroy(ps.gameObject);
 
     }
 

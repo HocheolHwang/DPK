@@ -34,14 +34,11 @@ public class KnightGCounterAttackPattern : Pattern
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.KnightG_CounterAttack, _controller.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.KnightG_CounterAttack, 0.0f, _controller.transform);
         ps.GetComponent<AudioSource>().Play();
         ps.transform.position = hitbox.transform.position;
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
-
-        yield return new WaitForSeconds(ps.main.duration);
-        Managers.Resource.Destroy(ps.gameObject);
     }
 }

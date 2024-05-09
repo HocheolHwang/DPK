@@ -1559,6 +1559,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2778570483922757427, guid: 353d5814f036b6143bb667409a76abc5, type: 3}
   m_PrefabInstance: {fileID: 878858662}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &990086796
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -7910020264550295268, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: sceneViewId
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.81281906
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5825163
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 71.255
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768749919651494245, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639721712671698837, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_Name
+      value: Mage
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639721712671698837, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c1445d135814484dbdd82c3a64194bb, type: 3}
 --- !u!1001 &1058047558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2173,15 +2238,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3062761661400111319, guid: ee1f75a9120a0494094143838a1883dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.151301
+      value: 13.22
       objectReference: {fileID: 0}
     - target: {fileID: 3062761661400111319, guid: ee1f75a9120a0494094143838a1883dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.57
       objectReference: {fileID: 0}
     - target: {fileID: 3062761661400111319, guid: ee1f75a9120a0494094143838a1883dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.6664538
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 3062761661400111319, guid: ee1f75a9120a0494094143838a1883dd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2893,8 +2958,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 4703521808886210746}
+  ObservedComponents: []
   sceneViewId: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -3237,3 +3301,4 @@ SceneRoots:
   - {fileID: 3634967007063812870}
   - {fileID: 4033833236110706220}
   - {fileID: 1789945451}
+  - {fileID: 990086796}

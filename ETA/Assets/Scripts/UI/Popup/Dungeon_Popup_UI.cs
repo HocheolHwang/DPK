@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,7 @@ using TMPro;
 using PlayerStates;
 using System;
 using Photon.Pun;
+using WebSocketSharp;
 
 public class Dungeon_Popup_UI : UI_Popup
 {
@@ -76,7 +78,17 @@ public class Dungeon_Popup_UI : UI_Popup
         Skill_5_Unable_Image,
         Skill_6_Unable_Image,
         Skill_7_Unable_Image,
-        Skill_8_Unable_Image
+        Skill_8_Unable_Image,
+
+        // 스킬 아이콘
+        Skill_Icon_1,
+        Skill_Icon_2,
+        Skill_Icon_3,
+        Skill_Icon_4,
+        Skill_Icon_5,
+        Skill_Icon_6,
+        Skill_Icon_7,
+        Skill_Icon_8
     }
 
     enum Texts
@@ -141,6 +153,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private Image[][] partyMemberIcons = new Image[3][];
     private Image[] skillCooldownImages = new Image[8];
     private Image[] skillUnableImages = new Image[8];
+    private Image[] skillIcons = new Image[8];
     private TextMeshProUGUI dungeonTierText;
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI timeText;
@@ -323,10 +336,16 @@ public class Dungeon_Popup_UI : UI_Popup
         }
 
 
-        // --------------- 쿨타임 UI 초기화 ---------------
+        // --------------- 스킬 슬롯 UI 초기화 ---------------
 
-        // 스킬 슬롯 참조
-        skillSlot = FindObjectOfType<SkillSlot>();
+        // 스킬 슬롯 업데이트 코루틴 시작
+        StartCoroutine(LoadSkillSlotDataCoroutine());
+
+        // 스킬 아이콘 초기화
+        for (int i = 0; i < skillIcons.Length; i++)
+        {
+            skillIcons[i] = GetImage((int)Images.Skill_Icon_1 + i);
+        }
 
         // 이미지와 텍스트 초기화를 반복문으로 처리
         for (int i = 0; i < skillCooldownImages.Length; i++)
@@ -666,6 +685,81 @@ public class Dungeon_Popup_UI : UI_Popup
         Managers.Network.EXPStatisticsCall(dto);
         currentExp = 0;
     }
+
+    // 스킬 슬롯 업데이트 코루틴
+    private IEnumerator LoadSkillSlotDataCoroutine()
+    {
+        // 스킬 슬롯 참조
+        skillSlot = GetComponent<SkillSlot>();
+
+        // 스킬 슬롯이 참조될때까지 기다림
+        yield return null;
+
+        // 참조 완료 후 UI 업데이트
+        UpdateSlotSkillIcons();
+    }
+
+    // 스킬 슬롯 아이콘 업데이트 메서드
+    private void UpdateSlotSkillIcons()
+    {
+        string className = Managers.Player.GetClassCode() switch
+        {
+            "C001" => "Warrior",
+            "C002" => "Archer",
+            "C003" => "Mage",
+            _ => ""
+        };
+
+        string[] skills = skillSlot != null ? skillSlot.LoadedSkills : null;
+
+        if (skills == null)
+        {
+            // 스킬이 없는 경우 모든 슬롯을 기본 이미지로 설정
+            FillRemainingSlots(0);
+            return;
+        }
+
+        // 스킬 개수만큼 반복
+        for (int i = 0; i < skills.Length; i++)
+        {
+            Sprite sprite = LoadSkillSprite(className, skills[i]);
+
+            // 이미지 컴포넌트에 Sprite 할당
+            if (sprite != null && skillIcons[i] != null)
+            {
+                skillIcons[i].sprite = sprite;
+            }
+        }
+
+        // 남은 슬롯들을 기본 이미지로 채우기
+        if (skills.Length < skillIcons.Length)
+        {
+            FillRemainingSlots(skills.Length);
+        }
+    }
+
+    // 남은 슬롯들을 기본 이미지로 채우는 메서드
+    private void FillRemainingSlots(int startIndex)
+    {
+        for (int i = startIndex; i < skillIcons.Length; i++)
+        {
+            if (skillIcons[i] != null)
+            {
+                skillIcons[i].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
+            }
+        }
+    }
+
+    // 스킬 아이콘 로드 메서드
+    private Sprite LoadSkillSprite(string className, string skillName)
+    {
+        // 스킬 아이콘 로드 시도
+        Sprite loadedSprite = Resources.Load<Sprite>($"Sprites/SkillIcon/{className}/{skillName}");
+
+        // 로드된 스킬 아이콘이 null이면 기본 이미지를 반환, 있다면 로드된 스킬 아이콘을 반환
+        return loadedSprite == null ? Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image") : loadedSprite;
+    }
+
 
     // 쿨타임 UI 초기화 메서드
     private void ResetCooldownUI(int skillIndex)

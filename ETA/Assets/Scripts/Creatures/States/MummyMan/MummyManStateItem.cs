@@ -521,13 +521,14 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            ps = Managers.Effect.Play(Define.Effect.Groggy, _controller.transform);
-            ps.transform.SetParent(_controller.transform);
-            ps.transform.position = new Vector3(0, 3.0f, 0);
+
 
             if (_controller.PrevState is ForeShadowingState)
             {
                 groggyTime = 3.0f;
+                ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
+                ps.transform.SetParent(_controller.transform);
+                ps.transform.position = new Vector3(0, 3.0f, 0);
             }
             else
             {
@@ -547,7 +548,6 @@ namespace MummyManStateItem
         }
         public override void Exit()
         {
-            Managers.Effect.Stop(ps);
         }
     }
     #endregion

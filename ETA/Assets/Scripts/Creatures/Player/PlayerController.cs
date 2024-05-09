@@ -57,9 +57,9 @@ public class PlayerController : BaseController
 
         //UI_CharacterNickName ui = Managers.UI.MakeWorldSpaceUI<UI_CharacterNickName>(transform);
         //ui.NickName = photonView.Owner.NickName;
-        
 
-        
+
+        _stateMachine.CurState = IDLE_STATE;
 
         //ChangeState(IDLE_STATE);
 
@@ -83,6 +83,9 @@ public class PlayerController : BaseController
         // 캐릭터가 다 생성 되었기 때문에 신호르 보내줍니다.
         // "내 캐릭터는 완성 되었다"
         FindObjectOfType<GameSystem>().SendCharacherInstantiatedMsg();
+
+        
+        //if(gameObject.name.StartsWith("Archer"))FindObjectOfType<CollavoSystem>().AddCurrentSkill(this, "Cyclone");
 
 
 
@@ -169,7 +172,7 @@ public class PlayerController : BaseController
         //Debug.Log(pos);
         _destination = GameObject.Find(pos).transform;
         transform.position = _destination.position;
-        Camera.main.GetComponent<CameraController>()._player = _destination.gameObject;
+        Camera.main.GetComponent<CameraController>()._player = _destination.parent.gameObject;
 
     }
 
@@ -351,6 +354,7 @@ public class PlayerController : BaseController
     [PunRPC]
     void RPC_TakeDamage(int attackDamage, bool isCounter)
     {
+        //Debug.Log($"{attackDamage} 이만큼 아파");
         CalcDamage(attackDamage, isCounter);
     }
 }

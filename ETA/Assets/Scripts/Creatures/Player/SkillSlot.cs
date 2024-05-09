@@ -16,24 +16,28 @@ public class SkillSlot : MonoBehaviour
 
     private Skill _currentSkill;
     public Skill CurrentSkill { get { return _currentSkill; } }
+
+    private string[] loadedSkills;
+    public string[] LoadedSkills { get { return loadedSkills; } }
+
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
         // 내 캐릭터만 UI에 연결하기
         if(GetComponent<PhotonView>().IsMine) GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
 
-        string[] loadedSkills = null;
+        // string[] loadedSkills = null;
         // TMP
         switch (gameObject.name.Replace("(Clone)",""))
         {
             case "Warrior": // 워리어
-                loadedSkills = new string[] { "WhirlWind", "HolyHammer", "DrawSword", "WindSlash", "Guard" };
+                loadedSkills = new string[] { "WhirlWind", "HolyHammer", "DrawSword", "WindSlash", "Guard", "Blessing" };
                 break;
             case "Archer": // 아처
-                loadedSkills = new string[]{ "WindBall", "WindSlash", "ArrowBomb", "RapidArrow", "WindShield", "ForestSpirit" };
+                loadedSkills = new string[]{ "ArrowShower", "RapidArrow", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "ForestSpirit", "LightningShot" };
                 break;
             case "Mage": // 메이지
-                loadedSkills = new string[] { "Thunder", "Meteor", "Protection", "BloodBoom", "Heal" };
+                loadedSkills = new string[] { "Thunder", "Meteor", "IceBone", "BloodBoom", "Heal", "Protection", "Protection", "Gravity" };
                 break;
         }
 
@@ -115,6 +119,8 @@ public class SkillSlot : MonoBehaviour
 
     public void NormalAttack()
     {
+
+        // 이게 꼭 필요할까?
         if (_currentSkill != null)
         {
             _currentSkill.StopCast();
@@ -139,7 +145,6 @@ public class SkillSlot : MonoBehaviour
         
         _currentSkill.Cast();
     }
-
 
     public void Clear()
     {
