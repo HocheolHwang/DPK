@@ -97,12 +97,14 @@ public class Define
     {
         WarriorNormalAttackEffect,
         ArcherNormalAttackEffect,
+        // ------------------------ KnightG ------------------------------
         KnightG_CounterEnable,
         KnightG_CounterAttack,
         KnightG_TwoSkillEnergy,
         KnightG_TwoSkillAttack,
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
+        // ------------------------ KnightG ------------------------------
         Groggy,
         EnergyNovaBlue,
         EnergyNovaGreen,
@@ -131,6 +133,7 @@ public class Define
         RapidArrowShot,
         MagicSphereBlue,
         DarknessSlash,
+        // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
         Mummy_RangedHit,
@@ -138,6 +141,8 @@ public class Define
         Mummy_JumpAura,
         Mummy_JumpDown,
         Mummy_Shouting,
+        Mummy_Clap,
+        // ------------------------ Mummy ------------------------------
         WindBall,
         MaxCount
     }

@@ -217,9 +217,6 @@ namespace MummyManStateItem
     #region CLAP
     public class ClapState : MummyManState
     {
-        // IDLE -> CLAP
-        // 첫 플레이어와 조우하면 몬스터를 소환한다.
-        // 소환한 몬스터가 한 번씩 죽으면, 다시 한 번 소환한다.
         public ClapState(MummyManController controller) : base(controller)
         {
         }
@@ -233,6 +230,7 @@ namespace MummyManStateItem
             _animator.CrossFade(_animData.ClapParamHash, 0.1f);
 
             _summonSkill.Summon();
+            Managers.Sound.Play("Sounds/Monster/Mummy/MummyClap_SND", Define.Sound.Effect);
         }
 
         public override void Execute()
