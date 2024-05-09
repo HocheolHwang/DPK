@@ -34,14 +34,8 @@ public class EffectManager
         return ps;
     }
 
-    public void Play(Define.Effect effect, float duration = 0.1f, Transform starter = null)
+    public ParticleSystem Play(Define.Effect effect, float duration = 0.1f, Transform starter = null)
     {
-        Managers.Coroutine.Run(PlayEffect(effect, duration, starter));
-    }
-
-    IEnumerator PlayEffect(Define.Effect effect, float duration, Transform starter)
-    {
-
         GameObject original = _effectPrefabs[(int)effect];
         GameObject go = Managers.Resource.Instantiate($"Effect/{original.name}");
 
@@ -55,9 +49,14 @@ public class EffectManager
 
         ps.Play();
 
-        yield return new WaitForSeconds(duration);
+        Managers.Coroutine.Run(StopEffect(ps, duration));
 
-        ps.Stop();
+        return ps;
+    }
+
+    IEnumerator StopEffect(ParticleSystem ps, float duration)
+    {
+        yield return new WaitForSeconds(duration);
 
         Managers.Resource.Destroy(ps.gameObject);
 
