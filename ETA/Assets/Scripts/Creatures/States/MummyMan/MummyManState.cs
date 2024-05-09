@@ -12,7 +12,7 @@ enum EMummyManPattern
     WindMill,
     MAX_LEN
 }
-
+// d
 public class MummyManState : State
 {
     protected static bool _meetPlayer;                     // 플레이어와 첫 조우 여부
