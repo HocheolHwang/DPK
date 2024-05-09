@@ -198,6 +198,40 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    // 현재 스킬 저장하기
+    IEnumerator LearnSkillRequest(UnityWebRequest request, Action callback)
+    {
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Current Class Error] {request.error}\n{request.downloadHandler.text}");
+        }
+        else
+        {
+            Debug.Log("Response: " + request.downloadHandler.text);
+
+            // 직업 변화 
+            callback?.Invoke();
+        }
+    }
+    // 모든 스킬 받아오기
+    IEnumerator AllSkillRequest(UnityWebRequest request, Action<SkillResDto> callback)
+    {
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Current Class Error] {request.error}\n{request.downloadHandler.text}");
+        }
+        else
+        {
+            Debug.Log("Response: " + request.downloadHandler.text);
+            SkillResDto data = JsonUtility.FromJson<SkillResDto>(request.downloadHandler.text);
+
+            // 직업 변화 
+            callback?.Invoke(data);
+        }
+    }
+
 
     UnityWebRequest CreateRequest(string method, string path, string json = null)
     {
@@ -304,6 +338,17 @@ public class NetworkManager : MonoBehaviour
     {
         string classData = JsonUtility.ToJson(dto);
         StartCoroutine(SelectClassRequest(CreateRequest("POST", "class/select", classData), callback));
+    }
+    // 스킬 저장하기
+    public void LearnSkillCall(ClassReqDto dto, Action callback)
+    {
+        string classData = JsonUtility.ToJson(dto);
+        StartCoroutine(LearnSkillRequest(CreateRequest("PUT", "skill/learned", classData), callback));
+    }
+    // 스킬 불러오기
+    public void AllSkillCall(Action<SkillResDto> callback)
+    {
+        StartCoroutine(AllSkillRequest(CreateRequest("GET", "skill/learned"), callback));
     }
 }
 

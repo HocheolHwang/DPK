@@ -48,7 +48,8 @@ public class Define
         StarShardPlain,
         TestDungeon01,
         TestDungeon02,
-        MultiPlayTest
+        MultiPlayTest,
+        Test
     }
     public enum UIEvent
     {
@@ -80,6 +81,10 @@ public class Define
         Porin,
         Shaga,
         Butterfly,
+        Starfish,
+        Krake,
+        Puffe,
+        Octopus,
         // ------------------- 보스 몬스터 -----------------------
         FlowerDryad,
         KnightG,
@@ -99,6 +104,8 @@ public class Define
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
         Groggy,
+        EnergyNovaBlue,
+        EnergyNovaGreen,
         AuraChargeYellow,
         AuraChargeBlue,
         AuraChargeGreen,
@@ -122,6 +129,8 @@ public class Define
         WindShield,
         ArrowStab,
         RapidArrowShot,
+        MagicSphereBlue,
+        DarknessSlash,
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
         Mummy_RangedHit,

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+
 
 public class TestUI : MonoBehaviour
 {
@@ -111,6 +113,12 @@ public class TestUI : MonoBehaviour
         {
             Debug.Log($"{rank.nickname} / {rank.playerLevel} / {rank.className}");
         }
+    }
+
+    public void Move()
+    {
+        SceneManager.LoadScene("WaterTest_Monster");
+        DontDestroyOnLoad(gameObject);
     }
     
 
