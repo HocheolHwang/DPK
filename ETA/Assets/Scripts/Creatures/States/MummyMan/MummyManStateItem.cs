@@ -339,6 +339,8 @@ namespace MummyManStateItem
     public class RushState : MummyManState
     {
         Vector3 destination;
+        float tempDist;
+        float rushTime;
 
         public RushState(MummyManController controller) : base(controller)
         {
@@ -346,31 +348,38 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            _agent.velocity = Vector3.zero;
+            tempDist = _agent.stoppingDistance;
+            _agent.stoppingDistance = 0;
+            _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
+
             destination = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
+            destination.y = _controller.transform.position.y;
+            HitBox hit = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+            hit.transform.position = destination;
 
             SetStartAndDestPos(_controller.transform.position, destination);
-
-            // pattern 수행
 
             InitTime(_animData.RushAnim.length);
             _animator.SetFloat("RushSpeed", 2.0f);
             _animator.CrossFade(_animData.RushParamHash, 0.1f);
+
+            _agent.SetDestination(_destPos);
+            StartCast((int)EMummyManPattern.Rush);
+
+            rushTime = CalcTimeToDest(_destPos);
         }
 
         public override void Execute()
         {
-            _animTime += Time.deltaTime;
-
-            JumpToTarget(_animTime);
-
-            if (IsStayForSeconds(CalcTimeToDest(destination)))
+            if (IsStayForSeconds(rushTime))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
         public override void Exit()
         {
+            _agent.stoppingDistance = tempDist;
+            _agent.speed = _controller.Stat.MoveSpeed;
         }
     }
     #endregion

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Data;
 using UnityEngine;
+using UnityEngine.AI;
 
 // shouting, rush
 enum EMummyManPattern
@@ -13,6 +14,7 @@ enum EMummyManPattern
     WindMill,
     Jump,
     Shouting,
+    Rush,
     MAX_LEN
 }
 
@@ -25,7 +27,7 @@ public class MummyManState : State
     
 
     protected static float _shoutingTime;
-    protected static float _threadHoldShouting = 5.0f;    // 14초
+    protected static float _threadHoldShouting = 14.0f;    // 14초
     protected static float _jumpTime;
     protected static float _threadHoldJump = 30.5f;        // 30.5초
 
@@ -153,7 +155,6 @@ public class MummyManState : State
         // destPos 방향을 바라본다.
         _controller.transform.LookAt(_destPos);
 
-        // duration초 만큼 이동한다.
         Vector3 moveStopPos = Vector3.Lerp(_startPos, _destPos, deltaTime);
         _controller.transform.position = moveStopPos;
     }
@@ -180,7 +181,7 @@ public class MummyManState : State
 
     public float CalcTimeToDest(Vector3 Destination)
     {
-        float moveSpeed = _controller.Stat.MoveSpeed;
+        float moveSpeed = _agent.speed;
         if (moveSpeed <= 0.1f)
         {
             Debug.Log($"{_controller.gameObject.name}의 속도({moveSpeed})가 0.1f보다 낮습니다.");
@@ -201,17 +202,40 @@ public class MummyManState : State
         return timeToDest;
     }
 
-    // pattern에서 이동 구현
-    public void RushToTarget()
+    //protected float CalcTimeToDest(Vector3 Destination)
+    //{
+    //    NavMeshPath path = new NavMeshPath();
+    //    Destination.y = _controller.transform.position.y;
+
+    //    // 현재 위치에서 목적지까지의 경로 계산
+    //    if (_agent.CalculatePath(Destination, path))
+    //    {
+    //        float pathLen = GetPathLength(path);
+    //        return pathLen / _agent.speed;
+    //    }
+
+    //    return -1;
+    //}
+
+    protected float GetPathLength(NavMeshPath path)
     {
-        // agent speed를 N배 증가 또는 일정 수치를 할당
-        _agent.speed = 10.0f;
+        float len = 0;
 
-        // 목적지까지 agent를 이동
-        _agent.SetDestination(_destPos);
+        if (path.corners.Length < 2)
+        {
+            Debug.Log("유효하지 않은 경로");
+            return len;
+        }
 
-        // agent.speed = Stat.MoveSpeed 원상복구
+        // 경로상의 모든 코너점을 순회하면서 두 점 사이의 거리를 구함
+        for (int i = 0; i < path.corners.Length - 1; ++i)
+        {
+            len += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+        }
+
+        return len;
     }
+
     #endregion
 
     // -------------------------- GLOBAL FUNCTIONS -----------------------------------

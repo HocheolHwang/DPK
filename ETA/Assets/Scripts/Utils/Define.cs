@@ -142,6 +142,8 @@ public class Define
         Mummy_JumpDown,
         Mummy_Shouting,
         Mummy_Clap,
+        Mummy_Rushing,
+        Mummy_RushEnd,
         // ------------------------ Mummy ------------------------------
         WindBall,
         MaxCount
