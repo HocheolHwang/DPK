@@ -24,6 +24,14 @@ public class SwordWave : Skill
         //SwordVolleyBlue
         yield return new WaitForSeconds(0.5f);
 
+        StartCoroutine(SwordWaveCoroutine());
+
+        yield return new WaitForSeconds(0.4f);
+        _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+    private IEnumerator SwordWaveCoroutine()
+    {
         for (int i = 0; i < 2; i++)
         {
             ParticleSystem ps = Managers.Effect.Play(Define.Effect.SwordWaveWhite, gameObject.transform);
@@ -37,8 +45,5 @@ public class SwordWave : Skill
             Managers.Resource.Destroy(hitbox.gameObject);
             Managers.Effect.Stop(ps);
         }
-
-        yield return new WaitForSeconds(0.4f);
-        _controller.ChangeState(_controller.MOVE_STATE);
     }
 }
