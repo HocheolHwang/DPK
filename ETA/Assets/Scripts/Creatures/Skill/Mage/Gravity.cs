@@ -21,20 +21,23 @@ public class Gravity : Skill
     {
         _animator.CrossFade("SKILL2", 0.1f);
         yield return new WaitForSeconds(0.6f);
-        Managers.Sound.Play("Skill/Gravity");
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Gravity01, 1.0f, gameObject.transform);
-        ps.transform.position = gameObject.transform.position + transform.up;
-        //ps.Play();
+        //Managers.Sound.Play("Skill/Gravity");
+        //ParticleSystem ps = Managers.Effect.Play(Define.Effect.Gravity01, 1.0f, gameObject.transform);
+        //ps.transform.position = gameObject.transform.position + transform.up;
+        ////ps.Play();
 
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, false);
-        //hitbox.transform.position = gameObject.transform.position + transform.forward;
-        hitbox.transform.position = gameObject.transform.position + transform.forward * 2.0f;
-        hitbox.transform.rotation = gameObject.transform.rotation;
-        hitbox.transform.localScale = skillRange;
+        //HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+        //hitbox.SetUp(transform, Damage, -1, false);
+        ////hitbox.transform.position = gameObject.transform.position + transform.forward;
+        //hitbox.transform.position = gameObject.transform.position + transform.forward * 2.0f;
+        //hitbox.transform.rotation = gameObject.transform.rotation;
+        //hitbox.transform.localScale = skillRange;
 
-        yield return new WaitForSeconds(0.1f);
-        Managers.Resource.Destroy(hitbox.gameObject);
+        //yield return new WaitForSeconds(0.1f);
+        //Managers.Resource.Destroy(hitbox.gameObject);
+
+        Managers.Coroutine.Run(GravityCoroutine());
+
         yield return new WaitForSeconds(1.0f);
         //Managers.Resource.Destroy(ps.gameObject);
         //Managers.Effect.Stop(ps);
@@ -49,13 +52,41 @@ public class Gravity : Skill
         yield return new WaitForSeconds(0.5f);
 
 
-        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.Gravity02, 1.0f, gameObject.transform);
-        ps1.transform.position = transform.position;
+        //ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.Gravity02, 1.0f, gameObject.transform);
+        //ps1.transform.position = transform.position;
 
-        yield return new WaitForSeconds(1.0f);
+        Managers.Coroutine.Run(GravityCollavoCoroutine());
+        yield return new WaitForSeconds(0.6f);
+
 
         //Managers.Effect.Stop(ps1);
         yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+    IEnumerator GravityCoroutine()
+    {
+        Managers.Sound.Play("Skill/Gravity");
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Gravity01, 1.0f, gameObject.transform);
+        ps.transform.position = gameObject.transform.position + transform.up;
+        //ps.Play();
+
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+        hitbox.SetUp(transform, Damage, -1, false);
+        //hitbox.transform.position = gameObject.transform.position + transform.forward;
+        hitbox.transform.position = gameObject.transform.position + transform.forward * 2.0f;
+        hitbox.transform.rotation = gameObject.transform.rotation;
+        hitbox.transform.localScale = skillRange;
+
+        yield return new WaitForSeconds(0.1f);
+        Managers.Resource.Destroy(hitbox.gameObject);
+    }
+
+    IEnumerator GravityCollavoCoroutine()
+    {
+        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.Gravity02, 1.0f, gameObject.transform);
+        ps1.transform.position = transform.position;
+
+        yield return new WaitForSeconds(1.0f);
     }
 }

@@ -16,8 +16,9 @@ public class WindShield : Skill
     public override IEnumerator StartSkillCast()
     {
         _animator.CrossFade("GUARD", 0.05f);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindShield, gameObject.transform);
-        StartCoroutine(Evasion(1.0f));
+        //ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindShield, 1.0f, gameObject.transform);
+        Managers.Coroutine.Run(WindShieldCoroutine());
+        Managers.Coroutine.Run(Evasion(1.0f));
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/GuardSkill");
         
@@ -33,5 +34,11 @@ public class WindShield : Skill
         _controller.Evasion = true;
         yield return new WaitForSeconds(duration);
         _controller.Evasion = false;
+    }
+
+    IEnumerator WindShieldCoroutine()
+    {
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindShield, 1.0f, gameObject.transform);
+        yield return new WaitForSeconds(0.1f);
     }
 }

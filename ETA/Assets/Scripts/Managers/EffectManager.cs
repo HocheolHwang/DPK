@@ -65,6 +65,7 @@ public class EffectManager
 
     public void Stop(ParticleSystem ps)
     {
+        if (ps == null) return;
         ps.Stop();
         Managers.Resource.Destroy(ps.gameObject);
     }

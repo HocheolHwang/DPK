@@ -158,6 +158,7 @@ public class Define
         CollavoWindBall,
         ForestSpiritSpawn,
         WindSlash,
+        CounteredEffect_Blue,
         CollavoCyclone,
         CollavoCycloneShot,
         CollavoBlackHole,
