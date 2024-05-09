@@ -59,7 +59,7 @@ const MainPage = () => {
                                 </Box>
                             </div>
                             <Box marginY={"1rem"}>
-                                <a href="https://j10e107.p.ssafy.io/file/download/LostTaste.zip" download={"LostTaste.zip"}>
+                                <a href="https://k10e207.p.ssafy.io/file/DungeonProcessingKnight.zip" download={"DungeonProcessingKnight.zip"}>
                                     <Box color={"white"} bgcolor={"#FFD257"} boxShadow={0}>
                                         <Stack
                                             paddingY={"2%"}
