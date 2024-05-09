@@ -77,6 +77,6 @@ public class MummyManMeleeAutoAttack : Pattern
         Managers.Resource.Destroy(hitbox.gameObject);
 
         yield return new WaitForSeconds(ps.main.duration);
-        Managers.Resource.Destroy(ps.gameObject);
+        Managers.Effect.Stop(ps);
     }
 }

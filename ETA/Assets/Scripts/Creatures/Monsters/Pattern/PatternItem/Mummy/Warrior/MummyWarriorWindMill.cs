@@ -43,7 +43,7 @@ public class MummyWarriorWindMill : Pattern
         ps.transform.position = hitbox.transform.position;
 
         yield return new WaitForSeconds(_animData.WindMillAnim.length);
-        Managers.Resource.Destroy(ps.gameObject);
+        Managers.Effect.Stop(ps);
 
         hitbox.SetActiveCollider();
 
@@ -54,6 +54,6 @@ public class MummyWarriorWindMill : Pattern
         Managers.Resource.Destroy(hitbox.gameObject);
 
         yield return new WaitForSeconds(ps.main.duration);
-        Managers.Resource.Destroy(ps.gameObject);
+        Managers.Effect.Stop(ps);
     }
 }

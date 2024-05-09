@@ -50,7 +50,8 @@ public class MeleeDetector : MonoBehaviour, IDetector
         
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+            //yield return new WaitForSeconds(0.1f);
+            yield return null;
 
             float closeDist = Mathf.Infinity;
             Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);

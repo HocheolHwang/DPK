@@ -58,13 +58,13 @@ public class MummyBufferRangedAutoAttack : Pattern
                 hitPs.transform.position = ps.transform.position;
 
                 Managers.Resource.Destroy(hitbox.gameObject);
-                Managers.Resource.Destroy(ps.gameObject);
+                Managers.Effect.Stop(ps);
                 yield break;
             }
 
             yield return null;
         }
-        Managers.Resource.Destroy(ps.gameObject);
+        Managers.Effect.Stop(ps);
         Managers.Resource.Destroy(hitbox.gameObject);
     }
 }

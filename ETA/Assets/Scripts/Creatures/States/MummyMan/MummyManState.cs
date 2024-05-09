@@ -5,10 +5,14 @@ using System.ComponentModel.Design.Serialization;
 using System.Data;
 using UnityEngine;
 
+// shouting, rush
 enum EMummyManPattern
 {
     RangedAutoAttack        = 0,
     MeleeAutoAttack,
+    WindMill,
+    Jump,
+    Shouting,
     MAX_LEN
 }
 
@@ -21,7 +25,7 @@ public class MummyManState : State
     
 
     protected static float _shoutingTime;
-    protected static float _threadHoldShouting = 14.0f;
+    protected static float _threadHoldShouting = 5.0f;    // 14초
     protected static float _jumpTime;
     protected static float _threadHoldJump = 30.5f;        // 30.5초
 
@@ -65,6 +69,36 @@ public class MummyManState : State
     // -------------------------- IDLE_BATTLE FUNCTIONS -----------------------------------
     #region IDLE_BATTLE FUNCTIONS
 
+    protected void SetDetector()
+    {
+        if (_isRangedAttack && (_summonSkill.WarriorDeathCount == MaxSummonCount))
+        {
+            _isRangedAttack = false;
+        }
+
+        // Target이 null인 문제를 해결하기 위해서 어느 Detector를 사용하는지 지정
+        if (_isRangedAttack)
+        {
+            _controller.GetComponent<MeleeDetector>().enabled = false;
+            _controller.GetComponent<RangedDetector>().enabled = true;
+            _detector = _controller.GetComponent<RangedDetector>();
+
+            _agent.stoppingDistance = _detector.AttackRange;
+            _target = _detector.Target;
+            _attackRange = _detector.AttackRange;
+        }
+        else
+        {
+            _controller.GetComponent<MeleeDetector>().enabled = true;
+            _controller.GetComponent<RangedDetector>().enabled = false;
+            _detector = _controller.GetComponent<MeleeDetector>();
+
+            _agent.stoppingDistance = _detector.AttackRange;
+            _target = _detector.Target;
+            _attackRange = _detector.AttackRange;
+        }
+    }
+
     protected bool IsSommoningMonster()
     {
         // 플레이어를 만났고
@@ -91,15 +125,6 @@ public class MummyManState : State
         }
     }
 
-    protected void DeadWarriorEvent()
-    {
-        if (_meetPlayer && (_summonSkill.WarriorDeathCount == MaxSummonCount))
-        {
-            _isRangedAttack = false;
-            return;
-        }
-    }
-
     protected bool IsDeadBuffer()
     {
         if (_meetPlayer && (_summonSkill.BufferDeathCount == MaxSummonCount) && !_isRush)
@@ -113,10 +138,10 @@ public class MummyManState : State
 
     // -------------------------- JUMP && BACK_LOCATION FUNCTIONS -----------------------------------
 
-    // Pattern에서 구현하도록 수정
     #region JUMP AND BACK_LOCATION FUNCTIONS
 
-    // pattern에서 구현할지 결정
+    // 시간 없어서 pattern으로 안 옮김
+    // 상태에는 상태에 관련된 함수만 가지고 싶음
     protected void JumpToTarget(float deltaTime)   // 점프 상태일 때는 forward지만, BACK_LOCATION 상태일 때는 뒤로 돌고 forward이다.
     {
         if (Vector3.Distance(_startPos, _destPos) <= 0.1f)
@@ -141,6 +166,7 @@ public class MummyManState : State
     #endregion
 
     // -------------------------- RUSH FUNCTIONS -----------------------------------
+    #region RUSH
     public bool IsPreviousState()
     {
         // wind mill 추가
@@ -186,46 +212,29 @@ public class MummyManState : State
 
         // agent.speed = Stat.MoveSpeed 원상복구
     }
+    #endregion
 
     // -------------------------- GLOBAL FUNCTIONS -----------------------------------
     #region GLOBAL_FUNCTIONS
     public void CheckGlobal()
     {
-        SetDetector();
-
         if (_stat.Hp <= 0)
         {
             _controller.ChangeState(_controller.DIE_STATE);
         }
     }
 
-    protected void SetDetector()
+    protected void UpdateTarget()
     {
-        if (_isRangedAttack && _summonSkill.WarriorDeathCount == 1)
-        {
-            _isRangedAttack = false;
-        }
-
-        // Target이 null인 문제를 해결하기 위해서 어느 Detector를 사용하는지 지정
         if (_isRangedAttack)
         {
-            _controller.GetComponent<MeleeDetector>().enabled = false;
-            _controller.GetComponent<RangedDetector>().enabled = true;
             _detector = _controller.GetComponent<RangedDetector>();
-
-            _agent.stoppingDistance = _detector.AttackRange;
             _target = _detector.Target;
-            _attackRange = _detector.AttackRange;
         }
         else
         {
-            _controller.GetComponent<MeleeDetector>().enabled = true;
-            _controller.GetComponent<RangedDetector>().enabled = false;
             _detector = _controller.GetComponent<MeleeDetector>();
-
-            _agent.stoppingDistance = _detector.AttackRange;
             _target = _detector.Target;
-            _attackRange = _detector.AttackRange;
         }
     }
     #endregion
