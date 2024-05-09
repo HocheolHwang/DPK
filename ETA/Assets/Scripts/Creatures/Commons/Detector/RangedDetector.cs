@@ -75,7 +75,8 @@ public class RangedDetector : MonoBehaviour, IDetector
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+            //yield return new WaitForSeconds(0.1f);
+            yield return null;
 
             Collider[] enemies = Physics.OverlapSphere(transform.position, _detectRange, TargetLayerMask);
             if (enemies.Length == 0)

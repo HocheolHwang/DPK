@@ -28,7 +28,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
     private void Start()
     {
         _target = null;
-        if (GetComponent<PhotonView>().IsMine)
+        //if (GetComponent<PhotonView>().IsMine)
             StartCoroutine(UpdateTarget());
 
     }
@@ -50,7 +50,8 @@ public class MeleeDetector : MonoBehaviour, IDetector
         
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+            //yield return new WaitForSeconds(0.1f);
+            yield return null;
 
             float closeDist = Mathf.Infinity;
             Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);
@@ -66,8 +67,8 @@ public class MeleeDetector : MonoBehaviour, IDetector
                 {
                     closeDist = distToEnemy;
                     Target = enemy.transform;
-                    int viewId = Target.GetComponent<PhotonView>().ViewID;
-                    gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
+                    //int viewId = Target.GetComponent<PhotonView>().ViewID;
+                    //gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
                 }
             }
         }

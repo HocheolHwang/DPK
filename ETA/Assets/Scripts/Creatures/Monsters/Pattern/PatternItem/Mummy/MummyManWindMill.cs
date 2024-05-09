@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MummyWarriorWindMill : Pattern
+public class MummyManWindMill : Pattern
 {
     [Header("개발 편의성")]
     [SerializeField] float _hitboxRadius = 4.0f;
     [SerializeField] float _upPos = 1.0f;
 
-    private MummyWarriorAnimationData _animData;
+    private MummyManAnimationData _animData;
 
     public override void Init()
     {
         base.Init();
 
         _createTime = 0.2f;
-        _patternDmg = 10;
+        _patternDmg = 20;
 
-        _animData = _controller.GetComponent<MummyWarriorAnimationData>();
+        _animData = _controller.GetComponent<MummyManAnimationData>();
     }
 
     public override IEnumerator StartPatternCast()
@@ -39,15 +39,7 @@ public class MummyWarriorWindMill : Pattern
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = Pos;
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.MummyWarrior_WindMill, _controller.transform);
-        ps.transform.position = hitbox.transform.position;
-
-        yield return new WaitForSeconds(_animData.WindMillAnim.length);
-        Managers.Effect.Stop(ps);
-
-        hitbox.SetActiveCollider();
-
-        ps = Managers.Effect.Play(Define.Effect.MummyWarrior_WindMill, _controller.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Mummy_WindMill, _controller.transform);
         ps.transform.position = hitbox.transform.position;
 
         yield return new WaitForSeconds(0.15f);

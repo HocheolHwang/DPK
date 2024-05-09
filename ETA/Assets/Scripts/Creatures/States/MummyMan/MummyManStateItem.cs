@@ -16,18 +16,24 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            SetDetector();
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
         public override void Execute()
         {
+            Debug.Log($"Target: {_target} | AttackRange: {_attackRange} | IsMeet? {_meetPlayer}");
+
+
             if (!_meetPlayer && _target != null) // 첫 조우 때 CLAP으로 시작
             {
+                Debug.Log($"IDLE TO CLAP");
                 _controller.ChangeState(_controller.CLAP_STATE);
             }
             else if (_target != null)
             {
+                Debug.Log($"IDLE TO CHASE");
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
         }
@@ -42,8 +48,6 @@ namespace MummyManStateItem
     #region IDLE_BATTLE
     public class IdleBattleState : MummyManState
     {
-        // CHASE -> IDLE BATTLE -> ATTACK
-        // CHASE -> IDLE BATTLE -> SHOUTING
         public IdleBattleState(MummyManController controller) : base(controller)
         {
         }
@@ -51,8 +55,10 @@ namespace MummyManStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
+
+            SetDetector();
             LookAtEnemy();
-            DeadWarriorEvent();
+
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
@@ -77,6 +83,10 @@ namespace MummyManStateItem
             else if (_shoutingTime >= _threadHoldShouting)
             {
                 _controller.ChangeState(_controller.SHOUTING_STATE);
+            }
+            else if ( !_detector.IsArriveToTarget(_target, _attackRange) )
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
             }
             else if (IsStayForSeconds())
             {
@@ -133,6 +143,8 @@ namespace MummyManStateItem
     {
         private float _attackLen;
         private float _windMillLen;
+
+        // 현재 detector를 고정시킨 뒤에 로직을 구현
 
         public AttackState(MummyManController controller) : base(controller)
         {
@@ -381,6 +393,8 @@ namespace MummyManStateItem
 
             InitTime(_animData.WindMillAnim.length);
             _animator.CrossFade(_animData.WindMillParamHash, 0.1f);
+
+            StartCast((int)EMummyManPattern.WindMill);
         }
 
         public override void Execute()
@@ -560,6 +574,7 @@ namespace MummyManStateItem
             if (_controller.CurState == _controller.DIE_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
+            UpdateTarget();
             CheckGlobal();
         }
     }
