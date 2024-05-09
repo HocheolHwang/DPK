@@ -90,6 +90,7 @@ public class Thunder : Skill
     private IEnumerator ThunderCoroutine(Define.Effect effect, Transform hitbox)
     {
         ParticleSystem ps = Managers.Effect.Play(effect, hitbox.transform);
+        ps.transform.localScale = new Vector3(2, 2, 2);
 
         yield return new WaitForSeconds(2.0f);
         Managers.Effect.Stop(ps);

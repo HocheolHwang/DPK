@@ -18,15 +18,14 @@ public class Protection : Skill
     {
         _animator.CrossFade("SKILL5", 0.1f);
         Managers.Sound.Play("Skill/Heal");
-        ps = Managers.Effect.Play(Define.Effect.AuraChargeBlue, gameObject.transform);
-
-        // 파티클 시스템을 캐릭터의 자식으로 설정
-        if (ps != null)
-            ps.transform.SetParent(gameObject.transform);
+        ps = Managers.Effect.Play(Define.Effect.EnergyNovaBlue, gameObject.transform);
 
         protectionCoroutine = StartCoroutine(ProtectionCoroutine());
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.2f);
+        if (ps != null)
+            Managers.Effect.Stop(ps);
+        yield return new WaitForSeconds(0.1f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 
@@ -36,7 +35,7 @@ public class Protection : Skill
         BuffBox buffbox1 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
         buffbox1.SetUp(transform, 100, BuffBox.stat.Shield);
         buffbox1.transform.position = gameObject.transform.position;
-        buffbox1.transform.localScale = new Vector3(10, 5, 10);
+        buffbox1.transform.localScale = new Vector3(20, 5, 20);
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(buffbox1.gameObject);
 
@@ -45,7 +44,7 @@ public class Protection : Skill
         BuffBox buffbox2 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
         buffbox2.SetUp(transform, -100, BuffBox.stat.Shield);
         buffbox2.transform.position = gameObject.transform.position;
-        buffbox2.transform.localScale = new Vector3(10, 5, 10);
+        buffbox2.transform.localScale = new Vector3(20, 5, 20);
         if (ps != null)
             Managers.Effect.Stop(ps);
     }

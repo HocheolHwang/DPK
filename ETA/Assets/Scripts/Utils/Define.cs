@@ -99,6 +99,8 @@ public class Define
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
         Groggy,
+        EnergyNovaBlue,
+        EnergyNovaGreen,
         AuraChargeYellow,
         AuraChargeBlue,
         AuraChargeGreen,

@@ -9,7 +9,7 @@ public class Heal : Skill
     protected override void Init()
     {
         SetCoolDownTime(1);
-        SkillType = Define.SkillType.Target;
+        SkillType = Define.SkillType.Immediately;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Heal.png");
     }
@@ -18,7 +18,7 @@ public class Heal : Skill
     {
         _animator.CrossFade("CASTING_IN", 0.1f);
         Managers.Sound.Play("Skill/Heal");
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.AuraChargeGreen, _skillSystem.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.EnergyNovaGreen, _skillSystem.transform);
 
         yield return new WaitForSeconds(0.2f);
         _animator.CrossFade("CASTING_WAIT", 0.1f);
@@ -41,8 +41,8 @@ public class Heal : Skill
     {
         BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
         buffbox.SetUp(transform, 1, BuffBox.stat.Hp);
-        buffbox.transform.position = _skillSystem.TargetPosition;
-        buffbox.transform.localScale = new Vector3(1, 3, 1);
+        buffbox.transform.position = gameObject.transform.position + transform.forward;
+        buffbox.transform.localScale = new Vector3(20, 3, 20);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.AuraChargeGreen, buffbox.transform);
         yield return new WaitForSeconds(0.4f);
         Managers.Resource.Destroy(buffbox.gameObject);
