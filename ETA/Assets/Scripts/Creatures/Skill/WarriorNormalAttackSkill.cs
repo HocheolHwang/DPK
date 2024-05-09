@@ -21,7 +21,9 @@ public class WarriorNormalAttackSkill : Skill
         
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/NormalAttack");
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WarriorNormalAttackEffect, gameObject.transform);
+
+        Managers.Effect.Play(Define.Effect.WarriorNormalAttackEffect, 0.1f, gameObject.transform);
+
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 1.5f;
@@ -32,8 +34,6 @@ public class WarriorNormalAttackSkill : Skill
         Managers.Resource.Destroy(hitbox.gameObject);
 
         yield return new WaitForSeconds(1.3f);
-
-        Managers.Effect.Stop(ps);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 }

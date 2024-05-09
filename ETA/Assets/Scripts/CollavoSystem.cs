@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,11 +16,15 @@ public class CollavoSystem : MonoBehaviour
 
     public void AddCurrentSkill(PlayerController controller, string skillName)
     {
+        //if (PhotonNetwork.IsMasterClient == false) return;
         if(_currentSkills.TryGetValue(skillName, out PlayerController player)) // 있음
         {
+            if (player.gameObject.name == controller.name) return;
             _currentSkills.Remove(skillName);
             ChangeToCollavoState(controller);
             ChangeToCollavoState(player);
+
+            
         }
         else // 없음
         {
@@ -36,6 +41,7 @@ public class CollavoSystem : MonoBehaviour
 
     public void RemoveCurrentSkill(string skillName)
     {
+        return;
         Debug.Log($"Remove {skillName}");
         if (skillName == null) return;
         if(_currentSkills.ContainsKey(skillName)) _currentSkills.Remove(skillName);
