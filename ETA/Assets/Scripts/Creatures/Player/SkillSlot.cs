@@ -34,10 +34,10 @@ public class SkillSlot : MonoBehaviour
                 loadedSkills = new string[] { "WhirlWind", "HolyHammer", "DrawSword", "WindSlash", "Guard" };
                 break;
             case "Archer": // 아처
-                loadedSkills = new string[]{ "ArrowShower", "RapidArrow", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "ForestSpirit" };
+                loadedSkills = new string[]{ "ArrowShower", "RapidArrow", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "LightningShot", "ForestSpirit" };
                 break;
             case "Mage": // 메이지
-                loadedSkills = new string[] { "Thunder", "Meteor", "Protection", "BloodBoom", "Heal" };
+                loadedSkills = new string[] { "Thunder", "Meteor", "IceBone", "BloodBoom", "Heal", "Protection" };
                 break;
         }
 
@@ -119,10 +119,10 @@ public class SkillSlot : MonoBehaviour
 
     public void NormalAttack()
     {
-        if (_currentSkill != null)
-        {
-            _currentSkill.StopCast();
-        }
+        //if (_currentSkill != null)
+        //{
+        //    _currentSkill.StopCast();
+        //}
         // TODO: 직업이 여러개면 바꿔 주어야할 것
         if (gameObject.name.Contains("Warrior"))
         {

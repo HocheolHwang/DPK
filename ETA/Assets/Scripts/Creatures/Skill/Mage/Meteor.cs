@@ -31,7 +31,7 @@ public class Meteor : Skill
         GameObject hammerPrefab = Managers.Resource.Instantiate("Skill/HitBoxRect");
         // Hammer prefab을 타겟 위치로 이동
         hammerPrefab.transform.position = _skillSystem.TargetPosition + new Vector3(0f, 15f, 0f);
-        ParticleSystem ps2 = Managers.Effect.Play(Define.Effect.FireTrail, hammerPrefab.transform);
+        ParticleSystem ps2 = Managers.Effect.Play(Define.Effect.FireTrail, 4.0f, hammerPrefab.transform);
         yield return new WaitForSeconds(0.8f);
 
         // 대상과의 거리 계산
@@ -57,7 +57,7 @@ public class Meteor : Skill
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
-        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.Explosion, hitbox.transform);
+        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.Explosion, 3.0f, hitbox.transform);
         yield return new WaitForSeconds(0.01f);
         Managers.Resource.Destroy(hitbox.gameObject);
         Managers.Resource.Destroy(hammerPrefab.gameObject);

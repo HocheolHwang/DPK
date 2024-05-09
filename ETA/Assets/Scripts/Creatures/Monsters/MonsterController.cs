@@ -28,7 +28,7 @@ public class MonsterController : BaseMonsterController
 
     protected override void Start()
     {
-        ChangeState(IDLE_STATE);
+        
     }
 
     // ---------------------------------- Init ------------------------------------------
@@ -47,6 +47,8 @@ public class MonsterController : BaseMonsterController
         ATTACK_STATE = new AttackState(this);
         DIE_STATE = new DieState(this);
         GLOBAL_STATE = new GlobalState(this);
+
+        _stateMachine.CurState = IDLE_STATE;
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
@@ -145,6 +147,4 @@ public class MonsterController : BaseMonsterController
     {
         CalcDamage(attackDamage, isCounter);
     }
-
-
 }

@@ -485,20 +485,23 @@ namespace KnightGStateItem
         public override void Enter()
         {
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
-            ps = Managers.Effect.Play(Define.Effect.Groggy, _controller.transform);
-            ps.transform.SetParent(_controller.transform);
-            ps.transform.position = new Vector3(0, 3.0f, 0);
+            
+
 
             
             // 보스는 카운터 이외의 공격에는 그로기 상태에 빠지지 않는다.
             if (_controller.PrevState is CounterEnableState)
             {
                 groggyTime = 3.0f;
+                ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
+                ps.transform.SetParent(_controller.transform);
+                ps.transform.position = new Vector3(0, 3.0f, 0);
             }
             else
             {
                 groggyTime = 0;
             }
+
 
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
@@ -514,7 +517,6 @@ namespace KnightGStateItem
         }
         public override void Exit()
         {
-            Managers.Effect.Stop(ps);
         }
     }
     #endregion

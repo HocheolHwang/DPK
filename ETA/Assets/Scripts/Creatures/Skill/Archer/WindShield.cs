@@ -22,7 +22,7 @@ public class WindShield : Skill
         Managers.Sound.Play("Skill/GuardSkill");
         
         yield return new WaitForSeconds(0.9f);
-        Managers.Effect.Stop(ps);
+        //Managers.Effect.Stop(ps);
         yield return new WaitForSeconds(0.1f);
 
         _controller.ChangeState(_controller.MOVE_STATE);

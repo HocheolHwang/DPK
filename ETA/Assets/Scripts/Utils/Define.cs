@@ -146,6 +146,15 @@ public class Define
         Mummy_RushEnd,
         // ------------------------ Mummy ------------------------------
         WindBall,
+        CycloneUIEffect,
+        LightningShot,
+        ArrowShower,
+        RapidArrowHit,
+        RapidArrowCharge,
+        ArrowBomb,
+        CollavoWindBall,
+        ForestSpiritSpawn,
+        WindSlash,
         MaxCount
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Define;
 
-public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IPunObservable
+public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 {
     protected StateMachine _stateMachine;
     protected State _curState;
@@ -97,8 +97,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
         {
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.red;
-
-
             string label = "Active State: " + _curState.ToString();
             Handles.Label(transform.position, label, style);
         }
@@ -267,6 +265,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
     // TakeDamage를 통해서만 DestoryObject를 수행할 수 있기 때문에 TEST를 위한 함수 추가
     IEnumerator TestDie()
     {
+
         Debug.Log($"------------- TEST DIE --------------");
         Debug.Log($"------------- TEST SUMMON SKILL - DespawnAll --------------");
 
@@ -282,36 +281,36 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat, IP
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        Debug.Log(stream.IsWriting);
-        if (stream.IsWriting)
-        {
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
-            stream.SendNext(Agent.velocity);
-        }
-        else
-        {
-            networkPosition = (Vector3)stream.ReceiveNext();
-            networkRotation = (Quaternion)stream.ReceiveNext();
-            Agent.velocity = (Vector3)stream.ReceiveNext();
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    //Debug.Log(stream.IsWriting);
+    //    if (stream.IsWriting)
+    //    {
+    //        stream.SendNext(transform.position);
+    //        stream.SendNext(transform.rotation);
+    //        stream.SendNext(Agent.velocity);
+    //    }
+    //    else
+    //    {
+    //        networkPosition = (Vector3)stream.ReceiveNext();
+    //        networkRotation = (Quaternion)stream.ReceiveNext();
+    //        Agent.velocity = (Vector3)stream.ReceiveNext();
 
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            //transform.position += Agent.velocity * lag;
-            networkPosition += (Agent.velocity * lag);
-        }
-    }
+    //        float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+    //        //transform.position += Agent.velocity * lag;
+    //        networkPosition += (Agent.velocity * lag);
+    //    }
+    //}
 
-    public void FixedUpdate()
-    {
-        //if (!photonView.IsMine)
-        //{
-        //    Debug.Log($"{gameObject.name}");
-        //    transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);
-        //    transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
-        //}
-    }
+    //public void FixedUpdate()
+    //{
+    //    if (!photonView.IsMine)
+    //    {
+    //        //Debug.Log($"{gameObject.name}");
+    //        transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);
+    //        transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+    //    }
+    //}
 
     public void SendTakeDamageMsg(int attackDamage, bool isCounter)
     {
