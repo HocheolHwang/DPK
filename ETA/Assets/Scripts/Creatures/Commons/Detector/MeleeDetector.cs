@@ -50,8 +50,8 @@ public class MeleeDetector : MonoBehaviour, IDetector
         
         while (true)
         {
-            //yield return new WaitForSeconds(0.1f);
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
+            //yield return null;
 
             float closeDist = Mathf.Infinity;
             Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);
@@ -59,18 +59,26 @@ public class MeleeDetector : MonoBehaviour, IDetector
             {
                 _target = null;
             }
-
-            foreach (Collider enemy in enemies)
+            else
             {
-                float distToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-                if (distToEnemy < closeDist)
+                int viewId = -1;
+                foreach (Collider enemy in enemies)
                 {
-                    closeDist = distToEnemy;
-                    Target = enemy.transform;
-                    int viewId = Target.GetComponent<PhotonView>().ViewID;
-                    gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
+                    float distToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                    if (distToEnemy < closeDist)
+                    {
+                        closeDist = distToEnemy;
+                        Target = enemy.transform;
+                        viewId = Target.GetComponent<PhotonView>().ViewID;
+
+                    }
                 }
+                if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
             }
+
+
+
+
         }
     }
 

@@ -84,6 +84,9 @@ public class PlayerController : BaseController
         // "내 캐릭터는 완성 되었다"
         FindObjectOfType<GameSystem>().SendCharacherInstantiatedMsg();
 
+        
+        //if(gameObject.name.StartsWith("Archer"))FindObjectOfType<CollavoSystem>().AddCurrentSkill(this, "Cyclone");
+
 
 
     }
