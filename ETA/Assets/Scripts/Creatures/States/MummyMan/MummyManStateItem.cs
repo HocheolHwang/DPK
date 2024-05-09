@@ -315,6 +315,7 @@ namespace MummyManStateItem
             _animator.SetFloat("JumpSpeed", 0.5f);
             _animator.CrossFade(_animData.JumpParamHash, 0.1f);
 
+            StartCast((int)EMummyManPattern.Jump);
         }
 
         public override void Execute()

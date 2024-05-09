@@ -126,6 +126,9 @@ public class Define
         Mummy_RangedAttack,
         Mummy_RangedHit,
         Mummy_WindMill,
+        Mummy_JumpAura,
+        Mummy_JumpDown,
+        Mummy_Shouting,
         WindBall,
         MaxCount
     }

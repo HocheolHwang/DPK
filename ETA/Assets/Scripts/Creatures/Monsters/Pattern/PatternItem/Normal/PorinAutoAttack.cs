@@ -53,7 +53,7 @@ public class PorinAutoAttack : Pattern
             if (hitbox.Penetration == 0)
             {
                 Managers.Resource.Destroy(hitbox.gameObject);
-                Managers.Resource.Destroy(ps.gameObject);
+                Managers.Effect.Stop(ps);
 
                 // hit event를 여기서 실행시키면 됨
 
@@ -63,6 +63,6 @@ public class PorinAutoAttack : Pattern
             yield return null;
         }
         Managers.Resource.Destroy(hitbox.gameObject);
-        Managers.Resource.Destroy(ps.gameObject);
+        Managers.Effect.Stop(ps);
     }
 }

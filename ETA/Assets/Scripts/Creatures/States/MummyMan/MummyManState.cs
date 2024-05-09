@@ -5,14 +5,16 @@ using System.ComponentModel.Design.Serialization;
 using System.Data;
 using UnityEngine;
 
+// shouting, rush
 enum EMummyManPattern
 {
     RangedAutoAttack        = 0,
     MeleeAutoAttack,
     WindMill,
+    Jump,
     MAX_LEN
 }
-// d
+
 public class MummyManState : State
 {
     protected static bool _meetPlayer;                     // 플레이어와 첫 조우 여부
@@ -24,7 +26,7 @@ public class MummyManState : State
     protected static float _shoutingTime;
     protected static float _threadHoldShouting = 14.0f;
     protected static float _jumpTime;
-    protected static float _threadHoldJump = 30.5f;        // 30.5초
+    protected static float _threadHoldJump = 5.5f;        // 30.5초
 
     protected static Transform _target;
     protected static float _attackRange;
@@ -135,10 +137,10 @@ public class MummyManState : State
 
     // -------------------------- JUMP && BACK_LOCATION FUNCTIONS -----------------------------------
 
-    // Pattern에서 구현하도록 수정
     #region JUMP AND BACK_LOCATION FUNCTIONS
 
-    // pattern에서 구현할지 결정
+    // 시간 없어서 pattern으로 안 옮김
+    // 상태에는 상태에 관련된 함수만 가지고 싶음
     protected void JumpToTarget(float deltaTime)   // 점프 상태일 때는 forward지만, BACK_LOCATION 상태일 때는 뒤로 돌고 forward이다.
     {
         if (Vector3.Distance(_startPos, _destPos) <= 0.1f)
