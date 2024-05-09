@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photonView: {fileID: 0}
-  UnitType: 7
+  UnitType: 8
   Animator: {fileID: 0}
   Agent: {fileID: 0}
   Stat: {fileID: 0}
@@ -182,10 +182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee81152ef09fb14bb6d8decaa883507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 110
-  _hp: 110
+  _maxHp: 130
+  _hp: 130
   _moveSpeed: 5
-  _attackDamage: 15
+  _attackDamage: 20
   _defense: 1
   _shield: 0
 --- !u!114 &8453857506676642955

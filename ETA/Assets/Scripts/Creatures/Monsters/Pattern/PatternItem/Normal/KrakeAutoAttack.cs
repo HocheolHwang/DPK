@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class KrakeAutoAttack : Pattern
 {
-
-    [Header("원하는 이펙트 이름을 넣으세요 - 디버깅")]
-    [SerializeField] string _effectName;
-
     [Header("개발 편의성")]
     [SerializeField] float _hitboxForwardLoc = 0.7f;
     [SerializeField] Vector3 _hitboxRange = new Vector3(1f, 1f, 1.3f);
@@ -34,7 +30,7 @@ public class KrakeAutoAttack : Pattern
 
         yield return new WaitForSeconds(_createTime);
 
-        Managers.Sound.Play("Monster/ForestSpirit/ForestSpiritAttack_SND", Define.Sound.Effect);
+        Managers.Sound.Play("Monster/Krake/SWIPE Slider Zip Movement Silly 04", Define.Sound.Effect);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         //ParticleSystem ps = Managers.Resource.Instantiate($"Effect/{_effectName}").GetComponent<ParticleSystem>();        // hit effect에서 가운데에 나오는 뾰족한 것만 가져오기
@@ -42,6 +38,7 @@ public class KrakeAutoAttack : Pattern
         hitbox.transform.localScale = _patternRange;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
+
 
         //ps.transform.position = hitbox.transform.position;
 

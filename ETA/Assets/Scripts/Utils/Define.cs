@@ -121,6 +121,8 @@ public class Define
         WindShield,
         ArrowStab,
         RapidArrowShot,
+        MagicSphereBlue,
+        DarknessSlash,
         MaxCount
     }
 }

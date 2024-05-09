@@ -6,7 +6,7 @@ public class StarFishInfo : PatternInfo
 {    protected override void Init()
     {
         base.Init();
-
+        GetComponent<MonsterController>().UnitType = Define.UnitType.Starfish;
         PatternList.Add(gameObject.GetOrAddComponent<StarFishAutoAttack>());
     }
 }

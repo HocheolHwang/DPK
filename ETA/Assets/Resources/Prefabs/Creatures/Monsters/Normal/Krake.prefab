@@ -1949,7 +1949,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.6
+  m_Height: 1.27
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -2000,7 +2000,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &7939881535781348483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2014,7 +2014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photonView: {fileID: 0}
-  UnitType: 0
+  UnitType: 8
   Animator: {fileID: 0}
   Agent: {fileID: 0}
   Stat: {fileID: 0}
@@ -2031,10 +2031,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee81152ef09fb14bb6d8decaa883507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 140
-  _hp: 140
+  _maxHp: 150
+  _hp: 150
   _moveSpeed: 3
-  _attackDamage: 20
+  _attackDamage: 25
   _defense: 1
   _shield: 0
 --- !u!114 &2758158111217750087

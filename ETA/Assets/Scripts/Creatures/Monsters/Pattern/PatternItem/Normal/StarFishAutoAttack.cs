@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class StarFishAutoAttack : Pattern
 {
-
-    [Header("원하는 이펙트 이름을 넣으세요 - 디버깅")]
-    [SerializeField] string _effectName;
-
     [Header("개발 편의성")]
     [SerializeField] float _hitboxForwardLoc = 0.7f;
     [SerializeField] Vector3 _hitboxRange = new Vector3(0.9f, 0.5f, 1.3f);
@@ -23,7 +19,7 @@ public class StarFishAutoAttack : Pattern
 
     public override IEnumerator StartPatternCast()
     {
-        Managers.Sound.Play("Monster/Tree/TreeAttack_SND", Define.Sound.Effect);
+        Managers.Sound.Play("Monster/StarFish/twinklesparkle", Define.Sound.Effect);
         // 멈췄을 때 target을 향해 hitbox, effect 생성
         Vector3 rootForward = transform.TransformDirection(Vector3.forward * (_controller.Detector.AttackRange - _hitboxForwardLoc)); // Target이 null일 수 있기 때문에 임의로 지정
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
