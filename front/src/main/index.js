@@ -38,36 +38,36 @@ const MainPage = () => {
                 <Stack direction={"column"} alignItems={"center"} justifyContent={"center"}>
                     <Box marginTop={"5vh"} bgcolor={"rgba(255,255,255,0.95)"} height={"95vh"}>
                         <Stack justifyContent={"center"} alignItems={"center"}>
-                            <Box marginTop={"7vh"}>
-                                <img src={LogoImg}></img>
+                            <Box marginTop={"7vh"} height={"15vh"}>
+                                <img src={LogoImg} height={"100%"}></img>
                             </Box>
-                            <Box marginTop={"2vh"} marginBottom={"4vh"} color={"#FFD257"} sx={{ fontSize: "500%" }}>
+                            <Box marginTop={"2vh"} marginBottom={"4vh"} color={"#FFD257"} sx={{ fontSize: "8vh" }}>
                                 던전 액션 RPG
                             </Box>
                             <div onClick={openHandler} style={{ cursor: "pointer" }}>
-                                <Box color={"white"} bgcolor={"#FFD257"} boxShadow={0} sx={{}}>
+                                <Box className="main-btn" color={"white"} bgcolor={"#FFD257"} boxShadow={0} sx={{}}>
                                     <Stack
                                         paddingY={"2%"}
-                                        minWidth={"36vw"}
+                                        minWidth={"30vw"}
                                         direction={"column"}
                                         alignItems={"center"}
                                         justifyContent={"center"}
-                                        sx={{ fontSize: "400%" }}
+                                        sx={{ fontSize: "6vh" }}
                                     >
                                         게임 소개영상
                                     </Stack>
                                 </Box>
                             </div>
                             <Box marginY={"1rem"}>
-                                <a href="https://j10e107.p.ssafy.io/file/download/LostTaste.zip" download={"LostTaste.zip"}>
-                                    <Box color={"white"} bgcolor={"#FFD257"} boxShadow={0}>
+                                <a href="https://k10e207.p.ssafy.io/file/DungeonProcessingKnight.zip" download={"DungeonProcessingKnight.zip"}>
+                                    <Box className="main-btn" color={"white"} bgcolor={"#FFD257"} boxShadow={0}>
                                         <Stack
                                             paddingY={"2%"}
-                                            minWidth={"36vw"}
+                                            minWidth={"30vw"}
                                             direction={"column"}
                                             alignItems={"center"}
                                             justifyContent={"center"}
-                                            sx={{ fontSize: "400%" }}
+                                            sx={{ fontSize: "6vh" }}
                                         >
                                             게임 다운로드
                                         </Stack>
