@@ -45,7 +45,7 @@ const MainPage = () => {
                                 던전 액션 RPG
                             </Box>
                             <div onClick={openHandler} style={{ cursor: "pointer" }}>
-                                <Box color={"white"} bgcolor={"#FFD257"} boxShadow={0} sx={{}}>
+                                <Box className="main-btn" color={"white"} bgcolor={"#FFD257"} boxShadow={0} sx={{}}>
                                     <Stack
                                         paddingY={"2%"}
                                         minWidth={"36vw"}
@@ -60,7 +60,7 @@ const MainPage = () => {
                             </div>
                             <Box marginY={"1rem"}>
                                 <a href="https://k10e207.p.ssafy.io/file/DungeonProcessingKnight.zip" download={"DungeonProcessingKnight.zip"}>
-                                    <Box color={"white"} bgcolor={"#FFD257"} boxShadow={0}>
+                                    <Box className="main-btn" color={"white"} bgcolor={"#FFD257"} boxShadow={0}>
                                         <Stack
                                             paddingY={"2%"}
                                             minWidth={"36vw"}
