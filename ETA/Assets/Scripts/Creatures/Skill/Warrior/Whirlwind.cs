@@ -19,8 +19,8 @@ public class WhirlWind : Skill
     public override IEnumerator StartSkillCast()
     {
         _animator.CrossFade("WHIRLWIND", 0.1f);
-        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.WhirlwindEffect1, gameObject.transform);
-        ParticleSystem ps2 = Managers.Effect.Play(Define.Effect.WhirlwindEffect2, gameObject.transform);
+        StartCoroutine(WhirlWindCoroutine());
+
         for (int i = 0; i < 8; i++)
         {
             Managers.Sound.Play("Skill/Whirlwind");
@@ -33,15 +33,13 @@ public class WhirlWind : Skill
         }
 
         yield return new WaitForSeconds(0.1f);
-        Managers.Effect.Stop(ps1);
-        Managers.Effect.Stop(ps2);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 
     public override IEnumerator StartCollavoSkillCast()
     {
         _animator.CrossFade("WHIRLWIND", 0.1f);
-        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.WhirlwindEffect1, gameObject.transform);
+        StartCoroutine(WhirlWindCoroutine());
 
         for (int i = 0; i < 5; i++)
         {
@@ -58,16 +56,22 @@ public class WhirlWind : Skill
         }
 
         yield return new WaitForSeconds(0.2f);
-        Managers.Effect.Stop(ps1);
         _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+    private IEnumerator WhirlWindCoroutine()
+    {
+        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.WhirlwindEffect1, 2.0f, gameObject.transform);
+        ParticleSystem ps2 = Managers.Effect.Play(Define.Effect.WhirlwindEffect2, 2.0f, gameObject.transform);
+
+        yield return new WaitForSeconds(0.1f);
     }
 
     private IEnumerator TornadoCoroutine(Define.Effect effect, Transform hitbox)
     {
-        ParticleSystem ps = Managers.Effect.Play(effect, hitbox.transform);
+        ParticleSystem ps = Managers.Effect.Play(effect, 2.0f, hitbox.transform);
         ps.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
-        yield return new WaitForSeconds(3.0f);
-        Managers.Effect.Stop(ps);
+        yield return new WaitForSeconds(0.1f);
     }
 }

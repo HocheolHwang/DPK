@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Heal : Skill
 {
-    private Coroutine protectionCoroutine;
+    private Coroutine healCoroutine;
 
     protected override void Init()
     {
@@ -18,35 +18,31 @@ public class Heal : Skill
     {
         _animator.CrossFade("CASTING_IN", 0.1f);
         Managers.Sound.Play("Skill/Heal");
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.EnergyNovaGreen, _skillSystem.transform);
 
         yield return new WaitForSeconds(0.2f);
         _animator.CrossFade("CASTING_WAIT", 0.1f);
-        for (int i = 0; i < 15; i++)
-        {
-            yield return new WaitForSeconds(0.1f);
-            protectionCoroutine = StartCoroutine(ProtectionCoroutine());
-        }
+        healCoroutine = StartCoroutine(HealCoroutine());
 
-        yield return new WaitForSeconds(0.1f);
-        if (ps != null)
-            Managers.Effect.Stop(ps);
+        yield return new WaitForSeconds(1.5f);
         _animator.CrossFade("CASTING_OUT", 0.1f);
+
         yield return new WaitForSeconds(0.3f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 
 
-    private IEnumerator ProtectionCoroutine()
+    private IEnumerator HealCoroutine()
     {
-        BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
-        buffbox.SetUp(transform, 1, BuffBox.stat.Hp);
-        buffbox.transform.position = gameObject.transform.position + transform.forward;
-        buffbox.transform.localScale = new Vector3(20, 3, 20);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.AuraChargeGreen, buffbox.transform);
-        yield return new WaitForSeconds(0.4f);
-        Managers.Resource.Destroy(buffbox.gameObject);
-        if (ps != null)
-            Managers.Effect.Stop(ps);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.EnergyNovaGreen, 2.0f, gameObject.transform);
+
+        for (int i = 0; i < 15; i++)
+        {
+            BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
+            buffbox.SetUp(transform, 1, BuffBox.stat.Hp);
+            buffbox.transform.position = gameObject.transform.position;
+            buffbox.transform.localScale = new Vector3(20, 3, 20);
+            yield return new WaitForSeconds(0.1f);
+            Managers.Resource.Destroy(buffbox.gameObject);
+        }
     }
 }

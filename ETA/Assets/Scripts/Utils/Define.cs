@@ -120,6 +120,8 @@ public class Define
         BlessingEffect,
         HealEffect,
         SwordWaveWhite,
+        SlashWideBlue,
+        SwordVolleyBlue,
         StoneSlash1,
         StoneSlash2,
         SurfaceExplosionDirtStone,

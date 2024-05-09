@@ -15,9 +15,18 @@ public class Massacre : Skill
 
     public override IEnumerator StartSkillCast()
     {
+        StartCoroutine(MassacreCoroutine());
+
+        yield return new WaitForSeconds(0.7f);
+        _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+    private IEnumerator MassacreCoroutine()
+    {
         // 애니메이션과 이펙트 재생
         for (int i = 0; i < 4; i++)
         {
+            Managers.Sound.Play("Skill/NormalAttack");
             Define.Effect effectName = (i % 2 == 0) ? Define.Effect.StoneSlash1 : Define.Effect.StoneSlash2;
 
             if (i % 2 == 0)
@@ -25,7 +34,7 @@ public class Massacre : Skill
             else
                 _animator.CrossFade("ATTACK2", 0.1f); // 2번째와 4번째 칼 휘두르기
 
-            ParticleSystem ps = Managers.Effect.Play(effectName, gameObject.transform);
+            ParticleSystem ps = Managers.Effect.Play(effectName, 1.0f, gameObject.transform);
 
             // 히트박스 생성
             HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
@@ -37,7 +46,5 @@ public class Massacre : Skill
             Managers.Effect.Stop(ps);
             Managers.Resource.Destroy(hitbox.gameObject);
         }
-        yield return new WaitForSeconds(0.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
     }
 }

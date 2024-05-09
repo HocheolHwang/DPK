@@ -47,10 +47,11 @@ public class IceBone : Skill
         hitbox.transform.localScale = skillRange;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.SpikeIce, hitbox.transform);
         Managers.Sound.Play("Skill/TargetSkill");
+
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
-        yield return new WaitForSeconds(3.0f); // 이펙트 발동 시점 조절
+        yield return new WaitForSeconds(3.0f);
         Managers.Effect.Stop(ps);
     }
 
