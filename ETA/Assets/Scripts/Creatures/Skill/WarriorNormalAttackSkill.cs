@@ -22,7 +22,7 @@ public class WarriorNormalAttackSkill : Skill
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/NormalAttack");
 
-        Managers.Effect.Play(Define.Effect.WarriorNormalAttackEffect, 0.1f, gameObject.transform);
+        Managers.Effect.Play(Define.Effect.WarriorNormalAttackEffect, gameObject.transform);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);

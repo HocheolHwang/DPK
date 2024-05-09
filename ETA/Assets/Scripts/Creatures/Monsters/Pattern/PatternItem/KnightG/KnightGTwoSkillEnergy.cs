@@ -43,7 +43,7 @@ public class KnightGTwoSkillEnergy : Pattern
         _hitbox.transform.rotation = transform.rotation;
         _hitbox.transform.position = objectLoc;
 
-        _ps = Managers.Effect.Play(Define.Effect.KnightG_TwoSkillEnergy, _controller.transform);
+        _ps = Managers.Effect.Play(Define.Effect.KnightG_TwoSkillEnergy, 0, _controller.transform);
         _ps.transform.position = _hitbox.transform.position;
 
         // KnightGTwoSkillEnergy_SND
@@ -67,7 +67,6 @@ public class KnightGTwoSkillEnergy : Pattern
         }
 
         Managers.Resource.Destroy(_hitbox.gameObject);
-        Managers.Effect.Stop(_ps);
-        _ps.GetComponent<AudioSource>().Stop();
+        
     }
 }

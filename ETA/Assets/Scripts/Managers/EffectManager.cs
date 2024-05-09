@@ -20,7 +20,7 @@ public class EffectManager
         }
 
     }
-    public ParticleSystem Play(Define.Effect effect, Transform starter)
+    public ParticleSystem Play(Define.Effect effect, Transform starter = null)
     {
         GameObject original = _effectPrefabs[(int)effect];
         GameObject go = Managers.Resource.Instantiate($"Effect/{original.name}");
@@ -34,7 +34,7 @@ public class EffectManager
         return ps;
     }
 
-    public ParticleSystem Play(Define.Effect effect, float duration = 0.1f, Transform starter = null)
+    public ParticleSystem Play(Define.Effect effect, float duration = 0.0f, Transform starter = null)
     {
         GameObject original = _effectPrefabs[(int)effect];
         GameObject go = Managers.Resource.Instantiate($"Effect/{original.name}");
@@ -48,9 +48,9 @@ public class EffectManager
         ParticleSystem ps = go.GetComponent<ParticleSystem>();
 
         ps.Play();
-
-        Managers.Coroutine.Run(StopEffect(ps, duration));
-
+        if (duration == 0) duration = ps.main.duration;
+        if(duration > 0) Managers.Coroutine.Run(StopEffect(ps, duration));
+        
         return ps;
     }
 

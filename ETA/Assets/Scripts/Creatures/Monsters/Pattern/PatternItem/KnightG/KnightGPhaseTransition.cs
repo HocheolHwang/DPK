@@ -41,7 +41,7 @@ public class KnightGPhaseTransition : Pattern
         _hitbox.transform.rotation = transform.rotation;
         _hitbox.transform.position = objectLoc;
 
-        _ps = Managers.Effect.Play(Define.Effect.KnightG_PhaseTransition, _controller.transform);
+        _ps = Managers.Effect.Play(Define.Effect.KnightG_PhaseTransition, 0, _controller.transform);
         _ps.transform.SetParent(transform);
 
         Invoke("PlayBeatSound", 0.25f);
