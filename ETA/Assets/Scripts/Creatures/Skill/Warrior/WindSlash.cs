@@ -42,8 +42,8 @@ public class WindSlash : Skill
         _animator.CrossFade("COLLAVO", 0.1f);
         yield return new WaitForSeconds(0.5f);
 
-        ParticleSystem ps0 = Managers.Resource.Instantiate("Effect/CycloneUIEffect").GetComponent<ParticleSystem>();
-        ps0.Play();
+        //ParticleSystem ps0 = Managers.Resource.Instantiate("Effect/CycloneUIEffect").GetComponent<ParticleSystem>();
+        //ps0.Play();
 
         ParticleSystem ps = Managers.Resource.Instantiate("Effect/WindSlash").GetComponent<ParticleSystem>();
         ps.transform.position = gameObject.transform.position + transform.up;
@@ -76,7 +76,7 @@ public class WindSlash : Skill
         Managers.Resource.Destroy(hitbox.gameObject);
         yield return new WaitForSeconds(1.0f);
         Managers.Resource.Destroy(ps.gameObject);
-        Managers.Resource.Destroy(ps0.gameObject);
+        //Managers.Resource.Destroy(ps0.gameObject);
         Managers.Resource.Destroy(ps1.gameObject);
         Managers.Resource.Destroy(ps2.gameObject);
 

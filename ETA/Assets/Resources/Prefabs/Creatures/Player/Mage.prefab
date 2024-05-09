@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 7165674948341768064}
   - component: {fileID: -7910020264550295268}
   - component: {fileID: 5031976017889342358}
+  - component: {fileID: -785621988742261031}
   m_Layer: 6
   m_Name: Mage
   m_TagString: Player
@@ -226,7 +227,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 4694504172340541658}
+  - {fileID: -785621988742261031}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -249,6 +250,39 @@ MonoBehaviour:
   CollavoSkillRange: {x: 0, y: 0, z: 0}
   RangeType: 0
   CollavoSkillName: 
+--- !u!114 &-785621988742261031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8639721712671698837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 4
+    InterpolateMoveTowardsSpeed: 8
+    InterpolateLerpSpeed: 8
+    ExtrapolateOption: 2
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1001 &8345211140607448447
 PrefabInstance:
   m_ObjectHideFlags: 0

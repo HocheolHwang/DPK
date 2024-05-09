@@ -79,13 +79,8 @@ namespace PlayerStates
 
                 if (_detector.IsArriveToTarget())
                 {
-                    if (_playerController.CurState is MoveState)
-                    {
                         _playerController.ChangeState(_playerController.ATTACK_STATE);
                         return;
-
-                        
-                    }
 
                 }
             }
@@ -150,6 +145,7 @@ namespace PlayerStates
         {
             base.Enter();
             if (_playerController.photonView.IsMine) _playerController.ChangeToSkillState();
+            GameObject.FindObjectOfType<CollavoSystem>().RemoveCurrentSkill(_playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
             _agent.velocity = Vector3.zero;
             _agent.isStopped = true;
 
@@ -190,6 +186,8 @@ namespace PlayerStates
             
             if (_playerController.photonView.IsMine) _playerController.ChangeToCollavoState();
             _playerController.SkillSlot.CastCollavoSkill(_playerController._usingSkill);
+            GameObject.FindObjectOfType<CollavoSystem>().RemoveCurrentSkill(_playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
+
 
 
         }
@@ -267,7 +265,7 @@ namespace PlayerStates
 
             if (Time.time - startTime >= 3.0f)
             {
-                GameObject.FindObjectOfType<CollavoSystem>().RemoveCurrentSkill(_playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
+                //GameObject.FindObjectOfType<CollavoSystem>().RemoveCurrentSkill(_playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
                 _playerController.ChangeState(_playerController.SKILL_STATE);
                 return;
             }
@@ -279,7 +277,7 @@ namespace PlayerStates
             else // 키를 떄면?
             {
                 //_playerController.ChangeState(_playerController.COLLAVO_STATE);
-                GameObject.FindObjectOfType<CollavoSystem>().RemoveCurrentSkill(_playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
+                //GameObject.FindObjectOfType<CollavoSystem>().RemoveCurrentSkill(_playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
                 _playerController.ChangeState(_playerController.SKILL_STATE);
                 return;
 

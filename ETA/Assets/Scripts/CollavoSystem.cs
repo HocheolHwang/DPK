@@ -10,7 +10,7 @@ public class CollavoSystem : MonoBehaviour
     {
 
         //TMP
-        _currentSkills.Add("Cyclone", null);
+        //_currentSkills.Add("Cyclone", null);
     }
 
     public void AddCurrentSkill(PlayerController controller, string skillName)
@@ -30,12 +30,14 @@ public class CollavoSystem : MonoBehaviour
 
     public void ChangeToCollavoState(PlayerController controller)
     {
-        if (controller == null) return;
+        if (controller == null || !controller.photonView.IsMine) return;
         controller.ChangeState(controller.COLLAVO_STATE);
     }
 
     public void RemoveCurrentSkill(string skillName)
     {
+        Debug.Log($"Remove {skillName}");
+        if (skillName == null) return;
         if(_currentSkills.ContainsKey(skillName)) _currentSkills.Remove(skillName);
     }
 
