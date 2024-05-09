@@ -16,13 +16,17 @@ public class SkillSlot : MonoBehaviour
 
     private Skill _currentSkill;
     public Skill CurrentSkill { get { return _currentSkill; } }
+
+    private string[] loadedSkills;
+    public string[] LoadedSkills { get { return loadedSkills; } }
+
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
         // 내 캐릭터만 UI에 연결하기
         if(GetComponent<PhotonView>().IsMine) GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
 
-        string[] loadedSkills = null;
+        // string[] loadedSkills = null;
         // TMP
         switch (gameObject.name.Replace("(Clone)",""))
         {
@@ -139,7 +143,6 @@ public class SkillSlot : MonoBehaviour
         
         _currentSkill.Cast();
     }
-
 
     public void Clear()
     {
