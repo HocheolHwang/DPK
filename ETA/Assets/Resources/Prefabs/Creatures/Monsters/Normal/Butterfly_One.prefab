@@ -402,8 +402,11 @@ GameObject:
   - component: {fileID: 7244837445936276119}
   - component: {fileID: 5124365159700954334}
   - component: {fileID: 452731348794098034}
-  - component: {fileID: -4592542451953495264}
   - component: {fileID: 6766364674128847522}
+  - component: {fileID: -6260146403126256312}
+  - component: {fileID: 3959328205618097347}
+  - component: {fileID: 5734166396427527513}
+  - component: {fileID: 3461901959014726534}
   m_Layer: 7
   m_Name: Butterfly_One
   m_TagString: Monster
@@ -531,6 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86cc2e01477d23642b72d4eb2b4b9830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
   UnitType: 5
   Animator: {fileID: 0}
   Agent: {fileID: 0}
@@ -554,24 +558,6 @@ MonoBehaviour:
   _attackDamage: 3
   _defense: 0
   _shield: 0
---- !u!114 &-4592542451953495264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4811888516200086630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DetectRange: 18
-  _attackRange: 14
-  _target: {fileID: 0}
-  TargetLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &6766364674128847522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,6 +575,76 @@ MonoBehaviour:
   attackParamName: ATTACK
   dieParamName: DIE
   attackAnim: {fileID: -3860031751415323757, guid: ed5a417dfb7260d4d9eef74294102b49, type: 3}
+--- !u!114 &-6260146403126256312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811888516200086630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detectRange: 18
+  _attackRange: 14
+  _target: {fileID: 0}
+  TargetLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &3959328205618097347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811888516200086630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &5734166396427527513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811888516200086630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5124365159700954334}
+  - {fileID: 3959328205618097347}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3461901959014726534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811888516200086630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961d1354e403ca34da4876288403c67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5473436153560122614
 GameObject:
   m_ObjectHideFlags: 0
