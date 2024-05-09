@@ -141,6 +141,8 @@ public class Define
         Mummy_JumpDown,
         Mummy_Shouting,
         WindBall,
+        FlowerDryadAttack,
+        FlowerDryad_CounterAttack,
         CycloneUIEffect,
         LightningShot,
         ArrowShower,
