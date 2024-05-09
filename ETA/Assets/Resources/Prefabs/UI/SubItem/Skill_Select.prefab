@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6231397987678273134}
   - component: {fileID: 8954912098621614702}
   m_Layer: 5
-  m_Name: S_Skill
+  m_Name: Slot_Skill_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6648335694570663843}
   m_Layer: 5
-  m_Name: Skill_Category_2_List
+  m_Name: Category_2_Skill_List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8481966905683378395}
   m_Layer: 5
-  m_Name: Skill_Category_1_Container
+  m_Name: Category_1_Skill_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 620106197145762664}
   - component: {fileID: 8359808540183485213}
   m_Layer: 5
-  m_Name: Skill_Category_2_Item_6
+  m_Name: Category_2_Skill_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 197094946376166147}
   - component: {fileID: 3845930308245819017}
   m_Layer: 5
-  m_Name: Q_Skill
+  m_Name: Slot_Skill_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 2f27aec26253dad47a7c5f79ab370ef0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 3526061079440758600}
   - component: {fileID: 9013837201716039576}
   m_Layer: 5
-  m_Name: Skill_Category_2_Item_2
+  m_Name: Category_2_Skill_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 1139151779061828366}
   - component: {fileID: 3495125563362085666}
   m_Layer: 5
-  m_Name: Skill_Category_3_Item_4
+  m_Name: Category_3_Skill_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -538,7 +538,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8681837939819502768}
   m_Layer: 5
-  m_Name: Skill_Category_4_List
+  m_Name: Category_4_Skill_List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -581,7 +581,7 @@ GameObject:
   - component: {fileID: 1715891735268251538}
   - component: {fileID: 1480628067398342462}
   m_Layer: 5
-  m_Name: E_Skill
+  m_Name: Slot_Skill_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -693,7 +693,7 @@ GameObject:
   - component: {fileID: 8926370185124134200}
   - component: {fileID: 4543047272036544677}
   m_Layer: 5
-  m_Name: Skill_Category_2_Text
+  m_Name: Category_2_Skill_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -827,7 +827,7 @@ GameObject:
   - component: {fileID: 3655153048239309005}
   - component: {fileID: 5578432920267216789}
   m_Layer: 5
-  m_Name: F_Skill
+  m_Name: Slot_Skill_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -902,7 +902,7 @@ GameObject:
   - component: {fileID: 7217544743435955239}
   - component: {fileID: 7780364387868734779}
   m_Layer: 5
-  m_Name: Skill_Common_Item_11
+  m_Name: Common_Skill_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1105,7 +1105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 938e446ad6f71984284c20ea5bee8668, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1164,7 +1164,7 @@ GameObject:
   - component: {fileID: 4108416418788159780}
   - component: {fileID: 7209570898976280371}
   m_Layer: 5
-  m_Name: Skill_Category_3_Item_6
+  m_Name: Category_3_Skill_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1236,6 +1236,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1409905671142046399}
+  - component: {fileID: 8062440806505217421}
   m_Layer: 5
   m_Name: Skill_Select
   m_TagString: Untagged
@@ -1264,6 +1265,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1205, y: 810}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &8062440806505217421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525390022561696450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f92f313280fd04ea0f877024530b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2697670203868412376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,7 +1289,7 @@ GameObject:
   - component: {fileID: 4370846318028424805}
   - component: {fileID: 8665284468455167451}
   m_Layer: 5
-  m_Name: Skill_Category_1_Item_3
+  m_Name: Category_1_Skill_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1351,7 +1364,7 @@ GameObject:
   - component: {fileID: 8020983326082744191}
   - component: {fileID: 2012553683263149683}
   m_Layer: 5
-  m_Name: Skill_Category_1_Item_5
+  m_Name: Category_1_Skill_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1426,7 +1439,7 @@ GameObject:
   - component: {fileID: 1050510660336151564}
   - component: {fileID: 402746302832069434}
   m_Layer: 5
-  m_Name: Skill_Category_3_Text
+  m_Name: Category_3_Skill_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1560,7 +1573,7 @@ GameObject:
   - component: {fileID: 5987181005806860489}
   - component: {fileID: 8351575708004701433}
   m_Layer: 5
-  m_Name: Skill_Common_Item_2
+  m_Name: Common_Skill_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1635,7 +1648,7 @@ GameObject:
   - component: {fileID: 610186789306325189}
   - component: {fileID: 9014907964626979838}
   m_Layer: 5
-  m_Name: R_Skill
+  m_Name: Slot_Skill_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1748,7 +1761,7 @@ GameObject:
   - component: {fileID: 7553449260487838228}
   - component: {fileID: 1505768583304935287}
   m_Layer: 5
-  m_Name: Skill_Common_Item_6
+  m_Name: Common_Skill_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1862,7 +1875,7 @@ GameObject:
   - component: {fileID: 3859024427197097049}
   - component: {fileID: 7601465969839741920}
   m_Layer: 5
-  m_Name: Skill_Common_Text
+  m_Name: Common_Skill_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1996,7 +2009,7 @@ GameObject:
   - component: {fileID: 6283190615500419817}
   - component: {fileID: 1534899734147057348}
   m_Layer: 5
-  m_Name: Skill_Category_2_Item_4
+  m_Name: Category_2_Skill_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2071,7 +2084,7 @@ GameObject:
   - component: {fileID: 3422723623035935150}
   - component: {fileID: 6182909434635210432}
   m_Layer: 5
-  m_Name: A_Skill
+  m_Name: Slot_Skill_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2146,7 +2159,7 @@ GameObject:
   - component: {fileID: 8091412475308151504}
   - component: {fileID: 4514463140622624441}
   m_Layer: 5
-  m_Name: Skill_Category_1_Item_1
+  m_Name: Category_1_Skill_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2221,7 +2234,7 @@ GameObject:
   - component: {fileID: 7250715305030303126}
   - component: {fileID: 3540101085948019448}
   m_Layer: 5
-  m_Name: Skill_Category_4_Item_6
+  m_Name: Category_4_Skill_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2294,7 +2307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7194276872074619059}
   m_Layer: 5
-  m_Name: Skill_Common_List
+  m_Name: Common_Skill_List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2343,7 +2356,7 @@ GameObject:
   - component: {fileID: 7950190815756587494}
   - component: {fileID: 3822553227976459505}
   m_Layer: 5
-  m_Name: Skill_Common_Item_5
+  m_Name: Common_Skill_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2418,7 +2431,7 @@ GameObject:
   - component: {fileID: 9194160885937405463}
   - component: {fileID: 1657075586187812133}
   m_Layer: 5
-  m_Name: Skill_Category_4_Item_4
+  m_Name: Category_4_Skill_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2493,7 +2506,7 @@ GameObject:
   - component: {fileID: 7427556082444178234}
   - component: {fileID: 6695407029883136742}
   m_Layer: 5
-  m_Name: Skill_Category_2_Item_3
+  m_Name: Category_2_Skill_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2568,7 +2581,7 @@ GameObject:
   - component: {fileID: 8252691469962388108}
   - component: {fileID: 955627035448165864}
   m_Layer: 5
-  m_Name: Skill_Category_2_Item_1
+  m_Name: Category_2_Skill_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2643,7 +2656,7 @@ GameObject:
   - component: {fileID: 8660294101067686717}
   - component: {fileID: 8398089327360777350}
   m_Layer: 5
-  m_Name: Skill_Category_3_Item_3
+  m_Name: Category_3_Skill_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2718,7 +2731,7 @@ GameObject:
   - component: {fileID: 2369959611738859495}
   - component: {fileID: 1667573888468822370}
   m_Layer: 5
-  m_Name: Skill_Common_Item_10
+  m_Name: Common_Skill_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2793,7 +2806,7 @@ GameObject:
   - component: {fileID: 2149309531562265104}
   - component: {fileID: 494072593840224693}
   m_Layer: 5
-  m_Name: Skill_Category_4_Text
+  m_Name: Category_4_Skill_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2925,7 +2938,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3080785285823592753}
   m_Layer: 5
-  m_Name: Skill_Category_1_List
+  m_Name: Category_1_Skill_List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2966,7 +2979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 544296058702041137}
   m_Layer: 5
-  m_Name: Skill_Category_3_List
+  m_Name: Category_3_Skill_List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3084,7 +3097,7 @@ GameObject:
   - component: {fileID: 2826702932856543868}
   - component: {fileID: 4235359766711075978}
   m_Layer: 5
-  m_Name: Skill_Category_4_Item_2
+  m_Name: Category_4_Skill_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3159,7 +3172,7 @@ GameObject:
   - component: {fileID: 6786509673309531554}
   - component: {fileID: 627867710249873652}
   m_Layer: 5
-  m_Name: Skill_Common_Item_12
+  m_Name: Common_Skill_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3234,7 +3247,7 @@ GameObject:
   - component: {fileID: 6336546532677627123}
   - component: {fileID: 13896339840569327}
   m_Layer: 5
-  m_Name: D_Skill
+  m_Name: Slot_Skill_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3309,7 +3322,7 @@ GameObject:
   - component: {fileID: 8905550432967662839}
   - component: {fileID: 1449101253644224742}
   m_Layer: 5
-  m_Name: Skill_Category_1_Item_6
+  m_Name: Category_1_Skill_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3384,7 +3397,7 @@ GameObject:
   - component: {fileID: 1681716976436123635}
   - component: {fileID: 2308665960889593515}
   m_Layer: 5
-  m_Name: Skill_Category_2_Item_5
+  m_Name: Category_2_Skill_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3481,8 +3494,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 70, y: -1.5}
-  m_SizeDelta: {x: 200, y: -3}
+  m_AnchoredPosition: {x: 70, y: -2.5}
+  m_SizeDelta: {x: 200, y: -5}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1942636118673062130
 CanvasRenderer:
@@ -3613,10 +3626,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8665950920259998544}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 70, y: 0}
-  m_SizeDelta: {x: 200, y: 57}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 70, y: -2.5}
+  m_SizeDelta: {x: 200, y: -5}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1540294362084616228
 CanvasRenderer:
@@ -3727,7 +3740,7 @@ GameObject:
   - component: {fileID: 3718141262648965617}
   - component: {fileID: 7295184894556551171}
   m_Layer: 5
-  m_Name: Skill_Category_1_Item_4
+  m_Name: Category_1_Skill_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3802,7 +3815,7 @@ GameObject:
   - component: {fileID: 1610211955104697760}
   - component: {fileID: 7768879556331049957}
   m_Layer: 5
-  m_Name: Skill_Common_Item_7
+  m_Name: Common_Skill_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3953,7 +3966,7 @@ GameObject:
   - component: {fileID: 3888950504262921418}
   - component: {fileID: 8478578292462256524}
   m_Layer: 5
-  m_Name: Skill_Common_Item_8
+  m_Name: Common_Skill_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4026,7 +4039,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1568797535666064751}
   m_Layer: 5
-  m_Name: Skill_Common_Container
+  m_Name: Common_Skill_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4237,7 +4250,7 @@ GameObject:
   - component: {fileID: 3473826419756720881}
   - component: {fileID: 5476667549545256401}
   m_Layer: 5
-  m_Name: Skill_Category_4_Item_3
+  m_Name: Category_4_Skill_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4312,7 +4325,7 @@ GameObject:
   - component: {fileID: 2293767315437504991}
   - component: {fileID: 2252205067220540284}
   m_Layer: 5
-  m_Name: Skill_Category_4_Item_1
+  m_Name: Category_4_Skill_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4422,7 +4435,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1378608717706383338}
   m_Layer: 5
-  m_Name: Skill_Category_3_Container
+  m_Name: Category_3_Skill_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4461,7 +4474,7 @@ GameObject:
   - component: {fileID: 5685404134343247394}
   - component: {fileID: 9021265056896682450}
   m_Layer: 5
-  m_Name: Skill_Common_Item_4
+  m_Name: Common_Skill_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4534,7 +4547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567450223596469656}
   m_Layer: 5
-  m_Name: Skill_Category_4_Container
+  m_Name: Category_4_Skill_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4573,7 +4586,7 @@ GameObject:
   - component: {fileID: 6562297207878081764}
   - component: {fileID: 3434400764052137019}
   m_Layer: 5
-  m_Name: Skill_Category_3_Item_5
+  m_Name: Category_3_Skill_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4648,7 +4661,7 @@ GameObject:
   - component: {fileID: 7709766103522952}
   - component: {fileID: 7277019440460385003}
   m_Layer: 5
-  m_Name: Skill_Category_1_Text
+  m_Name: Category_1_Skill_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4782,7 +4795,7 @@ GameObject:
   - component: {fileID: 8335986837004470091}
   - component: {fileID: 5212875503236734713}
   m_Layer: 5
-  m_Name: Skill_Category_4_Item_5
+  m_Name: Category_4_Skill_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4857,7 +4870,7 @@ GameObject:
   - component: {fileID: 6209123781885851695}
   - component: {fileID: 9173679688151572326}
   m_Layer: 5
-  m_Name: Skill_Category_1_Item_2
+  m_Name: Category_1_Skill_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4932,7 +4945,7 @@ GameObject:
   - component: {fileID: 1524990087490406899}
   - component: {fileID: 2519467216181287510}
   m_Layer: 5
-  m_Name: Skill_Category_3_Item_2
+  m_Name: Category_3_Skill_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5007,7 +5020,7 @@ GameObject:
   - component: {fileID: 5312246589714758469}
   - component: {fileID: 2403861526233981909}
   m_Layer: 5
-  m_Name: Skill_Common_Item_9
+  m_Name: Common_Skill_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5123,7 +5136,7 @@ GameObject:
   - component: {fileID: 7680463186847033147}
   - component: {fileID: 4651629316231930490}
   m_Layer: 5
-  m_Name: Skill_Common_Item_3
+  m_Name: Common_Skill_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5196,7 +5209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8298691026627292135}
   m_Layer: 5
-  m_Name: Skill_Category_2_Container
+  m_Name: Category_2_Skill_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5235,7 +5248,7 @@ GameObject:
   - component: {fileID: 6415656641994280997}
   - component: {fileID: 5661501401785395115}
   m_Layer: 5
-  m_Name: Skill_Category_3_Item_1
+  m_Name: Category_3_Skill_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5310,7 +5323,7 @@ GameObject:
   - component: {fileID: 5643110329761903399}
   - component: {fileID: 5755429448107889120}
   m_Layer: 5
-  m_Name: W_Skill
+  m_Name: Slot_Skill_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5385,7 +5398,7 @@ GameObject:
   - component: {fileID: 6759243456727915307}
   - component: {fileID: 1505379167862468921}
   m_Layer: 5
-  m_Name: Skill_Common_Item_1
+  m_Name: Common_Skill_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
