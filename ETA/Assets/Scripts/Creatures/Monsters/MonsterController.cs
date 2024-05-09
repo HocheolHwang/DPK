@@ -73,6 +73,15 @@ public class MonsterController : BaseMonsterController
             case Define.UnitType.Tree:
                 Managers.Sound.Play("Monster/Tree/TreeHit_SND", Define.Sound.Effect);
                 break;
+            case Define.UnitType.Starfish:
+                Managers.Sound.Play("Monster/Tree/TreeHit_SND", Define.Sound.Effect);
+                break;
+            case Define.UnitType.Krake:
+                Managers.Sound.Play("Monster/Tree/TreeHit_SND", Define.Sound.Effect);
+                break;
+            case Define.UnitType.Puffe:
+                Managers.Sound.Play("Monster/Tree/TreeHit_SND", Define.Sound.Effect);
+                break;
         }
     }
 

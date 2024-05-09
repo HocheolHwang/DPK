@@ -273,8 +273,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             }
         }
 
-        
-        Debug.Log(" 머가없냐 " + selectRoom.Name);
         if (selectRoom.MaxPlayers <= selectRoom.PlayerCount)
         {
             // 방에 모든 사람이 들어가면 더 이상 들어갈 수 없음
