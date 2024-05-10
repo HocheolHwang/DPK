@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -72,14 +73,20 @@ public class SummonSkill : MonoBehaviour
         _buffer.transform.rotation = gameObject.transform.rotation;
         _warrior.transform.rotation = gameObject.transform.rotation;
 
-        _refBuffer = Instantiate(_buffer).GetComponent<MummyBufferController>();
-        _refWarrior = Instantiate(_warrior).GetComponent<MummyWarriorController>();
+        //_refBuffer = Instantiate(_buffer).GetComponent<MummyBufferController>();
+        //_refWarrior = Instantiate(_warrior).GetComponent<MummyWarriorController>();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _refBuffer = PhotonNetwork.Instantiate($"Prefabs/Creatures/Monsters/{_buffer.name}", _buffer.transform.position, _buffer.transform.rotation).GetComponent<MummyBufferController>();
+            _refWarrior = PhotonNetwork.Instantiate($"Prefabs/Creatures/Monsters/{_warrior.name}", _warrior.transform.position, _warrior.transform.rotation).GetComponent<MummyWarriorController>();
+            _refBuffer.OnDeath -= HandleDeathBuffer;
+            _refWarrior.OnDeath -= HandleDeathWarrior;
+            _refBuffer.OnDeath += HandleDeathBuffer;
+            _refWarrior.OnDeath += HandleDeathWarrior;
+        }
 
         // Action에 함수 세팅
-        _refBuffer.OnDeath -= HandleDeathBuffer;
-        _refWarrior.OnDeath -= HandleDeathWarrior;
-        _refBuffer.OnDeath += HandleDeathBuffer;
-        _refWarrior.OnDeath += HandleDeathWarrior;
+
     }
 
     public void DespawnAll()        // MummyMan이 죽었을 떄, Buffer와 Warrior의 체력을 0으로 세팅

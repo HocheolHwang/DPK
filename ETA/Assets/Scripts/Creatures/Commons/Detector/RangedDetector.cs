@@ -94,6 +94,7 @@ public class RangedDetector : MonoBehaviour, IDetector
                 // detectRange 안쪽과 attackRange 바깥쪽에 플레이어가 존재하도록 값을 세팅한다.
                 // 그래야 모든 플레이어를 감지할 수 있기 때문이다.
                 float farthestDist = 0;
+                int viewId = -1;
                 foreach (Collider player in enemies)
                 {
                     // player.GetComponent<Collider>().enabled
@@ -104,9 +105,13 @@ public class RangedDetector : MonoBehaviour, IDetector
                         {
                             farthestDist = distToEnemy;
                             _target = player.transform;
+                            viewId = _target.GetComponent<PhotonView>().ViewID;
                         }
                     }
                 }
+                if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateRangeTarget", RpcTarget.Others, viewId);
+
+
                 //foreach (PlayerController player in _players)
                 //{
                 //    if (player.stat.Hp > 0)
@@ -123,6 +128,7 @@ public class RangedDetector : MonoBehaviour, IDetector
             else
             {
                 float closeDist = Mathf.Infinity;
+                int viewId = -1;
                 foreach (Collider enemy in enemies)
                 {
                     _hasMetTargetOne = true;    // 한 번 Target을 만남
@@ -132,8 +138,11 @@ public class RangedDetector : MonoBehaviour, IDetector
                     {
                         closeDist = distToEnemy;
                         _target = enemy.transform;
+                        viewId = _target.GetComponent<PhotonView>().ViewID;
                     }
                 }
+                if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateRangeTarget", RpcTarget.Others, viewId);
+
             }
         }
     }
@@ -150,5 +159,22 @@ public class RangedDetector : MonoBehaviour, IDetector
         _attackRange = attackRange;
         if (_target == null) return false;
         return Vector3.Distance(_target.position, transform.position) <= _attackRange;
+    }
+
+
+    [PunRPC]
+    void RPC_UpdateRangeTarget(int viewId)
+    {
+
+        PhotonView[] views = GameObject.FindObjectsOfType<PhotonView>();
+
+        foreach (var view in views)
+        {
+            if (view.ViewID == viewId)
+            {
+                Target = view.transform;
+                return;
+            }
+        }
     }
 }
