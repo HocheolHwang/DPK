@@ -30,7 +30,7 @@ public class BloodBoom : Skill
         _animator.CrossFade("SKILL2", 0.1f);
 
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }

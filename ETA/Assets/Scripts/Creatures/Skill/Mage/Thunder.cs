@@ -27,19 +27,19 @@ public class Thunder : Skill
 
             HitBox hitbox1 = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
             hitbox1.SetUp(transform, Damage);
-            hitbox1.transform.position = gameObject.transform.position + transform.forward * (i + 1);
+            hitbox1.transform.position = gameObject.transform.position + transform.forward * 1.5f * (i + 1);
             hitbox1.transform.localScale = skillRange;
             StartCoroutine(ThunderCoroutine(effectName1, hitbox1.transform));
 
             HitBox hitbox2 = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
             hitbox2.SetUp(transform, Damage);
-            hitbox2.transform.position = gameObject.transform.position + transform.forward * (i + 1) + transform.right * i;
+            hitbox2.transform.position = gameObject.transform.position + transform.forward * 1.5f * (i + 1) + transform.right * i;
             hitbox2.transform.localScale = skillRange;
             StartCoroutine(ThunderCoroutine(effectName2, hitbox2.transform));
 
             HitBox hitbox3 = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
             hitbox3.SetUp(transform, Damage);
-            hitbox3.transform.position = gameObject.transform.position + transform.forward * (i + 1) + transform.right * -i;
+            hitbox3.transform.position = gameObject.transform.position + transform.forward * 1.5f * (i + 1) + transform.right * -i;
             hitbox2.transform.localScale = skillRange;
             StartCoroutine(ThunderCoroutine(effectName2, hitbox3.transform));
 
