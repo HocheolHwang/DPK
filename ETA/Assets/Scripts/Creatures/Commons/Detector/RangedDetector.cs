@@ -109,7 +109,7 @@ public class RangedDetector : MonoBehaviour, IDetector
                         }
                     }
                 }
-                if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
+                if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateRangeTarget", RpcTarget.Others, viewId);
 
 
                 //foreach (PlayerController player in _players)
@@ -141,7 +141,7 @@ public class RangedDetector : MonoBehaviour, IDetector
                         viewId = _target.GetComponent<PhotonView>().ViewID;
                     }
                 }
-                if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
+                if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateRangeTarget", RpcTarget.Others, viewId);
 
             }
         }
@@ -163,7 +163,7 @@ public class RangedDetector : MonoBehaviour, IDetector
 
 
     [PunRPC]
-    void RPC_UpdateTarget(int viewId)
+    void RPC_UpdateRangeTarget(int viewId)
     {
 
         PhotonView[] views = GameObject.FindObjectsOfType<PhotonView>();
