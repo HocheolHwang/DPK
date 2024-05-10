@@ -8,7 +8,7 @@ public class DrawSword : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(15);
+        SetCoolDownTime(10);
         Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Immediately;
