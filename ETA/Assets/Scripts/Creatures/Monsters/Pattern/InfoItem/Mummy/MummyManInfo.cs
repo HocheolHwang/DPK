@@ -9,8 +9,10 @@ using UnityEngine;
 /// 3. WindMill: ATK + P_ATK(20)
 /// 4. Jump: ATK + P_ATK(40)
 /// 5. Shouting: ATK + P_ATK(20)
+/// 
+/// Counter 이후
 /// 6. Rush: ATK + P_ATK(50, 150)           - counter 이후 공격
-/// 7. Buff: 버프 수치( HP 10% 회복, ATK += 10, DEF += 5, TIME: 30초 )
+/// 7. Buff: 자신한테만 버프 수치( HP 10% 회복, ATK += 10, DEF += 5, TIME: 30초, Shield: 30초 HP 10% 부여 )
 /// </summary>
 public class MummyManInfo : PatternInfo
 {

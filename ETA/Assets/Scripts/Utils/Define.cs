@@ -148,6 +148,7 @@ public class Define
         Mummy_Rushing,
         Mummy_RushEnd,
         Mummy_Buff,
+        Mummy_Shield,
         // ------------------------ Mummy ------------------------------
         WindBall,
         CycloneUIEffect,

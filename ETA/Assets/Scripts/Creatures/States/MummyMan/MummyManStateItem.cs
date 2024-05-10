@@ -416,7 +416,7 @@ namespace MummyManStateItem
 
     // -------------------------------------- FORE_SHADOWING : COUNTER ENABLE ------------------------------------------------
     #region FORE_SHADOWING
-    // 버프 수치(HP 10% 회복, ATK += 10, DEF += 5, TIME: 30초 )
+    // 자신한테만 버프 수치( HP 10% 회복, ATK += 10, DEF += 5, TIME: 30초, Shield: 30초 HP 10% 부여 )
     // COUNTER ENABLE
     public class ForeShadowingState : MummyManState
     {

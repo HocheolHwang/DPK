@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // 버프 수치(HP 10% 회복, ATK += 10, DEF += 5, TIME: 30초 )
@@ -11,6 +12,7 @@ public class MummyBufferBuff : Pattern
 
     private Transform[] _closedMonsterList;
     private float duration;
+    private float buffDuration;
     private int healAmount;
     private int upAmountATK;
     private int upAmountDEF;
@@ -23,7 +25,8 @@ public class MummyBufferBuff : Pattern
         _patternRange = _hitboxRange;
 
         // Buff Stat
-        duration = 30.0f;
+        duration = 35.0f;       // effect 파괴 시간
+        buffDuration = 30.0f;   // effect 비활성화 시간 및 버프 효과 적용 시간
         upAmountATK = 10;
         upAmountDEF = 5;
     }
@@ -46,7 +49,8 @@ public class MummyBufferBuff : Pattern
             monster.GetComponent<BaseController>().IncreaseDefense(upAmountDEF);
             monster.GetComponent<BaseController>().IncreaseHp(healAmount);
 
-            StartCoroutine(DecreaseStat(duration, monster));
+            // buffer가 죽어도 coroutine을 멈추지 않는다.
+            ps.GetOrAddComponent<PatternCoroutine>().Enumerator = DecreaseStat(buffDuration, monster, ps, upAmountATK, upAmountDEF);
         }
     }
 
@@ -71,13 +75,19 @@ public class MummyBufferBuff : Pattern
         }
     }
 
-    IEnumerator DecreaseStat(float afterTime, Transform controller)
+    IEnumerator DecreaseStat(float afterTime, Transform controller, ParticleSystem ps, int amountATK, int amountDEF)
     {
         yield return new WaitForSeconds(afterTime);
 
-        if (controller == null) yield break;
+        ps.gameObject.SetActive(false);
 
-        controller.GetComponent<BaseController>().DecreaseDamage(upAmountATK);
-        controller.GetComponent<BaseController>().DecreaseDefense(upAmountDEF);
+        controller.GetComponent<BaseController>().DecreaseDamage(amountATK);
+        controller.GetComponent<BaseController>().DecreaseDefense(amountDEF);
     }
+
+    //private void DecreaseStat(Transform monster, int amountATK, int amountDEF)
+    //{
+    //    monster.GetComponent<BaseController>().DecreaseDamage(amountATK);
+    //    monster.GetComponent<BaseController>().DecreaseDefense(amountDEF);
+    //}
 }
