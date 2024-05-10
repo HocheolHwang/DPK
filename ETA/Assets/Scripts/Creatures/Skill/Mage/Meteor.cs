@@ -22,7 +22,8 @@ public class Meteor : Skill
 
         yield return new WaitForSeconds(2.0f);
         meteorCoroutine = StartCoroutine(MeteorCoroutine());
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator MeteorCoroutine()

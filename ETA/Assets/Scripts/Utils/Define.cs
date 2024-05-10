@@ -43,11 +43,9 @@ public class Define
         Lobby,
         Opening,
         Tutorial,
-        DeepForest,
-        ForgottenTemple,
         StarShardPlain,
-        TestDungeon01,
-        TestDungeon02,
+        ForgottenTemple,
+        SeaOfAbyss,
         MultiPlayTest,
         Test
     }
@@ -97,19 +95,24 @@ public class Define
     {
         WarriorNormalAttackEffect,
         ArcherNormalAttackEffect,
-        KnightG_CounterEnable,
+        MageNormalAttackEffect,
+        // ------------------------ KnightG ------------------------------
         KnightG_CounterAttack,
         KnightG_TwoSkillEnergy,
         KnightG_TwoSkillAttack,
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
+        // ------------------------ Common ------------------------------
+        CounterEnable,
         Groggy,
+        // ------------------------ Common  ------------------------------
         EnergyNovaBlue,
         EnergyNovaGreen,
         AuraChargeYellow,
         AuraChargeBlue,
         AuraChargeGreen,
         AuraChargeRed,
+        FlashLight,
         Thunder1,
         Thunder2,
         SpikeIce,
@@ -133,6 +136,7 @@ public class Define
         RapidArrowShot,
         MagicSphereBlue,
         DarknessSlash,
+        // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
         Mummy_RangedHit,
@@ -140,6 +144,12 @@ public class Define
         Mummy_JumpAura,
         Mummy_JumpDown,
         Mummy_Shouting,
+        Mummy_Clap,
+        Mummy_Rushing,
+        Mummy_RushEnd,
+        Mummy_Buff,
+        Mummy_Shield,
+        // ------------------------ Mummy ------------------------------
         WindBall,
         FlowerDryadAttack,
         FlowerDryad_CounterAttack,

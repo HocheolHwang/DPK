@@ -9,6 +9,10 @@ using UnityEngine;
 /// 3. WindMill: ATK + P_ATK(20)
 /// 4. Jump: ATK + P_ATK(40)
 /// 5. Shouting: ATK + P_ATK(20)
+/// 
+/// Counter 이후
+/// 6. Rush: ATK + P_ATK(50, 150)           - counter 이후 공격
+/// 7. Buff: 자신한테만 버프 수치( HP 10% 회복, ATK += 10, DEF += 5, TIME: 30초 쿨타임과 유지시간, Shield: 30초 HP 10% 부여 )
 /// </summary>
 public class MummyManInfo : PatternInfo
 {
@@ -19,6 +23,9 @@ public class MummyManInfo : PatternInfo
         PatternList.Add(gameObject.GetOrAddComponent<MummyManMeleeAutoAttack>());
         PatternList.Add(gameObject.GetOrAddComponent<MummyManWindMill>());
         PatternList.Add(gameObject.GetOrAddComponent<MummyManJump>());
-        PatternList.Add(gameObject.GetOrAddComponent<MummyManShouting>());
+        PatternList.Add(gameObject.GetOrAddComponent<MummyManShouting>()); 
+        PatternList.Add(gameObject.GetOrAddComponent<MummyManRush>()); 
+        PatternList.Add(gameObject.GetOrAddComponent<MummyManCounterEnable>()); 
+        PatternList.Add(gameObject.GetOrAddComponent<MummyManBuff>()); 
     }
 }

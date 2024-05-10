@@ -260,6 +260,7 @@ namespace PlayerStates
 
         public override void Execute()
         {
+
             if (_playerController.photonView.IsMine == false) return;
             GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = (Time.time - startTime) / 3.0f;
 
@@ -288,6 +289,38 @@ namespace PlayerStates
         {
             Managers.Resource.Destroy(_chargeEffect.gameObject);
             GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = 0;
+        }
+    }
+
+    public class GroggyState : PlayerState
+    {
+        public GroggyState(PlayerController playerController) : base(playerController)
+        {
+
+        }
+        public override void Enter()
+        {
+
+            _playerController.SkillSlot.CurrentSkill?.StopCast();
+            _agent.velocity = Vector3.zero;
+            _agent.isStopped = true;
+
+            if (_playerController.photonView.IsMine) _playerController.ChangeToGroggyState();
+            _animator.CrossFade("GROGGY", 0.05f);
+            StartTime = Time.time;
+        }
+
+        public override void Execute()
+        {
+            if (_playerController.photonView.IsMine == false) return;
+            if (ExecuteTime >= 3.0f)
+            {
+                _playerController.ChangeState(_playerController.MOVE_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
         }
     }
 

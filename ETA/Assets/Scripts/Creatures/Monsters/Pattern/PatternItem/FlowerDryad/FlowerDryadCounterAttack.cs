@@ -34,7 +34,7 @@ public class FlowerDryadCounterAttackPattern : Pattern
 
         yield return new WaitForSeconds(1.3f);
         Managers.Sound.Play("Monster/FlowerDryad/healpop-46004", Define.Sound.Effect);
-        gameObject.GetComponent<BaseController>().IncreaseHp(300);
+        gameObject.GetComponent<BaseController>().IncreaseHp(100);
         Managers.Resource.Destroy(ps.gameObject);
 
     }

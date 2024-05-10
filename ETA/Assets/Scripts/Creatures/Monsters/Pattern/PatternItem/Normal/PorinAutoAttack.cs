@@ -36,7 +36,7 @@ public class PorinAutoAttack : Pattern
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Porin_Attack, _controller.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Porin_Attack, _duration, _controller.transform);
         ps.transform.rotation = hitbox.transform.rotation;
         ps.transform.position = hitbox.transform.position;
 
@@ -63,6 +63,6 @@ public class PorinAutoAttack : Pattern
             yield return null;
         }
         Managers.Resource.Destroy(hitbox.gameObject);
-        Managers.Effect.Stop(ps);
+        //Managers.Effect.Stop(ps);
     }
 }

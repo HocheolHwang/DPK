@@ -7,8 +7,8 @@ public class WindBall : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
-        Damage = 25;
+        SetCoolDownTime(20);
+        Damage = 10;
         base.Init();
         SkillType = Define.SkillType.Holding;
         skillRange = new Vector3(5, 5, 5);
@@ -44,7 +44,8 @@ public class WindBall : Skill
         //Managers.Effect.Stop(ps);
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //if (_controller.photonView.IsMine) _controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     public override IEnumerator StartCollavoSkillCast()
@@ -64,7 +65,8 @@ public class WindBall : Skill
 
         //Managers.Effect.Stop(ps1);
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator WindBallCoroutine()

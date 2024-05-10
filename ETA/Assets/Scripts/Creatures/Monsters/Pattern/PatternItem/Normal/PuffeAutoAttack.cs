@@ -35,7 +35,7 @@ public class PuffeAutoAttack : Pattern
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.MagicSphereBlue, _controller.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.MagicSphereBlue, _duration, _controller.transform);
         ps.transform.rotation = hitbox.transform.rotation;
         ps.transform.position = hitbox.transform.position;
 

@@ -6,9 +6,10 @@ public class Massacre : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(15);
         base.Init();
         SkillType = Define.SkillType.Immediately;
+        Damage = 20;
         skillRange = new Vector3(7, 7, 7);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Massacre.png");
     }
@@ -18,7 +19,8 @@ public class Massacre : Skill
         StartCoroutine(MassacreCoroutine());
 
         yield return new WaitForSeconds(0.7f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator MassacreCoroutine()

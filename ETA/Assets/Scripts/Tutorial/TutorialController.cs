@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TutorialController : MonoBehaviour
+public class TutorialController : MonoBehaviourPunCallbacks
 {
     // 순차적으로 진행할 튜토리얼
     [SerializeField]
@@ -70,13 +70,19 @@ public class TutorialController : MonoBehaviour
             //PlayerPrefs.Save();
 
             // Scene 이동 전에 모든 팝업 창 닫은 뒤 이동
-            Managers.UI.CloseAllPopupUI();
+            //Managers.UI.CloseAllPopupUI();
             //SceneManager.LoadScene(nextSceneName);
 
             // 방에서 나가기
             if(PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
-            Managers.Scene.LoadScene(nextSceneName);
+            
             
         }
+    }
+
+    public override void OnLeftRoom()
+    {
+        Managers.UI.CloseAllPopupUI();
+        Managers.Scene.LoadScene(nextSceneName);
     }
 }

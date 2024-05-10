@@ -21,7 +21,8 @@ public class Blessing : Skill
         blessingCoroutine = StartCoroutine(BlessingCoroutine());
 
         yield return new WaitForSeconds(0.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator BlessingCoroutine()
@@ -30,11 +31,11 @@ public class Blessing : Skill
         if (ps != null)
             ps.transform.SetParent(gameObject.transform);
 
-        _controller.IncreaseDefense(10);
+        _controller.IncreaseDefense(5);
 
         // 방어력 증가 후 일정 시간 대기
         yield return new WaitForSeconds(5.0f);
-        _controller.DecreaseDefense(10);
+        _controller.DecreaseDefense(5);
 
         // 이전 코드
         /*

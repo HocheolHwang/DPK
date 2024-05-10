@@ -7,8 +7,8 @@ public class ArrowBomb : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(1);
-        Damage = 25;
+        SetCoolDownTime(10);
+        Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(8, 8, 8);
@@ -40,7 +40,8 @@ public class ArrowBomb : Skill
         //Managers.Resource.Destroy(ps.gameObject);
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator ArrowBombCoroutine()

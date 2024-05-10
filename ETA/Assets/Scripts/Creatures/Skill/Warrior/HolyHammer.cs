@@ -8,9 +8,10 @@ public class HolyHammer : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(10);
         base.Init();
         SkillType = Define.SkillType.Range;
+        Damage = 30;
         skillRange = new Vector3(3, 3, 3);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/HolyHammer.png");
     }
@@ -22,7 +23,8 @@ public class HolyHammer : Skill
         holyhammerCoroutine = StartCoroutine(HolyHammerCoroutine());
 
         yield return new WaitForSeconds(1.8f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator HolyHammerCoroutine()

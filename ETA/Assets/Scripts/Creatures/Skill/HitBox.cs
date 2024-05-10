@@ -22,6 +22,7 @@ public class HitBox : MonoBehaviour
         _penetration = penetration;
         _isCounter = isCounter;
         _duration = duration;
+        StartCoroutine(InActiveColider(_duration));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,7 +48,8 @@ public class HitBox : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        StartCoroutine(InActiveColider(_duration));
+        
+        
     }
 
     IEnumerator InActiveColider(float duration)

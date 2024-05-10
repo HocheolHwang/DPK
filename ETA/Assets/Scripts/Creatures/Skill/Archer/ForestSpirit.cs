@@ -7,7 +7,7 @@ public class ForestSpirit : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(10);
+        SetCoolDownTime(15);
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(3, 3, 3);
@@ -39,7 +39,7 @@ public class ForestSpirit : Skill
 
         Vector3 spawnPosition = _skillSystem.TargetPosition;
         //GameObject forestSpirit = Resources.Load<GameObject>("Prefabs/Creatures/Player/ForestSpirit");
-        PhotonNetwork.Instantiate("Prefabs/Creatures/Player/ForestSpirit", spawnPosition, Quaternion.identity);
+        if(PhotonNetwork.IsMasterClient) PhotonNetwork.Instantiate("Prefabs/Creatures/Player/ForestSpirit", spawnPosition, Quaternion.identity);
         //GameObject dummy = Instantiate(forestSpirit, spawnPosition, Quaternion.identity);
         yield return new WaitForSeconds(0.1f);
         
@@ -48,7 +48,8 @@ public class ForestSpirit : Skill
         //Managers.Resource.Destroy(ps01.gameObject);
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator ForestSpiritCoroutine()

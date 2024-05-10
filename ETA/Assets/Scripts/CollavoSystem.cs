@@ -9,7 +9,6 @@ public class CollavoSystem : MonoBehaviour
 
     private void Start()
     {
-
         //TMP
         //_currentSkills.Add("Cyclone", null);
     }
@@ -41,7 +40,6 @@ public class CollavoSystem : MonoBehaviour
 
     public void RemoveCurrentSkill(string skillName)
     {
-        return;
         Debug.Log($"Remove {skillName}");
         if (skillName == null) return;
         if (_currentSkills.ContainsKey(skillName)) _currentSkills.Remove(skillName);
@@ -50,5 +48,14 @@ public class CollavoSystem : MonoBehaviour
     public void Clear()
     {
         _currentSkills.Clear();
+    }
+
+    public bool IsCastingSkill(string skillname)
+    {
+        if(_currentSkills.TryGetValue(skillname, out PlayerController player))
+        {
+            return true;
+        }
+        return false;
     }
 }
