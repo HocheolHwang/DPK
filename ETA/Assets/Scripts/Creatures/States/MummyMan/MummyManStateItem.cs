@@ -17,7 +17,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToIdleState();
             SetDetector();
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
@@ -52,7 +52,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToIdleBattleState();
             _agent.velocity = Vector3.zero;
 
             SetDetector();
@@ -110,7 +110,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToChaseState();
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
         }
@@ -154,7 +154,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToAttackState();
             _agent.velocity = Vector3.zero;
             // 근거리 몬스터가 죽고 근거리 디텍터를 활성화한 상태
             if ( !_isRangedAttack)
@@ -232,7 +232,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToClapState();
             _meetPlayer = true;
 
             _agent.velocity = Vector3.zero;
@@ -271,7 +271,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToShoutingState();
             _agent.velocity = Vector3.zero;
             InitTime(_animData.ShoutingAnim.length);
 
@@ -314,7 +314,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToJumpState();
             _agent.velocity = Vector3.zero;
             _agent.enabled = false;               // BACK_LOCATION에서 true
 
@@ -364,7 +364,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToRushState();
             tempDist = _agent.stoppingDistance;
             _agent.stoppingDistance = 0;
             _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
@@ -410,7 +410,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToWindMillState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.WindMillAnim.length);
@@ -446,7 +446,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToForeShadowingState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.ForeShadowingAnim.length);
@@ -488,7 +488,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToBackLocationState();
             _agent.velocity = Vector3.zero;
             _agent.enabled = false;
 
@@ -530,7 +530,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToDieState();
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
         }
