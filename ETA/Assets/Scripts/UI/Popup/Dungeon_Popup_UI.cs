@@ -9,6 +9,7 @@ using System;
 using Photon.Pun;
 using WebSocketSharp;
 using System.Linq;
+using System.IO;
 
 public class Dungeon_Popup_UI : UI_Popup
 {
@@ -216,6 +217,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
     // 콜라보 시스템
     private CollavoSystem collavoSystem;
+
+    // 현재 숫자를 추적하는 외부 변수
+    private int currentNum = 2;
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -948,12 +952,20 @@ public class Dungeon_Popup_UI : UI_Popup
         for (int i = 0; i < 8; i++)
         {
             var skill = skillSlot.Skills[i];
-            if (skill.SkillType != Define.SkillType.Holding) continue;
+
+            if (skill.SkillType != Define.SkillType.Holding)
+            {
+                collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
+                continue;
+            }
+
             if (collavoSystem.IsCastingSkill(skill.CollavoSkillName))
             {
-                int randomNum = UnityEngine.Random.Range(2, 10); // Random.Range는 최대값을 포함하지 않으므로 10을 사용합니다.
-                string path = $"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 ({randomNum})";
-                collaboImages[i].sprite = Resources.Load<Sprite>(path);
+                collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (7)");
+            }
+            else
+            {
+                collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
             }
         }
     }
