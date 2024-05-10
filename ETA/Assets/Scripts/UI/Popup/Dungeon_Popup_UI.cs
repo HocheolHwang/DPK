@@ -48,6 +48,10 @@ public class Dungeon_Popup_UI : UI_Popup
 
     enum Images
     {
+        // 보스 상태
+        KnightG_Icon,
+        FlowerDryad_Icon,
+
         // 파티원 상태
         Party_Member_1,
         Party_Member_2,
@@ -161,6 +165,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private GameObject playerShieldBar;
     private GameObject[] memberHPBars = new GameObject[3];
     private GameObject[] memberShieldBars = new GameObject[3];
+    private Image knightGIcon;
+    private Image flowerDryadIcon;
     private Image[] partyMembers = new Image[3];
     private Image[][] partyMemberIcons = new Image[3][];
     private Image[] skillCooldownImages = new Image[8];
@@ -294,6 +300,10 @@ public class Dungeon_Popup_UI : UI_Popup
 
 
         // --------------- 보스 정보 UI 초기화 ---------------
+
+        // 보스 아이콘
+        knightGIcon = GetImage((int)Images.KnightG_Icon);
+        flowerDryadIcon = GetImage((int)Images.FlowerDryad_Icon);
 
         // 보스 상태창 초기화 및 비활성화
         bossStatus = GetObject((int)GameObjects.Boss_Status);
@@ -509,6 +519,17 @@ public class Dungeon_Popup_UI : UI_Popup
     // 보스 정보 업데이트 메서드
     private void UpdateBossInfo()
     {
+        if (isTutorialScene)
+        {
+            knightGIcon.gameObject.SetActive(false);
+            flowerDryadIcon.gameObject.SetActive(true);
+        }
+        else
+        {
+            knightGIcon.gameObject.SetActive(true);
+            flowerDryadIcon.gameObject.SetActive(false);
+        }
+
         // 보스 HP 슬라이더 설정
         bossHPSlider.value = 1;
 
