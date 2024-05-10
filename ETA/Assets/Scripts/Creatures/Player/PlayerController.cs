@@ -18,6 +18,7 @@ public class PlayerController : BaseController
     public State COLLAVO_STATE;
     public State DIE_STATE;
     public State HOLD_STATE;
+    public State GROGGY_STATE;
     public State GLOBAL_STATE;
 
 
@@ -46,6 +47,7 @@ public class PlayerController : BaseController
         COLLAVO_STATE = new CollavoState(this);
         DIE_STATE = new DieState(this);
         HOLD_STATE = new HoldState(this);
+        GROGGY_STATE = new GroggyState(this);
         GLOBAL_STATE = new GlobalState(this);
 
         SkillSlot = gameObject.GetOrAddComponent<SkillSlot>();
@@ -84,11 +86,18 @@ public class PlayerController : BaseController
         // "내 캐릭터는 완성 되었다"
         FindObjectOfType<GameSystem>().SendCharacherInstantiatedMsg();
 
-        
+
         //if(gameObject.name.StartsWith("Archer"))FindObjectOfType<CollavoSystem>().AddCurrentSkill(this, "Cyclone");
 
 
+        // if(PhotonNetwork.IsMasterClient) StartCoroutine(TESTGROGGY());
+    }
 
+    IEnumerator TESTGROGGY()
+    {
+        yield return new WaitForSeconds(3.0f);
+        ChangeState(GROGGY_STATE);
+        
     }
 
     private void OnDestroy()
@@ -170,7 +179,9 @@ public class PlayerController : BaseController
 
         //Debug.Log(totalNum);
         //Debug.Log(pos);
+        
         _destination = GameObject.Find(pos).transform;
+        transform.position = _destination.position;
         transform.position = _destination.position;
         Camera.main.GetComponent<CameraController>()._player = _destination.parent.gameObject;
 
@@ -179,7 +190,7 @@ public class PlayerController : BaseController
 
     void KeyEvent()
     {
-        if (CurState is SkillState || CurState is DieState || CurState is HoldState || CurState is CollavoState) return;
+        if (CurState is SkillState || CurState is DieState || CurState is HoldState || CurState is CollavoState || CurState is GroggyState) return;
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -302,6 +313,11 @@ public class PlayerController : BaseController
         photonView.RPC("RPC_ChangeToDieState", RpcTarget.Others);
     }
 
+    public void ChangeToGroggyState()
+    {
+        photonView.RPC("RPC_ChangeToGroggyState", RpcTarget.Others);
+    }
+
 
 
     [PunRPC]
@@ -349,6 +365,12 @@ public class PlayerController : BaseController
     void RPC_ChangeToDieState()
     {
         ChangeState(DIE_STATE);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToGroggyState()
+    {
+        ChangeState(GROGGY_STATE);
     }
 
     [PunRPC]

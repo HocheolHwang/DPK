@@ -33,7 +33,9 @@ public class Dungeon_Scene : BaseScene
         ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["currentScene"] = Define.Scene.Unknown;
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
+
     }
+
 
     public override void Clear()
     {
