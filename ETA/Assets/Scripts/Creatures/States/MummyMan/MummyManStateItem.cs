@@ -413,6 +413,7 @@ namespace MummyManStateItem
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToWindMillState();
             _agent.velocity = Vector3.zero;
 
+            Debug.Log("Wind Mill 상태 됬다");
             InitTime(_animData.WindMillAnim.length);
             _animator.CrossFade(_animData.WindMillParamHash, 0.1f);
 

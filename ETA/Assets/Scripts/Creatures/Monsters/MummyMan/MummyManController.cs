@@ -146,7 +146,7 @@ public class MummyManController : BaseMonsterController
         photonView.RPC("RPC_ChangeToClapState", RpcTarget.Others);
     }
     [PunRPC]
-    void RPC_ChangeToBuffState()
+    void RPC_ChangeToClapState()
     {
         ChangeState(CLAP_STATE);
     }
@@ -190,6 +190,7 @@ public class MummyManController : BaseMonsterController
     [PunRPC]
     void RPC_ChangeToWindMillState()
     {
+        Debug.Log("Wind Mill RPC 받았따");
         ChangeState(WIND_MILL_STATE);
     }
 

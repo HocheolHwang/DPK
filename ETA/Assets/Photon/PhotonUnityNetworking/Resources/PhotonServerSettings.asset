@@ -67,6 +67,14 @@ MonoBehaviour:
   - RPC_SetCurrentDungeon
   - SendRoomEnterLog
   - RPC_ChangeToBuffState
+  - RPC_ChangeToWindMillState
+  - RPC_ChangeToBackLocationState
+  - RPC_ChangeToForeShadowingState
+  - RPC_ChangeToJumpState
+  - RPC_ChangeToRushState
+  - RPC_ChangeToShoutingState
+  - RPC_UpdateRangeTarget
+  - RPC_ChangeToClapState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

@@ -42,6 +42,9 @@ public class MonsterManager : MonoBehaviour
 
     private void Start()
     {
+
+        // TODO : 고처야할것
+
         _existPlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         _existMonsterList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Monster"));
         //_monsterCoList = new List<Coroutine>();

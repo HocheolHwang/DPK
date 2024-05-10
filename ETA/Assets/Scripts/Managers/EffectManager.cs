@@ -59,7 +59,8 @@ public class EffectManager
     {
         yield return new WaitForSeconds(duration);
 
-        Managers.Resource.Destroy(ps.gameObject);
+        if(ps != null) Managers.Resource.Destroy(ps.gameObject);
+
 
     }
 

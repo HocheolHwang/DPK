@@ -23,16 +23,20 @@ public class MummyManWindMill : Pattern
 
     public override IEnumerator StartPatternCast()
     {
+        Debug.Log("!!!!윈드밀 써라 데발");
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upPos);
         Vector3 windPos = transform.position + rootUp;
 
         // wind mill
         yield return new WaitForSeconds(_createTime);
-        StartCoroutine(CreateWindMill(AttackDamage + _patternDmg, windPos));
+        Managers.Coroutine.Run(CreateWindMill(AttackDamage + _patternDmg, windPos));
+        
     }
 
     IEnumerator CreateWindMill(int attackDMG, Vector3 Pos)
     {
+
+        Debug.Log("윈드밀 발생");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
         hitbox.SetUp(transform, attackDMG);
         hitbox.GetComponent<SphereCollider>().radius = _hitboxRadius;
