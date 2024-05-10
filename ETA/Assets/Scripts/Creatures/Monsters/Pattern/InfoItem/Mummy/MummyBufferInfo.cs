@@ -11,6 +11,6 @@ public class MummyBufferInfo : PatternInfo
     {
         base.Init();
         PatternList.Add(gameObject.GetOrAddComponent<MummyBufferRangedAutoAttack>());
-
+        PatternList.Add(gameObject.GetOrAddComponent<MummyBufferBuff>());
     }
 }

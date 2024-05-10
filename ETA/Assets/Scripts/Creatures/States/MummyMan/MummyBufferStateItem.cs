@@ -36,8 +36,6 @@ namespace MummyBufferStateItem
     #region IDLE_BATTLE
     public class IdleBattleState : MummyBufferState
     {
-        private const float _threadHoldBuff = 5.0f;
-        // CHASE -> IDLE BATTLE -> ATTACK, BUFF
         public IdleBattleState(MummyBufferController controller) : base(controller)
         {
         }
@@ -161,6 +159,8 @@ namespace MummyBufferStateItem
             InitTime(_animData.BuffAnim.length);
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.BuffParamHash, 0.1f);
+
+            StartCast((int)EBufferPattern.Buff);
         }
 
         public override void Execute()

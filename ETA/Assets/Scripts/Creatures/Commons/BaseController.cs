@@ -138,6 +138,17 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
         if (Stat.Shield < 0) Stat.Shield = 0;
     }
 
+    public virtual void IncreaseDamage(int amount)
+    {
+        Stat.AttackDamage += amount;
+    }
+
+    public virtual void DecreaseDamage(int amount)
+    {
+        Stat.AttackDamage -= amount;
+        if (Stat.AttackDamage < 0) Stat.AttackDamage = 0;
+    }
+
     // ---------------------------------- IDamage ------------------------------------------
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {

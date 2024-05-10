@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,6 +10,7 @@ public class MonsterManager : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> _existPlayerList;
+    private List<GameObject> _existMonsterList;
 
     // 싱글톤
     private static MonsterManager _instance;
@@ -41,7 +43,7 @@ public class MonsterManager : MonoBehaviour
     private void Start()
     {
         _existPlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        //Debug.Log("Monster Manager 생성");
+        _existMonsterList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Monster"));
     }
 
     // --------------------------- Get the Destination using the players ----------------------------------
@@ -93,11 +95,24 @@ public class MonsterManager : MonoBehaviour
         get
         {
             _existPlayerList.RemoveAll(player => player.GetComponent<Stat>().Hp <= 0);
-            foreach (GameObject player in _existPlayerList)
-            {
-                Debug.Log($"exist player: {player.name}");
-            }
+            //foreach (GameObject player in _existPlayerList)
+            //{
+            //    Debug.Log($"exist player: {player.name}");
+            //}
             return _existPlayerList;
+        }
+    }
+
+    public List<GameObject> ExistMonsterList
+    {
+        get
+        {
+            _existMonsterList.RemoveAll(monster => monster.GetComponent<Stat>().Hp <= 0);
+            foreach (GameObject monster in _existMonsterList)
+            {
+                Debug.Log($"exist monster: {monster.name}");
+            }
+            return _existMonsterList;
         }
     }
     #endregion
