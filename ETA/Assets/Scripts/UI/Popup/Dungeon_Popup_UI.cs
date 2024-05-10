@@ -404,6 +404,11 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 콜라보 시스템 참조
         collavoSystem = FindObjectOfType<CollavoSystem>();
+
+        for (int i = 0; i < 8; i++)
+        {
+            collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
+        }
     }
 
     //public void PartyEnter()
