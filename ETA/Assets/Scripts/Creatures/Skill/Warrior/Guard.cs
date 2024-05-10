@@ -22,6 +22,7 @@ public class Guard : Skill
 
         _controller.RemoveShield(100);
 
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 }

@@ -27,7 +27,8 @@ public class Heal : Skill
         _animator.CrossFade("CASTING_OUT", 0.1f);
 
         yield return new WaitForSeconds(0.3f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
 

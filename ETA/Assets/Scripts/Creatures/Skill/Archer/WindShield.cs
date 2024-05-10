@@ -20,13 +20,14 @@ public class WindShield : Skill
         Managers.Coroutine.Run(WindShieldCoroutine());
         Managers.Coroutine.Run(Evasion(1.0f));
         yield return new WaitForSeconds(0.1f);
-        Managers.Sound.Play("Skill/GuardSkill");
+        Managers.Sound.Play("Skill/ForestSpiritSpawn");
         
         yield return new WaitForSeconds(0.9f);
         //Managers.Effect.Stop(ps);
         yield return new WaitForSeconds(0.1f);
 
-        _controller.ChangeState(_controller.MOVE_STATE);
+
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator Evasion(float duration)

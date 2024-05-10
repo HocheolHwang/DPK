@@ -213,7 +213,7 @@ public class Lobby_Popup_UI : UI_Popup
     }
 
     // 경고 문구 업데이트 코루틴
-    private IEnumerator ShowWarningPopupCoroutine(string title, string message)
+    public IEnumerator ShowWarningPopupCoroutine(string title, string message)
     {
         // 경고 Popup UI를 띄움
         var warningPopup = Managers.UI.ShowPopupUI<Warning_Popup_UI>("[Lobby]_Warning_Popup_UI");
@@ -338,9 +338,9 @@ public class Lobby_Popup_UI : UI_Popup
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
         dungeonNameText.text = selectedDungeonNumber switch
         {
-            1 => "깊은 숲",
+            1 => "별의 조각 평원",
             2 => "잊혀진 신전",
-            3 => "별의 조각 평원",
+            3 => "심연의 바다",
             _ => "알 수 없는 던전입니다."
         };
     }

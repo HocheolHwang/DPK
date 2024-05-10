@@ -79,6 +79,10 @@ public class MageNormalAttackSkill : Skill
             yield return null;
         }
         Managers.Resource.Destroy(hitbox.gameObject);
-        Managers.Resource.Destroy(ps.gameObject);
+
+        yield return new WaitForSeconds(1.3f);
+
+        Managers.Effect.Stop(ps);
+        ChangeToPlayerMoveState();
     }
 }

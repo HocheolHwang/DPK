@@ -189,8 +189,8 @@ MonoBehaviour:
   _maxHp: 250
   _hp: 250
   _moveSpeed: 8
-  _attackDamage: 50
-  _defense: 10
+  _attackDamage: 20
+  _defense: 5
   _shield: 0
 --- !u!114 &7165674948341768064
 MonoBehaviour:
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 0}
   SkillType: 1
-  Damage: 50
+  Damage: 20
   skillRange: {x: 0, y: 0, z: 0}
   CollavoSkillRange: {x: 0, y: 0, z: 0}
   RangeType: 0

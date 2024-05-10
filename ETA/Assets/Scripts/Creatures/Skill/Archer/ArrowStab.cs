@@ -7,7 +7,7 @@ public class ArrowStab : Skill
     protected override void Init()
     {
         SetCoolDownTime(1);
-        Damage = 25;
+        Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
@@ -35,12 +35,13 @@ public class ArrowStab : Skill
         //Managers.Resource.Destroy(hitbox.gameObject);
 
         Managers.Coroutine.Run(ArrowStabCoroutine());
-
+        yield return new WaitForSeconds(0.3f);
         //Managers.Resource.Destroy(ps.gameObject);
         //Managers.Effect.Stop(ps);
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator ArrowStabCoroutine()

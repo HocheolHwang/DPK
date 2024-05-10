@@ -43,7 +43,8 @@ public class Gravity : Skill
         //Managers.Effect.Stop(ps);
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     public override IEnumerator StartCollavoSkillCast()
@@ -61,7 +62,8 @@ public class Gravity : Skill
 
         //Managers.Effect.Stop(ps1);
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator GravityCoroutine()
