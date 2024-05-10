@@ -31,7 +31,8 @@ public class DrawSword : Skill
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
         yield return new WaitForSeconds(1.0f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
 

@@ -50,6 +50,7 @@ public class Sting : Skill
         Managers.Resource.Destroy(hitbox.gameObject);
         Managers.Sound.Play("Skill/TargetSkill");
         yield return new WaitForSeconds(0.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 }

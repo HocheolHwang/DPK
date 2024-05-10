@@ -23,7 +23,8 @@ public class TelekineticSwords : Skill
         telekineticswordsCoroutine = StartCoroutine(TelekineticSwordsCoroutine());
 
         yield return new WaitForSeconds(1.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
 

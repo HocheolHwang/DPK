@@ -339,7 +339,7 @@ public class Dungeon_Popup_UI : UI_Popup
         // --------------- 스킬 슬롯 UI 초기화 ---------------
 
         // 스킬 슬롯 업데이트 코루틴 시작
-        StartCoroutine(LoadSkillSlotDataCoroutine());
+        //StartCoroutine(LoadSkillSlotDataCoroutine());
 
         // 스킬 아이콘 초기화
         for (int i = 0; i < skillIcons.Length; i++)
@@ -690,7 +690,16 @@ public class Dungeon_Popup_UI : UI_Popup
     private IEnumerator LoadSkillSlotDataCoroutine()
     {
         // 스킬 슬롯 참조
-        skillSlot = GetComponent<SkillSlot>();
+        foreach(var slot in FindObjectsOfType<SkillSlot>())
+        {
+            if (slot.GetComponent<PhotonView>().IsMine)
+            {
+                skillSlot = slot;
+                Debug.Log(slot.gameObject.name);
+                break;
+            }
+        }
+        
 
         // 스킬 슬롯이 참조될때까지 기다림
         yield return null;
@@ -700,7 +709,7 @@ public class Dungeon_Popup_UI : UI_Popup
     }
 
     // 스킬 슬롯 아이콘 업데이트 메서드
-    private void UpdateSlotSkillIcons()
+    public void UpdateSlotSkillIcons()
     {
         string className = Managers.Player.GetClassCode() switch
         {

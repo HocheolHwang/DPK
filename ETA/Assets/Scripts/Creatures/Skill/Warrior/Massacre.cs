@@ -18,7 +18,8 @@ public class Massacre : Skill
         StartCoroutine(MassacreCoroutine());
 
         yield return new WaitForSeconds(0.7f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator MassacreCoroutine()

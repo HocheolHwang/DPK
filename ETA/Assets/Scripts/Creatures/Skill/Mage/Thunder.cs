@@ -50,7 +50,8 @@ public class Thunder : Skill
         }
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     public override IEnumerator StartCollavoSkillCast()
@@ -84,7 +85,9 @@ public class Thunder : Skill
         }
 
         yield return new WaitForSeconds(0.2f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
+
     }
 
     private IEnumerator ThunderCoroutine(Define.Effect effect, Transform hitbox)

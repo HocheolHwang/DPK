@@ -26,7 +26,8 @@ public class WindShield : Skill
         //Managers.Effect.Stop(ps);
         yield return new WaitForSeconds(0.1f);
 
-        _controller.ChangeState(_controller.MOVE_STATE);
+
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator Evasion(float duration)

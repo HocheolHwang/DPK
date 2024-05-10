@@ -42,7 +42,8 @@ public class LightningShot : Skill
         //Managers.Effect.Stop(ps);
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     public override IEnumerator StartCollavoSkillCast()
@@ -77,7 +78,8 @@ public class LightningShot : Skill
         Managers.Coroutine.Run(LightningShotCollavoCoroutine());
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator LightningShotCoroutine()

@@ -27,7 +27,8 @@ public class SwordWave : Skill
         StartCoroutine(SwordWaveCoroutine());
 
         yield return new WaitForSeconds(0.4f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator SwordWaveCoroutine()

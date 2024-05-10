@@ -40,7 +40,8 @@ public class ArrowBomb : Skill
         //Managers.Resource.Destroy(ps.gameObject);
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator ArrowBombCoroutine()

@@ -24,7 +24,8 @@ public class GroundCrash : Skill
         groundcrashCoroutine = StartCoroutine(GroundCrashCoroutine());
 
         yield return new WaitForSeconds(1.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator GroundCrashCoroutine()

@@ -131,6 +131,7 @@ public class GameSystem : MonoBehaviourPunCallbacks
         finish += 1;
         if (finish >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
+            // 게임 시작
             myController.ChangeState(myController.MOVE_STATE);
             FindObjectOfType<PlayerZone>().Run();
 
