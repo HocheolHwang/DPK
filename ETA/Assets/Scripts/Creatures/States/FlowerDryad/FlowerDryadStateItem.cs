@@ -280,11 +280,17 @@ namespace FlowerDryadStateItem
             ps.transform.SetParent(_controller.transform);
             ps.transform.position = new Vector3(0, 3.0f, 0);
 
-            
             // 보스는 카운터 이외의 공격에는 그로기 상태에 빠지지 않는다.
             if (_controller.PrevState is CounterEnableState)
             {
                 groggyTime = 3.0f;
+                ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
+                ps.transform.SetParent(_controller.transform);
+                ps.transform.localPosition = new Vector3(0, 1.0f, 0);
+
+                ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
+                ps.transform.SetParent(_controller.transform);
+                ps.transform.localPosition = new Vector3(0, 2.0f, 0);
             }
             else
             {

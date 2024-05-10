@@ -17,10 +17,10 @@ public class Guard : Skill
         _animator.CrossFade("GUARD", 0.05f);
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/GuardSkill");
-        _controller.GetShield(30);
+        _controller.GetShield(100);
         yield return new WaitForSeconds(1.0f);
 
-        _controller.RemoveShield(30);
+        _controller.RemoveShield(100);
 
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();

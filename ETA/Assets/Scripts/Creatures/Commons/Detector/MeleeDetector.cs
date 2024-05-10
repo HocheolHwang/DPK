@@ -28,7 +28,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
     private void Start()
     {
         _target = null;
-        //if (GetComponent<PhotonView>().IsMine)
+        if (GetComponent<PhotonView>().IsMine)
             StartCoroutine(UpdateTarget());
 
     }

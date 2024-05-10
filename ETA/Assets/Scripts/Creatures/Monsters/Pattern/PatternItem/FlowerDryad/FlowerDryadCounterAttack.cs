@@ -26,6 +26,7 @@ public class FlowerDryadCounterAttackPattern : Pattern
         Vector3 rootRight = transform.TransformDirection(Vector3.right * _rightLoc);
         Vector3 objectLoc = transform.position + rootForward + rootUp + rootRight;
 
+        Managers.Sound.Play("Monster/FlowerDryad/FlowerDance", Define.Sound.Effect);
         yield return new WaitForSeconds(_createTime);
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.FlowerDryad_CounterAttack, _controller.transform);

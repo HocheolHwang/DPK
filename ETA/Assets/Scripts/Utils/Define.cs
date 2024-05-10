@@ -168,6 +168,7 @@ public class Define
         CollavoBlackHole,
         Gravity01,
         Gravity02,
+        SparkleMissileGreen,
         MaxCount
     }
 }
