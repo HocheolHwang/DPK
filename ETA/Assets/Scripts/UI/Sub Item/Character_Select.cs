@@ -23,7 +23,7 @@ public class Character_Select : MonoBehaviour
     private TMP_Text characterDetailText;
     private TMP_Text characterClassText;
     private TMP_Text characterDifficultyText;
-    private TMP_Text characterLevelText;
+    // private TMP_Text characterLevelText;
     private TMP_Text hpText;
     private TMP_Text apText;
     private TMP_Text dpText;
@@ -84,7 +84,7 @@ public class Character_Select : MonoBehaviour
         characterDetailText = GameObject.Find("Character_Detail_Text").GetComponent<TMP_Text>();
         characterClassText = GameObject.Find("Character_Class_Text").GetComponent<TMP_Text>();
         characterDifficultyText = GameObject.Find("Character_Difficulty_Text").GetComponent<TMP_Text>();
-        characterLevelText = GameObject.Find("Character_Level_Text").GetComponent<TMP_Text>();
+        // characterLevelText = GameObject.Find("Character_Level_Text").GetComponent<TMP_Text>();
         hpText = GameObject.Find("HP_Text").GetComponent<TMP_Text>();
         apText = GameObject.Find("AP_Text").GetComponent<TMP_Text>();
         dpText = GameObject.Find("DP_Text").GetComponent<TMP_Text>();
@@ -191,7 +191,7 @@ public class Character_Select : MonoBehaviour
         characterDetailText.text = UpdateDetail(className);
         characterClassText.text = className;
         characterDifficultyText.text = difficulty;
-        characterLevelText.text = $"Lv. {level}";
+        // characterLevelText.text = $"Lv. {level}";
         hpText.text = $"{hp}";
         apText.text = $"{ap}";
         dpText.text = $"{dp}";
