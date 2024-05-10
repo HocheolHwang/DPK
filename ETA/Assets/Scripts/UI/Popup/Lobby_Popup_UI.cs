@@ -213,7 +213,7 @@ public class Lobby_Popup_UI : UI_Popup
     }
 
     // 경고 문구 업데이트 코루틴
-    private IEnumerator ShowWarningPopupCoroutine(string title, string message)
+    public IEnumerator ShowWarningPopupCoroutine(string title, string message)
     {
         // 경고 Popup UI를 띄움
         var warningPopup = Managers.UI.ShowPopupUI<Warning_Popup_UI>("[Lobby]_Warning_Popup_UI");

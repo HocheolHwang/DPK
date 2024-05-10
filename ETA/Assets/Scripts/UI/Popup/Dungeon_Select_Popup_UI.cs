@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,7 +24,16 @@ public class Dungeon_Select_Popup_UI : UI_Popup
 
     enum Texts
     {
-        Selected_Dungeon_Text
+        Selected_Dungeon_Text,
+        Selected_Dungeon_Detail_Text
+    }
+
+    enum Images
+    {
+        StarShardPlain_Unselected,
+        ForgottenTemple_Unselected,
+        SeaOfAbyss_Unselected,
+        Selected_Dungeon_Background
     }
 
     // UI 컴포넌트 바인딩 변수
@@ -37,6 +47,9 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     private Button cancelButton;
     private Button dungeonSelectButton;
     private TextMeshProUGUI selectedDungeonText;
+    private TextMeshProUGUI selectedDungeonDetailText;
+    private Image[] dungeonUnselecteds = new Image[3];
+    private Image selectedDungeonBackground;
 
     // 현재 던전 정보 변수
     private int existingDungeonNumber;
@@ -54,6 +67,7 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         // 컴포넌트 바인딩
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
+        Bind<Image>(typeof(Images));
 
         // 현재 던전 정보를 저장
         existingDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
@@ -99,7 +113,17 @@ public class Dungeon_Select_Popup_UI : UI_Popup
 
         // 선택된 던전
         selectedDungeonText = GetText((int)Texts.Selected_Dungeon_Text);
-        UpdateSelectedDungeon();
+        selectedDungeonDetailText = GetText((int)Texts.Selected_Dungeon_Detail_Text);
+        selectedDungeonBackground = GetImage((int)Images.Selected_Dungeon_Background);
+
+        // 던전 미선택 이미지 초기화
+        for (int i = 0; i < dungeonUnselecteds.Length; i++)
+        {
+            dungeonUnselecteds[i] = GetImage((int)Images.StarShardPlain_Unselected + i);
+        }
+
+        // 던전 정보 업데이트 코루틴
+        StartCoroutine(UpdatedDungeonInfo());
     }
 
 
@@ -147,21 +171,37 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     private void SelectStarShardPlain(PointerEventData data)
     {
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 1;
-        UpdateSelectedDungeon();
+        
+        // 던전 정보 업데이트 코루틴
+        StartCoroutine(UpdatedDungeonInfo());
     }
 
     // 잊혀진 신전 선택 메서드
     private void SelectForgottenTemple(PointerEventData data)
     {
+        // 임시로 막아둠
+        Lobby_Popup_UI lobbyPopupUI = FindObjectOfType<Lobby_Popup_UI>();
+        StartCoroutine(lobbyPopupUI.ShowWarningPopupCoroutine("던전 선택 불가", "잊혀진 신전은 현재 입장하실 수 없습니다.\n" + "다음 배포를 기대해주세요!"));
+        return;
+
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 2;
-        UpdateSelectedDungeon();
+
+        // 던전 정보 업데이트 코루틴
+        StartCoroutine(UpdatedDungeonInfo());
     }
 
     // 심연의 바다 선택 메서드
     private void SelectSeaOfAbyss(PointerEventData data)
     {
+        // 임시로 막아둠
+        Lobby_Popup_UI lobbyPopupUI = FindObjectOfType<Lobby_Popup_UI>();
+        StartCoroutine(lobbyPopupUI.ShowWarningPopupCoroutine("던전 선택 불가", "심연의 바다는 현재 입장하실 수 없습니다.\n" + "다음 배포를 기대해주세요!"));
+        return;
+
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 3;
-        UpdateSelectedDungeon();
+
+        // 던전 정보 업데이트 코루틴
+        StartCoroutine(UpdatedDungeonInfo());
     }
 
     // 취소하기 메서드
@@ -187,19 +227,55 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
     }
 
-    // 선택된 던전 업데이트 메서드
-    public void UpdateSelectedDungeon()
+    // 던전 정보 업데이트 코루틴
+    private IEnumerator UpdatedDungeonInfo()
     {
         // 선택된 던전 번호를 가져옴
         selectedDungeonNumber = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
 
-        // 선택된 던전 번호에 따라 다른 텍스트를 설정
-        selectedDungeonText.text = selectedDungeonNumber switch
+        // 선택된 던전 번호를 가져올때까지 기다림
+        yield return null;
+
+        // 참조 완료 후 UI 업데이트
+        UpdateSelectedDungeon();
+    }
+
+    // 선택된 던전 업데이트 메서드
+    public void UpdateSelectedDungeon()
+    {
+        // 던전 미선택 이미지 업데이트
+        for (int i = 0; i < dungeonUnselecteds.Length; i++)
         {
-            1 => "선택된 던전: [별의 조각 평원]",
-            2 => "선택된 던전: [잊혀진 신전]",
-            3 => "선택된 던전: [심연의 바다]",
-            _ => "알 수 없는 던전입니다."
+            dungeonUnselecteds[i].gameObject.SetActive(i + 1 != selectedDungeonNumber);
+        }
+
+        // 선택된 던전 이미지 업데이트
+        string dungeonName = selectedDungeonNumber switch
+        {
+            1 => "StarShardPlain",
+            2 => "ForgottenTemple",
+            3 => "SeaOfAbyss",
+            _ => ""
+        };
+
+        selectedDungeonBackground.sprite = Resources.Load<Sprite>($"Sprites/Dungeon Select/{dungeonName} Selected");
+
+        // 선택된 던전 번호에 따라 다른 텍스트와 상세 설명을 설정
+        (selectedDungeonText.text, selectedDungeonDetailText.text) = selectedDungeonNumber switch
+        {
+            1 => ("별의 조각 평원",
+                  "별이 쏟아진 평원을 탐험하세요. 빛나는 별의 조각들이 고대의 힘을 간직하고 있습니다.\n" +
+                  "하지만 조심하세요, 평화롭게 보이는 이 평원에는 예측할 수 없는 위험이 도사리고 있습니다.\n" +
+                  "용감한 모험가들만이 진정한 별의 비밀을 밝혀낼 수 있을 것입니다."),
+            2 => ("잊혀진 신전",
+                  "숲속 깊은 곳에 숨겨진 잊혀진 신전을 탐험하세요. 고대 문명의 유산이 잠들어 있습니다.\n" +
+                  "수많은 함정과 수수께끼가 모험가를 기다리고 있으며, 신전을 지키는 수호자들도 만만치 않습니다.\n" +
+                  "잊혀진 신전의 비밀을 풀고, 그 속에 숨겨진 보물을 찾아내세요."),
+            3 => ("심연의 바다",
+                  "어둠이 내려앉은 심연의 바다로 떠나세요. 이곳은 상상을 초월하는 생명체들의 서식지입니다.\n" +
+                  "심연의 바다는 끝없는 보물과 함께, 끝없는 위험도 감추고 있습니다. 빛이 닿지 않는 곳에서,\n" +
+                  "당신의 용기와 지혜가 시험될 것입니다. 심연의 비밀을 밝혀내세요."),
+            _ => ("알 수 없는 던전입니다.", "알 수 없는 던전입니다. 선택한 던전 번호가 올바르지 않습니다.")
         };
     }
 }
