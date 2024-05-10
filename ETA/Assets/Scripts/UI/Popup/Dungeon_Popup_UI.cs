@@ -418,6 +418,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
     void Update()
     {
+
         // 게임 시간 업데이트
         UpdateTime();
 
@@ -950,6 +951,7 @@ public class Dungeon_Popup_UI : UI_Popup
     // 콜라보 발동 여부 체크하는 메서드
     private void CheckCollavo()
     {
+        if (skillSlot == null) return;
         for (int i = 0; i < 8; i++)
         {
             var skill = skillSlot.Skills[i];
