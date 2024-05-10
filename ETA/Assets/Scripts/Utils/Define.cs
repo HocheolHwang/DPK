@@ -43,11 +43,9 @@ public class Define
         Lobby,
         Opening,
         Tutorial,
-        DeepForest,
-        ForgottenTemple,
         StarShardPlain,
-        TestDungeon01,
-        TestDungeon02,
+        ForgottenTemple,
+        SeaOfAbyss,
         MultiPlayTest,
         Test
     }
