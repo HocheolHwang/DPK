@@ -52,7 +52,7 @@ public class ArcherNormalAttackSkill : Skill
         Vector3 objectLoc = transform.position + rootForward + rootUp;
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, 2);
+        hitbox.SetUp(transform, Damage, 1, false, 2.0f);
         hitbox.transform.localScale = skillRange;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;

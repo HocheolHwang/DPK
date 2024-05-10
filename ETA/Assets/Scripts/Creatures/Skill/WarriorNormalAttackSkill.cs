@@ -6,7 +6,7 @@ public class WarriorNormalAttackSkill : Skill
 {
     protected override void Init()
     {
-        Damage = 25;
+        Damage = 20;
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(0.25f, 1.0f, 3f);
 

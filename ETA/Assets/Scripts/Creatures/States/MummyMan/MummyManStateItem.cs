@@ -537,6 +537,10 @@ namespace MummyManStateItem
             if (_controller.PrevState is ForeShadowingState)
             {
                 groggyTime = 3.0f;
+                ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
+                ps.transform.SetParent(_controller.transform);
+                ps.transform.localPosition = new Vector3(0, 1.0f, 0);
+
                 ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
                 ps.transform.SetParent(_controller.transform);
                 ps.transform.position = new Vector3(0, 2.0f, 0);
