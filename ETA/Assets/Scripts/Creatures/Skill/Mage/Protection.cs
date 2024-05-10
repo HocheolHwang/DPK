@@ -18,9 +18,13 @@ public class Protection : Skill
         _animator.CrossFade("SKILL5", 0.1f);
         Managers.Sound.Play("Skill/Heal");
 
+        yield return new WaitForSeconds(0.2f);
+        _animator.CrossFade("CASTING_WAIT", 0.1f);
         protectionCoroutine = StartCoroutine(ProtectionCoroutine());
 
-        yield return new WaitForSeconds(1.3f);
+
+        yield return new WaitForSeconds(0.5f);
+        _animator.CrossFade("CASTING_OUT", 0.1f); ;
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }
@@ -29,7 +33,7 @@ public class Protection : Skill
     private IEnumerator ProtectionCoroutine()
     {
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.EnergyNovaBlue, 2.0f, gameObject.transform);
-        
+
         BuffBox buffbox1 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
         buffbox1.SetUp(transform, 50, BuffBox.stat.Shield);
         buffbox1.transform.position = gameObject.transform.position;

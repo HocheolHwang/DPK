@@ -38,7 +38,7 @@ public class Gravity : Skill
 
         Managers.Coroutine.Run(GravityCoroutine());
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         //Managers.Resource.Destroy(ps.gameObject);
         //Managers.Effect.Stop(ps);
 
