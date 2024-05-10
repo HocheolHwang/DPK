@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -53,5 +54,11 @@ public class BaseMonsterController : BaseController
                 _isHitCounter = false;
             }
         }
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(int attackDamage, bool isCounter)
+    {
+        CalcDamage(attackDamage, isCounter);
     }
 }

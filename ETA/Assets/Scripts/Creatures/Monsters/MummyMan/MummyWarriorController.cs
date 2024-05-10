@@ -128,4 +128,10 @@ public class MummyWarriorController : BaseMonsterController
     {
         ChangeState(DIE_STATE);
     }
+
+    [PunRPC]
+    void RPC_TakeDamage(int attackDamage, bool isCounter)
+    {
+        CalcDamage(attackDamage, isCounter);
+    }
 }
