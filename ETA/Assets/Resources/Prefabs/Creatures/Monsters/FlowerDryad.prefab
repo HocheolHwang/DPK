@@ -364,7 +364,7 @@ MonoBehaviour:
   _maxHp: 500
   _hp: 500
   _moveSpeed: 5
-  _attackDamage: 1
+  _attackDamage: 20
   _defense: 0
   _shield: 0
 --- !u!114 &-3999620190797943074
@@ -466,7 +466,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 5391626556976596394}
   - {fileID: 5235222730077480815}
   sceneViewId: 0
   InstantiationId: 0
