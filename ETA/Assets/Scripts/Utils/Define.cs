@@ -96,13 +96,16 @@ public class Define
         WarriorNormalAttackEffect,
         ArcherNormalAttackEffect,
         MageNormalAttackEffect,
-        KnightG_CounterEnable,
+        // ------------------------ KnightG ------------------------------
         KnightG_CounterAttack,
         KnightG_TwoSkillEnergy,
         KnightG_TwoSkillAttack,
         KnightG_PhaseTransition,
         KnightG_PhaseAttack,
+        // ------------------------ Common ------------------------------
+        CounterEnable,
         Groggy,
+        // ------------------------ Common  ------------------------------
         EnergyNovaBlue,
         EnergyNovaGreen,
         AuraChargeYellow,
@@ -133,6 +136,7 @@ public class Define
         RapidArrowShot,
         MagicSphereBlue,
         DarknessSlash,
+        // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
         Mummy_RangedHit,
@@ -140,6 +144,12 @@ public class Define
         Mummy_JumpAura,
         Mummy_JumpDown,
         Mummy_Shouting,
+        Mummy_Clap,
+        Mummy_Rushing,
+        Mummy_RushEnd,
+        Mummy_Buff,
+        Mummy_Shield,
+        // ------------------------ Mummy ------------------------------
         WindBall,
         FlowerDryadAttack,
         FlowerDryad_CounterAttack,

@@ -39,13 +39,13 @@ public class MummyManWindMill : Pattern
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = Pos;
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Mummy_WindMill, _controller.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Mummy_WindMill, 0, _controller.transform);
         ps.transform.position = hitbox.transform.position;
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
-        yield return new WaitForSeconds(ps.main.duration);
-        Managers.Effect.Stop(ps);
+        //yield return new WaitForSeconds(ps.main.duration);
+        //Managers.Effect.Stop(ps);
     }
 }

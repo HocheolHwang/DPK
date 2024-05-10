@@ -139,6 +139,17 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
         if (Stat.Shield < 0) Stat.Shield = 0;
     }
 
+    public virtual void IncreaseDamage(int amount)
+    {
+        Stat.AttackDamage += amount;
+    }
+
+    public virtual void DecreaseDamage(int amount)
+    {
+        Stat.AttackDamage -= amount;
+        if (Stat.AttackDamage < 0) Stat.AttackDamage = 0;
+    }
+
     // ---------------------------------- IDamage ------------------------------------------
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
@@ -282,36 +293,36 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
         }
     }
 
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    //Debug.Log(stream.IsWriting);
-    //    if (stream.IsWriting)
-    //    {
-    //        stream.SendNext(transform.position);
-    //        stream.SendNext(transform.rotation);
-    //        stream.SendNext(Agent.velocity);
-    //    }
-    //    else
-    //    {
-    //        networkPosition = (Vector3)stream.ReceiveNext();
-    //        networkRotation = (Quaternion)stream.ReceiveNext();
-    //        Agent.velocity = (Vector3)stream.ReceiveNext();
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //Debug.Log(stream.IsWriting);
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+            stream.SendNext(Agent.velocity);
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkRotation = (Quaternion)stream.ReceiveNext();
+            Agent.velocity = (Vector3)stream.ReceiveNext();
 
-    //        float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-    //        //transform.position += Agent.velocity * lag;
-    //        networkPosition += (Agent.velocity * lag);
-    //    }
-    //}
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            //transform.position += Agent.velocity * lag;
+            networkPosition += (Agent.velocity * lag);
+        }
+    }
 
-    //public void FixedUpdate()
-    //{
-    //    if (!photonView.IsMine)
-    //    {
-    //        //Debug.Log($"{gameObject.name}");
-    //        transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);
-    //        transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
-    //    }
-    //}
+    public void FixedUpdate()
+    {
+        if (!photonView.IsMine)
+        {
+            //Debug.Log($"{gameObject.name}");
+            transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.fixedDeltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+        }
+    }
 
     public void SendTakeDamageMsg(int attackDamage, bool isCounter)
     {

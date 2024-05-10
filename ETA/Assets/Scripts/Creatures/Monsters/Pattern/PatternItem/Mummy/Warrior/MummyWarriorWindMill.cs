@@ -39,21 +39,21 @@ public class MummyWarriorWindMill : Pattern
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = Pos;
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.MummyWarrior_WindMill, _controller.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.MummyWarrior_WindMill, _animData.WindMillAnim.length, _controller.transform);
         ps.transform.position = hitbox.transform.position;
 
         yield return new WaitForSeconds(_animData.WindMillAnim.length);
-        Managers.Effect.Stop(ps);
+        //Managers.Effect.Stop(ps);
 
         hitbox.SetActiveCollider();
 
-        ps = Managers.Effect.Play(Define.Effect.MummyWarrior_WindMill, _controller.transform);
+        ps = Managers.Effect.Play(Define.Effect.MummyWarrior_WindMill, ps.main.duration, _controller.transform);
         ps.transform.position = hitbox.transform.position;
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
 
-        yield return new WaitForSeconds(ps.main.duration);
-        Managers.Effect.Stop(ps);
+        //yield return new WaitForSeconds(ps.main.duration);
+        //Managers.Effect.Stop(ps);
     }
 }

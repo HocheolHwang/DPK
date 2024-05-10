@@ -28,7 +28,7 @@ public class MeleeDetector : MonoBehaviour, IDetector
     private void Start()
     {
         _target = null;
-        if (GetComponent<PhotonView>().IsMine)
+        //if (GetComponent<PhotonView>().IsMine)
             StartCoroutine(UpdateTarget());
 
     }
@@ -75,10 +75,6 @@ public class MeleeDetector : MonoBehaviour, IDetector
                 }
                 if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
             }
-
-
-
-
         }
     }
 

@@ -51,7 +51,7 @@ public class FlowerDryadCounterEnable : Pattern
         _hitbox.transform.position = objectLoc;
 
         
-        _ps = Managers.Effect.Play(Define.Effect.KnightG_CounterEnable, _controller.transform);
+        _ps = Managers.Effect.Play(Define.Effect.CounterEnable, _controller.transform);
         _ps.transform.position = _hitbox.transform.position;
         ParticleSystem.MainModule _psMainModule = _ps.main;
         _psMainModule.startLifetime = _animData.CounterEnableAnim.length * 4.0f;

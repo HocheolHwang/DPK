@@ -217,9 +217,6 @@ namespace MummyManStateItem
     #region CLAP
     public class ClapState : MummyManState
     {
-        // IDLE -> CLAP
-        // 첫 플레이어와 조우하면 몬스터를 소환한다.
-        // 소환한 몬스터가 한 번씩 죽으면, 다시 한 번 소환한다.
         public ClapState(MummyManController controller) : base(controller)
         {
         }
@@ -233,6 +230,7 @@ namespace MummyManStateItem
             _animator.CrossFade(_animData.ClapParamHash, 0.1f);
 
             _summonSkill.Summon();
+            Managers.Sound.Play("Sounds/Monster/Mummy/MummyClap_SND", Define.Sound.Effect);
         }
 
         public override void Execute()
@@ -341,6 +339,8 @@ namespace MummyManStateItem
     public class RushState : MummyManState
     {
         Vector3 destination;
+        float tempDist;
+        float rushTime;
 
         public RushState(MummyManController controller) : base(controller)
         {
@@ -348,31 +348,36 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
-            _agent.velocity = Vector3.zero;
+            tempDist = _agent.stoppingDistance;
+            _agent.stoppingDistance = 0;
+            _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
+
             destination = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
+            destination.y = _controller.transform.position.y;
 
             SetStartAndDestPos(_controller.transform.position, destination);
-
-            // pattern 수행
 
             InitTime(_animData.RushAnim.length);
             _animator.SetFloat("RushSpeed", 2.0f);
             _animator.CrossFade(_animData.RushParamHash, 0.1f);
+
+            _agent.SetDestination(_destPos);
+            StartCast((int)EMummyManPattern.Rush);
+
+            rushTime = CalcTimeToDest(_destPos);
         }
 
         public override void Execute()
         {
-            _animTime += Time.deltaTime;
-
-            JumpToTarget(_animTime);
-
-            if (IsStayForSeconds(CalcTimeToDest(destination)))
+            if (IsStayForSeconds(rushTime))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
         public override void Exit()
         {
+            _agent.stoppingDistance = tempDist;
+            _agent.speed = _controller.Stat.MoveSpeed;
         }
     }
     #endregion
@@ -411,6 +416,8 @@ namespace MummyManStateItem
 
     // -------------------------------------- FORE_SHADOWING : COUNTER ENABLE ------------------------------------------------
     #region FORE_SHADOWING
+    // 자신한테만 버프 수치( HP 10% 회복, ATK += 10, DEF += 5, TIME: 30초, Shield: 30초 HP 10% 부여 )
+    // COUNTER ENABLE
     public class ForeShadowingState : MummyManState
     {
         public ForeShadowingState(MummyManController controller) : base(controller)
@@ -424,6 +431,8 @@ namespace MummyManStateItem
             InitTime(_animData.ForeShadowingAnim.length);
             _animator.SetFloat("ForeShadowingSpeed", 0.5f);
             _animator.CrossFade(_animData.ForeShadowingParamHash, 0.1f);
+
+            StartCast((int)EMummyManPattern.CounterEnable);
         }
 
         public override void Execute()
@@ -441,6 +450,8 @@ namespace MummyManStateItem
         }
         public override void Exit()
         {
+            // 여기서 Buff 부여
+            StartCast((int)EMummyManPattern.Buff);
         }
     }
     #endregion
@@ -528,7 +539,7 @@ namespace MummyManStateItem
                 groggyTime = 3.0f;
                 ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
                 ps.transform.SetParent(_controller.transform);
-                ps.transform.position = new Vector3(0, 3.0f, 0);
+                ps.transform.position = new Vector3(0, 2.0f, 0);
             }
             else
             {

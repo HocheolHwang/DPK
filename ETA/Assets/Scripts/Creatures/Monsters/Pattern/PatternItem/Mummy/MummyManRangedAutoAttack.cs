@@ -24,7 +24,7 @@ public class MummyManRangedAutoAttack : Pattern
     public override IEnumerator StartPatternCast()
     {
         // 오른손에 stone 생성
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Mummy_RangedAttack, transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Mummy_RangedAttack, _createTime + _duration, transform);
         ps.transform.position -= transform.up;
         ps.transform.SetParent(rightHandPos.transform);
         
@@ -55,7 +55,7 @@ public class MummyManRangedAutoAttack : Pattern
             {
                 // hit event를 여기서 실행시키면 됨
                 // Stop Action -> Destroy
-                ParticleSystem hitPs = Managers.Effect.Play(Define.Effect.Mummy_RangedHit, ps.transform);
+                ParticleSystem hitPs = Managers.Effect.Play(Define.Effect.Mummy_RangedHit, 0, ps.transform);
                 hitPs.transform.position = ps.transform.position;
 
                 Managers.Resource.Destroy(hitbox.gameObject);
@@ -65,7 +65,7 @@ public class MummyManRangedAutoAttack : Pattern
 
             yield return null;
         }
-        Managers.Effect.Stop(ps);
+        //Managers.Effect.Stop(ps);
         Managers.Resource.Destroy(hitbox.gameObject);
     }
 
