@@ -6,7 +6,7 @@ public class FlowerDryadFirstAutoAttack : Pattern
 {
     [Header("개발 편의성")]
     [SerializeField] float _hitboxForwardLoc = 0.7f;
-    [SerializeField] Vector3 _hitboxRange = new Vector3(1f, 1f, 4.5f);
+    [SerializeField] Vector3 _hitboxRange = new Vector3(4f, 4f, 4.5f);
     [SerializeField] float _upLoc = 0.4f;
 
     public override void Init()
