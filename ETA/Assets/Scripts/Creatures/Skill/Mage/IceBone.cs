@@ -28,7 +28,7 @@ public class IceBone : Skill
             yield return new WaitForSeconds(0.1f);
         }
 
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1.0f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }

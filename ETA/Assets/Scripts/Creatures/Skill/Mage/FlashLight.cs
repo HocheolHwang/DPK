@@ -20,7 +20,7 @@ public class FlashLight : Skill
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(FlashLightCoroutine());
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 
