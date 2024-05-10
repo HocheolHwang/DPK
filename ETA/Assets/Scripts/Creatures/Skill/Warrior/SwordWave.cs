@@ -6,8 +6,8 @@ public class SwordWave : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
-        Damage = 30;
+        SetCoolDownTime(10);
+        Damage = 20;
         skillRange = new Vector3(2, 2, 2);
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/SwordWave.png");

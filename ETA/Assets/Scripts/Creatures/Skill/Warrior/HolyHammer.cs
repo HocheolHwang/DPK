@@ -8,9 +8,10 @@ public class HolyHammer : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(10);
         base.Init();
         SkillType = Define.SkillType.Range;
+        Damage = 30;
         skillRange = new Vector3(3, 3, 3);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/HolyHammer.png");
     }
