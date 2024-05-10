@@ -17,7 +17,7 @@ public class ArcherNormalAttackSkill : Skill
         Damage = 25;
 
         SkillType = Define.SkillType.Immediately;
-        skillRange = new Vector3(1f, 1.0f, 1f);
+        skillRange = new Vector3(0.3f, 1.0f, 1f);
         base.Init();
 
     }
