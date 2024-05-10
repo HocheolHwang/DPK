@@ -4,12 +4,12 @@ using UnityEngine;
 
 
 /// <summary>
-/// pattern DMG( player 레벨에 따라 수치 조정 )
-/// 1. FirstAuto: 20 + 5  ( 내려찍기 )
-/// 2. SecondAuto: 20     ( 올려치기 )
-/// 3. TwoSkill: 20 + 80
-/// 4. CounterATK: 20 + 130
-/// 5. phase ATK: 20 + 0 ( 찍기 ) | 20 - 10 ( 퍼지기 )
+/// Pattern DMG( ATK: 공격력, P_ATK: 패턴 공격력 )
+/// 1. FirstAuto: ATK + P_ATK(5)  ( 내려찍기 )
+/// 2. SecondAuto: ATK     ( 올려치기 )
+/// 3. TwoSkill: ATK + P_ATK(80)
+/// 4. CounterATK: ATK + P_ATK(130
+/// 5. phase ATK: ATK + P_ATK(0) ( 찍기 ) | ATK - 10 ( 퍼지기 )
 /// </summary>
 public class KnightGInfo : PatternInfo
 {
