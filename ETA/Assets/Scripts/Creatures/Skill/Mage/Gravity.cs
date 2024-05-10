@@ -7,7 +7,7 @@ public class Gravity : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(5);
         Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Holding;
@@ -38,7 +38,7 @@ public class Gravity : Skill
 
         Managers.Coroutine.Run(GravityCoroutine());
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         //Managers.Resource.Destroy(ps.gameObject);
         //Managers.Effect.Stop(ps);
 

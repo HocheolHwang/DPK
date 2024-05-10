@@ -8,7 +8,7 @@ public class Heal : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(10);
         SkillType = Define.SkillType.Immediately;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Heal.png");
@@ -23,7 +23,7 @@ public class Heal : Skill
         _animator.CrossFade("CASTING_WAIT", 0.1f);
         healCoroutine = StartCoroutine(HealCoroutine());
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         _animator.CrossFade("CASTING_OUT", 0.1f);
 
         yield return new WaitForSeconds(0.3f);
@@ -36,10 +36,10 @@ public class Heal : Skill
     {
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.EnergyNovaGreen, 2.0f, gameObject.transform);
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 10; i++)
         {
             BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
-            buffbox.SetUp(transform, 1, BuffBox.stat.Hp);
+            buffbox.SetUp(transform, 2, BuffBox.stat.Hp);
             buffbox.transform.position = gameObject.transform.position;
             buffbox.transform.localScale = new Vector3(20, 3, 20);
             yield return new WaitForSeconds(0.1f);

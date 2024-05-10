@@ -37,7 +37,7 @@ public class LightningShot : Skill
 
         //yield return new WaitForSeconds(0.1f);
         //Managers.Resource.Destroy(hitbox.gameObject);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.3f);
         //Managers.Resource.Destroy(ps.gameObject);
         //Managers.Effect.Stop(ps);
 

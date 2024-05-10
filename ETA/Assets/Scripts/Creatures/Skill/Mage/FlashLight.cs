@@ -6,8 +6,8 @@ public class FlashLight : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(4);
-        Damage = 10;
+        SetCoolDownTime(10);
+        Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(30, 10, 30);
@@ -20,7 +20,7 @@ public class FlashLight : Skill
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(FlashLightCoroutine());
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 

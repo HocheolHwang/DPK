@@ -21,8 +21,8 @@ public class WindShield : Skill
         Managers.Coroutine.Run(Evasion(1.0f));
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/ForestSpiritSpawn");
-        
-        yield return new WaitForSeconds(0.9f);
+
+        yield return new WaitForSeconds(0.8f);
         //Managers.Effect.Stop(ps);
         yield return new WaitForSeconds(0.1f);
 

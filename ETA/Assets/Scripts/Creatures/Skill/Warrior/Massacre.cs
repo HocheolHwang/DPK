@@ -18,7 +18,7 @@ public class Massacre : Skill
     {
         StartCoroutine(MassacreCoroutine());
 
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(1.5f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }
@@ -45,7 +45,6 @@ public class Massacre : Skill
             hitbox.transform.localScale = skillRange;
 
             yield return new WaitForSeconds(0.3f);
-            Managers.Effect.Stop(ps);
             Managers.Resource.Destroy(hitbox.gameObject);
         }
     }

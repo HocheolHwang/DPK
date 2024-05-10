@@ -8,12 +8,12 @@ public class IceBone : Skill
     private Coroutine iceboneCoroutine;
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(10);
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(1, 3, 1);
         RangeType = Define.RangeType.Round;
-        Damage = 15;
+        Damage = 5;
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/IceBone.png");
     }
     public override IEnumerator StartSkillCast()
@@ -28,7 +28,7 @@ public class IceBone : Skill
             yield return new WaitForSeconds(0.1f);
         }
 
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1.0f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }

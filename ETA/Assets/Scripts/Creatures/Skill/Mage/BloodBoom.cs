@@ -7,7 +7,8 @@ public class BloodBoom : Skill
     private Coroutine bloodboomCoroutine;
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(5);
+        Damage = 50;
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(5, 5, 5);
@@ -16,6 +17,7 @@ public class BloodBoom : Skill
     public override IEnumerator StartSkillCast()
     {
         _animator.CrossFade("CASTING_IN", 0.1f);
+        _controller.DecreaseHp(5);
 
         yield return new WaitForSeconds(0.3f);
         bloodboomCoroutine = StartCoroutine(BloodboomCoroutine());
@@ -28,7 +30,7 @@ public class BloodBoom : Skill
         _animator.CrossFade("SKILL2", 0.1f);
 
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }

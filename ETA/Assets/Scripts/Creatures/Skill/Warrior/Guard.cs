@@ -15,7 +15,7 @@ public class Guard : Skill
     public override IEnumerator StartSkillCast()
     {
         _animator.CrossFade("GUARD", 0.05f);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         Managers.Sound.Play("Skill/GuardSkill");
         _controller.GetShield(100);
         yield return new WaitForSeconds(1.0f);

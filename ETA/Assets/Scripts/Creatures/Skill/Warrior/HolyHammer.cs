@@ -22,7 +22,7 @@ public class HolyHammer : Skill
 
         holyhammerCoroutine = StartCoroutine(HolyHammerCoroutine());
 
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1.3f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }
