@@ -59,16 +59,6 @@ public class Dungeon_Scene : BaseScene
     // 플레이어가 나갈때 자기 캐릭터 삭제
     public override void OnLeftRoom()
     {
-        var players = FindObjectsOfType<PlayerController>();
-
-        foreach(var player in players)
-        {
-            if (player.photonView.Owner.IsLocal)
-            {
-                PhotonNetwork.Destroy(player.gameObject);
-                return;
-            }
-        }
     }
     public void AnyOneDied()
     {
@@ -77,6 +67,27 @@ public class Dungeon_Scene : BaseScene
         if (players.Length != 0) return;
         FindObjectOfType<Dungeon_Popup_UI>().HandlePlayerDestroyed();
 
+    }
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        Debug.Log($"# On Player Left Room {PhotonNetwork.IsMasterClient}");
+        if (PhotonNetwork.IsMasterClient == false) return;
+        var players = FindObjectsOfType<PlayerController>();
+
+        foreach(var p in players)
+        {
+            Debug.Log($"# On Player Left Room {PhotonNetwork.IsMasterClient} ... {p.photonView.Owner.ActorNumber} {otherPlayer.ActorNumber}");
+            if(otherPlayer.CustomProperties.TryGetValue("viewID", out object value))
+            {
+                int viewId = (int)value;
+                if (p.photonView.ViewID == viewId)
+                {
+                    PhotonNetwork.Destroy(p.gameObject);
+                }
+            }
+
+        }
     }
 
 

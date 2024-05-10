@@ -77,6 +77,10 @@ public class PlayerController : BaseController
 
             Managers.Input.MouseAction -= MouseEvent;
             Managers.Input.MouseAction += MouseEvent;
+
+            var newProperties = PhotonNetwork.LocalPlayer.CustomProperties;
+            newProperties["viewID"] = photonView.ViewID;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(newProperties);
             
         }
         //Debug.Log($"{photonView.IsMine}");
