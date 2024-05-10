@@ -21,7 +21,8 @@ public class Protection : Skill
         protectionCoroutine = StartCoroutine(ProtectionCoroutine());
 
         yield return new WaitForSeconds(1.3f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
 

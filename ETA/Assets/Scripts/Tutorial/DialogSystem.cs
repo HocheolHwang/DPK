@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum Speaker { Leo = 0,  }
+public enum Speaker { 레오 = 0,  }
 
 public class DialogSystem : MonoBehaviour
 {

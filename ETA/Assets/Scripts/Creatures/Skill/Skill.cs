@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -76,6 +77,16 @@ public abstract class Skill : MonoBehaviour
         if (_currentCoroutine == null) return;
         Managers.Coroutine.Stop(_currentCoroutine);
         
+    }
+
+    public void ChangeToPlayerMoveState()
+    {
+        if (_controller.photonView.IsMine) _controller.ChangeState(_controller.MOVE_STATE);
+    }
+
+    public void ChangeToMonsterMoveState()
+    {
+        if(PhotonNetwork.IsMasterClient) _controller.ChangeState(_controller.MOVE_STATE);
     }
 
 

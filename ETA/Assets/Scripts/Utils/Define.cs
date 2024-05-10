@@ -43,11 +43,9 @@ public class Define
         Lobby,
         Opening,
         Tutorial,
-        DeepForest,
-        ForgottenTemple,
         StarShardPlain,
-        TestDungeon01,
-        TestDungeon02,
+        ForgottenTemple,
+        SeaOfAbyss,
         MultiPlayTest,
         Test
     }
@@ -97,6 +95,7 @@ public class Define
     {
         WarriorNormalAttackEffect,
         ArcherNormalAttackEffect,
+        MageNormalAttackEffect,
         // ------------------------ KnightG ------------------------------
         KnightG_CounterAttack,
         KnightG_TwoSkillEnergy,
@@ -113,6 +112,7 @@ public class Define
         AuraChargeBlue,
         AuraChargeGreen,
         AuraChargeRed,
+        FlashLight,
         Thunder1,
         Thunder2,
         SpikeIce,
@@ -151,6 +151,8 @@ public class Define
         Mummy_Shield,
         // ------------------------ Mummy ------------------------------
         WindBall,
+        FlowerDryadAttack,
+        FlowerDryad_CounterAttack,
         CycloneUIEffect,
         LightningShot,
         ArrowShower,

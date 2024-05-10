@@ -6,8 +6,8 @@ public class Sting : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
-        Damage = 50;
+        SetCoolDownTime(15);
+        Damage = 30;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Sting.png");
     }
@@ -50,6 +50,7 @@ public class Sting : Skill
         Managers.Resource.Destroy(hitbox.gameObject);
         Managers.Sound.Play("Skill/TargetSkill");
         yield return new WaitForSeconds(0.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 }

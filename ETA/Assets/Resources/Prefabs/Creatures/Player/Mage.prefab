@@ -168,8 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 5
-  _attackRange: 3
+  _detectRange: 7
+  _attackRange: 6
   _target: {fileID: 0}
   TargetLayerMask:
     serializedVersion: 2
@@ -189,8 +189,8 @@ MonoBehaviour:
   _maxHp: 250
   _hp: 250
   _moveSpeed: 8
-  _attackDamage: 50
-  _defense: 10
+  _attackDamage: 20
+  _defense: 5
   _shield: 0
 --- !u!114 &7165674948341768064
 MonoBehaviour:
@@ -245,11 +245,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 0}
   SkillType: 1
-  Damage: 50
+  Damage: 20
   skillRange: {x: 0, y: 0, z: 0}
   CollavoSkillRange: {x: 0, y: 0, z: 0}
   RangeType: 0
   CollavoSkillName: 
+  _duration: 1.5
+  _speed: 14
+  _upLoc: 1
 --- !u!114 &-785621988742261031
 MonoBehaviour:
   m_ObjectHideFlags: 0

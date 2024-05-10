@@ -8,8 +8,8 @@ public class GroundCrash : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(2);
-        Damage = 20;
+        SetCoolDownTime(10);
+        Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
@@ -24,7 +24,8 @@ public class GroundCrash : Skill
         groundcrashCoroutine = StartCoroutine(GroundCrashCoroutine());
 
         yield return new WaitForSeconds(1.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator GroundCrashCoroutine()

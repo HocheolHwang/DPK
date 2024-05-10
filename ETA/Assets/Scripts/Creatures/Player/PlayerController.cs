@@ -93,7 +93,7 @@ public class PlayerController : BaseController
 
     private void OnDestroy()
     {
-        FindObjectOfType<Dungeon_Scene>().AnyOneDied();
+        FindObjectOfType<Dungeon_Scene>()?.AnyOneDied();
     }
 
     private void SetPosition()

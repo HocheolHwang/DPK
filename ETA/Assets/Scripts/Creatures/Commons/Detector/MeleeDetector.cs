@@ -69,11 +69,11 @@ public class MeleeDetector : MonoBehaviour, IDetector
                     {
                         closeDist = distToEnemy;
                         Target = enemy.transform;
-                        //viewId = Target.GetComponent<PhotonView>().ViewID;
+                        viewId = Target.GetComponent<PhotonView>().ViewID;
 
                     }
                 }
-                //if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
+                if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
             }
         }
     }

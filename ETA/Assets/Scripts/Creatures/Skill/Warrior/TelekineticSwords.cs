@@ -8,7 +8,7 @@ public class TelekineticSwords : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(7);
+        SetCoolDownTime(15);
         Damage = 10;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/TelekineticSwords.png");
@@ -23,7 +23,8 @@ public class TelekineticSwords : Skill
         telekineticswordsCoroutine = StartCoroutine(TelekineticSwordsCoroutine());
 
         yield return new WaitForSeconds(1.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
 

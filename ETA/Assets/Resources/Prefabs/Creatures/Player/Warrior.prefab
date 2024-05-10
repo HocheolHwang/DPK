@@ -1388,10 +1388,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159ad026f5bff748819b48b1f65b0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 250
-  _hp: 250
+  _maxHp: 300
+  _hp: 300
   _moveSpeed: 8
-  _attackDamage: 50
+  _attackDamage: 20
   _defense: 10
   _shield: 0
 --- !u!114 &5940483213191967641
@@ -1424,7 +1424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 0}
   SkillType: 0
-  Damage: 25
+  Damage: 20
   skillRange: {x: 0, y: 0, z: 0}
   CollavoSkillRange: {x: 0, y: 0, z: 0}
   RangeType: 0
