@@ -371,12 +371,8 @@ public class Dungeon_Popup_UI : UI_Popup
 
         expResult = false;
 
-        if (Managers.Photon.DungeonIndex != 0)
-        {
-            FindObjectOfType<PhotonChat>().gameObject.AddComponent<SendRoomLog>();
-            Managers.Photon.CloseRoom();
-
-        }
+        FindObjectOfType<PhotonChat>().gameObject.AddComponent<SendRoomLog>();
+        Managers.Photon.CloseRoom();
 
         // 콜라보 시스템 참조
         collavoSystem = FindObjectOfType<CollavoSystem>();
