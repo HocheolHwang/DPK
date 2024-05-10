@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using MummyManStateItem;
+using Photon.Pun;
 
 public class MummyManController : BaseMonsterController
 {
@@ -93,5 +94,143 @@ public class MummyManController : BaseMonsterController
         OnBossDestroyed?.Invoke();
 
         base.DestroyEvent();
+    }
+
+    public void ChangeToIdleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToIdleState()
+    {
+        ChangeState(IDLE_STATE);
+    }
+    // ---------
+    public void ChangeToIdleBattleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleBattleState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToIdleBattleState()
+    {
+        ChangeState(IDLE_BATTLE_STATE);
+    }
+
+
+    public void ChangeToChaseState()
+    {
+        photonView.RPC("RPC_ChangeToChaseState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToChaseState()
+    {
+        ChangeState(CHASE_STATE);
+    }
+
+
+
+    public void ChangeToAttackState()
+    {
+        photonView.RPC("RPC_ChangeToAttackState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToAttackState()
+    {
+        ChangeState(ATTACK_STATE);
+    }
+
+
+    public void ChangeToClapState()
+    {
+        photonView.RPC("RPC_ChangeToClapState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToBuffState()
+    {
+        ChangeState(CLAP_STATE);
+    }
+
+    public void ChangeToShoutingState()
+    {
+        photonView.RPC("RPC_ChangeToShoutingState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToShoutingState()
+    {
+        ChangeState(SHOUTING_STATE);
+    }
+    public void ChangeToJumpState()
+    {
+        photonView.RPC("RPC_ChangeToJumpState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToJumpState()
+    {
+        ChangeState(JUMP_STATE);
+    }
+
+
+    public void ChangeToRushState()
+    {
+        photonView.RPC("RPC_ChangeToRushState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToRushState()
+    {
+        ChangeState(RUSH_STATE);
+    }
+
+
+
+    public void ChangeToWindMillState()
+    {
+        photonView.RPC("RPC_ChangeToWindMillState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToWindMillState()
+    {
+        ChangeState(WIND_MILL_STATE);
+    }
+
+
+    public void ChangeToForeShadowingState()
+    {
+        photonView.RPC("RPC_ChangeToForeShadowingState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToForeShadowingState()
+    {
+        ChangeState(FORE_SHADOWING_STATE);
+    }
+
+
+    public void ChangeToBackLocationState()
+    {
+        photonView.RPC("RPC_ChangeToBackLocationState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToBackLocationState()
+    {
+        ChangeState(BACK_LOCATION_STATE);
+    }
+
+
+    public void ChangeToDieState()
+    {
+        photonView.RPC("RPC_ChangeToDieState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToDieState()
+    {
+        ChangeState(DIE_STATE);
+    }
+    public void ChangeToGroggyState()
+    {
+        photonView.RPC("RPC_ChangeToGroggyState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToGroggyState()
+    {
+        ChangeState(GROGGY_STATE);
     }
 }

@@ -1,4 +1,5 @@
 using KnightGStateItem;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             SetDetector();
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
@@ -23,6 +25,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (!_meetPlayer && _target != null) // 첫 조우 때 CLAP으로 시작
             {
                 _controller.ChangeState(_controller.CLAP_STATE);
@@ -49,6 +52,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.velocity = Vector3.zero;
 
             SetDetector();
@@ -59,6 +63,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (IsPreviousState())
             {
                 _controller.ChangeState(_controller.BACK_LOCATION_STATE);
@@ -105,12 +110,14 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
         }
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (_target == null)
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
@@ -147,6 +154,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.velocity = Vector3.zero;
             // 근거리 몬스터가 죽고 근거리 디텍터를 활성화한 상태
             if ( !_isRangedAttack)
@@ -174,6 +182,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             // 근거리 디텍터
@@ -223,6 +232,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _meetPlayer = true;
 
             _agent.velocity = Vector3.zero;
@@ -235,6 +245,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             if (_animTime >= _threadHold)
@@ -260,6 +271,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.velocity = Vector3.zero;
             InitTime(_animData.ShoutingAnim.length);
 
@@ -271,6 +283,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             if (_animTime >= (_threadHold * 2) && (_controller.PrevState is ForeShadowingState))
@@ -301,6 +314,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.velocity = Vector3.zero;
             _agent.enabled = false;               // BACK_LOCATION에서 true
 
@@ -315,6 +329,8 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             JumpToTarget(_animTime);
             if (_isRangedAttack && IsStayForSeconds((_threadHold * 2.0f) + 0.5f))
@@ -348,6 +364,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             tempDist = _agent.stoppingDistance;
             _agent.stoppingDistance = 0;
             _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
@@ -369,6 +386,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (IsStayForSeconds(rushTime))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
@@ -392,6 +410,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.WindMillAnim.length);
@@ -402,6 +421,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (IsStayForSeconds(_threadHold))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
@@ -426,6 +446,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.ForeShadowingAnim.length);
@@ -437,6 +458,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             if (_controller.IsHitCounter)
@@ -466,6 +488,7 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.velocity = Vector3.zero;
             _agent.enabled = false;
 
@@ -479,6 +502,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             JumpToTarget(_animTime);
@@ -506,12 +530,14 @@ namespace MummyManStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
         }
 
         public override void Execute()
         {
+
         }
         public override void Exit()
         {
@@ -533,6 +559,7 @@ namespace MummyManStateItem
         public override void Enter()
         {
 
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
 
             if (_controller.PrevState is ForeShadowingState)
             {
@@ -556,6 +583,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (IsStayForSeconds(groggyTime))
             {
                 _controller.RevertToPrevState();
@@ -577,6 +605,7 @@ namespace MummyManStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (_meetPlayer)
             {
                 _shoutingTime += Time.deltaTime;
