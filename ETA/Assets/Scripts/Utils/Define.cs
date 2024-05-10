@@ -110,6 +110,7 @@ public class Define
         AuraChargeBlue,
         AuraChargeGreen,
         AuraChargeRed,
+        FlashLight,
         Thunder1,
         Thunder2,
         SpikeIce,
