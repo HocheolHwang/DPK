@@ -8,7 +8,7 @@ public class TelekineticSwords : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(7);
+        SetCoolDownTime(15);
         Damage = 10;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/TelekineticSwords.png");

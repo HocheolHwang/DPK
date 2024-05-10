@@ -6,9 +6,10 @@ public class Massacre : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(15);
         base.Init();
         SkillType = Define.SkillType.Immediately;
+        Damage = 20;
         skillRange = new Vector3(7, 7, 7);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Massacre.png");
     }
