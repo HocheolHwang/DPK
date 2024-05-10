@@ -202,6 +202,9 @@ public class Dungeon_Popup_UI : UI_Popup
     // 파티원 수
     private int partySize = PhotonNetwork.PlayerList.Length;
 
+    // 콜라보 시스템
+    private CollavoSystem collavoSystem;
+
 
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
@@ -370,6 +373,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
         FindObjectOfType<PhotonChat>().gameObject.AddComponent<SendRoomLog>();
         Managers.Photon.CloseRoom();
+
+        // 콜라보 시스템 참조
+        collavoSystem = FindObjectOfType<CollavoSystem>();
     }
 
     //public void PartyEnter()
@@ -401,6 +407,9 @@ public class Dungeon_Popup_UI : UI_Popup
             UpdatePartyInfo();
             partySize = PhotonNetwork.PlayerList.Length;
         }
+
+        // 콜라보 발동 여부 인식
+        CheckCollavo();
     }
 
     void OnDestroy()
@@ -896,6 +905,19 @@ public class Dungeon_Popup_UI : UI_Popup
             if(con.photonView.Owner.CustomProperties["CurClass"] != null)
             {
                 string classCode = (string)con.photonView.Owner.CustomProperties["CurClass"];
+            }
+        }
+    }
+
+    // 콜라보 발동 여부 체크하는 메서드
+    private void CheckCollavo()
+    {
+        foreach (var skill in skillSlot.Skills)
+        {
+            if (skill.SkillType != Define.SkillType.Holding) continue;
+            if (collavoSystem.IsCastingSkill(skill.CollavoSkillName))
+            {
+
             }
         }
     }

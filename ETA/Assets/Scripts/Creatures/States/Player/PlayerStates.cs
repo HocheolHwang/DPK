@@ -260,6 +260,7 @@ namespace PlayerStates
 
         public override void Execute()
         {
+
             if (_playerController.photonView.IsMine == false) return;
             GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = (Time.time - startTime) / 3.0f;
 
