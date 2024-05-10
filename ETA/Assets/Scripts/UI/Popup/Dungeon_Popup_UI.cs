@@ -8,6 +8,8 @@ using PlayerStates;
 using System;
 using Photon.Pun;
 using WebSocketSharp;
+using System.Linq;
+using System.IO;
 
 public class Dungeon_Popup_UI : UI_Popup
 {
@@ -88,7 +90,17 @@ public class Dungeon_Popup_UI : UI_Popup
         Skill_Icon_5,
         Skill_Icon_6,
         Skill_Icon_7,
-        Skill_Icon_8
+        Skill_Icon_8,
+
+        // 콜라보 이펙트
+        Skill_1_Collabo_Image,
+        Skill_2_Collabo_Image,
+        Skill_3_Collabo_Image,
+        Skill_4_Collabo_Image,
+        Skill_5_Collabo_Image,
+        Skill_6_Collabo_Image,
+        Skill_7_Collabo_Image,
+        Skill_8_Collabo_Image,
     }
 
     enum Texts
@@ -154,6 +166,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private Image[] skillCooldownImages = new Image[8];
     private Image[] skillUnableImages = new Image[8];
     private Image[] skillIcons = new Image[8];
+    private Image[] collaboImages = new Image[8];
     private TextMeshProUGUI dungeonTierText;
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI timeText;
@@ -204,6 +217,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
     // 콜라보 시스템
     private CollavoSystem collavoSystem;
+
+    // 현재 숫자를 추적하는 외부 변수
+    private int currentNum = 2;
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -369,6 +385,14 @@ public class Dungeon_Popup_UI : UI_Popup
             ResetCooldownUI(i);
         }
 
+
+        // 콜라보 아이콘 초기화
+        for (int i = 0; i < collaboImages.Length; i++)
+        {
+            collaboImages[i] = GetImage((int)Images.Skill_1_Collabo_Image + i);
+        }
+
+
         expResult = false;
 
         if (Managers.Photon.DungeonIndex != 0)
@@ -380,6 +404,11 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 콜라보 시스템 참조
         collavoSystem = FindObjectOfType<CollavoSystem>();
+
+        for (int i = 0; i < 8; i++)
+        {
+            collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
+        }
     }
 
     //public void PartyEnter()
@@ -925,12 +954,23 @@ public class Dungeon_Popup_UI : UI_Popup
     // 콜라보 발동 여부 체크하는 메서드
     private void CheckCollavo()
     {
-        foreach (var skill in skillSlot.Skills)
+        for (int i = 0; i < 8; i++)
         {
-            if (skill.SkillType != Define.SkillType.Holding) continue;
+            var skill = skillSlot.Skills[i];
+
+            if (skill.SkillType != Define.SkillType.Holding)
+            {
+                collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
+                continue;
+            }
+
             if (collavoSystem.IsCastingSkill(skill.CollavoSkillName))
             {
-
+                collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (7)");
+            }
+            else
+            {
+                collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
             }
         }
     }

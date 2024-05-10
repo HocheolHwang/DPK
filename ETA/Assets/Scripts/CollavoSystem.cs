@@ -54,7 +54,7 @@ public class CollavoSystem : MonoBehaviour
     {
         if(_currentSkills.TryGetValue(skillname, out PlayerController player))
         {
-            return true;
+            if (player.photonView.IsMine == false) return true;
         }
         return false;
     }
