@@ -46,5 +46,7 @@ public class Login_Scene : BaseScene
         // UI를 이용해서 입장 하자
         Managers.UI.ClosePopupUI();
         Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
+
+        Managers.Photon.CloseRoom();
     }
 }
