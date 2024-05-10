@@ -95,6 +95,7 @@ public class Define
     {
         WarriorNormalAttackEffect,
         ArcherNormalAttackEffect,
+        MageNormalAttackEffect,
         KnightG_CounterEnable,
         KnightG_CounterAttack,
         KnightG_TwoSkillEnergy,
