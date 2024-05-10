@@ -38,7 +38,8 @@ public class WindSlash : Skill
 
         yield return new WaitForSeconds(1.0f);
         //Managers.Resource.Destroy(ps.gameObject);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     public override IEnumerator StartCollavoSkillCast()
@@ -92,7 +93,8 @@ public class WindSlash : Skill
         //Managers.Resource.Destroy(ps2.gameObject);
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator WindSlashCoroutine()

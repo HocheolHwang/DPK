@@ -361,7 +361,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Managers.Player.SetPartyLeader(false);
-        Destroy(GameObject.FindObjectOfType<GameSystem>());
+        Destroy(GameObject.FindObjectOfType<GameSystem>().gameObject);
     }
     public override void OnConnectedToMaster()
     {

@@ -33,7 +33,8 @@ public class WhirlWind : Skill
         }
 
         yield return new WaitForSeconds(0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     public override IEnumerator StartCollavoSkillCast()
@@ -56,7 +57,8 @@ public class WhirlWind : Skill
         }
 
         yield return new WaitForSeconds(0.2f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator WhirlWindCoroutine()

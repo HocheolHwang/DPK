@@ -460,7 +460,7 @@ namespace KnightGStateItem
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
             Managers.Sound.Play("Monster/KnightG/KnightGDie_SND", Define.Sound.Effect);
-            _controller.GetComponentInChildren<ParticleSystem>().Stop();
+            //_controller.GetComponentInChildren<ParticleSystem>().Stop();
         }
 
         public override void Execute()

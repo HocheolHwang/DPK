@@ -39,7 +39,10 @@ public class ArcherNormalAttackSkill : Skill
         Managers.Coroutine.Run(ShotArrow());
 
         yield return new WaitForSeconds(_duration+ 0.1f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+
+
+        //if(_controller.photonView.IsMine) _controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     IEnumerator ShotArrow()

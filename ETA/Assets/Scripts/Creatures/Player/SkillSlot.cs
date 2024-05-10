@@ -24,7 +24,7 @@ public class SkillSlot : MonoBehaviour
     {
         SkillSystem = GetComponent<SkillSystem>();
         // 내 캐릭터만 UI에 연결하기
-        if(GetComponent<PhotonView>().IsMine) GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
+
 
         // string[] loadedSkills = null;
         // TMP
@@ -54,6 +54,12 @@ public class SkillSlot : MonoBehaviour
                 skill[i] = (Skill)gameObject.AddComponent(type);
                 
             }
+        }
+
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            GameObject.FindObjectOfType<Dungeon_Popup_UI>().skillSlot = this;
+            GameObject.FindObjectOfType<Dungeon_Popup_UI>().UpdateSlotSkillIcons();
         }
     }
 
@@ -119,12 +125,12 @@ public class SkillSlot : MonoBehaviour
 
     public void NormalAttack()
     {
-
         // 이게 꼭 필요할까?
         if (_currentSkill != null)
         {
             _currentSkill.StopCast();
         }
+
         // TODO: 직업이 여러개면 바꿔 주어야할 것
         if (gameObject.name.Contains("Warrior"))
         {

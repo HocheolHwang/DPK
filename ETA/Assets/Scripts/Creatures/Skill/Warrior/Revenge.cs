@@ -23,7 +23,8 @@ public class Revenge : Skill    // 폐기
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
         yield return new WaitForSeconds(1.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
 
     }
 
@@ -68,7 +69,8 @@ public class Revenge : Skill    // 폐기
         Managers.Resource.Destroy(hitbox2.gameObject);
         Managers.Resource.Destroy(hitbox3.gameObject);
 
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
 
         yield return new WaitForSeconds(1.3f);
         Managers.Sound.Play("Skill/WarriorHoldSkill2");

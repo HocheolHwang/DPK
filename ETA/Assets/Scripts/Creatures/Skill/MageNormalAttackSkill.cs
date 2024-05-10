@@ -34,6 +34,7 @@ public class MageNormalAttackSkill : Skill
         yield return new WaitForSeconds(1.3f);
 
         Managers.Effect.Stop(ps);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 }

@@ -131,6 +131,7 @@ public class GameSystem : MonoBehaviourPunCallbacks
         finish += 1;
         if (finish >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
+            // 게임 시작
             myController.ChangeState(myController.MOVE_STATE);
             FindObjectOfType<PlayerZone>().Run();
 
@@ -158,6 +159,7 @@ public class GameSystem : MonoBehaviourPunCallbacks
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = num;
         FindObjectOfType<Lobby_Popup_UI>().UpdateSelectedDungeon();
     }
+
 
     // 어차피 로비 오면 삭제할거 같은데 의미있나?
     public void Clear()
