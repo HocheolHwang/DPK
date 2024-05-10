@@ -179,11 +179,6 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     // 잊혀진 신전 선택 메서드
     private void SelectForgottenTemple(PointerEventData data)
     {
-        // 임시로 막아둠
-        Lobby_Popup_UI lobbyPopupUI = FindObjectOfType<Lobby_Popup_UI>();
-        StartCoroutine(lobbyPopupUI.ShowWarningPopupCoroutine("던전 선택 불가", "잊혀진 신전은 현재 입장하실 수 없습니다.\n" + "다음 배포를 기대해주세요!"));
-        return;
-
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 2;
 
         // 던전 정보 업데이트 코루틴
@@ -193,11 +188,6 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     // 심연의 바다 선택 메서드
     private void SelectSeaOfAbyss(PointerEventData data)
     {
-        // 임시로 막아둠
-        Lobby_Popup_UI lobbyPopupUI = FindObjectOfType<Lobby_Popup_UI>();
-        StartCoroutine(lobbyPopupUI.ShowWarningPopupCoroutine("던전 선택 불가", "심연의 바다는 현재 입장하실 수 없습니다.\n" + "다음 배포를 기대해주세요!"));
-        return;
-
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 3;
 
         // 던전 정보 업데이트 코루틴
