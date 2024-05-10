@@ -7,8 +7,8 @@ public class WindBall : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
-        Damage = 25;
+        SetCoolDownTime(20);
+        Damage = 10;
         base.Init();
         SkillType = Define.SkillType.Holding;
         skillRange = new Vector3(5, 5, 5);

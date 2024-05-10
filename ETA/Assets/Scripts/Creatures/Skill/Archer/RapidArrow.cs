@@ -6,8 +6,8 @@ public class RapidArrow : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
-        Damage = 25;
+        SetCoolDownTime(15);
+        Damage = 15;
         base.Init();
         SkillType = Define.SkillType.Target;
         //RangeType = Define.RangeType.Square;
