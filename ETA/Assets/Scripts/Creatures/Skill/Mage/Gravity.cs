@@ -7,7 +7,7 @@ public class Gravity : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(5);
         Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Holding;

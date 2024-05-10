@@ -37,7 +37,7 @@ public class SkillSlot : MonoBehaviour
                 loadedSkills = new string[]{ "ArrowShower", "RapidArrow", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "ForestSpirit", "LightningShot" };
                 break;
             case "Mage": // 메이지
-                loadedSkills = new string[] { "Meteor", "IceBone", "FlashLight", "Thunder", "Heal", "Protection", "Protection", "Gravity" };
+                loadedSkills = new string[] { "Meteor", "IceBone", "FlashLight", "Thunder", "Heal", "Protection", "BloodBoom", "Gravity" };
                 break;
         }
 
