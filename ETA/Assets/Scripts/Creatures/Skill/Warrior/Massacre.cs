@@ -45,7 +45,6 @@ public class Massacre : Skill
             hitbox.transform.localScale = skillRange;
 
             yield return new WaitForSeconds(0.3f);
-            Managers.Effect.Stop(ps);
             Managers.Resource.Destroy(hitbox.gameObject);
         }
     }
