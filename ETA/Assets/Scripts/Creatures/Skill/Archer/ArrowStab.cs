@@ -6,7 +6,7 @@ public class ArrowStab : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(10);
         Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Immediately;
