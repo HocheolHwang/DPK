@@ -199,6 +199,18 @@ namespace MonsterStateItem
                 case Define.UnitType.Tree:
                     _unitType = "Tree";
                     break;
+                case Define.UnitType.Butterfly:
+                    _unitType = "Butterfly";
+                    break;
+                case Define.UnitType.Krake:
+                    _unitType = "Krake";
+                    break;
+                case Define.UnitType.Puffe:
+                    _unitType = "Puff";
+                    break;
+                case Define.UnitType.Starfish:
+                    _unitType = "StarFish";
+                    break;
                 default:
                     _unitType = null;
                     break;
