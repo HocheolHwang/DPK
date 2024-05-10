@@ -40,7 +40,6 @@ public class BaseMonsterController : BaseController
     {
         base.CounterEvent();
         _isHitCounter = true;
-        // 카운터 맞았다는 이펙트 수행
     }
 
     IEnumerator InitCounter()
@@ -51,7 +50,6 @@ public class BaseMonsterController : BaseController
             // counter 맞고 0.15초 뒤에 맞았다는 상태를 초기화
             if (_isHitCounter)
             {
-                
                 _isHitCounter = false;
             }
         }
