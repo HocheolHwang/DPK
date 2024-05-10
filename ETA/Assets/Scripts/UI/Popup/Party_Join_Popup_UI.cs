@@ -139,9 +139,9 @@ public class Party_Join_Popup_UI : UI_Popup
             // 선택된 던전 번호에 따라 다른 텍스트를 설정
             string dungeonName = selectedDungeonNumber switch
             {
-                1 => "깊은 숲",
+                1 => "별의 조각 평원",
                 2 => "잊혀진 신전",
-                3 => "별의 조각 평원",
+                3 => "심연의 바다",
                 _ => "알 수 없는 던전입니다."
             };
 

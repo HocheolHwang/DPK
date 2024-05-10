@@ -49,4 +49,13 @@ public class CollavoSystem : MonoBehaviour
     {
         _currentSkills.Clear();
     }
+
+    public bool IsCastingSkill(string skillname)
+    {
+        if(_currentSkills.TryGetValue(skillname, out PlayerController player))
+        {
+            return true;
+        }
+        return false;
+    }
 }
