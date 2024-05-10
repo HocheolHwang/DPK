@@ -209,7 +209,7 @@ namespace MonsterStateItem
                     _unitType = "Puff";
                     break;
                 case Define.UnitType.Starfish:
-                    _unitType = "Starfish";
+                    _unitType = "StarFish";
                     break;
                 default:
                     _unitType = null;
