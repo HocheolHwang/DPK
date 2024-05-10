@@ -36,7 +36,7 @@ public class ArrowBomb : Skill
         ////ps.Play();
         Managers.Coroutine.Run(ArrowBombCoroutine());
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.3f);
         //Managers.Resource.Destroy(ps.gameObject);
 
         yield return new WaitForSeconds(0.1f);

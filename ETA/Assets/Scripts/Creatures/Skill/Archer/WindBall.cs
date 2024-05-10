@@ -79,7 +79,7 @@ public class WindBall : Skill
         hitbox.transform.localScale = skillRange;
 
         //ParticleSystem ps = Managers.Resource.Instantiate("Effect/ArrowStab").GetComponent<ParticleSystem>();
-        yield return new WaitForSeconds(0.2f);
+        //yield return new WaitForSeconds(0.2f);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.WindBall, 1.0f, gameObject.transform);
         ps.transform.position = gameObject.transform.position + transform.up;
 
