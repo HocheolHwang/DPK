@@ -89,6 +89,7 @@ public class Define
         MummyMan,
         MummyManWarrior,
         MummyManBuffer,
+        Ipris,
     }
 
     public enum Effect

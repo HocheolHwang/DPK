@@ -34,6 +34,7 @@ public class IprisAnimationData : MonsterAnimationData
     #endregion
 
     // ---------------------------- Animation Clip ----------------------------------------
+    [SerializeField] private AnimationClip dieAnim;
     [SerializeField] private AnimationClip attackFirstAnim;
     [SerializeField] private AnimationClip attackSecondAnim;
     [SerializeField] private AnimationClip buffAnim;
@@ -45,6 +46,7 @@ public class IprisAnimationData : MonsterAnimationData
     [SerializeField] private AnimationClip patternTwoWindMillAnim;
 
     #region SET/GET Anim
+    public AnimationClip DieAnim { get => dieAnim; }
     public AnimationClip AttackFirstAnim { get => attackFirstAnim; }
     public AnimationClip AttackSecondAnim { get => attackSecondAnim; }
     public AnimationClip BuffAnim { get => buffAnim; }
