@@ -11,7 +11,7 @@ using static UnityEngine.GraphicsBuffer;
 /// 1. 0.1초마다 인식 범위에 적이 있는지 판단한다.
 /// 2. 있으면 가장 가까운 적을 target으로 세팅한다.
 /// </summary>
-public class MeleeDetector : MonoBehaviour, IDetector
+public class MeleeDetector : MonoBehaviourPunCallbacks, IDetector
 {
     [Header("Set Values from the Inspector")]
     [SerializeField] private float _detectRange = 15.0f;
@@ -28,8 +28,8 @@ public class MeleeDetector : MonoBehaviour, IDetector
     private void Start()
     {
         _target = null;
-        if (GetComponent<PhotonView>().IsMine)
-            StartCoroutine(UpdateTarget());
+
+        StartCoroutine(UpdateTarget());
 
     }
 
@@ -47,10 +47,14 @@ public class MeleeDetector : MonoBehaviour, IDetector
 
     public IEnumerator UpdateTarget()
     {
-        
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
+            if (GetComponent<PhotonView>().IsMine == false)
+            {
+                continue;
+            }
+            
             //yield return null;
 
             float closeDist = Mathf.Infinity;
@@ -107,4 +111,5 @@ public class MeleeDetector : MonoBehaviour, IDetector
             }
         }
     }
+
 }
