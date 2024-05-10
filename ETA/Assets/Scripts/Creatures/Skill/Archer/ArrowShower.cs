@@ -6,8 +6,8 @@ public class ArrowShower : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
-        Damage = 25;
+        SetCoolDownTime(10);
+        Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(7, 7, 7);

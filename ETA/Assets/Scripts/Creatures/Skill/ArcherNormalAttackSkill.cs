@@ -14,7 +14,7 @@ public class ArcherNormalAttackSkill : Skill
     {
         _createTime = 0.1f;
 
-        Damage = 25;
+        Damage = 20;
 
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(0.3f, 1.0f, 1f);
@@ -49,7 +49,7 @@ public class ArcherNormalAttackSkill : Skill
         Vector3 objectLoc = transform.position + rootForward + rootUp;
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, Damage, 1);
         hitbox.transform.localScale = skillRange;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
