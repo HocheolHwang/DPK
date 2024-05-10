@@ -496,6 +496,7 @@ namespace KnightGStateItem
                 ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
                 ps.transform.SetParent(_controller.transform);
                 ps.transform.localPosition = new Vector3(0, 1.0f, 0);
+
                 ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
                 ps.transform.SetParent(_controller.transform);
                 ps.transform.localPosition = new Vector3(0, 3.0f, 0);

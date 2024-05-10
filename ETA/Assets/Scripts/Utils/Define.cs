@@ -104,6 +104,7 @@ public class Define
         KnightG_PhaseAttack,
         // ------------------------ Common ------------------------------
         CounterEnable,
+        CounteredEffect_Blue,
         Groggy,
         // ------------------------ Common  ------------------------------
         EnergyNovaBlue,
@@ -162,7 +163,6 @@ public class Define
         CollavoWindBall,
         ForestSpiritSpawn,
         WindSlash,
-        CounteredEffect_Blue,
         CollavoCyclone,
         CollavoCycloneShot,
         CollavoBlackHole,
