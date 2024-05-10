@@ -6,7 +6,7 @@ public class Thunder : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(10);
         Damage = 10;
         base.Init();
         SkillType = Define.SkillType.Holding;

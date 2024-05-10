@@ -8,7 +8,7 @@ public class Heal : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(10);
         SkillType = Define.SkillType.Immediately;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Heal.png");
@@ -36,7 +36,7 @@ public class Heal : Skill
     {
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.EnergyNovaGreen, 2.0f, gameObject.transform);
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 20; i++)
         {
             BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
             buffbox.SetUp(transform, 1, BuffBox.stat.Hp);

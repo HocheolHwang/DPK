@@ -6,8 +6,8 @@ public class FlashLight : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(4);
-        Damage = 10;
+        SetCoolDownTime(10);
+        Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(30, 10, 30);
