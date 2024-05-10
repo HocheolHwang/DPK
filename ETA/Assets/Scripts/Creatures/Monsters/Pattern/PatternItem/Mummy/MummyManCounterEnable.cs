@@ -45,7 +45,7 @@ public class MummyManCounterEnable : Pattern
         _psMainModule.startLifetime = _animData.ForeShadowingAnim.length * 2.0f;
 
         // 카운터 도중에 내는 소리
-        Managers.Sound.Play("Monster/KnightG/KnightGCounterEnergy_SND", Define.Sound.Effect);
+        Managers.Sound.Play("Monster/CounterEnergy_SND", Define.Sound.Effect);
 
         // 시전 도중에 카운터 스킬을 맞으면 hit box와 effect가 사라지고, sound가 발생
         float timer = 0;
