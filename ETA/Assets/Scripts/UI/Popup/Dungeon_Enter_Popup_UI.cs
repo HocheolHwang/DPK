@@ -95,11 +95,9 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         // 선택된 던전 번호에 따라 다른 씬으로 이동
         Define.Scene sceneName = selectedDungeonNumber switch
         {
-            1 => Define.Scene.DeepForest,
+            1 => Define.Scene.StarShardPlain,
             2 => Define.Scene.ForgottenTemple,
-            3 => Define.Scene.StarShardPlain,
-            4 => Define.Scene.TestDungeon01,
-            5 => Define.Scene.TestDungeon02,
+            3 => Define.Scene.SeaOfAbyss,
             _ => Define.Scene.Unknown // 던전 번호가 인식할 수 없는 값일 경우 null을 반환
         };
 
@@ -129,11 +127,9 @@ public class Dungeon_Enter_Popup_UI : UI_Popup
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
         dungeonEnterText.text = selectedDungeonNumber switch
         {
-            1 => "[깊은 숲]에 입장하시겠습니까?",
+            1 => "[별의 조각 평원]에 입장하시겠습니까?",
             2 => "[잊혀진 신전]에 입장하시겠습니까?",
-            3 => "[별의 조각 평원]에 입장하시겠습니까?",
-            4 => "[Test 1]에 입장하시겠습니까?",
-            5 => "[Test 2]에 입장하시겠습니까?",
+            3 => "[심연의 바다]에 입장하시겠습니까?",
             _ => "알 수 없는 던전입니다.",
         };
     }

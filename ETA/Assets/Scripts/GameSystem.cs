@@ -33,13 +33,13 @@ public class GameSystem : MonoBehaviourPunCallbacks
         int num = 0;
         switch (scene)
         {
-            case Define.Scene.DeepForest:
+            case Define.Scene.StarShardPlain:
                 num = 1;
                 break;
             case Define.Scene.ForgottenTemple:
                 num = 2;
                 break;
-            case Define.Scene.StarShardPlain:
+            case Define.Scene.SeaOfAbyss:
                 num = 3;
                 break;
         }
@@ -54,13 +54,13 @@ public class GameSystem : MonoBehaviourPunCallbacks
         int num = 0;
         switch (scene)
         {
-            case Define.Scene.DeepForest:
+            case Define.Scene.StarShardPlain:
                 num = 1;
                 break;
             case Define.Scene.ForgottenTemple:
                 num = 2;
                 break;
-            case Define.Scene.StarShardPlain:
+            case Define.Scene.SeaOfAbyss:
                 num = 3;
                 break;
         }

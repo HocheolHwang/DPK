@@ -14,11 +14,9 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         Open_Party_Leave_Button,
         Open_Dungeon_Select_Button,
         Open_Dungeon_Enter_Button,
-        Select_DeepForest_Button,
-        Select_ForgottenTemple_Button,
         Select_StarShardPlain_Button,
-        Select_Test_1_Button,
-        Select_Test_2_Button,
+        Select_ForgottenTemple_Button,
+        Select_SeaOfAbyss_Button,
         Cancel_Button,
         Dungeon_Select_Button
     }
@@ -33,11 +31,9 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     private Button openPartyLeaveButton;
     private Button openDungeonSelectButton;
     private Button openDungeonEnterButton;
-    private Button selectDeepForestButton;
-    private Button selectForgottenTempleButton;
     private Button selectStarShardPlainButton;
-    private Button selectTest1Button;
-    private Button selectTest2Button;
+    private Button selectForgottenTempleButton;
+    private Button selectSeaOfAbyssButton;
     private Button cancelButton;
     private Button dungeonSelectButton;
     private TextMeshProUGUI selectedDungeonText;
@@ -79,29 +75,17 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         openDungeonEnterButton = GetButton((int)Buttons.Open_Dungeon_Enter_Button);
         AddUIEvent(openDungeonEnterButton.gameObject, OpenDungeonEnter);
 
-        // 깊은 숲 선택 버튼 이벤트 등록
-        selectDeepForestButton = GetButton((int)Buttons.Select_DeepForest_Button);
-        AddUIEvent(selectDeepForestButton.gameObject, SelectDeepForest);
+        // 별의 조각 평원 선택 버튼 이벤트 등록
+        selectStarShardPlainButton = GetButton((int)Buttons.Select_StarShardPlain_Button);
+        AddUIEvent(selectStarShardPlainButton.gameObject, SelectStarShardPlain);
 
         // 잊혀진 신전 선택 버튼 이벤트 등록
         selectForgottenTempleButton = GetButton((int)Buttons.Select_ForgottenTemple_Button);
         AddUIEvent(selectForgottenTempleButton.gameObject, SelectForgottenTemple);
 
-        // 별의 조각 평원 선택 버튼 이벤트 등록
-        selectStarShardPlainButton = GetButton((int)Buttons.Select_StarShardPlain_Button);
-        AddUIEvent(selectStarShardPlainButton.gameObject, SelectStarShardPlain);
-
-
-        // @@@@@@@@@@@@@@@@@@@@ 임시 버튼 @@@@@@@@@@@@@@@@@@@@
-        // Test 1 선택 버튼 이벤트 등록
-        selectTest1Button = GetButton((int)Buttons.Select_Test_1_Button);
-        AddUIEvent(selectTest1Button.gameObject, SelectTest1);
-
-        // Test 2 선택 버튼 이벤트 등록
-        selectTest2Button = GetButton((int)Buttons.Select_Test_2_Button);
-        AddUIEvent(selectTest2Button.gameObject, SelectTest2);
-        // @@@@@@@@@@@@@@@@@@@@ 임시 버튼 @@@@@@@@@@@@@@@@@@@@
-
+        // 심연의 바다 선택 버튼 이벤트 등록
+        selectSeaOfAbyssButton = GetButton((int)Buttons.Select_SeaOfAbyss_Button);
+        AddUIEvent(selectSeaOfAbyssButton.gameObject, SelectSeaOfAbyss);
 
         // 돌아가기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
@@ -159,8 +143,8 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         Managers.UI.ShowPopupUI<Dungeon_Enter_Popup_UI>("[Lobby]_Dungeon_Enter_Popup_UI");
     }
 
-    // 깊은 숲 선택 메서드
-    private void SelectDeepForest(PointerEventData data)
+    // 별의 조각 평원 선택 메서드
+    private void SelectStarShardPlain(PointerEventData data)
     {
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 1;
         UpdateSelectedDungeon();
@@ -173,30 +157,12 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         UpdateSelectedDungeon();
     }
 
-    // 별의 조각 평원 선택 메서드
-    private void SelectStarShardPlain(PointerEventData data)
+    // 심연의 바다 선택 메서드
+    private void SelectSeaOfAbyss(PointerEventData data)
     {
         FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 3;
         UpdateSelectedDungeon();
     }
-
-
-    // @@@@@@@@@@@@@@@@@@@@ 임시 버튼 @@@@@@@@@@@@@@@@@@@@
-    // Test 1 선택 메서드
-    private void SelectTest1(PointerEventData data)
-    {
-        FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 4;
-        UpdateSelectedDungeon();
-    }
-
-    // Test 2 선택 메서드
-    private void SelectTest2(PointerEventData data)
-    {
-        FindObjectOfType<Lobby_Scene>().currentDungeonNumber = 5;
-        UpdateSelectedDungeon();
-    }
-    // @@@@@@@@@@@@@@@@@@@@ 임시 버튼 @@@@@@@@@@@@@@@@@@@@
-
 
     // 취소하기 메서드
     private void Cancel(PointerEventData data)
@@ -230,11 +196,9 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         // 선택된 던전 번호에 따라 다른 텍스트를 설정
         selectedDungeonText.text = selectedDungeonNumber switch
         {
-            1 => "선택된 던전: [깊은 숲]",
+            1 => "선택된 던전: [별의 조각 평원]",
             2 => "선택된 던전: [잊혀진 신전]",
-            3 => "선택된 던전: [별의 조각 평원]",
-            4 => "선택된 던전: [Test 1]",
-            5 => "선택된 던전: [Test 2]",
+            3 => "선택된 던전: [심연의 바다]",
             _ => "알 수 없는 던전입니다."
         };
     }
