@@ -39,7 +39,7 @@ public class ForestSpirit : Skill
 
         Vector3 spawnPosition = _skillSystem.TargetPosition;
         //GameObject forestSpirit = Resources.Load<GameObject>("Prefabs/Creatures/Player/ForestSpirit");
-        PhotonNetwork.Instantiate("Prefabs/Creatures/Player/ForestSpirit", spawnPosition, Quaternion.identity);
+        if(PhotonNetwork.IsMasterClient) PhotonNetwork.Instantiate("Prefabs/Creatures/Player/ForestSpirit", spawnPosition, Quaternion.identity);
         //GameObject dummy = Instantiate(forestSpirit, spawnPosition, Quaternion.identity);
         yield return new WaitForSeconds(0.1f);
         

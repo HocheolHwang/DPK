@@ -101,7 +101,7 @@ public class WindSlash : Skill
     {
         Managers.Sound.Play("Skill/RSkill");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, true);
+        hitbox.SetUp(transform, Damage, -1, false);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
 
