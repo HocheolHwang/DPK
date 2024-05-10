@@ -9,7 +9,7 @@ public class Massacre : Skill
         SetCoolDownTime(15);
         base.Init();
         SkillType = Define.SkillType.Immediately;
-        Damage = 20;
+        Damage = 10;
         skillRange = new Vector3(7, 7, 7);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Massacre.png");
     }
