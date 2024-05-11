@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 345270223321798369}
   - component: {fileID: 3572073544404535573}
   - component: {fileID: -1752917871219708000}
+  - component: {fileID: -5115740161905249399}
   m_Layer: 7
   m_Name: MummyMan
   m_TagString: Monster
@@ -460,6 +461,18 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-5115740161905249399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640021385561637830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f251232eea01f0942a2b1542720c0528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &703396583548552387
 GameObject:
   m_ObjectHideFlags: 0
