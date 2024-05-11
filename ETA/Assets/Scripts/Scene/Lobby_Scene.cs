@@ -42,25 +42,24 @@ public class Lobby_Scene : BaseScene
         SetUpMannequins();
 
         // 다시 들어 왔을떄는?
+        // 파티 참여중
         if (PhotonNetwork.InRoom)
+        {
+            Managers.Photon.OpenRoom();
             ChangeMannequin();
-        else
+            GameSystem gameSystem = FindObjectOfType<GameSystem>();
+            if (gameSystem != null)
+            {
+                gameSystem.Clear();
+            }
+        }  
+        else // 파티 없을 경우
         {
             // 캐릭터 바꿀때 마다 이거 또 해줘야할듯
             mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
             mannequins[1].Init();
             mannequins[2].Init();
         }
-
-
-        // 파티 유지할 경우, GameSystem 초기화 시킴
-        GameSystem gameSystem = FindObjectOfType<GameSystem>();
-        if (gameSystem != null)
-        {
-            gameSystem.Clear();
-        }
-
-        if (Managers.Photon.IsConnecting && PhotonNetwork.InRoom) Managers.Photon.OpenRoom();
 
         ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["currentScene"] = Define.Scene.Lobby;
