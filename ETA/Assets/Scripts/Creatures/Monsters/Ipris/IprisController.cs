@@ -6,6 +6,7 @@ using IprisStateItem;
 
 public class IprisController : BaseMonsterController
 {
+    #region STATE
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
@@ -21,6 +22,17 @@ public class IprisController : BaseMonsterController
     public State PATTERN_ONE_STATE;
     public State PATTERN_TWO_STATE;
     public State PATTERN_TWO_WINDMILL_STATE;
+    #endregion
+
+    #region STATE VARIABLE
+    private bool _meetPlayer;
+    private float _counterTime;
+    private float _threadHoldCounter = 10.0f;
+
+    public bool MeetPlayer { get => _meetPlayer; set => _meetPlayer = value; }
+    public float CounterTime { get => _counterTime; set => _counterTime = value; }
+    public float ThreadHoldCounter { get => _threadHoldCounter; set => _threadHoldCounter = value; }
+    #endregion
 
     private IprisAnimationData _animData;
     public IprisAnimationData AnimData { get => _animData; }
@@ -51,6 +63,10 @@ public class IprisController : BaseMonsterController
         DIE_STATE = new DieState(this);
         GLOBAL_STATE = new GlobalState(this);
         _stateMachine.SetGlobalState(GLOBAL_STATE);
+
+        COUNTER_ENABLE_STATE = new CounterEnable(this);
+        COUNTER_ATTACK_STATE = new CounterAttack(this);
+
 
 
         Agent.stoppingDistance = Detector.AttackRange - 0.3f;
