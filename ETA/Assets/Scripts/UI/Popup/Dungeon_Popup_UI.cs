@@ -418,12 +418,6 @@ public class Dungeon_Popup_UI : UI_Popup
         }
     }
 
-    //public void PartyEnter()
-    //{
-    //    photonView.RPC("Managers.Photon.SendRoomEnterLog", RpcTarget.All);
-    //    //Managers.Photon.SendRoomEnterLog();
-    //}
-
 
     // ------------------------------ 유니티 생명주기 메서드 ------------------------------
 

@@ -212,8 +212,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         dto.clearTime = clearTime;
         Managers.Network.EndDungeonCall(dto);
 
-       UpdateUUID();
+        UpdateUUID();
     }
+
+
 
     // 새로운 UUID 업데이트
     public void UpdateUUID()

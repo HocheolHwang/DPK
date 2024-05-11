@@ -26,7 +26,7 @@ public class Dungeon_Scene : BaseScene
         Managers.UI.ShowPopupUI<Fade_Effect_UI>("[Common]_Fade_Effect_UI");
 
         GameSystem mp = GameObject.FindObjectOfType<GameSystem>();
-        mp.SendLoadMsg();
+        mp.SceneLoaded();
 
         Managers.Resource.Instantiate("MonsterManager").name = "@MonsterManager";
 
