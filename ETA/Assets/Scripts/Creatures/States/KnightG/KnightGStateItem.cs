@@ -56,11 +56,11 @@ namespace KnightGStateItem
         {
             if (PhotonNetwork.IsMasterClient == false) return;
             // Counter
-            if (counterTime >= threadHoldCounter)
+            if (_controller.CounterTime >= threadHoldCounter)
             {
                 _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
             } 
-            else if (twoSkillTrigger == 1 && _stat.Hp <= (_stat.MaxHp * 0.6))
+            else if (_controller.TwoSkillTrigger == 1 && _stat.Hp <= (_stat.MaxHp * 0.6))
             {
                 _controller.ChangeState(_controller.TWO_SKILL_TRANSITION_STATE);
             } 
@@ -87,7 +87,7 @@ namespace KnightGStateItem
         public override void Enter()
         {
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToChaseState();
-            counterTimeTrigger = 0;
+            _controller.CounterTimeTrigger = 0;
 
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
@@ -138,19 +138,19 @@ namespace KnightGStateItem
         public override void Enter()
         {
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToAttackState();
-            counterTimeTrigger = 0;
-            attackCnt++;
+            _controller.CounterTimeTrigger = 0;
+            _controller.AttackCnt++;
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
 
             // 2가지 자동 공격 모션이 존재한다.
-            if (attackCnt % 2 == 1)
+            if (_controller.AttackCnt % 2 == 1)
             {
                 InitTime(_animData.AttackAnim.length);
                 _animator.CrossFade(_animData.AttackParamHash, 0.4f);
 
                 StartCast((int)EKnightGPattern.FirstAuto);
             }
-            else if (attackCnt % 2 == 0)
+            else if (_controller.AttackCnt % 2 == 0)
             {
                 InitTime(_animData.AttackUpAnim.length);
                 _animator.CrossFade(_animData.AttackUpParamHash, 0.4f);
@@ -250,7 +250,7 @@ namespace KnightGStateItem
 
         public override void Exit()
         {
-            twoSkillTrigger = 0;
+            _controller.TwoSkillTrigger = 0;
         }
     }
     #endregion
@@ -325,7 +325,7 @@ namespace KnightGStateItem
         }
         public override void Exit()
         {
-            counterTime = 0;
+            _controller.CounterTime = 0;
         }
     }
     #endregion
@@ -542,9 +542,9 @@ namespace KnightGStateItem
             if (PhotonNetwork.IsMasterClient == false) return; 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
 
-            if (counterTimeTrigger <= 0)
+            if (_controller.CounterTimeTrigger <= 0)
             {
-                counterTime += Time.deltaTime;
+                _controller.CounterTime += Time.deltaTime;
             }
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.

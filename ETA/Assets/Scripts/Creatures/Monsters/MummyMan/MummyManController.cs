@@ -11,26 +11,50 @@ public class MummyManController : BaseMonsterController
     [Header("RightHand")]
     [SerializeField] public GameObject StoneSpawned;
 
+    #region STATE
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
     public State THROW_STATE;
-
     public State CLAP_STATE;
-
     public State SHOUTING_STATE;
     public State JUMP_STATE;
     public State BACK_LOCATION_STATE;
-
     public State FORE_SHADOWING_STATE;
     public State RUSH_STATE;
-
     public State WIND_MILL_STATE;
-    
     public State DIE_STATE;
     public State GROGGY_STATE;
     public State GLOBAL_STATE;
+    #endregion
+
+    #region STATE VARIABLE
+    [Header("STATE VARIABLE")]
+    [SerializeField] private bool _meetPlayer;                     // 플레이어와 첫 조우 여부
+    [SerializeField] private bool _isRangedAttack = true;          // 원거리 디텍터를 활성화한 상태
+    [SerializeField] private bool _isRush;                         // Rush Pattern 수행
+    [SerializeField] private float _shoutingTime;
+    [SerializeField] private float _threadHoldShouting = 14.0f;    // 14초
+    [SerializeField] private float _jumpTime;
+    [SerializeField] private float _threadHoldJump = 30.5f;        // 30.5초
+    [SerializeField] private Transform _target;
+    [SerializeField] private float _attackRange;
+    [SerializeField] private Vector3 _startPos;
+    [SerializeField] private Vector3 _destPos;
+
+    public bool MeetPlayer { get => _meetPlayer; set => _meetPlayer = value; }
+    public bool IsRangedAttack { get => _isRangedAttack; set => _isRangedAttack = value; }
+    public bool IsRush { get => _isRush; set => _isRush = value; }
+    public float ShoutingTime { get => _shoutingTime; set => _shoutingTime = value; }
+    public float ThreadHoldShouting { get => _threadHoldShouting; set => _threadHoldShouting = value; }
+    public float JumpTime { get => _jumpTime; set => _jumpTime = value; }
+    public float ThreadHoldJump { get => _threadHoldJump; set => _threadHoldJump = value; }
+    public Transform Target { get => _target; set => _target = value; }
+    public float AttackRange { get => _attackRange; set => _attackRange = value; }
+    public Vector3 StartPos { get => _startPos; set => _startPos = value; }
+    public Vector3 DestPos { get => _destPos; set => _destPos = value; }
+    #endregion
 
     private MummyManAnimationData _animData;
     private SummonSkill _summonSkill;

@@ -26,11 +26,11 @@ namespace MummyManStateItem
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            if (!_meetPlayer && _target != null) // 첫 조우 때 CLAP으로 시작
+            if (!_controller.MeetPlayer && _controller.Target != null) // 첫 조우 때 CLAP으로 시작
             {
                 _controller.ChangeState(_controller.CLAP_STATE);
             }
-            else if (_target != null)
+            else if (_controller.Target != null)
             {
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
@@ -76,15 +76,15 @@ namespace MummyManStateItem
             {
                 _controller.ChangeState(_controller.FORE_SHADOWING_STATE);
             }
-            else if (_jumpTime >= _threadHoldJump)
+            else if (_controller.JumpTime >= _controller.ThreadHoldJump)
             {
                 _controller.ChangeState(_controller.JUMP_STATE);
             }
-            else if (_shoutingTime >= _threadHoldShouting)
+            else if (_controller.ShoutingTime >= _controller.ThreadHoldShouting)
             {
                 _controller.ChangeState(_controller.SHOUTING_STATE);
             }
-            else if ( !_detector.IsArriveToTarget(_target, _attackRange) )
+            else if ( !_detector.IsArriveToTarget(_controller.Target, _controller.AttackRange) )
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
@@ -118,17 +118,17 @@ namespace MummyManStateItem
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            if (_target == null)
+            if (_controller.Target == null)
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-            else if (_target != null && _detector.IsArriveToTarget(_target, _attackRange))
+            else if (_controller.Target != null && _detector.IsArriveToTarget(_controller.Target, _controller.AttackRange))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
             else
             {
-                _agent.SetDestination(_target.position);
+                _agent.SetDestination(_controller.Target.position);
             }
         }
 
@@ -157,7 +157,7 @@ namespace MummyManStateItem
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToAttackState();
             _agent.velocity = Vector3.zero;
             // 근거리 몬스터가 죽고 근거리 디텍터를 활성화한 상태
-            if ( !_isRangedAttack)
+            if ( !_controller.IsRangedAttack)
             {
                 // attack( left, right - 둘 다 len이 같음 ) + wind_mill 연속 공격
                 _attackLen = _animData.AttackAnim.length;
@@ -186,7 +186,7 @@ namespace MummyManStateItem
             _animTime += Time.deltaTime;
 
             // 근거리 디텍터
-            if ( !_isRangedAttack && _animTime >= _threadHold)
+            if ( !_controller.IsRangedAttack && _animTime >= _threadHold)
             {
                 // 첫 공격 이후
                 if ( _animTime >= (_threadHold - (_attackLen + _windMillLen) ) )
@@ -210,7 +210,7 @@ namespace MummyManStateItem
                 
             }
             // 원거리 디텍터
-            else if (_isRangedAttack && _animTime >= _threadHold * 2.0f)
+            else if (_controller.IsRangedAttack && _animTime >= _threadHold * 2.0f)
             {
                 ControlChangeState();
             }
@@ -233,7 +233,7 @@ namespace MummyManStateItem
         public override void Enter()
         {
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToClapState();
-            _meetPlayer = true;
+            _controller.MeetPlayer = true;
 
             _agent.velocity = Vector3.zero;
             InitTime(_animData.ClapAnim.length);
@@ -298,7 +298,7 @@ namespace MummyManStateItem
 
         public override void Exit()
         {
-            _shoutingTime = 0;
+            _controller.ShoutingTime = 0;
         }
     }
     #endregion
@@ -333,11 +333,11 @@ namespace MummyManStateItem
             if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             JumpToTarget(_animTime);
-            if (_isRangedAttack && IsStayForSeconds((_threadHold * 2.0f) + 0.5f))
+            if (_controller.IsRangedAttack && IsStayForSeconds((_threadHold * 2.0f) + 0.5f))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
-            else if (!_isRangedAttack && IsStayForSeconds((_threadHold * 2.0f)))
+            else if (!_controller.IsRangedAttack && IsStayForSeconds((_threadHold * 2.0f)))
             {
                 _controller.ChangeState(_controller.WIND_MILL_STATE);
             }
@@ -345,7 +345,7 @@ namespace MummyManStateItem
 
         public override void Exit()
         {
-            _jumpTime = 0;
+            _controller.JumpTime = 0;
         }
     }
     #endregion
@@ -378,10 +378,10 @@ namespace MummyManStateItem
             _animator.SetFloat("RushSpeed", 2.0f);
             _animator.CrossFade(_animData.RushParamHash, 0.1f);
 
-            _agent.SetDestination(_destPos);
+            _agent.SetDestination(_controller.DestPos);
             StartCast((int)EMummyManPattern.Rush);
 
-            rushTime = CalcTimeToDest(_destPos);
+            rushTime = CalcTimeToDest(_controller.DestPos);
         }
 
         public override void Execute()
@@ -413,7 +413,7 @@ namespace MummyManStateItem
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToWindMillState();
             _agent.velocity = Vector3.zero;
 
-            Debug.Log("Wind Mill 상태 됬다");
+            Debug.Log("Wind Mill 상태 됐다");
             InitTime(_animData.WindMillAnim.length);
             _animator.CrossFade(_animData.WindMillParamHash, 0.1f);
 
@@ -493,7 +493,7 @@ namespace MummyManStateItem
             _agent.velocity = Vector3.zero;
             _agent.enabled = false;
 
-            SetStartAndDestPos(_controller.transform.position, _startPos);
+            SetStartAndDestPos(_controller.transform.position, _controller.StartPos);
 
             InitTime(_animData.JumpAnim.length);
             _animator.SetFloat("JumpSpeed", 0.5f);
@@ -607,10 +607,10 @@ namespace MummyManStateItem
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            if (_meetPlayer)
+            if (_controller.MeetPlayer)
             {
-                _shoutingTime += Time.deltaTime;
-                _jumpTime += Time.deltaTime;
+                _controller.ShoutingTime += Time.deltaTime;
+                _controller.JumpTime += Time.deltaTime;
             }
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
