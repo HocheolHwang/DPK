@@ -143,12 +143,17 @@ public class MonsterManager : MonoBehaviour
     {
         get
         {
-            _existPlayerList.RemoveAll(player => player.GetComponent<Stat>().Hp <= 0);
+            List<GameObject> tmp = new List<GameObject>();
+            foreach(var player in FindObjectsOfType<PlayerController>())
+            {
+                tmp.Add(player.gameObject);
+            }
+            //_existPlayerList.RemoveAll(player => player.GetComponent<Stat>().Hp <= 0);
             //foreach (GameObject player in _existPlayerList)
             //{
             //    Debug.Log($"exist player: {player.name}");
             //}
-            return _existPlayerList;
+            return tmp;
         }
     }
 
