@@ -16,14 +16,12 @@ public class Tutorial_Scene : BaseScene
         GameSystem gameSystem = GameObject.FindObjectOfType<GameSystem>();
         gameSystem.SendLoadMsg();// 씬을 다 옮겼다는 메세지
         Debug.Log(gameSystem);
-        //Managers.Photon.Connect();
 
     }
 
     public override void Clear()
     {
-        Debug.Log("Tutorial Scene Clear");
-
+        Debug.Log("<color=red>Login Scene Clear</color>");
         PhotonNetwork.Destroy(GameObject.FindObjectOfType<GameSystem>().gameObject);
     }
 }

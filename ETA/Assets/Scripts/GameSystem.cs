@@ -18,7 +18,6 @@ public class GameSystem : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-        
         DontDestroyOnLoad(gameObject);
     }
 

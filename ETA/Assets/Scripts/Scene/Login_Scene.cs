@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,6 +52,11 @@ public class Login_Scene : BaseScene
         Managers.UI.ClosePopupUI();
         Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
         Managers.Photon.CloseRoom();
+
+        // GameSystem On
+        Managers.Player.SetPartyLeader(true);
+        GameObject gameSystem = PhotonNetwork.Instantiate("Prefabs/GameSystem", new Vector3(), new Quaternion());
+        gameSystem.name = "GameSystem";
     }
 
     void OnBeforeLobby()
