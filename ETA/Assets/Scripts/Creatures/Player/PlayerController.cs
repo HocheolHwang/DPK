@@ -186,7 +186,16 @@ public class PlayerController : BaseController
 
         _destination = GameObject.Find(pos).transform;
         transform.position = _destination.position;
-        Camera.main.GetComponent<CameraController>()._player = _destination.parent.gameObject;
+        Debug.Log(Managers.Scene.CurrentScene.SceneType);
+        if(Managers.Scene.CurrentScene.SceneType == Define.Scene.Tutorial)
+        {
+            Camera.main.GetComponent<CameraController>()._player = gameObject;
+        }
+        else
+        {
+            Camera.main.GetComponent<CameraController>()._player = _destination.parent.gameObject;
+        }
+        
 
     }
 

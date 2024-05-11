@@ -23,11 +23,11 @@ public class TutorialPause : MonoBehaviour
 
     public void PauseGame()
     {
-        Time.timeScale = 0;
         if (panelState.pausePanels.Length > 0)
         {
             panelState.pausePanels[panelState.currentPanelIndex].SetActive(true);
         }
+        Time.timeScale = 0;
     }
 
     public void ResumeGame()

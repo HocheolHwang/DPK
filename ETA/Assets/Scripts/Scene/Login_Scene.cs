@@ -6,8 +6,12 @@ using UnityEngine;
 
 public class Login_Scene : BaseScene
 {
-    private void Start()
+    protected override void Init()
     {
+        base.Init();
+
+        SceneType = Define.Scene.Login;
+
         Managers.UI.ShowPopupUI<Before_Login_Popup_UI>("[Login]_Before_Login_Popup_UI");
         Managers.UI.ShowPopupUI<Login_Popup_UI>("[Login]_Login_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/Login");

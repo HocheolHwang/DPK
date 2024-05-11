@@ -10,6 +10,7 @@ public class Tutorial_Scene : BaseScene
     protected override void Init()
     {
         base.Init();
+        SceneType = Define.Scene.Tutorial;
 
         gameSystem = GameObject.FindObjectOfType<GameSystem>();
         gameSystem.SceneLoaded();
@@ -21,7 +22,6 @@ public class Tutorial_Scene : BaseScene
 
     public override void Clear()
     {
-        Debug.Log("<color=red>Login Scene Clear</color>");
-        PhotonNetwork.Destroy(GameObject.FindObjectOfType<GameSystem>().gameObject);
+        Debug.Log("<color=red>Tutorial Scene Clear</color>");
     }
 }
