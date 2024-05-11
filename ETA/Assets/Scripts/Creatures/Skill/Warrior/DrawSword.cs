@@ -26,7 +26,7 @@ public class DrawSword : Skill
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
 
-        drawswordCoroutine = StartCoroutine(DrawSwordCoroutine());
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SlashWideBlue, 0.0f, transform);
 
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
@@ -36,12 +36,4 @@ public class DrawSword : Skill
     }
 
 
-
-    private IEnumerator DrawSwordCoroutine()
-    {
-        HitBox hiddenbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hiddenbox.transform.position = gameObject.transform.position + transform.up;
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SlashWideBlue, 0.0f, hiddenbox.transform);
-        yield return null;
-    }
 }
