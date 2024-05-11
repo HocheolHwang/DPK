@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,8 +6,12 @@ using UnityEngine;
 
 public class Login_Scene : BaseScene
 {
-    private void Start()
+    protected override void Init()
     {
+        base.Init();
+
+        SceneType = Define.Scene.Login;
+
         Managers.UI.ShowPopupUI<Before_Login_Popup_UI>("[Login]_Before_Login_Popup_UI");
         Managers.UI.ShowPopupUI<Login_Popup_UI>("[Login]_Login_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/Login");
@@ -51,6 +56,11 @@ public class Login_Scene : BaseScene
         Managers.UI.ClosePopupUI();
         Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
         Managers.Photon.CloseRoom();
+
+        // GameSystem On
+        Managers.Player.SetPartyLeader(true);
+        GameObject gameSystem = PhotonNetwork.Instantiate("Prefabs/GameSystem", new Vector3(), new Quaternion());
+        gameSystem.name = "GameSystem";
     }
 
     void OnBeforeLobby()

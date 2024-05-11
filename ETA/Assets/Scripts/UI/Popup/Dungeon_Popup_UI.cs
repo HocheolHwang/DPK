@@ -245,7 +245,8 @@ public class Dungeon_Popup_UI : UI_Popup
         // --------------- 튜토리얼 및 UI 버튼 이벤트 설정 ---------------
 
         // 현재 Scene이 튜토리얼 Scene인지 확인
-        isTutorialScene = SceneManager.GetActiveScene().name == "Tutorial";
+        isTutorialScene = Managers.Scene.CurrentScene.SceneType == Define.Scene.Tutorial;
+
 
         // UI 버튼 요소들을 가져옴
         openChatButton = GetButton((int)Buttons.Open_Chat_Button);
@@ -416,12 +417,6 @@ public class Dungeon_Popup_UI : UI_Popup
             collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
         }
     }
-
-    //public void PartyEnter()
-    //{
-    //    photonView.RPC("Managers.Photon.SendRoomEnterLog", RpcTarget.All);
-    //    //Managers.Photon.SendRoomEnterLog();
-    //}
 
 
     // ------------------------------ 유니티 생명주기 메서드 ------------------------------

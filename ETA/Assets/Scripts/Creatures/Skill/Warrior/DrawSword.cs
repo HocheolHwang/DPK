@@ -41,7 +41,7 @@ public class DrawSword : Skill
     {
         HitBox hiddenbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hiddenbox.transform.position = gameObject.transform.position + transform.up;
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SlashWideBlue, 2.0f, hiddenbox.transform);
-        yield return new WaitForSeconds(0.1f);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SlashWideBlue, 0.0f, hiddenbox.transform);
+        yield return null;
     }
 }

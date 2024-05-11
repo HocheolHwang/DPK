@@ -10,7 +10,7 @@ public class NetworkManager : MonoBehaviour
     //string baseUrl = "https://localhost:8080/api/v1/";
     string baseUrl = "https://k10e207.p.ssafy.io/api/v1/";
 
-    IEnumerator SendWebRequest(UnityWebRequest request)
+    IEnumerator SendWebRequest(UnityWebRequest request, Action callback = null)
     {
         yield return request.SendWebRequest();
 
@@ -21,6 +21,7 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
+            callback?.Invoke();
             //Debug.Log(request.result);
             //Debug.Log("Response: " + request.downloadHandler.text);
         }
@@ -290,10 +291,10 @@ public class NetworkManager : MonoBehaviour
     }
     
     // 던전 결과 전송
-    public void EndDungeonCall(DungeonReqDto dto)
+    public void EndDungeonCall(DungeonReqDto dto, Action callback = null)
     {
         string partyData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("POST", "dungeon/end", partyData)));
+        StartCoroutine(SendWebRequest(CreateRequest("POST", "dungeon/end", partyData), callback));
     }
 
     // 던전 결과 랭크
@@ -320,11 +321,11 @@ public class NetworkManager : MonoBehaviour
     }
 
     // 플레이어 경험치 변화량 전송
-    public void EXPStatisticsCall(EXPStatisticsReqDto dto)
+    public void EXPStatisticsCall(EXPStatisticsReqDto dto, Action callback = null)
     {
         //Debug.Log("경험치 변화 있나??");
         string expData = JsonUtility.ToJson(dto);
-        StartCoroutine(SendWebRequest(CreateRequest("PUT", "player/exp", expData)));
+        StartCoroutine(SendWebRequest(CreateRequest("PUT", "player/exp", expData), callback));
     }
 
     // 직업 불러오기

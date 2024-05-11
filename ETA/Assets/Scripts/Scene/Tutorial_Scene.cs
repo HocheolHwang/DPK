@@ -10,20 +10,18 @@ public class Tutorial_Scene : BaseScene
     protected override void Init()
     {
         base.Init();
+        SceneType = Define.Scene.Tutorial;
+
+        gameSystem = GameObject.FindObjectOfType<GameSystem>();
+        gameSystem.SceneLoaded();
+
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/Tutorial");
-
-        GameSystem gameSystem = GameObject.FindObjectOfType<GameSystem>();
-        gameSystem.SendLoadMsg();// 씬을 다 옮겼다는 메세지
-        Debug.Log(gameSystem);
-        //Managers.Photon.Connect();
 
     }
 
     public override void Clear()
     {
-        Debug.Log("Tutorial Scene Clear");
-
-        PhotonNetwork.Destroy(GameObject.FindObjectOfType<GameSystem>().gameObject);
+        Debug.Log("<color=red>Tutorial Scene Clear</color>");
     }
 }

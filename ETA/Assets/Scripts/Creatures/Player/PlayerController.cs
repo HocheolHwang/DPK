@@ -68,16 +68,16 @@ public class PlayerController : BaseController
 
         if (photonView.IsMine)
         {
-            // 테스트를 할땐 주석 처리 하기!
+            // 내 캐릭터 포지션 잡기
             SetPosition();
 
-            //ChangeState(MOVE_STATE);
             Managers.Input.KeyAction -= KeyEvent;
             Managers.Input.KeyAction += KeyEvent;
 
             Managers.Input.MouseAction -= MouseEvent;
             Managers.Input.MouseAction += MouseEvent;
 
+            // 내캐릭터가 무엇인지 저장한다.
             var newProperties = PhotonNetwork.LocalPlayer.CustomProperties;
             newProperties["viewID"] = photonView.ViewID;
             PhotonNetwork.LocalPlayer.SetCustomProperties(newProperties);
@@ -86,8 +86,8 @@ public class PlayerController : BaseController
         //Debug.Log($"{photonView.IsMine}");
 
 
-        // 캐릭터가 다 생성 되었기 때문에 신호르 보내줍니다.
-        // "내 캐릭터는 완성 되었다"
+        // 캐릭터가 생성 될 때 마다 카운트를 해준다.
+        // 내 화면에 모든 캐릭턱 생성 되기를 기다려야 하기 때문
         FindObjectOfType<GameSystem>().SendCharacherInstantiatedMsg();
 
 
@@ -186,7 +186,16 @@ public class PlayerController : BaseController
 
         _destination = GameObject.Find(pos).transform;
         transform.position = _destination.position;
-        Camera.main.GetComponent<CameraController>()._player = _destination.parent.gameObject;
+        Debug.Log(Managers.Scene.CurrentScene.SceneType);
+        if(Managers.Scene.CurrentScene.SceneType == Define.Scene.Tutorial)
+        {
+            Camera.main.GetComponent<CameraController>()._player = gameObject;
+        }
+        else
+        {
+            Camera.main.GetComponent<CameraController>()._player = _destination.parent.gameObject;
+        }
+        
 
     }
 

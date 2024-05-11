@@ -14,6 +14,6 @@ public class TriggerCamera : MonoBehaviour
 
     public void CameraChange(Collider other)
     {
-        Camera.main.GetComponent<CameraController>()._player = other.gameObject;
+        //Camera.main.GetComponent<CameraController>()._player = other.gameObject;
     }
 }

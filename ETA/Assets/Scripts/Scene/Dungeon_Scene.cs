@@ -20,13 +20,15 @@ public class Dungeon_Scene : BaseScene
     protected override void Init()
     {
         base.Init();
+
+
         Debug.Log("나는 첫째");
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/DeepForest");
         Managers.UI.ShowPopupUI<Fade_Effect_UI>("[Common]_Fade_Effect_UI");
 
-        GameSystem mp = GameObject.FindObjectOfType<GameSystem>();
-        mp.SendLoadMsg();
+        GameSystem gameSystem = GameObject.FindObjectOfType<GameSystem>();
+        gameSystem.SceneLoaded();
 
         Managers.Resource.Instantiate("MonsterManager").name = "@MonsterManager";
 
@@ -44,12 +46,6 @@ public class Dungeon_Scene : BaseScene
 
     private void Update()
     {
-        //if(playerZone == null)
-        //{
-        //    PlayerZone playerZone = FindObjectOfType<PlayerZone>();
-        //    if(playerZone != null) Camera.main.GetComponent<CameraController>()._player = playerZone.gameObject;
-        //}
-
     }
 
     // Dungeon

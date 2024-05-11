@@ -6,9 +6,9 @@ using UnityEngine;
 public class GameSystem : MonoBehaviourPunCallbacks
 {
     public PhotonView PhotonView;
-    int loadCnt = 0;
-    int characterCnt = 0;
-    int finish = 0;
+    int _loadedCnt = 0;
+    int _createdCharacterCnt = 0;
+    int _finishedClient = 0;
     public int currentDungeonNum;
     PlayerController myController;
     // Start is called before the first frame update
@@ -18,14 +18,7 @@ public class GameSystem : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-        
         DontDestroyOnLoad(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void ChangeSceneAllPlayer(Define.Scene scene)
@@ -69,81 +62,73 @@ public class GameSystem : MonoBehaviourPunCallbacks
         Managers.Scene.LoadScene(scene);
     }
 
-    public void SendLoadMsg()
+    public void SceneLoaded()
     {
-        PhotonView.RPC("RPC_LoadedScene", RpcTarget.All);
+        PhotonView.RPC("RPC_SceneLoaded", RpcTarget.All);
     }
 
     [PunRPC]
-    public void RPC_LoadedScene()
+    public void RPC_SceneLoaded()
     {
         // load된 사용자의 수
-        loadCnt += 1;
+        _loadedCnt += 1;
 
         // load된 사용자 수가 방 인원만큼되면
-        if(loadCnt >= PhotonNetwork.CurrentRoom.PlayerCount)
+        if(_loadedCnt >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
 
             // 게임을 시작하려고 합니다.
             // 본인의 직업에 맞춰서 캐릭터를 생성합니다.
             // 캐릭터를 생성하면 그것도 신호를 보내줘야함
 
-            string classCode = Managers.Player.GetClassCode();
-            if(classCode == "C001")
-            {
-                myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Warrior", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
-            }
-            else if(classCode == "C002")
-            {
-                myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Archer", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
-            }
-            else if(classCode == "C003")
-            {
-                myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Mage", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
-            }
-            else
-            {
-                Debug.LogError("존재하지 않는 클래스 입니다.");
-            }
-
-            
-
+            InstantiateMyCharacter();
+        }
+    }
+    void InstantiateMyCharacter()
+    {
+        string classCode = Managers.Player.GetClassCode();
+        if (classCode == "C001")
+        {
+            myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Warrior", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
+        }
+        else if (classCode == "C002")
+        {
+            myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Archer", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
+        }
+        else if (classCode == "C003")
+        {
+            myController = PhotonNetwork.Instantiate("Prefabs/Creatures/Player/Mage", new Vector3(13.0f, 0.5f, 0f), Quaternion.Euler(0, 90, 0)).GetComponent<PlayerController>();
+        }
+        else
+        {
+            Debug.LogError("존재하지 않는 클래스 입니다.");
         }
     }
 
     public void SendCharacherInstantiatedMsg()
     {
-        // 이게 내 화면에 캐릭터들이 다 완성되면 보냄
-        characterCnt += 1;
-        if (characterCnt >= PhotonNetwork.CurrentRoom.PlayerCount)
+        // 캐릭터가 생성 될때 마다 카운트한다.
+        _createdCharacterCnt += 1;
+
+        // 내 화면에 모든 사용자의 캐릭터가 다 만들어지면
+        if (_createdCharacterCnt >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            //myController.ChangeState(myController.MOVE_STATE);
-            //FindObjectOfType<PlayerZone>().Run();
-            PhotonView.RPC("RPC_CharacherInstantiated", RpcTarget.All);
+            // 다 완성되었다고 메세지를 보낸다.
+            PhotonView.RPC("RPC_AllCharachersInstantiated", RpcTarget.All);
         }
 
     }
 
     [PunRPC]
-    public void RPC_CharacherInstantiated()
+    public void RPC_AllCharachersInstantiated()
     {
         // 캐릭터들이 다 로드된 클라이언트 갯수
-        finish += 1;
-        if (finish >= PhotonNetwork.CurrentRoom.PlayerCount)
+        _finishedClient += 1;
+        if (_finishedClient >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            // 게임 시작
             myController.ChangeState(myController.MOVE_STATE);
             FindObjectOfType<PlayerZone>().Run();
-
             FindObjectOfType<Dungeon_Popup_UI>().SetMembersInfo();
-
-
-            //var cons = FindObjectsOfType<PlayerController>();
-            //foreach(var c in cons)
-            //{
-            //    Managers.UI.MakeWorldSpaceUI<UI_CharacterNickName>(c.gameObject.transform);
-
-            //}
             
         }
 
@@ -164,9 +149,9 @@ public class GameSystem : MonoBehaviourPunCallbacks
     // 어차피 로비 오면 삭제할거 같은데 의미있나?
     public void Clear()
     {
-        loadCnt = 0;
-        characterCnt = 0;
-        finish = 0;
+        _loadedCnt = 0;
+        _createdCharacterCnt = 0;
+        _finishedClient = 0;
         myController = null;
     }
 

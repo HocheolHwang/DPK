@@ -11,8 +11,11 @@ public class Lobby_Scene : BaseScene
 
     public int currentDungeonNumber;
 
-    private void Start()
+    protected override void Init()
     {
+        base.Init();
+        SceneType = Define.Scene.Lobby;
+
         // 첫 로그인 여부를 확인
         bool isFirstLogin = PlayerPrefs.GetInt("FirstLogin", 1) == 1;
         currentDungeonNumber = 1; // 깊은 숲 설정
@@ -35,13 +38,22 @@ public class Lobby_Scene : BaseScene
 
         Managers.Sound.Play("BackgroundMusic/Lobby");
 
-        
+
         SetUpMannequins();
 
         // 다시 들어 왔을떄는?
+        // 파티 참여중
         if (PhotonNetwork.InRoom)
+        {
+            Managers.Photon.OpenRoom();
             ChangeMannequin();
-        else
+            GameSystem gameSystem = FindObjectOfType<GameSystem>();
+            if (gameSystem != null)
+            {
+                gameSystem.Clear();
+            }
+        }  
+        else // 파티 없을 경우
         {
             // 캐릭터 바꿀때 마다 이거 또 해줘야할듯
             mannequins[0].EnterPlayer(Managers.Player.GetNickName(), Managers.Player.GetClassCode());
@@ -49,25 +61,9 @@ public class Lobby_Scene : BaseScene
             mannequins[2].Init();
         }
 
-
-        // 파티 유지할 경우, GameSystem 초기화 시킴
-        GameSystem gameSystem = FindObjectOfType<GameSystem>();
-        if (gameSystem != null)
-        {
-            gameSystem.Clear();
-        }
-
-        // TMP 임시 코드
-        if (PhotonNetwork.InRoom == false)
-        {
-            //PhotonNetwork.JoinRandomOrCreateRoom();
-        }
-        if (Managers.Photon.IsConnecting && PhotonNetwork.InRoom ) Managers.Photon.OpenRoom();
-
         ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["currentScene"] = Define.Scene.Lobby;
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
-
     }
 
     public override void Clear()
