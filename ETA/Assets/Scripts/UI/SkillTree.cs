@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-class SkillInfo
+class SkillInfoTMP
 {
     public string SkillCode { get; set; }
     public string SkillName { get; set; }
@@ -22,7 +22,7 @@ class SkillInfo
 public class SkillTree : UI_Fixed
 {
 
-    Dictionary<string, SkillInfo> _skills = new Dictionary<string, SkillInfo>();
+    Dictionary<string, SkillInfoTMP> _skills = new Dictionary<string, SkillInfoTMP>();
     
     public override void Init()
     {
