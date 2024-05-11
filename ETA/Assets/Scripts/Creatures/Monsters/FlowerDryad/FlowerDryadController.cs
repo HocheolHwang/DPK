@@ -164,8 +164,8 @@ public class FlowerDryadController : BaseMonsterController
 
 
     [PunRPC]
-    void RPC_TakeDamage(int attackDamage, bool isCounter)
+    void RPC_TakeDamage(int attackDamage, bool isCounter, int shield, bool evasion, int defense)
     {
-        CalcDamage(attackDamage, isCounter);
+        CalcDamage(attackDamage, isCounter, shield, evasion, defense);
     }
 }
