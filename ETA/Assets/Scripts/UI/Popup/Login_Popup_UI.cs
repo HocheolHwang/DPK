@@ -119,24 +119,19 @@ public class Login_Popup_UI : UI_Popup
     }
 
     // 로그인 시도 후 콜백 함수로 경고 텍스트 업데이트하는 메서드
-    private void UpdateWarningText(PlayerResDto dto)
+    private void UpdateWarningText(PlayerResDto responsBody)
     {
-        string message = dto.message;
+        string message = responsBody.message;
         // 메시지가 "success"인 경우 After Login Popup UI 띄움
         if (message == "success")
         {
-            Managers.Player.SetToken(dto.accessToken);
-            Managers.Player.SetGold(dto.playerGold);
-            Managers.Player.SetFirst(dto.first);
-            Managers.Player.SetNickName(JWTDecord.DecodeJWT(dto.accessToken));
+            Managers.Player.SetToken(responsBody.accessToken);
+            Managers.Player.SetGold(responsBody.playerGold);
+            Managers.Player.SetFirst(responsBody.first);
+            Managers.Player.SetNickName(JWTDecord.DecodeJWT(responsBody.accessToken));
 
             // 모든 Popup UI를 닫음
             CloseAllPopupUI();
-            //Managers.UI.ShowPopupUI<Login_Loading_Popup_UI>("[Dungeon]_Loading_Popup_UI");
-
-            // 포톤(서버)에 연결 (
-            Managers.Photon.Connect(); // 연결시 자동으로 Lobby로 가게됨;
-
             // 현재 직업 정보를 요청함
             Managers.Network.CurrentClassCall(CurrentClass);
         }
@@ -160,6 +155,10 @@ public class Login_Popup_UI : UI_Popup
         Managers.Player.SetSkillPoint(dto.skillPoint);
 
         Managers.Photon.SetPlayerClass();
+
+        // 플레이어 정보를 모두 가져왔으니
+        // 포톤(서버)에 연결
+        Managers.Photon.Connect(); // 연결시 자동으로 Lobby로 가게됨;
     }
 
     // 회원가입 Popup UI로 전환하는 메서드

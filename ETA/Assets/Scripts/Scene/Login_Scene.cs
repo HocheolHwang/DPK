@@ -14,7 +14,7 @@ public class Login_Scene : BaseScene
 
     public override void Clear()
     {
-        Debug.Log("Login Scene Clear");
+        Debug.Log("<color=red>Login Scene Clear</color>");
     }
 
     public override void OnJoinedLobby()
