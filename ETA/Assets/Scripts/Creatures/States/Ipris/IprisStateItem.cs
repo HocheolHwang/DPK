@@ -65,7 +65,7 @@ namespace IprisStateItem
             }
             else
             {
-                Debug.Log("CHASE");
+                //Debug.Log("CHASE");
                 _agent.SetDestination(_detector.Target.position);
             }
         }
@@ -99,9 +99,14 @@ namespace IprisStateItem
                 Debug.Log("IDLE_BATTLE TO IDLE");
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
+            else if (_controller.CounterTime >= _controller.ThreadHoldCounter)
+            {
+                Debug.Log("IDLE_BATTLE TO COUNTER_ENABLE");
+                _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
+            }
             else if (IsStayForSeconds(1.0f))
             {
-                Debug.Log("IDLE_BATTLE TO ATTACK");
+                //Debug.Log("IDLE_BATTLE TO ATTACK");
                 _controller.ChangeState(_controller.ATTACK_STATE);
             }
         }
@@ -132,7 +137,7 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
-                Debug.Log("ATTACK TO IDLE_BATTLE");
+                //Debug.Log("ATTACK TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
@@ -143,6 +148,75 @@ namespace IprisStateItem
     }
     #endregion
 
+    // -------------------------------------- COUNTER ENABLE ------------------------------------------------
+    #region COUNTER_ENABLE
+    public class CounterEnable : IprisState
+    {
+        public CounterEnable(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.CounterEnableAnim.length);
+            _animator.SetFloat("CounterEnableSpeed", 0.5f);
+            _animator.CrossFade(_animData.CounterEnableParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_controller.IsHitCounter)
+            {
+                Debug.Log("COUNTER_ENABLE TO GROGGY");
+                _controller.ChangeState(_controller.GROGGY_STATE);
+            }
+            else if (_animTime >= _threadHold * 2.0f)
+            {
+                Debug.Log("COUNTER_ENABLE TO COUNTER_ATTACK");
+                _controller.ChangeState(_controller.COUNTER_ATTACK_STATE);
+            }
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- COUNTER ATTACK ------------------------------------------------
+    #region COUNTER_ATTACK
+    public class CounterAttack : IprisState
+    {
+        public CounterAttack(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.CounterAttackAnim.length);
+            _animator.SetFloat("CounterAttackSpeed", 0.5f);
+            _animator.CrossFade(_animData.CounterAttackParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold * 2.0f)
+            {
+                Debug.Log("COUNTER_ATTACK TO IDLE_BATTLE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+        public override void Exit()
+        {
+            _controller.CounterTime = 0;
+        }
+    }
+    #endregion
 
     // -------------------------------------- GLOBAL_DIE ------------------------------------------------
 
@@ -191,7 +265,7 @@ namespace IprisStateItem
         {
 
 
-            if (_controller.PrevState is null)      // Counter Enable
+            if (_controller.PrevState is CounterEnable)      // Counter Enable
             {
                 groggyTime = 3.0f;
                 ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
@@ -234,6 +308,11 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (_controller.MeetPlayer)
+            {
+                _controller.CounterTime += Time.deltaTime;
+            }
+
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
 
