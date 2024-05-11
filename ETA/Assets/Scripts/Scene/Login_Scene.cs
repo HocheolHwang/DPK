@@ -54,7 +54,8 @@ public class Login_Scene : BaseScene
     void OnBeforeTutorial()
     {
         Managers.UI.ClosePopupUI();
-        Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
+
+        Managers.Network.AllSkillCall(LoadSkills);
         Managers.Photon.CloseRoom();
 
         // GameSystem On
@@ -66,6 +67,35 @@ public class Login_Scene : BaseScene
     void OnBeforeLobby()
     {
         Managers.UI.ClosePopupUI();
+        Managers.Network.AllSkillCall(LoadSkills);
+        //Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
+    }
+
+    void LoadSkills(SkillResDto responseBody)
+    {
+        foreach (var skill in responseBody.skills)
+        {
+            switch (skill.classCode)
+            {
+                case "C001":
+                    Managers.Player.warriorSkills[skill.index] = new SkillInfo { skillCode = skill.skillCode, skillName = skill.skillName };
+                    break;
+                case "C002":
+                    Managers.Player.archerSkills[skill.index] = new SkillInfo { skillCode = skill.skillCode, skillName = skill.skillName };
+                    break;
+                case "C003":
+                    Managers.Player.mageSkills[skill.index] = new SkillInfo { skillCode = skill.skillCode, skillName = skill.skillName };
+                    break;
+                case "C000":
+                    break;
+            }
+            
+        }
+        for (int i = 0; i < 8; i++)
+        {
+            Debug.Log(Managers.Player.warriorSkills[i].skillName);
+
+        }
         Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
     }
 }

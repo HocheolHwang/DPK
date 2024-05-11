@@ -17,7 +17,7 @@ public class SkillSlot : MonoBehaviour
     private Skill _currentSkill;
     public Skill CurrentSkill { get { return _currentSkill; } }
 
-    private string[] loadedSkills;
+    private string[] loadedSkills = new string[8];
     public string[] LoadedSkills { get { return loadedSkills; } }
 
     public void Start()
@@ -28,10 +28,18 @@ public class SkillSlot : MonoBehaviour
 
         // string[] loadedSkills = null;
         // TMP
+        //Managers.Network.AllSkillCall(LoadSkills);
+
+
+        // TODO 기본스킬 정해야할것
         switch (gameObject.name.Replace("(Clone)",""))
         {
             case "Warrior": // 워리어
                 loadedSkills = new string[] { "HolyHammer", "TelekineticSwords", "DrawSword", "WhirlWind", "Guard", "Blessing", "Massacre", "WindSlash" };
+                //for(int i = 0; i < 8; i++)
+                //{
+                //    loadedSkills[i] = Managers.Player.warriorSkills[i].skillName;
+                //}
                 break;
             case "Archer": // 아처
                 loadedSkills = new string[]{ "ArrowShower", "RapidArrow", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "ForestSpirit", "LightningShot" };

@@ -19,7 +19,11 @@ public class PlayerManager
     private long curExp;
     private int skillPoint;
 
-    
+    public SkillInfo[] warriorSkills = new SkillInfo[8];
+    public SkillInfo[] archerSkills = new SkillInfo[8];
+    public SkillInfo[] mageSkills = new SkillInfo[8];
+
+
 
     public PlayerManager() { }
 
