@@ -8,7 +8,7 @@ using Photon.Pun;
 
 public class KnightGController : BaseMonsterController
 {
-    // KnightG가 가지는 상태
+    #region STATE
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
@@ -23,6 +23,19 @@ public class KnightGController : BaseMonsterController
     public State DIE_STATE;
     public State GROGGY_STATE;
     public State GLOBAL_STATE;
+    #endregion
+
+    #region STATE VARIABLE
+    private int _attackCnt = 0;                 // 평타를 번갈아가면서 공격할 수 있음
+    private int _twoSkillTrigger = 1;           // 1번 사용할 수 있다.
+    private int _counterTimeTrigger = 1;        // 처음 플레이어를 직면한 후에 counterTime을 계산하기 시작한다.
+    private float _counterTime = 0;             // 카운터 공격을 할 수 있는 시간을 관리
+
+    public int AttackCnt { get => _attackCnt; set => _attackCnt = value; }
+    public int TwoSkillTrigger { get => _twoSkillTrigger; set => _twoSkillTrigger = value; }
+    public int CounterTimeTrigger { get => _counterTimeTrigger; set => _counterTimeTrigger = value; }
+    public float CounterTime { get => _counterTime; set => _counterTime = value; }
+    #endregion
 
     private KnightGAnimationData _animData;
     private bool _isEnterPhaseTwo;                 // Phase 진입 여부
@@ -74,7 +87,7 @@ public class KnightGController : BaseMonsterController
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
-        Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
+        Agent.stoppingDistance = Detector.AttackRange - 0.3f;      // 공격 사거리와 멈추는 거리를 살짝 차이를 둬야 잘 동작
         UnitType = Define.UnitType.KnightG;
     }
 

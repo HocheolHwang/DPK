@@ -21,21 +21,7 @@ enum EMummyManPattern
 
 public class MummyManState : State
 {
-    protected static bool _meetPlayer;                     // 플레이어와 첫 조우 여부
-    protected static bool _isRangedAttack = true;          // 원거리 디텍터를 활성화한 상태
-    protected static bool _isRush;                         // Rush Pattern 수행
-    protected const int MaxSummonCount = 1;                // 첫 조우 이후에 Buffer와 Warrior가 살아날 수 있는 횟수
-    
-
-    protected static float _shoutingTime;
-    protected static float _threadHoldShouting = 14.0f;    // 14초
-    protected static float _jumpTime;
-    protected static float _threadHoldJump = 30.5f;        // 30.5초
-
-    protected static Transform _target;
-    protected static float _attackRange;
-    protected static Vector3 _startPos;
-    protected static Vector3 _destPos;
+    protected const int MaxSummonCount = 1;         // 첫 조우 이후에 Buffer와 Warrior가 살아날 수 있는 횟수
 
     protected MummyManController _controller;
     protected MummyManAnimationData _animData;
@@ -53,12 +39,12 @@ public class MummyManState : State
     #region ATTACK FUNCTIONS
     protected void ControlChangeState() // 근접 + 3타 중간에 있는 상태 전환 조건
     {
-        if (_target == null)
+        if (_controller.Target == null)
         {
             _controller.ChangeState(_controller.IDLE_STATE);
         }
 
-        if (_detector.IsArriveToTarget(_target, _attackRange))
+        if (_detector.IsArriveToTarget(_controller.Target, _controller.AttackRange))
         {
             _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
         }
@@ -74,21 +60,21 @@ public class MummyManState : State
 
     protected void SetDetector()
     {
-        if (_isRangedAttack && (_summonSkill.WarriorDeathCount == MaxSummonCount))
+        if (_controller.IsRangedAttack && (_summonSkill.WarriorDeathCount == MaxSummonCount))
         {
-            _isRangedAttack = false;
+            _controller.IsRangedAttack = false;
         }
 
         // Target이 null인 문제를 해결하기 위해서 어느 Detector를 사용하는지 지정
-        if (_isRangedAttack)
+        if (_controller.IsRangedAttack)
         {
             _controller.GetComponent<MeleeDetector>().enabled = false;
             _controller.GetComponent<RangedDetector>().enabled = true;
             _detector = _controller.GetComponent<RangedDetector>();
 
             _agent.stoppingDistance = _detector.AttackRange;
-            _target = _detector.Target;
-            _attackRange = _detector.AttackRange;
+            _controller.Target = _detector.Target;
+            _controller.AttackRange = _detector.AttackRange;
         }
         else
         {
@@ -97,15 +83,15 @@ public class MummyManState : State
             _detector = _controller.GetComponent<MeleeDetector>();
 
             _agent.stoppingDistance = _detector.AttackRange;
-            _target = _detector.Target;
-            _attackRange = _detector.AttackRange;
+            _controller.Target = _detector.Target;
+            _controller.AttackRange = _detector.AttackRange;
         }
     }
 
     protected bool IsSommoningMonster()
     {
         // 플레이어를 만났고
-        if (_meetPlayer)
+        if (_controller.MeetPlayer)
         {
             // 한 번씩 소환했으며
             if (_summonSkill.BufferSummonCount == MaxSummonCount && _summonSkill.WarriorSummonCount == MaxSummonCount)
@@ -130,9 +116,9 @@ public class MummyManState : State
 
     protected bool IsDeadBuffer()
     {
-        if (_meetPlayer && (_summonSkill.BufferDeathCount == MaxSummonCount) && !_isRush)
+        if (_controller.MeetPlayer && (_summonSkill.BufferDeathCount == MaxSummonCount) && !_controller.IsRush)
         {
-            _isRush = true;
+            _controller.IsRush = true;
             return true;
         }
         return false;
@@ -147,23 +133,23 @@ public class MummyManState : State
     // 상태에는 상태에 관련된 함수만 가지고 싶음
     protected void JumpToTarget(float deltaTime)   // 점프 상태일 때는 forward지만, BACK_LOCATION 상태일 때는 뒤로 돌고 forward이다.
     {
-        if (Vector3.Distance(_startPos, _destPos) <= 0.1f)
+        if (Vector3.Distance(_controller.StartPos, _controller.DestPos) <= 0.1f)
         {
-            _controller.transform.position = _destPos;
+            _controller.transform.position = _controller.DestPos;
             return;
         }
 
         // destPos 방향을 바라본다.
-        _controller.transform.LookAt(_destPos);
+        _controller.transform.LookAt(_controller.DestPos);
 
-        Vector3 moveStopPos = Vector3.Lerp(_startPos, _destPos, deltaTime);
+        Vector3 moveStopPos = Vector3.Lerp(_controller.StartPos, _controller.DestPos, deltaTime);
         _controller.transform.position = moveStopPos;
     }
 
     protected void SetStartAndDestPos(Vector3 startPos, Vector3 destPos)
     {
-        _startPos = startPos;
-        _destPos = destPos;
+        _controller.StartPos = startPos;
+        _controller.DestPos = destPos;
     }
     #endregion
 
@@ -203,6 +189,7 @@ public class MummyManState : State
         return timeToDest;
     }
 
+    #region Temp
     //protected float CalcTimeToDest(Vector3 Destination)
     //{
     //    NavMeshPath path = new NavMeshPath();
@@ -217,6 +204,7 @@ public class MummyManState : State
 
     //    return -1;
     //}
+    #endregion
 
     protected float GetPathLength(NavMeshPath path)
     {
@@ -251,15 +239,15 @@ public class MummyManState : State
 
     protected void UpdateTarget()
     {
-        if (_isRangedAttack)
+        if (_controller.IsRangedAttack)
         {
             _detector = _controller.GetComponent<RangedDetector>();
-            _target = _detector.Target;
+            _controller.Target = _detector.Target;
         }
         else
         {
             _detector = _controller.GetComponent<MeleeDetector>();
-            _target = _detector.Target;
+            _controller.Target = _detector.Target;
         }
     }
     #endregion

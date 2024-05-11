@@ -9,8 +9,8 @@ using static UnityEngine.Rendering.DebugUI;
 // 몬스터는 던전 씬에서만 로직이 필요하기 때문이다.
 public class MonsterManager : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _existPlayerList;
-    [SerializeField] private List<GameObject> _existMonsterList;
+    //[SerializeField] private List<GameObject> _existPlayerList;
+    //[SerializeField] private List<GameObject> _existMonsterList;
 
     // 싱글톤
     private static MonsterManager _instance;
@@ -45,8 +45,8 @@ public class MonsterManager : MonoBehaviour
 
         // TODO : 고처야할것
 
-        _existPlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        _existMonsterList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Monster"));
+        //_existPlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        //_existMonsterList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Monster"));
         //_monsterCoList = new List<Coroutine>();
         //_coStateDic = new Dictionary<Coroutine, bool>();
     }
@@ -161,12 +161,18 @@ public class MonsterManager : MonoBehaviour
     {
         get
         {
-            _existMonsterList.RemoveAll(monster => monster.GetComponent<Stat>().Hp <= 0);
-            foreach (GameObject monster in _existMonsterList)
+            List<GameObject> tmp = new List<GameObject>();
+            foreach (var monster in FindObjectsOfType<BaseMonsterController>())
             {
-                Debug.Log($"exist monster: {monster.name}");
+                tmp.Add(monster.gameObject);
             }
-            return _existMonsterList;
+            //_existMonsterList.RemoveAll(monster => monster.GetComponent<Stat>().Hp <= 0);
+            //foreach (GameObject monster in _existMonsterList)
+            //{
+            //    Debug.Log($"exist monster: {monster.name}");
+            //}
+            //return _existMonsterList;
+            return tmp;
         }
     }
 

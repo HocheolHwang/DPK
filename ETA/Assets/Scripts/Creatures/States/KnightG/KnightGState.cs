@@ -19,10 +19,10 @@ enum EKnightGPattern
 // KnightG 상태
 public class KnightGState : State
 {
-    protected static int attackCnt = 0;                 // 평타를 번갈아가면서 공격할 수 있음
-    protected static int twoSkillTrigger = 1;           // 1번 사용할 수 있다.
-    protected static int counterTimeTrigger = 1;        // 처음 플레이어를 직면한 후에 counterTime을 계산하기 시작한다.
-    protected static float counterTime = 0;             // 카운터 공격을 할 수 있는 시간을 관리
+    //protected static int attackCnt = 0;                 // 평타를 번갈아가면서 공격할 수 있음
+    //protected static int twoSkillTrigger = 1;           // 1번 사용할 수 있다.
+    //protected static int counterTimeTrigger = 1;        // 처음 플레이어를 직면한 후에 counterTime을 계산하기 시작한다.
+    //protected static float counterTime = 0;             // 카운터 공격을 할 수 있는 시간을 관리
     protected const float threadHoldCounter = 10.0f;    // 10초마다 카운터 패턴 공격
 
     protected KnightGController _controller;
