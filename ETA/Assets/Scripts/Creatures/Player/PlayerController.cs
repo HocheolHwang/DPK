@@ -377,9 +377,8 @@ public class PlayerController : BaseController
     }
 
     [PunRPC]
-    void RPC_TakeDamage(int attackDamage, bool isCounter)
+    void RPC_TakeDamage(int attackDamage, bool isCounter, int shield, bool evasion, int defense)
     {
-        //Debug.Log($"{attackDamage} 이만큼 아파");
-        CalcDamage(attackDamage, isCounter);
+        CalcDamage(attackDamage, isCounter, shield, evasion, defense);
     }
 }

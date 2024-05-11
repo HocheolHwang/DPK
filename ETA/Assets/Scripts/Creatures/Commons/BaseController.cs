@@ -151,26 +151,37 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     }
 
     // ---------------------------------- IDamage ------------------------------------------
+
+    // 내 캐리
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
-        if (PhotonNetwork.IsMasterClient == false) return;
-        SendTakeDamageMsg(attackDamage, isCounter);
+        if(UnitType == Define.UnitType.Player)
+        {
+            if (photonView.IsMine == false) return;
+        }
+        else
+        {
+            if (PhotonNetwork.IsMasterClient == false) return;
+        }
+        
+        SendTakeDamageMsg(attackDamage, isCounter, Stat.Shield, Evasion, Stat.Defense);
 
         // 최소 데미지 = 1
-        CalcDamage(attackDamage, isCounter);
+        CalcDamage(attackDamage, isCounter, Stat.Shield, Evasion, Stat.Defense);
 
     }
 
-    public void CalcDamage(int attackDamage, bool isCounter)
+    public void CalcDamage(int attackDamage, bool isCounter ,int shield, bool evasion, int defense)
     {
         UI_AttackedDamage attackedDamage_ui = null;
-        if (Evasion)
+        if (evasion)
         {
+            // 다른 클라이언트에 회피 했다고 보내주기
             attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
             attackedDamage_ui.IsEvasion = true;
             return;
         }
-        int damage = attackDamage - Stat.Defense;
+        int damage = attackDamage - defense;
         if (damage <= 1)
         {
             damage = 1;
@@ -178,16 +189,18 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
 
 
-        if (Stat.Shield >= damage)
+        if (shield >= damage)
         {
-            Stat.Shield -= damage;
+            // 다른 클라이언트에 쉴드 했다고 보내주기
+            shield -= damage;
+            Stat.Shield = shield;
             attackedDamage_ui = Managers.UI.MakeWorldSpaceUI<UI_AttackedDamage>(transform);
             attackedDamage_ui.IsGurared = true;
             return;
         }
         else
         {
-            damage -= Stat.Shield;
+            damage -= shield;
             Stat.Shield = 0;
         }
 
@@ -294,9 +307,9 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     }
 
 
-    public void SendTakeDamageMsg(int attackDamage, bool isCounter)
+    public void SendTakeDamageMsg(int attackDamage, bool isCounter, int shield, bool evasion, int defense)
     {
-        photonView.RPC("RPC_TakeDamage", RpcTarget.Others, attackDamage, isCounter);
+        photonView.RPC("RPC_TakeDamage", RpcTarget.Others, attackDamage, isCounter, shield, evasion, defense);
     }
 
 
