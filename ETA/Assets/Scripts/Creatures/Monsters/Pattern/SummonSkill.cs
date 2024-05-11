@@ -108,13 +108,28 @@ public class SummonSkill : MonoBehaviour
     {
         //  Managers.Resource.Destroy(_buffer); // 죽는건 controller에서 관리함
         _bufferDeathCount++;
+        GetComponent<PhotonView>().RPC("RPC_HandleDeathBuffer", RpcTarget.Others);
     }
     private void HandleDeathWarrior()
     {
         _warriorDeathCount++;
+        GetComponent<PhotonView>().RPC("RPC_HandleDeathWarrior", RpcTarget.Others);
     }
     private void HandleDeathMan()
     {
+
+        //TODO 한쪽만 해도 되나?
         DespawnAll();
+    }
+
+    [PunRPC]
+    void RPC_HandleDeathBuffer()
+    {
+        _bufferDeathCount++;
+    }
+    [PunRPC]
+    void RPC_HandleDeathWarrior()
+    {
+        _warriorDeathCount++;
     }
 }
