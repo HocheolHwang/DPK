@@ -19,10 +19,11 @@ public class Login_Scene : BaseScene
 
     public override void OnJoinedLobby()
     {
-        // 로그인 후 성공적으로 포톤(서버)에 Connection후
+        // 로그인 성공, 사용자 정보 로드 끝
+        // 포톤(서버)에 Connection후
         // 로비 입장시 UI가 뜬다.
 
-
+        // 여기서 첫 로그인 유무에 따라 다른 행동을 해야한다.
         // 첫 로그인 일 경우
         if (Managers.Player.GetFirst())
         {
@@ -35,18 +36,26 @@ public class Login_Scene : BaseScene
         {
             // 그냥 바로 게임시작 UI 띄워준다.
             // UI를 이용해서 입장 하자
-            Managers.UI.ClosePopupUI();
-            Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
+
+            OnBeforeLobby();
         }
     }
 
     public override void OnJoinedRoom()
     {
-        // 첫 로그인 사용자가 로그인 씬에서 방까지 다 만들었을 경우에만 실행됨
-        // UI를 이용해서 입장 하자
+        OnBeforeTutorial();
+    }
+
+    void OnBeforeTutorial()
+    {
         Managers.UI.ClosePopupUI();
         Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
-
         Managers.Photon.CloseRoom();
+    }
+
+    void OnBeforeLobby()
+    {
+        Managers.UI.ClosePopupUI();
+        Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
     }
 }
