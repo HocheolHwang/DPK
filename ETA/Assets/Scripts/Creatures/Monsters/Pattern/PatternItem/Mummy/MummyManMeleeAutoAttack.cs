@@ -36,7 +36,6 @@ public class MummyManMeleeAutoAttack : Pattern
         // first attack
         yield return new WaitForSeconds(_createTime);
         _coroutineList[0] = StartCoroutine(CreateAutoAttack(AttackDamage, Pos));
-
         // second attack
         yield return new WaitForSeconds(_createTime * 2);
         _coroutineList[1] = StartCoroutine(CreateAutoAttack(AttackDamage, Pos));
