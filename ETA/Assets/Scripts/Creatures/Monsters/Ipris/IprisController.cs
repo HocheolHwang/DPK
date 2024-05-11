@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using IprisStateItem;
+
 public class IprisController : BaseMonsterController
 {
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
+    public State CHASE_STATE;
     public State ATTACK_STATE;
     public State DIE_STATE;
     public State TO_DRAGON_STATE;
@@ -39,11 +42,18 @@ public class IprisController : BaseMonsterController
         _animData = GetComponent<IprisAnimationData>();
         _animData.StringAnimToHash();
         _stateMachine = new StateMachine();
+
+        IDLE_STATE = new IdleState(this);
+        IDLE_BATTLE_STATE = new IdleBattleState(this);
+        CHASE_STATE = new ChaseState(this);
+        ATTACK_STATE = new AttackState(this);
+        GROGGY_STATE = new GroggyState(this);
+        DIE_STATE = new DieState(this);
+        GLOBAL_STATE = new GlobalState(this);
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
 
-
-        // StopDistance 세팅?
+        Agent.stoppingDistance = Detector.AttackRange - 0.3f;
         UnitType = Define.UnitType.Ipris;
     }
 }

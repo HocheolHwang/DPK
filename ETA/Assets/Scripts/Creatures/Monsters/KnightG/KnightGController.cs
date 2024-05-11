@@ -74,7 +74,7 @@ public class KnightGController : BaseMonsterController
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
-        Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
+        Agent.stoppingDistance = Detector.AttackRange - 0.3f;      // 공격 사거리와 멈추는 거리를 살짝 차이를 둬야 잘 동작
         UnitType = Define.UnitType.KnightG;
     }
 

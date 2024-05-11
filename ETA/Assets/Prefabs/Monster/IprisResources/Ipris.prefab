@@ -689,6 +689,7 @@ GameObject:
   - component: {fileID: 536256641140234866}
   - component: {fileID: 3762468526324884461}
   - component: {fileID: -2939625899651412242}
+  - component: {fileID: -8733523994994036906}
   m_Layer: 7
   m_Name: Ipris
   m_TagString: Monster
@@ -836,8 +837,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 15
-  _attackRange: 3
+  _detectRange: 15.5
+  _attackRange: 15
   _target: {fileID: 0}
   TargetLayerMask:
     serializedVersion: 2
@@ -879,6 +880,24 @@ MonoBehaviour:
   patternOneAnim: {fileID: 1827226128182048838, guid: 2084fa515f6f0604a9812025574f4dea, type: 3}
   patternTwoAnim: {fileID: 1827226128182048838, guid: 16de2bdb6d65bb6438b05585f10f8de6, type: 3}
   patternTwoWindMillAnim: {fileID: 1827226128182048838, guid: 1bc4a4f3b2626df43baa1c84cddac0aa, type: 3}
+--- !u!114 &-8733523994994036906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417164047586525017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6ffd22bab4cd64cb74898bd1e857b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
+  UnitType: 0
+  Animator: {fileID: 0}
+  Agent: {fileID: 0}
+  Stat: {fileID: 0}
+  _isHitCounter: 0
 --- !u!1 &3730044426861352560
 GameObject:
   m_ObjectHideFlags: 0

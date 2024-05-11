@@ -1,4 +1,5 @@
 using MummyManStateItem;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,14 +22,57 @@ namespace IprisStateItem
 
         public override void Execute()
         {
-            if (_target != null)
+            if (_detector.Target != null)
             {
-                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+                Debug.Log("IDLE TO CHASE");
+                _controller.ChangeState(_controller.CHASE_STATE);
             }
         }
 
         public override void Exit()
         {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- CHASE ------------------------------------------------
+    #region CHASE
+    public class ChaseState : IprisState
+    {
+        // IDLE_BATTLE animation clip을 이용해서 CHASE 상태를 유지한다.
+
+        public ChaseState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.speed = _stat.MoveSpeed;
+            _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            if (_detector.Target == null)
+            {
+                Debug.Log("CHASE TO IDLE");
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
+            else if (_detector.Target != null && _detector.IsArriveToTarget())
+            {
+                Debug.Log("CHASE TO IDLE_BATTLE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+            else
+            {
+                Debug.Log("CHASE");
+                _agent.SetDestination(_detector.Target.position);
+            }
+        }
+
+        public override void Exit()
+        {
+            _agent.ResetPath();
         }
     }
     #endregion
@@ -45,17 +89,19 @@ namespace IprisStateItem
         {
             _agent.velocity = Vector3.zero;
             LookAtEnemy();
-            _animator.CrossFade(_animData.IdleParamHash, 0.25f);
+            _animator.CrossFade(_animData.IdleBattleParamHash, 0.25f);
         }
 
         public override void Execute()
         {
-            if (!_detector.IsArriveToTarget(_target, _detector.AttackRange))
+            if (!_detector.IsArriveToTarget())
             {
+                Debug.Log("IDLE_BATTLE TO IDLE");
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
             else if (IsStayForSeconds(1.0f))
             {
+                Debug.Log("IDLE_BATTLE TO ATTACK");
                 _controller.ChangeState(_controller.ATTACK_STATE);
             }
         }
@@ -86,6 +132,7 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
+                Debug.Log("ATTACK TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
