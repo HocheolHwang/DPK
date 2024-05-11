@@ -7,7 +7,7 @@ public class MannequinController : MonoBehaviour
 {
     public int index;
 
-    private void Start()
+    private void Awake()
     {
         Init();
     }
@@ -27,6 +27,7 @@ public class MannequinController : MonoBehaviour
 
     public void EnterPlayer(string nickName, string classCode)
     {
+        Debug.Log("123sadasdasda");
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(0).GetComponent<TextMeshPro>().text = nickName;
         ClassUpdate(classCode);
@@ -52,8 +53,10 @@ public class MannequinController : MonoBehaviour
         }
         else if(classCode == "C003")
         {
+            Debug.Log("마법사 생성");
             transform.GetChild(3).gameObject.SetActive(true);
         }
+
     }
 
 }
