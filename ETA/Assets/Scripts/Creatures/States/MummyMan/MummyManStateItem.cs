@@ -534,6 +534,8 @@ namespace MummyManStateItem
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToDieState();
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
+            Managers.Sound.Play("Monster/Mummy/MummyDie_SND", Define.Sound.Effect);
+
         }
 
         public override void Execute()
