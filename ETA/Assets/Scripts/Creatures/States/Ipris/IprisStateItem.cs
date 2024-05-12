@@ -25,6 +25,7 @@ namespace IprisStateItem
             if (_detector.Target != null)
             {
                 Debug.Log("IDLE TO CHASE");
+                _controller.MeetPlayer = true;
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
         }
@@ -99,9 +100,14 @@ namespace IprisStateItem
                 Debug.Log("IDLE_BATTLE TO IDLE");
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
+            else if (_controller.BuffTime >= _controller.ThreadHoldBuff)
+            {
+                //Debug.Log("IDLE_BATTLE TO BUFF_STATE");
+                _controller.ChangeState(_controller.BUFF_STATE);
+            }
             else if (_controller.CounterTime >= _controller.ThreadHoldCounter)
             {
-                Debug.Log("IDLE_BATTLE TO COUNTER_ENABLE");
+                //Debug.Log("IDLE_BATTLE TO COUNTER_ENABLE");
                 _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
             }
             else if (IsStayForSeconds(1.0f))
@@ -150,9 +156,9 @@ namespace IprisStateItem
 
     // -------------------------------------- COUNTER ENABLE ------------------------------------------------
     #region COUNTER_ENABLE
-    public class CounterEnable : IprisState
+    public class CounterEnableState : IprisState
     {
-        public CounterEnable(IprisController controller) : base(controller)
+        public CounterEnableState(IprisController controller) : base(controller)
         {
         }
 
@@ -187,9 +193,9 @@ namespace IprisStateItem
 
     // -------------------------------------- COUNTER ATTACK ------------------------------------------------
     #region COUNTER_ATTACK
-    public class CounterAttack : IprisState
+    public class CounterAttackState : IprisState
     {
-        public CounterAttack(IprisController controller) : base(controller)
+        public CounterAttackState(IprisController controller) : base(controller)
         {
         }
 
@@ -214,6 +220,39 @@ namespace IprisStateItem
         public override void Exit()
         {
             _controller.CounterTime = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- BUFF ------------------------------------------------
+    #region BUFF
+    // 자신한테만 누적되는 버프 수치( ATK += 2, DEF += 1, Shield: HP 15% 부여, COOL_TIME: 20초 )
+    public class BuffState : IprisState
+    {
+        public BuffState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.BuffAnim.length);
+            _animator.CrossFade(_animData.BuffParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold)
+            {
+                Debug.Log("BUFF TO IDLE_BATTLE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+        public override void Exit()
+        {
+            _controller.BuffTime = 0;
         }
     }
     #endregion
@@ -265,7 +304,7 @@ namespace IprisStateItem
         {
 
 
-            if (_controller.PrevState is CounterEnable)      // Counter Enable
+            if (_controller.PrevState is CounterEnableState)      // Counter Enable
             {
                 groggyTime = 3.0f;
                 ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
@@ -311,6 +350,7 @@ namespace IprisStateItem
             if (_controller.MeetPlayer)
             {
                 _controller.CounterTime += Time.deltaTime;
+                _controller.BuffTime += Time.deltaTime;
             }
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.

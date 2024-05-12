@@ -25,13 +25,18 @@ public class IprisController : BaseMonsterController
     #endregion
 
     #region STATE VARIABLE
-    private bool _meetPlayer;
-    private float _counterTime;
-    private float _threadHoldCounter = 10.0f;
+    [Header("STATE VARIABLE")]
+    [SerializeField] private bool _meetPlayer;
+    [SerializeField] private float _counterTime;
+    private const float _threadHoldCounter = 10.0f;       // 10초
+    [SerializeField] private float _buffTime;
+    private const float _threadHoldBuff = 20.0f;          // 20초
 
     public bool MeetPlayer { get => _meetPlayer; set => _meetPlayer = value; }
     public float CounterTime { get => _counterTime; set => _counterTime = value; }
-    public float ThreadHoldCounter { get => _threadHoldCounter; set => _threadHoldCounter = value; }
+    public float ThreadHoldCounter { get => _threadHoldCounter; }
+    public float BuffTime { get => _buffTime; set => _buffTime = value; }
+    public float ThreadHoldBuff { get => _threadHoldBuff; }
     #endregion
 
     private IprisAnimationData _animData;
@@ -64,8 +69,9 @@ public class IprisController : BaseMonsterController
         GLOBAL_STATE = new GlobalState(this);
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
-        COUNTER_ENABLE_STATE = new CounterEnable(this);
-        COUNTER_ATTACK_STATE = new CounterAttack(this);
+        COUNTER_ENABLE_STATE = new CounterEnableState(this);
+        COUNTER_ATTACK_STATE = new CounterAttackState(this);
+        BUFF_STATE = new BuffState(this);
 
 
 
