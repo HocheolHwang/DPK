@@ -83,6 +83,7 @@ public class Define
         Krake,
         Puffe,
         Octopus,
+        Planta,
         // ------------------- 보스 몬스터 -----------------------
         FlowerDryad,
         KnightG,
@@ -124,7 +125,7 @@ public class Define
         GroundCrash,
         BlessingEffect,
         HealEffect,
-        SwordWaveWhite,
+        SwordWaveWhite, 
         SlashWideBlue,
         SwordVolleyBlue,
         StoneSlash1,
@@ -138,6 +139,7 @@ public class Define
         RapidArrowShot,
         MagicSphereBlue,
         DarknessSlash,
+        MagicMissileGreen,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
