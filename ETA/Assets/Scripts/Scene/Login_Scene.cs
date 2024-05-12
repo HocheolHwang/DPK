@@ -93,7 +93,7 @@ public class Login_Scene : BaseScene
         }
         for (int i = 0; i < 8; i++)
         {
-            Debug.Log(Managers.Player.warriorSkills[i].skillName);
+            Debug.Log(Managers.Player.warriorSkills[i]?.skillName);
 
         }
         Managers.UI.ShowPopupUI<After_Login_Popup_UI>("[Login]_After_Login_Popup_UI");
