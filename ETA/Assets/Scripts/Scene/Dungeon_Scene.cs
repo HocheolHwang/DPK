@@ -61,7 +61,7 @@ public class Dungeon_Scene : BaseScene
         var players = GameObject.FindObjectsOfType<PlayerController>();
 
         if (players.Length != 0) return;
-        FindObjectOfType<Dungeon_Popup_UI>().HandlePlayerDestroyed();
+        FindObjectOfType<Dungeon_Popup_UI>()?.HandlePlayerDestroyed();
 
     }
 
