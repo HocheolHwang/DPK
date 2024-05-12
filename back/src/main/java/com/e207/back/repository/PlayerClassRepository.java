@@ -7,8 +7,11 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PlayerClassRepository extends JpaRepository<PlayerClassEntity, PlayerClassId> {
 //    Slice<User> findByOrderByScoreDesc(Pageable pageable);
     Slice<PlayerClassEntity> findByOrderByPlayerLevelDesc(Pageable pageable);
+    List<PlayerClassEntity> findByPlayerPlayerId(String playerId);
 }

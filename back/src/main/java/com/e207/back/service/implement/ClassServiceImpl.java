@@ -1,8 +1,11 @@
 package com.e207.back.service.implement;
 
 import com.e207.back.dto.ResponseDto;
+import com.e207.back.dto.common.ClassDto;
+import com.e207.back.dto.request.AllClassRequestDto;
 import com.e207.back.dto.request.CurrentClassRequestDto;
 import com.e207.back.dto.request.SelectClassRequestDto;
+import com.e207.back.dto.response.AllClassResponseDto;
 import com.e207.back.dto.response.CurrentClassResponseDto;
 import com.e207.back.dto.response.SelectClassResponseDto;
 import com.e207.back.entity.ClassEntity;
@@ -22,6 +25,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -89,5 +94,26 @@ public class ClassServiceImpl implements ClassService {
             return ResponseDto.databaseError();
         }
         return SelectClassResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super AllClassResponseDto> getAllClass(AllClassRequestDto dto) {
+        List<ClassDto> list = new ArrayList<>();
+        try{
+            CustomUserDetails customUserDetails = CustomUserDetails.LoadUserDetails();
+            String playerId = customUserDetails.getPlayerId();
+            List<PlayerClassEntity> entities = playerClassRepository.findByPlayerPlayerId(playerId);
+            entities.forEach((e) ->{
+                ClassDto tmp = new ClassDto();
+                tmp.setClassCode(e.get_class().getClassCode());
+                tmp.setLevel(e.getPlayerLevel());
+                list.add(tmp);
+            });
+        }catch(Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return AllClassResponseDto.success(list);
     }
 }
