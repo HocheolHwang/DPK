@@ -64,7 +64,7 @@ public class GameSystem : MonoBehaviourPunCallbacks
 
     public void SceneLoaded()
     {
-        //PhotonView.RPC("RPC_SceneLoaded", RpcTarget.All);
+        PhotonView.RPC("RPC_SceneLoaded", RpcTarget.All);
     }
 
     [PunRPC]
