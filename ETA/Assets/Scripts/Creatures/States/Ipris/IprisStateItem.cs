@@ -102,13 +102,23 @@ namespace IprisStateItem
             }
             else if (_controller.BuffTime >= _controller.ThreadHoldBuff)
             {
-                //Debug.Log("IDLE_BATTLE TO BUFF_STATE");
+                //Debug.Log("IDLE_BATTLE TO BUFF");
                 _controller.ChangeState(_controller.BUFF_STATE);
+            }
+            else if (_controller.PatternOneCnt == _controller.ThreadHoldPatternOne)
+            {
+                //Debug.Log("IDLE_BATTLE TO PATTERN_ONE_ENABLE");
+                _controller.ChangeState(_controller.PATTERN_ONE_ENABLE_STATE);
             }
             else if (_controller.CounterTime >= _controller.ThreadHoldCounter)
             {
                 //Debug.Log("IDLE_BATTLE TO COUNTER_ENABLE");
                 _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
+            }
+            else if (_controller.PatternTwoTime >= _controller.ThreadHoldPatternTwo)
+            {
+                //Debug.Log("IDLE_BATTLE TO PATTERN_TWO");
+                _controller.ChangeState(_controller.PATTERN_TWO_STATE);
             }
             else if (IsStayForSeconds(1.0f))
             {
@@ -123,19 +133,21 @@ namespace IprisStateItem
     }
     #endregion
 
-    // -------------------------------------- ATTACK ------------------------------------------------
-    #region ATTACK
-    public class AttackState : IprisState
+    // -------------------------------------- BUFF ------------------------------------------------
+    #region BUFF
+    // 자신한테만 누적되는 버프 수치( ATK += 2, DEF += 1, Shield: HP 15% 부여, COOL_TIME: 20초 )
+    public class BuffState : IprisState
     {
-        public AttackState(IprisController controller) : base(controller)
+        public BuffState(IprisController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-            InitTime(_animData.AttackFirstAnim.length + _animData.AttackSecondAnim.length);
-            _animator.CrossFade(_animData.AttackParamHash, 0.2f);
+
+            InitTime(_animData.BuffAnim.length);
+            _animator.CrossFade(_animData.BuffParamHash, 0.1f);
         }
 
         public override void Execute()
@@ -143,11 +155,91 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
-                //Debug.Log("ATTACK TO IDLE_BATTLE");
+                Debug.Log("BUFF TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
+        public override void Exit()
+        {
+            _controller.BuffTime = 0;
+        }
+    }
+    #endregion
 
+    // -------------------------------------- PATTERN_ONE_ENABLE ------------------------------------------------
+    #region PATTERN_ONE_ENABLE
+    public class PatternOneEnableState : IprisState
+    {
+        public PatternOneEnableState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            _controller.PatternOneCnt++;
+
+            InitTime(_animData.PatternOneEnableAnim.length);
+            _animator.SetFloat("PatternOneEnableSpeed", 0.5f);
+            _animator.CrossFade(_animData.PatternOneEnableParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            if (_controller.IsHitCounter)
+            {
+                _controller.IsCounterTrigger = true;
+            }
+
+            if (_animTime >= (_threadHold * 2.0f))
+            {
+                //Debug.Log("PATTERN_ONE_ENABLE TO PATTERN_ONE");
+                _controller.ChangeState(_controller.PATTERN_ONE_STATE);
+            }
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- PATTERN_ONE ------------------------------------------------
+    #region PATTERN_ONE
+    public class PatternOneState : IprisState
+    {
+        public PatternOneState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.PatternOneAnim.length);
+            _animator.SetFloat("PatternOneSpeed", 0.5f);
+            _animator.CrossFade(_animData.PatternOneParamHash, 0.1f);
+
+            if (_controller.IsCounterTrigger)
+            {
+                // 더 강한 공격
+            }
+            else
+            {
+                // 보통 PATTER ONE
+            }
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_animTime >= (_threadHold * 2.0f))
+            {
+                //Debug.Log("PATTERN_ONE TO IDLE_BATTLE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
         public override void Exit()
         {
         }
@@ -224,21 +316,91 @@ namespace IprisStateItem
     }
     #endregion
 
-    // -------------------------------------- BUFF ------------------------------------------------
-    #region BUFF
-    // 자신한테만 누적되는 버프 수치( ATK += 2, DEF += 1, Shield: HP 15% 부여, COOL_TIME: 20초 )
-    public class BuffState : IprisState
+    // -------------------------------------- PATTERN_TWO ------------------------------------------------
+    #region PATTERN_TWO
+    public class PatternTwoState : IprisState
     {
-        public BuffState(IprisController controller) : base(controller)
+        public PatternTwoState(IprisController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
+            _controller.WindMillCnt++;
 
-            InitTime(_animData.BuffAnim.length);
-            _animator.CrossFade(_animData.BuffParamHash, 0.1f);
+            InitTime(_animData.PatternTwoAnim.length);
+            _animator.SetFloat("PatternTwoSpeed", 0.5f);
+            _animator.CrossFade(_animData.PatternTwoParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_animTime >= (_threadHold * 2.0f) && _controller.WindMillCnt >= _controller.ThreadHoldWindMill)
+            {
+                //Debug.Log("PATTERN_TWO TO WIND_MILL");
+                _controller.ChangeState(_controller.PATTERN_TWO_WINDMILL_STATE);
+            }
+            else if (_animTime >= (_threadHold * 2.0f))
+            {
+                //Debug.Log("PATTERN_TWO TO IDLE_BATTLE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+        public override void Exit()
+        {
+            _controller.PatternTwoTime = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- PATTERN_TWO_WINDMILL ------------------------------------------------
+    #region PATTERN_TWO_WINDMILL
+    public class PatternTwoWindMillState : IprisState
+    {
+        public PatternTwoWindMillState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            _controller.WindMillCnt = 0;
+
+            InitTime(_animData.PatternTwoWindMillAnim.length);
+            _animator.SetFloat("WindMillSpeed", 0.5f);
+            _animator.CrossFade(_animData.PatternTwoWindMillParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_animTime >= (_threadHold * 2.0f))
+            {
+                //Debug.Log("PATTERN_TWO_WINDMILL TO IDLE_BATTLE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- ATTACK ------------------------------------------------
+    #region ATTACK
+    public class AttackState : IprisState
+    {
+        public AttackState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            InitTime(_animData.AttackFirstAnim.length + _animData.AttackSecondAnim.length);
+            _animator.CrossFade(_animData.AttackParamHash, 0.2f);
         }
 
         public override void Execute()
@@ -246,20 +408,18 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
-                Debug.Log("BUFF TO IDLE_BATTLE");
+                //Debug.Log("ATTACK TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
+
         public override void Exit()
         {
-            _controller.BuffTime = 0;
         }
     }
     #endregion
 
     // -------------------------------------- GLOBAL_DIE ------------------------------------------------
-
-    // DIE => TO_DRAGON
     #region DIE
     public class DieState : IprisState
     {
@@ -269,6 +429,9 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            _agent.velocity = Vector3.zero;
+            _stat.Hp = 100;
+
             InitTime(_animData.DieAnim.length);
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
         }
@@ -288,8 +451,6 @@ namespace IprisStateItem
     #endregion
 
     // -------------------------------------- GLOBAL_GROGGY ------------------------------------------------
-
-    // if문 조건 수정 필요
     #region GROGGY
     public class GroggyState : IprisState
     {
@@ -306,7 +467,7 @@ namespace IprisStateItem
 
             if (_controller.PrevState is CounterEnableState)      // Counter Enable
             {
-                groggyTime = 3.0f;
+                groggyTime = 1.7f;
                 ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
                 ps.transform.SetParent(_controller.transform);
                 ps.transform.localPosition = new Vector3(0, 1.0f, 0);
@@ -351,15 +512,20 @@ namespace IprisStateItem
             {
                 _controller.CounterTime += Time.deltaTime;
                 _controller.BuffTime += Time.deltaTime;
+                _controller.PatternTwoTime += Time.deltaTime;
             }
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
 
             // GLOBAL_STATE로 전환하는 로직
-            if (_stat.Hp <= 0)
+            if (_stat.Hp <= 100)
             {
                 _controller.ChangeState(_controller.DIE_STATE);
+            }
+            else if (_controller.PatternOneCnt == 0 && _stat.Hp <= (_stat.MaxHp * 0.5f))
+            {
+                _controller.PatternOneCnt = 1;
             }
         }
     }
