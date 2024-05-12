@@ -28,7 +28,7 @@ public class IprisController : BaseMonsterController
     [Header("STATE VARIABLE")]
     [SerializeField] private bool _meetPlayer;
     [SerializeField] private float _counterTime;
-    private const float _threadHoldCounter = 10.0f;       // 10초
+    private const float _threadHoldCounter = 11.0f;       // 11초
     [SerializeField] private float _buffTime;
     private const float _threadHoldBuff = 30.0f;          // 30초
     [SerializeField] private float _patternTwoTime;       
