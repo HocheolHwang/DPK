@@ -89,7 +89,7 @@ public class IprisController : BaseMonsterController
         PATTERN_TWO_WINDMILL_STATE = new PatternTwoWindMillState(this);
         PATTERN_ONE_ENABLE_STATE = new PatternOneEnableState(this);
         PATTERN_ONE_STATE = new PatternOneState(this);
-        //TO_DRAGON_STATE = new ToDragonState(this);
+        TO_DRAGON_STATE = new ToDragonState(this);
 
 
         Agent.stoppingDistance = Detector.AttackRange - 0.3f;

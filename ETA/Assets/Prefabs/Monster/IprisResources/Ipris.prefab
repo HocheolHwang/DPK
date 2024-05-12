@@ -871,6 +871,7 @@ MonoBehaviour:
   patternTwoParamName: PATTERN_TWO
   patternTwoWindMillParamName: PATTERN_TWO_WINDMILL
   dieAnim: {fileID: 1827226128182048838, guid: e02d260090156044aad723ca905a2023, type: 3}
+  toDragonAnim: {fileID: 1827226128182048838, guid: 5576aa0acb4cfaf40a1d11f3b17842ac, type: 3}
   attackFirstAnim: {fileID: 1827226128182048838, guid: 05e68e49421669b40b9f8c903c1e445c, type: 3}
   attackSecondAnim: {fileID: 1827226128182048838, guid: 3da16a44b3aa7024089ea90459c0bab4, type: 3}
   buffAnim: {fileID: 1827226128182048838, guid: 85a35afdc5e8beb44baa4928eead2ed8, type: 3}
@@ -898,6 +899,12 @@ MonoBehaviour:
   Agent: {fileID: 0}
   Stat: {fileID: 0}
   _isHitCounter: 0
+  _meetPlayer: 0
+  _counterTime: 0
+  _buffTime: 0
+  _patternTwoTime: 0
+  _windMillCnt: 0
+  _patternOneCnt: 0
 --- !u!1 &3730044426861352560
 GameObject:
   m_ObjectHideFlags: 0

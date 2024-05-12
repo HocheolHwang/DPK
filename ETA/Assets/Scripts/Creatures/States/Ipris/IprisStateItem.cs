@@ -2,6 +2,7 @@ using MummyManStateItem;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace IprisStateItem
@@ -430,18 +431,53 @@ namespace IprisStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-            _stat.Hp = 100;
 
             InitTime(_animData.DieAnim.length);
+            _animator.SetFloat("DieSpeed", 0.5f);
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
         }
 
         public override void Execute()
         {
-            _animTime += Time.deltaTime;
-            if (_animTime >= _threadHold)
+            _stat.Hp = (int)(_stat.MaxHp * 0.1f);
+
+            if (IsStayForSeconds(_threadHold * 2.0f))
             {
                 _controller.ChangeState(_controller.TO_DRAGON_STATE);
+            }
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- TO_DRAGON ------------------------------------------------
+    #region TO_DRAGON
+    public class ToDragonState : IprisState
+    {
+        public ToDragonState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.ToDragonAnim.length);
+            _animator.SetFloat("ToDragonSpeed", 0.5f);
+            _animator.CrossFade(_animData.ToDragonParamHash, 0.1f);
+
+            // 산화하는 애니메이션 재생
+        }
+
+        public override void Execute()
+        {
+            _stat.Hp = (int)(_stat.MaxHp * 0.1f);
+
+            if (IsStayForSeconds(_threadHold * 2.0f))
+            {
+                GameObject.Destroy(_controller.gameObject);
             }
         }
         public override void Exit()
@@ -516,10 +552,11 @@ namespace IprisStateItem
             }
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
-            if (_controller.CurState == _controller.DIE_STATE) return;
+            if (_controller.CurState == _controller.DIE_STATE) return;            
+            if (_controller.CurState == _controller.TO_DRAGON_STATE) return;            
 
             // GLOBAL_STATE로 전환하는 로직
-            if (_stat.Hp <= 100)
+            if (_stat.Hp <= (_stat.MaxHp * 0.1f))
             {
                 _controller.ChangeState(_controller.DIE_STATE);
             }
