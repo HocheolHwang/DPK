@@ -690,6 +690,7 @@ GameObject:
   - component: {fileID: 3762468526324884461}
   - component: {fileID: -2939625899651412242}
   - component: {fileID: -8733523994994036906}
+  - component: {fileID: 6242981767869721767}
   m_Layer: 7
   m_Name: Ipris
   m_TagString: Monster
@@ -871,6 +872,7 @@ MonoBehaviour:
   patternTwoParamName: PATTERN_TWO
   patternTwoWindMillParamName: PATTERN_TWO_WINDMILL
   dieAnim: {fileID: 1827226128182048838, guid: e02d260090156044aad723ca905a2023, type: 3}
+  toDragonAnim: {fileID: 1827226128182048838, guid: 5576aa0acb4cfaf40a1d11f3b17842ac, type: 3}
   attackFirstAnim: {fileID: 1827226128182048838, guid: 05e68e49421669b40b9f8c903c1e445c, type: 3}
   attackSecondAnim: {fileID: 1827226128182048838, guid: 3da16a44b3aa7024089ea90459c0bab4, type: 3}
   buffAnim: {fileID: 1827226128182048838, guid: 85a35afdc5e8beb44baa4928eead2ed8, type: 3}
@@ -898,6 +900,24 @@ MonoBehaviour:
   Agent: {fileID: 0}
   Stat: {fileID: 0}
   _isHitCounter: 0
+  _meetPlayer: 0
+  _counterTime: 0
+  _buffTime: 0
+  _patternTwoTime: 0
+  _windMillCnt: 0
+  _patternOneCnt: 0
+--- !u!114 &6242981767869721767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417164047586525017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814bad0cd7a874747aca0705a2025a0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3730044426861352560
 GameObject:
   m_ObjectHideFlags: 0

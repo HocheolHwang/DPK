@@ -155,7 +155,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     // 내 캐리
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
-        if(UnitType == Define.UnitType.Player)
+        if (UnitType == Define.UnitType.Player)
         {
             if (photonView.IsMine == false) return;
         }
@@ -163,7 +163,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
         {
             if (PhotonNetwork.IsMasterClient == false) return;
         }
-        
+
         SendTakeDamageMsg(attackDamage, isCounter, Stat.Shield, Evasion, Stat.Defense);
 
         // 최소 데미지 = 1
@@ -220,7 +220,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
         }
         else if (isCounter)
         {
-            if (PhotonNetwork.IsMasterClient) CounterEvent();
+            if (PhotonNetwork.IsMasterClient) 
+                CounterEvent();
 
         }
     }
