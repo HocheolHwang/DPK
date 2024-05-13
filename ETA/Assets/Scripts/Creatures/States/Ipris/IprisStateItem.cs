@@ -1,4 +1,3 @@
-using MummyManStateItem;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -179,19 +178,24 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            // 0.15초 동안 유지되기 떄문에 카운터를 치지 않았음에도 true 조건을 만족하는 경우를 배제
+            _controller.IsHitCounter = false;
+
             _agent.velocity = Vector3.zero;
             _controller.PatternOneCnt++;
 
             InitTime(_animData.PatternOneEnableAnim.length);
             _animator.SetFloat("PatternOneEnableSpeed", 0.5f);
             _animator.CrossFade(_animData.PatternOneEnableParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.PatternOneEnable);
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
 
-            if (_controller.IsHitCounter)
+            if ( !_controller.IsCounterTrigger && _controller.IsHitCounter )
             {
                 _controller.IsCounterTrigger = true;
             }
@@ -227,10 +231,12 @@ namespace IprisStateItem
             if (_controller.IsCounterTrigger)
             {
                 // 더 강한 공격
+                StartCast((int)EIprisPattern.PatternOneStrongAttack);
             }
             else
             {
                 // 보통 PATTER ONE
+                //StartCast((int)EIprisPattern.PatternOneAttack);
             }
         }
 
@@ -273,12 +279,12 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_controller.IsHitCounter)
             {
-                Debug.Log("COUNTER_ENABLE TO GROGGY");
+                //Debug.Log("COUNTER_ENABLE TO GROGGY");
                 _controller.ChangeState(_controller.GROGGY_STATE);
             }
             else if (_animTime >= _threadHold * 2.0f)
             {
-                Debug.Log("COUNTER_ENABLE TO COUNTER_ATTACK");
+                //Debug.Log("COUNTER_ENABLE TO COUNTER_ATTACK");
                 _controller.ChangeState(_controller.COUNTER_ATTACK_STATE);
             }
         }
@@ -312,7 +318,7 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold * 2.0f)
             {
-                Debug.Log("COUNTER_ATTACK TO IDLE_BATTLE");
+                //Debug.Log("COUNTER_ATTACK TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
@@ -509,7 +515,7 @@ namespace IprisStateItem
 
             if (_controller.PrevState is CounterEnableState)      // Counter Enable
             {
-                groggyTime = 1.7f;
+                groggyTime = 2.5f;
                 ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
                 ps.transform.SetParent(_controller.transform);
                 ps.transform.localPosition = new Vector3(0, 1.0f, 0);

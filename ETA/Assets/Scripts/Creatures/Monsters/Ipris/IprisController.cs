@@ -36,7 +36,7 @@ public class IprisController : BaseMonsterController
     [SerializeField] private float _windMillCnt;
     [SerializeField] private int _patternOneCnt;          // HP가 MAX_HP의 절반
     private int _threadHoldPatternOne = 1;                // 1번만 수행
-    private bool _isCounterTrigger;                       // Counter 스킬에 맞았는지
+    [SerializeField] private bool _isCounterTrigger;                       // Counter 스킬에 맞았는지
 
     public bool MeetPlayer { get => _meetPlayer; set => _meetPlayer = value; }
     public float CounterTime { get => _counterTime; set => _counterTime = value; }

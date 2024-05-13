@@ -13,7 +13,7 @@ public class BaseMonsterController : BaseController
     protected PatternInfo _patternInfo;
 
     public PatternInfo PatternInfo { get => _patternInfo; }
-    public bool IsHitCounter { get => _isHitCounter; private set => _isHitCounter = value; }
+    public bool IsHitCounter { get => _isHitCounter; set => _isHitCounter = value; }
 
     protected override void Awake()
     {

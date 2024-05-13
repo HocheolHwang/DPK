@@ -72,7 +72,7 @@ namespace MummyManStateItem
             {
                 SommonMonsterEvent();
             }
-            else if (IsDeadBuffer())
+            else if (IsDeadBuffer())        // 2번 사용하도록 수정
             {
                 _controller.ChangeState(_controller.FORE_SHADOWING_STATE);
             }
