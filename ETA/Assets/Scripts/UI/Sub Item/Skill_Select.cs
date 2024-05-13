@@ -10,25 +10,19 @@ public class Skill_Select : MonoBehaviour
 
     // --------------- 스킬 목록 ---------------
 
-    // 스킬 계열 텍스트
-    private TMP_Text[] skillCategoryTexts = new TMP_Text[4];
-
-    // 클래스 코드에 따른 스킬 카테고리 텍스트를 저장하는 딕셔너리
-    private Dictionary<string, string[]> skillCategoriesByClassCode = new Dictionary<string, string[]>
-    {
-        { "C001", new string[] { "버서커", "팔라딘", "파이터", "마검사" } },
-        { "C002", new string[] { "활 기술", "생존 기술", "소환 기술", "함정 기술" } },
-        { "C003", new string[] { "소환 마법", "공격 마법", "신성 마법", "혈 마법" } },
-    };
-
     // 계열별 스킬 이미지를 저장하는 딕셔너리
-    private Dictionary<int, Image[]> categorySkillIconsByCategory = new Dictionary<int, Image[]>
-    {
-        { 1, new Image[6] },
-        { 2, new Image[6] },
-        { 3, new Image[6] },
-        { 4, new Image[6] },
-    };
+    //private Dictionary<Image, string, int> skillList = new Dictionary<Image, string, int>
+    //{
+    //    { Image, string, int a},
+    //    { Image, string, int a},
+    //    { Image, string, int a},
+    //    { Image, string, int a},
+    //    { Image, string, int a},
+    //    { Image, string, int a},
+    //    { Image, string, int a},
+    //    { Image, string, int a},
+    //    { Image, string, int a},
+    //};
 
 
     // --------------- 스킬 슬롯 ---------------
@@ -59,13 +53,13 @@ public class Skill_Select : MonoBehaviour
         //}
 
         // 스킬 이미지 오브젝트 연결
-        for (int category = 1; category <= 4; category++)
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                categorySkillIconsByCategory[category][i] = GameObject.Find($"Category_{category}_Skill_{i + 1}").GetComponent<Image>();
-            }
-        }
+        //for (int category = 1; category <= 4; category++)
+        //{
+        //    for (int i = 0; i < 6; i++)
+        //    {
+        //        categorySkillIconsByCategory[category][i] = GameObject.Find($"Category_{category}_Skill_{i + 1}").GetComponent<Image>();
+        //    }
+        //}
 
 
         // --------------- 스킬 슬롯 ---------------
@@ -115,20 +109,20 @@ public class Skill_Select : MonoBehaviour
     // ------------------------------ 메서드 정의 ------------------------------
 
     // 스킬 계열 텍스트 업데이트 메서드
-    private void UpdateSkillCategoryTexts(string selectedClassCode)
-    {
-        if (skillCategoriesByClassCode.TryGetValue(selectedClassCode, out string[] categories))
-        {
-            for (int i = 0; i < skillCategoryTexts.Length; i++)
-            {
-                skillCategoryTexts[i].text = categories[i];
-            }
-        }
-        else
-        {
-            Debug.Log("알 수 없는 클래스 코드: " + selectedClassCode);
-        }
-    }
+    //private void UpdateSkillCategoryTexts(string selectedClassCode)
+    //{
+    //    if (skillCategoriesByClassCode.TryGetValue(selectedClassCode, out string[] categories))
+    //    {
+    //        for (int i = 0; i < skillCategoryTexts.Length; i++)
+    //        {
+    //            skillCategoryTexts[i].text = categories[i];
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("알 수 없는 클래스 코드: " + selectedClassCode);
+    //    }
+    //}
 
     // 계열별 스킬 이미지 업데이트 메서드
     private void UpdateCategorySkillIcons()
@@ -159,7 +153,7 @@ public class Skill_Select : MonoBehaviour
         }
 
         // 스킬 계열 텍스트 업데이트
-        UpdateSkillCategoryTexts(classCode);
+        // UpdateSkillCategoryTexts(classCode);
 
         // 계열별 스킬 이미지 업데이트
         UpdateCategorySkillIcons();
