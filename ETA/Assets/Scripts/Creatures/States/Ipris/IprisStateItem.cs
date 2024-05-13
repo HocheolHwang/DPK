@@ -236,7 +236,7 @@ namespace IprisStateItem
             else
             {
                 // 보통 PATTER ONE
-                //StartCast((int)EIprisPattern.PatternOneAttack);
+                StartCast((int)EIprisPattern.PatternOneAttack);
             }
         }
 

@@ -6,6 +6,7 @@ enum EIprisPattern
 {
     BUFF,
     PatternOneEnable,
+    PatternOneAttack,
     PatternOneStrongAttack,
     CounterEnable,
     CounterAttack,

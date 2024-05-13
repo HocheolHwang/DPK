@@ -18,6 +18,7 @@ public class IprisInfo : PatternInfo
 
         PatternList.Add(gameObject.GetOrAddComponent<IprisBuff>());
         PatternList.Add(gameObject.GetOrAddComponent<IprisPatternOneEnable>());
+        PatternList.Add(gameObject.GetOrAddComponent<IprisPatternOneAttack>());
         PatternList.Add(gameObject.GetOrAddComponent<IprisPatternOneStrongAttack>());
         PatternList.Add(gameObject.GetOrAddComponent<IprisCounterEnable>());
         PatternList.Add(gameObject.GetOrAddComponent<IprisCounterAttack>());
