@@ -9,7 +9,6 @@ public class MummyManBuff : Pattern
     [SerializeField] Vector3 _buffRange = new Vector3(2.0f, 2.0f, 2.0f);
     [SerializeField] Vector3 _shieldRange = new Vector3(0.7f, 0.7f, 0.7f);
 
-    private Transform[] _closedMonsterList;
     private float duration;
     private int healAmount;
     private int upAmountATK;

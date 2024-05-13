@@ -264,7 +264,6 @@ namespace MummyManStateItem
     #region SHOUTING
     public class ShoutingState : MummyManState
     {
-        // 3초 동안 기절을 부여한다. -> hit box에 추가
         public ShoutingState(MummyManController controller) : base(controller)
         {
         }
@@ -307,7 +306,6 @@ namespace MummyManStateItem
     #region JUMP
     public class JumpState : MummyManState
     {
-        // 3초 동안 기절을 부여한다. -> hit box에 추가
         public JumpState(MummyManController controller) : base(controller)
         {
         }

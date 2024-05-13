@@ -4,7 +4,7 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// 버프 수치(HP 10% 회복, ATK += 10, DEF += 5, TIME: 30초 )
+// 버프 수치(HP 10% 회복, ATK += 10, DEF += 500, TIME: 10초 )
 public class MummyBufferBuff : Pattern
 {
     [Header("개발 편의성")]
@@ -25,10 +25,10 @@ public class MummyBufferBuff : Pattern
         _patternRange = _hitboxRange;
 
         // Buff Stat
-        duration = 35.0f;       // effect 파괴 시간
-        buffDuration = 30.0f;   // effect 비활성화 시간 및 버프 효과 적용 시간
+        duration = 12.0f;       // effect 파괴 시간
+        buffDuration = 10.0f;   // effect 비활성화 시간 및 버프 효과 적용 시간
         upAmountATK = 10;
-        upAmountDEF = 5;
+        upAmountDEF = 500;
     }
 
     public override IEnumerator StartPatternCast()

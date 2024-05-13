@@ -172,6 +172,9 @@ public class Define
         Gravity01,
         Gravity02,
         SparkleMissileGreen,
+        // ------------------------ Ipris ------------------------------
+        Ipris_Buff,
+        // ------------------------ Ipris ------------------------------
         MaxCount
     }
 }
