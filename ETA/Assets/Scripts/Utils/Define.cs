@@ -84,6 +84,7 @@ public class Define
         Puffe,
         Octopus,
         Planta,
+        Shellfish,
         // ------------------- 보스 몬스터 -----------------------
         FlowerDryad,
         KnightG,
@@ -140,6 +141,7 @@ public class Define
         MagicSphereBlue,
         DarknessSlash,
         MagicMissileGreen,
+        MagicMissileBlue,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
