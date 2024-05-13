@@ -26,9 +26,10 @@ public class Dungeon_Popup_UI : UI_Popup
     {
         // 던전 아이콘
         Tutorial_Icon,
-        DeepForest_Icon,
-        ForgottenTemple_Icon,
         StarShardPlain_Icon,
+        ForgottenTemple_Icon,
+        SeaOfAbyss_Icon,
+        
 
         // 보스 상태
         Boss_Status,
@@ -282,8 +283,10 @@ public class Dungeon_Popup_UI : UI_Popup
         // 던전 아이콘 초기화를 반복문으로 처리
         for (int i = 0; i < dungeonIcons.Length; i++)
         {
+           
             // 던전 아이콘 배열 초기화
             dungeonIcons[i] = GetObject((int)GameObjects.Tutorial_Icon + i);
+            Debug.Log(dungeonIcons[i].gameObject.name);
         }
 
         // 던전 등급 및 이름 초기화
@@ -451,6 +454,7 @@ public class Dungeon_Popup_UI : UI_Popup
     {
         // 등록된 이벤트 핸들러 해제
         KnightGController.OnBossDestroyed -= HandleBossDestroyed;
+        MummyManController.OnMummyDestroyed -= HandleBossDestroyed;
         PlayerController.OnPlayerDestroyed -= HandlePlayerDestroyed;
 
         if (isTutorialScene)
@@ -490,11 +494,9 @@ public class Dungeon_Popup_UI : UI_Popup
         // 던전 번호에 따라 다른 텍스트와 아이콘 설정
         (string dungeonTier, string dungeonName, GameObject activeIcon) = selectedDungeonNumber switch
         {
-            1 => ("초급 던전", "깊은 숲", dungeonIcons[1]),
+            1 => ("초급 던전", "별의 조각 평원", dungeonIcons[1]),
             2 => ("중급 던전", "잊혀진 신전", dungeonIcons[2]),
-            3 => ("고급 던전", "별의 조각 평원", dungeonIcons[3]),
-            4 => ("테스트 던전", "Test 1", dungeonIcons[3]),
-            5 => ("테스트 던전", "Test 2", dungeonIcons[3]),
+            3 => ("고급 던전", "심연의 바다", dungeonIcons[3]),
             _ => ("튜토리얼 던전", "던전처리기사 실기 시험장", dungeonIcons[0])
         };
 
@@ -539,6 +541,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 보스 파괴 이벤트 핸들러 등록
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
+        MummyManController.OnMummyDestroyed += HandleBossDestroyed;
     }
 
     // 파티원 정보 업데이트 메서드
