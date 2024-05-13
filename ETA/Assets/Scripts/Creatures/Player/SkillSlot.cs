@@ -15,6 +15,7 @@ public class SkillSlot : MonoBehaviour
     private Animator _animator;
 
     private Skill _currentSkill;
+    public Skill PreviousSkill;
     public Skill CurrentSkill { get { return _currentSkill; } }
 
     private string[] loadedSkills = new string[8];
@@ -35,7 +36,7 @@ public class SkillSlot : MonoBehaviour
         switch (gameObject.name.Replace("(Clone)",""))
         {
             case "Warrior": // 워리어
-                loadedSkills = new string[] { "SwordWave", "TelekineticSwords", "DrawSword", "WhirlWind", "Guard", "BackStep", "Massacre", "WindSlash" };
+                loadedSkills = new string[] { "DoubleSlash", "TripleSlash", "DrawSword", "WhirlWind", "Guard", "BackStep", "Massacre", "WindSlash" };
                 //for(int i = 0; i < 8; i++)
                 //{
                 //    loadedSkills[i] = Managers.Player.warriorSkills[i].skillName;
