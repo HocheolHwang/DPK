@@ -102,7 +102,7 @@ public class LightningShot : Skill
 
     IEnumerator LightningShotCollavoCoroutine()
     {
-        ParticleSystem psUI = Managers.Effect.Play(Define.Effect.ArcherMageUIEffect, 1.0f, gameObject.transform);
+        ParticleSystem psUI = Managers.Effect.Play(Define.Effect.ArcherMageUIEffect, 2.0f, gameObject.transform);
         ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.CollavoBlackHole, 2.0f, gameObject.transform);
         ps1.transform.position = transform.position;
         //ps1.Play();
