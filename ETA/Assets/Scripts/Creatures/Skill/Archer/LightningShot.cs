@@ -74,7 +74,7 @@ public class LightningShot : Skill
         //    Managers.Sound.Play("Skill/CollavoBlackholeHit");
         //}
         //Managers.Effect.Stop(ps1);
-
+        //ParticleSystem psUI = Managers.Effect.Play(Define.Effect.ArcherMageUIEffect, 1.0f, gameObject.transform);
         Managers.Coroutine.Run(LightningShotCollavoCoroutine());
 
         yield return new WaitForSeconds(0.1f);
@@ -102,6 +102,7 @@ public class LightningShot : Skill
 
     IEnumerator LightningShotCollavoCoroutine()
     {
+        ParticleSystem psUI = Managers.Effect.Play(Define.Effect.ArcherMageUIEffect, 1.0f, gameObject.transform);
         ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.CollavoBlackHole, 2.0f, gameObject.transform);
         ps1.transform.position = transform.position;
         //ps1.Play();
