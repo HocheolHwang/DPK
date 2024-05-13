@@ -176,6 +176,8 @@ public class Define
         Gravity02,
         SparkleMissileGreen,
         ArcherMageUIEffect,
+        WarriorMageUIEffect,
+        WarriorArcherUIEffect,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         // ------------------------ Ipris ------------------------------
