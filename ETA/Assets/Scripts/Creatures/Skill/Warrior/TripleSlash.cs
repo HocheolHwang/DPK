@@ -25,7 +25,7 @@ public class TripleSlash : Skill
         _animator.CrossFade("JUMPATTACK1", 0.05f);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.TripleSlash1, 0.0f, transform);
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, true);
+        hitbox.SetUp(transform, Damage);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
         yield return new WaitForSeconds(0.15f);
@@ -36,7 +36,7 @@ public class TripleSlash : Skill
         ps = Managers.Effect.Play(Define.Effect.TripleSlash2, 0.0f, transform);
         Managers.Sound.Play("Skill/RSkill");
         hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, true);
+        hitbox.SetUp(transform, Damage);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
         yield return new WaitForSeconds(0.15f);
@@ -47,13 +47,12 @@ public class TripleSlash : Skill
         if (_controller.SkillSlot.PreviousSkill is DoubleSlash)
         {
             Managers.Coroutine.Run(TelekineticSwordsCoroutine());
-            _controller.SkillSlot.PreviousSkill = this;
         }
         yield return new WaitForSeconds(0.4f);
         ps = Managers.Effect.Play(Define.Effect.TripleSlash3, 0.0f, transform);
         Managers.Sound.Play("Skill/RSkill");
         hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, true);
+        hitbox.SetUp(transform, Damage);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
         yield return new WaitForSeconds(0.05f);
