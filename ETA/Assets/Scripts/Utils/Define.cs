@@ -87,6 +87,7 @@ public class Define
         Shellfish,
         // ------------------- 보스 몬스터 -----------------------
         FlowerDryad,
+        Whale,
         KnightG,
         MummyMan,
         MummyManWarrior,
