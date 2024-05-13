@@ -157,7 +157,6 @@ public class Define
         WindBall,
         FlowerDryadAttack,
         FlowerDryad_CounterAttack,
-        CycloneUIEffect,
         LightningShot,
         ArrowShower,
         RapidArrowHit,
@@ -172,6 +171,7 @@ public class Define
         Gravity01,
         Gravity02,
         SparkleMissileGreen,
+        ArcherMageUIEffect,
         MaxCount
     }
 }
