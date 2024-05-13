@@ -57,12 +57,12 @@ namespace IprisStateItem
         {
             if (_detector.Target == null)
             {
-                Debug.Log("CHASE TO IDLE");
+                //Debug.Log("CHASE TO IDLE");
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
             else if (_detector.Target != null && _detector.IsArriveToTarget())
             {
-                Debug.Log("CHASE TO IDLE_BATTLE");
+                //Debug.Log("CHASE TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
             else
@@ -98,7 +98,7 @@ namespace IprisStateItem
         {
             if (!_detector.IsArriveToTarget())
             {
-                Debug.Log("IDLE_BATTLE TO IDLE");
+                //Debug.Log("IDLE_BATTLE TO IDLE");
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
             else if (_controller.BuffTime >= _controller.ThreadHoldBuff)
@@ -264,6 +264,8 @@ namespace IprisStateItem
             InitTime(_animData.CounterEnableAnim.length);
             _animator.SetFloat("CounterEnableSpeed", 0.5f);
             _animator.CrossFade(_animData.CounterEnableParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.CounterEnable);
         }
 
         public override void Execute()
@@ -301,6 +303,8 @@ namespace IprisStateItem
             InitTime(_animData.CounterAttackAnim.length);
             _animator.SetFloat("CounterAttackSpeed", 0.5f);
             _animator.CrossFade(_animData.CounterAttackParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.CounterAttack);
         }
 
         public override void Execute()

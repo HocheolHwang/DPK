@@ -5,6 +5,8 @@ using UnityEngine;
 enum EIprisPattern
 {
     BUFF,
+    CounterEnable,
+    CounterAttack,
     MAX_LEN,
 }
 

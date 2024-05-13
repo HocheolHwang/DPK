@@ -175,6 +175,8 @@ public class Define
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         Ipris_Shield,
+        Ipris_CounterAttack,
+        Ipris_CounterAttackExplo,
         // ------------------------ Ipris ------------------------------
         MaxCount
     }
