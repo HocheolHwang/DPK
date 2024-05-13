@@ -6,7 +6,7 @@ public class ChargeArrow : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(15);
+        SetCoolDownTime(13);
         Damage = 50;
         base.Init();
         SkillType = Define.SkillType.Immediately;
@@ -16,8 +16,9 @@ public class ChargeArrow : Skill
 
     public override IEnumerator StartSkillCast()
     {
-        _animator.CrossFade("SKILL1", 0.1f);
-        yield return new WaitForSeconds(0.5f);
+        _animator.CrossFade("HOLD", 0.1f);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.ChargeArrowCharge, 1.0f, gameObject.transform);
+        yield return new WaitForSeconds(1.0f);
         
         Managers.Coroutine.Run(ChargeArrowCoroutine());
 
@@ -28,6 +29,8 @@ public class ChargeArrow : Skill
 
     IEnumerator ChargeArrowCoroutine()
     {
+        _animator.CrossFade("HOLDATTACK", 0.1f);
+        yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/WindBlast");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage, -1, false);
