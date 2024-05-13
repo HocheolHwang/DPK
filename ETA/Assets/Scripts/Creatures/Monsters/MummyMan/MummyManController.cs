@@ -60,8 +60,8 @@ public class MummyManController : BaseMonsterController
     private SummonSkill _summonSkill;
     public MummyManAnimationData AnimData { get => _animData; }
     public SummonSkill SummonSkill { get => _summonSkill; }
-
     public Action OnBossDestroyed;
+    public static event Action OnMummyDestroyed;
 
     protected override void Awake()
     {
@@ -117,6 +117,7 @@ public class MummyManController : BaseMonsterController
     {
         // 보스몬스터 죽었을때 이벤트 발생
         OnBossDestroyed?.Invoke();
+        OnMummyDestroyed?.Invoke();
 
         base.DestroyEvent();
     }
