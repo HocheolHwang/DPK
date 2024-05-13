@@ -116,6 +116,7 @@ public class Define
         AuraChargeGreen,
         AuraChargeRed,
         FlashLight,
+        QuickFreeze,
         Thunder1,
         Thunder2,
         SpikeIce,
