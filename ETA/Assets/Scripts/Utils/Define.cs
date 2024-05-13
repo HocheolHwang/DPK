@@ -172,6 +172,9 @@ public class Define
         Gravity02,
         SparkleMissileGreen,
         ArcherMageUIEffect,
+        // ------------------------ Ipris ------------------------------
+        Ipris_Buff,
+        // ------------------------ Ipris ------------------------------
         MaxCount
     }
 }

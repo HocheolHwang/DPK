@@ -1,3 +1,4 @@
+using MummyManStateItem;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,9 +55,9 @@ namespace MummyBufferStateItem
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            if (_buffTime >= _threadHoldBuff)
+            if (_controller.BuffTime >= _controller.ThreadHoldBuff)
             {
-                _controller.ChangeState(_controller.BUFF_STATE);
+                _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
             }
 
             if (IsStayForSeconds())
@@ -155,6 +156,47 @@ namespace MummyBufferStateItem
     }
     #endregion
 
+    // -------------------------------------- COUNTER ENABLE ------------------------------------------------
+    #region COUNTER ENABLE
+    public class CounterEnableState : MummyBufferState
+    {
+        public CounterEnableState(MummyBufferController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToCounterEnableState();
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.CounterEnableAnim.length);
+            _animator.SetFloat("CounterEnableSpeed", 0.25f);
+            _animator.CrossFade(_animData.CounterEnableParamHash, 0.1f);
+
+            StartCast((int)EBufferPattern.CounterEnable);
+        }
+
+        public override void Execute()
+        {
+            if (PhotonNetwork.IsMasterClient == false) return;
+            _animTime += Time.deltaTime;
+
+            if (_controller.IsHitCounter)
+            {
+                _controller.ChangeState(_controller.GROGGY_STATE);
+            }
+            else if (_animTime >= _threadHold * 4.0f)
+            {
+                _controller.ChangeState(_controller.BUFF_STATE);
+            }
+        }
+        public override void Exit()
+        {
+            _controller.BuffTime = 0;
+        }
+    }
+    #endregion
+
     // -------------------------------------- BUFF ------------------------------------------------
     #region BUFF
     public class BuffState : MummyBufferState
@@ -186,7 +228,56 @@ namespace MummyBufferStateItem
 
         public override void Exit()
         {
-            _buffTime = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- GLOBAL_GROGGY ------------------------------------------------
+    #region GROGGY
+    public class GroggyState : MummyBufferState
+    {
+        ParticleSystem ps;
+        float groggyTime = 0f;
+
+        public GroggyState(MummyBufferController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
+
+            if (_controller.PrevState is CounterEnableState)
+            {
+                groggyTime = 3.0f;
+                ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
+                ps.transform.SetParent(_controller.transform);
+                ps.transform.localPosition = new Vector3(0, 1.0f, 0);
+
+                ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
+                ps.transform.SetParent(_controller.transform);
+                ps.transform.position = new Vector3(0, 2.0f, 0);
+            }
+            else
+            {
+                groggyTime = 0;
+            }
+
+            _agent.velocity = Vector3.zero;
+            _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            if (PhotonNetwork.IsMasterClient == false) return;
+            if (IsStayForSeconds(groggyTime))
+            {
+                _controller.ChangeState(_controller.IDLE_STATE);
+            }
+        }
+        public override void Exit()
+        {
         }
     }
     #endregion
@@ -226,7 +317,7 @@ namespace MummyBufferStateItem
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            _buffTime += Time.deltaTime;
+            _controller.BuffTime += Time.deltaTime;
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;

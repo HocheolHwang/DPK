@@ -8,6 +8,7 @@ using Photon.Pun;
 
 public class MummyWarriorController : BaseMonsterController
 {
+    #region STATE
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
@@ -15,6 +16,15 @@ public class MummyWarriorController : BaseMonsterController
     public State WIND_MILL_STATE;
     public State DIE_STATE;
     public State GLOBAL_STATE;
+    #endregion
+
+    #region STATE VARIABLE
+    [SerializeField] private float _windMillTime;
+    private const float _threadHoldWindMill = 15.0f;
+
+    public float WindMillTime { get => _windMillTime; set => _windMillTime = value; }
+    public float ThreadHoldWindMill { get => _threadHoldWindMill; }
+    #endregion
 
     private MummyWarriorAnimationData _animData;
     public MummyWarriorAnimationData AnimData { get => _animData; }

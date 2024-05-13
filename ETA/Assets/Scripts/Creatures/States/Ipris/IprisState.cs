@@ -4,6 +4,7 @@ using UnityEngine;
 
 enum EIprisPattern
 {
+    BUFF,
     MAX_LEN,
 }
 

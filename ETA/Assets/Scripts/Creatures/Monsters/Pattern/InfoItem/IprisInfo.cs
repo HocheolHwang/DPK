@@ -5,6 +5,7 @@ using UnityEngine;
 
 /// <summary>
 /// Pattern DMG( ATK: 공격력, P_ATK: 패턴 공격력 )
+/// BUFF: 영구적인 증가 버프 - ATK+2, DEF+1, Shield( hp 15% )
 /// </summary>
 public class IprisInfo : PatternInfo
 {
@@ -12,6 +13,6 @@ public class IprisInfo : PatternInfo
     {
         base.Init();
 
-        //PatternList.Add(gameObject.GetOrAddComponent<AutoAttack>());
+        PatternList.Add(gameObject.GetOrAddComponent<IprisBuff>());
     }
 }

@@ -11,13 +11,25 @@ public class MummyBufferController : BaseMonsterController
     [Header("RightHand")]
     [SerializeField] public GameObject StoneSpawned;
 
+    #region STATE
     public State IDLE_STATE;
     public State IDLE_BATTLE_STATE;
     public State CHASE_STATE;
     public State ATTACK_STATE;
+    public State COUNTER_ENABLE_STATE;
     public State BUFF_STATE;
+    public State GROGGY_STATE;
     public State DIE_STATE;
     public State GLOBAL_STATE;
+    #endregion
+
+    #region STATE VARIABLE
+    [SerializeField] private const float _threadHoldBuff = 12.0f;
+    private float _buffTime = _threadHoldBuff - 2.0f;
+
+    public float BuffTime { get => _buffTime; set => _buffTime = value; }
+    public float ThreadHoldBuff { get => _threadHoldBuff; }
+    #endregion
 
     private MummyBufferAnimationData _animData;
     public MummyBufferAnimationData AnimData { get => _animData; }
@@ -51,6 +63,9 @@ public class MummyBufferController : BaseMonsterController
         BUFF_STATE = new BuffState(this);
         DIE_STATE = new DieState(this);
         GLOBAL_STATE = new GlobalState(this);
+
+        COUNTER_ENABLE_STATE = new CounterEnableState(this);
+        GROGGY_STATE = new GroggyState(this);
 
         _stateMachine.SetGlobalState(GLOBAL_STATE);
 
@@ -122,6 +137,26 @@ public class MummyBufferController : BaseMonsterController
     void RPC_ChangeToBuffState()
     {
         ChangeState(BUFF_STATE);
+    }
+
+    public void ChangeToCounterEnableState()
+    {
+        photonView.RPC("RPC_ChangeToCounterEnableState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToCounterEnableState()
+    {
+        ChangeState(COUNTER_ENABLE_STATE);
+    }
+
+    public void ChangeToGroggyState()
+    {
+        photonView.RPC("RPC_ChangeToGroggyState", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ChangeToGroggyState()
+    {
+        ChangeState(GROGGY_STATE);
     }
 
 
