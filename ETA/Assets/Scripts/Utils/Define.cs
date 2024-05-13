@@ -149,6 +149,7 @@ public class Define
         TripleSlash1,
         TripleSlash2,
         TripleSlash3,
+        ThrowingShield,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
