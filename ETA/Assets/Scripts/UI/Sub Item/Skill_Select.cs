@@ -30,9 +30,6 @@ public class Skill_Select : MonoBehaviour
         { 4, new Image[6] },
     };
 
-    // 공용 스킬 이미지
-    private Image[] commonSkillIcons = new Image[12];
-
 
     // --------------- 스킬 슬롯 ---------------
 
@@ -56,24 +53,18 @@ public class Skill_Select : MonoBehaviour
         // --------------- 스킬 목록 ---------------
 
         // 스킬 계열 텍스트 오브젝트 연결
-        for (int i = 0; i < 4; i++)
-        {
-            skillCategoryTexts[i] = GameObject.Find($"Category_{i + 1}_Skill_Text").GetComponent<TMP_Text>();
-        }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    skillCategoryTexts[i] = GameObject.Find($"Category_{i + 1}_Skill_Text").GetComponent<TMP_Text>();
+        //}
 
-        // 계열별 스킬 이미지 오브젝트 연결
+        // 스킬 이미지 오브젝트 연결
         for (int category = 1; category <= 4; category++)
         {
             for (int i = 0; i < 6; i++)
             {
                 categorySkillIconsByCategory[category][i] = GameObject.Find($"Category_{category}_Skill_{i + 1}").GetComponent<Image>();
             }
-        }
-
-        // 공용 스킬 이미지 오브젝트 연결
-        for (int i = 0; i < 12; i++)
-        {
-            commonSkillIcons[i] = GameObject.Find($"Common_Skill_{i + 1}").GetComponent<Image>();
         }
 
 
