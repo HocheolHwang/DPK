@@ -190,6 +190,7 @@ public class Define
         ScatterArrow,
         WindBlast,
         ChargeArrow,
+        ChargeArrowCharge,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         // ------------------------ Ipris ------------------------------
