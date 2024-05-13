@@ -356,7 +356,8 @@ namespace IprisStateItem
 
             InitTime(_animData.PatternTwoAnim.length);
             rushTime = CalcTimeToDest(_controller.DestPos);
-            animSpeed = rushTime / _threadHold;
+            animSpeed = _threadHold / rushTime - 0.05f;
+            Debug.Log($"rushTime: {rushTime} | threadHold: {_threadHold} | animSpeed: {animSpeed}");
 
             _animator.SetFloat("PatternTwoSpeed", animSpeed);
             _animator.CrossFade(_animData.PatternTwoParamHash, 0.1f);
@@ -368,7 +369,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
-            if (Vector3.Distance(_controller.transform.position, _controller.DestPos) <= 2.0f)
+            if (Vector3.Distance(_controller.transform.position, _controller.DestPos) <= 3.0f)
             {
                 _agent.velocity = Vector3.zero;
             }

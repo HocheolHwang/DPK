@@ -8,7 +8,7 @@ public class IprisCounterAttack : Pattern
     [SerializeField] float _forwardPos = 1.0f;
     [SerializeField] float _upPos = 1.5f;
     [SerializeField] float _duration = 2.0f;
-    [SerializeField] float _speed = 15.0f;
+    [SerializeField] float _speed = 20.0f;
     [SerializeField] float _hitboxRadius = 1.5f;
 
     private int penetration = 2;
@@ -57,14 +57,24 @@ public class IprisCounterAttack : Pattern
 
             if (hitbox.Penetration == 0)
             {
+                Managers.Resource.Destroy(hitbox.gameObject);
+                Managers.Effect.Stop(ps);
+
                 // hit event를 여기서 실행시키면 됨
                 // Stop Action -> Destroy
                 ParticleSystem hitPs = Managers.Effect.Play(Define.Effect.Ipris_CounterAttackExplo, 0);
                 hitPs.transform.localScale += new Vector3(2.5f, 2.5f, 2.5f);
                 hitPs.transform.position = ps.transform.position;
 
-                Managers.Resource.Destroy(hitbox.gameObject);
-                Managers.Effect.Stop(ps);
+                HitBox exploHitBox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
+                exploHitBox.SetUp(transform, _patternDmg);
+                exploHitBox.GetComponent<SphereCollider>().radius = 2.8f;
+                exploHitBox.transform.rotation = _controller.transform.rotation;
+                exploHitBox.transform.position = hitPs.transform.position;
+
+                yield return new WaitForSeconds(0.15f);
+                Managers.Resource.Destroy(exploHitBox.gameObject);
+
                 yield break;
             }
 
