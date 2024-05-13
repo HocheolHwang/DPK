@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4798605234374934}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TailR1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4431805505048758}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4088283864085412}
   - component: {fileID: 137707411344732468}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Whale
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,9 +178,16 @@ GameObject:
   - component: {fileID: 904200664427190479}
   - component: {fileID: 4171724431710518997}
   - component: {fileID: 6819262688761465441}
-  m_Layer: 0
+  - component: {fileID: 9189452786261739989}
+  - component: {fileID: 5551145060887601936}
+  - component: {fileID: 4499055106248705603}
+  - component: {fileID: 5825911747063442825}
+  - component: {fileID: 6082308460127156374}
+  - component: {fileID: 6326044683781910711}
+  - component: {fileID: 1603364930976069089}
+  m_Layer: 7
   m_Name: Whale_three
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -293,6 +300,127 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &9189452786261739989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134410468473764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 006e1cd82b30fb94db1773ff188528c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleParamName: IDLE
+  chaseParamName: CHASE
+  attackParamName: ATTACK
+  dieParamName: DIE
+  attackAnim: {fileID: 7400000, guid: 55caf94400bc82247ab7fec81162d70e, type: 3}
+  groggyParamName: GROGGY
+  counterEnableParamName: COUNTER_ENABLE
+  counterAttackParamName: COUNTER_ATTACK
+  counterEnableAnim: {fileID: 7400000, guid: cd70e16669349be40ba6da290031947e, type: 3}
+  counterAttackAnim: {fileID: 7400000, guid: 1dbc3b6490db904409bcf2697a3c3e04, type: 3}
+--- !u!114 &5551145060887601936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134410468473764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c734d54b9bceb468fb8d69474ad0bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
+  UnitType: 14
+  Animator: {fileID: 0}
+  Agent: {fileID: 0}
+  Stat: {fileID: 0}
+  _isHitCounter: 0
+--- !u!114 &4499055106248705603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134410468473764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee81152ef09fb14bb6d8decaa883507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHp: 150
+  _hp: 150
+  _moveSpeed: 5
+  _attackDamage: 20
+  _defense: 3
+  _shield: 0
+--- !u!114 &5825911747063442825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134410468473764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f251232eea01f0942a2b1542720c0528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6082308460127156374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134410468473764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8864a00e17feed24d92c776a1f67e8e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6326044683781910711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134410468473764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1603364930976069089}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1603364930976069089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134410468473764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1175630428728328
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +430,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4636921680425756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FinL1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4124645406038640}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spine3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4896035988471456}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +526,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4756195209101328}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spine4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +559,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4148953543078004}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4706731609592636}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FinR1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4252548343606748}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +657,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4263400685521540}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TailL2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,7 +688,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4628203409332558}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +719,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4935901973261410}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FinR2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -622,7 +750,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4048385486008778}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -655,7 +783,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4112952905748180}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FinL2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -686,7 +814,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4117487108070926}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TailR2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,7 +845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4152915972466558}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TailL1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
