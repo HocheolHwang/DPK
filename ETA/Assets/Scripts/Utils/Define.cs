@@ -185,6 +185,7 @@ public class Define
         WarriorMageUIEffect,
         WarriorArcherUIEffect,
         ScatterArrow,
+        WindBlast,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         // ------------------------ Ipris ------------------------------

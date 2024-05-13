@@ -10,7 +10,7 @@ public class ArrowStab : Skill
         Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Immediately;
-        skillRange = new Vector3(1, 3, 8);
+        skillRange = new Vector3(3, 3, 8);
         //skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Archer/ArrowStab.png");
     }
 
