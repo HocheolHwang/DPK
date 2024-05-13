@@ -34,8 +34,10 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                transform.position = _player.transform.position + _delta;
-                transform.LookAt(_player.transform);
+                transform.position = new Vector3(_player.transform.position.x, 1.0f, 0) + _delta;
+                //transform.LookAt(_player.gameObject.transform);
+                transform.LookAt(new Vector3(_player.transform.position.x, 1.0f, 0) + Vector3.right * 4);
+
             }
         }
 
