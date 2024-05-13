@@ -183,6 +183,7 @@ public class Define
         ArcherMageUIEffect,
         WarriorMageUIEffect,
         WarriorArcherUIEffect,
+        ScatterArrow,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         // ------------------------ Ipris ------------------------------
