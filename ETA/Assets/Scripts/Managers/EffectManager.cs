@@ -55,6 +55,24 @@ public class EffectManager
         return ps;
     }
 
+    public ParticleSystem ContinuePlay(Define.Effect effect, Transform starter = null)
+    {
+        GameObject original = _effectPrefabs[(int)effect];
+        GameObject go = Managers.Resource.Instantiate($"Effect/{original.name}");
+
+        if (starter != null)
+        {
+            go.transform.position = starter.position + starter.transform.up;
+            go.transform.rotation = starter.rotation * _effectQuaternion[(int)effect];
+        }
+
+        ParticleSystem ps = go.GetComponent<ParticleSystem>();
+
+        ps.Play();
+
+        return ps;
+    }
+
     IEnumerator StopEffect(ParticleSystem ps, float duration)
     {
         yield return new WaitForSeconds(duration);

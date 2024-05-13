@@ -174,6 +174,7 @@ public class Define
         SparkleMissileGreen,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
+        Ipris_Shield,
         // ------------------------ Ipris ------------------------------
         MaxCount
     }

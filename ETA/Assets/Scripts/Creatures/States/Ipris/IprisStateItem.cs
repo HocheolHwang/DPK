@@ -149,6 +149,8 @@ namespace IprisStateItem
 
             InitTime(_animData.BuffAnim.length);
             _animator.CrossFade(_animData.BuffParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.BUFF);
         }
 
         public override void Execute()
@@ -156,7 +158,7 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
-                Debug.Log("BUFF TO IDLE_BATTLE");
+                //Debug.Log("BUFF TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }

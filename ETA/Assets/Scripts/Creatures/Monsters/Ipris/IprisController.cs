@@ -30,9 +30,9 @@ public class IprisController : BaseMonsterController
     [SerializeField] private float _counterTime;
     private const float _threadHoldCounter = 11.0f;       // 11초
     [SerializeField] private float _buffTime;
-    private const float _threadHoldBuff = 30.0f;          // 30초
+    private const float _threadHoldBuff = 15.0f;          // 15초
     [SerializeField] private float _patternTwoTime;       
-    private const float _threadHoldPatternTwo = 20.0f;    // 20초
+    private const float _threadHoldPatternTwo = 21.0f;    // 21초
     [SerializeField] private float _windMillCnt;
     [SerializeField] private int _patternOneCnt;          // HP가 MAX_HP의 절반
     private int _threadHoldPatternOne = 1;                // 1번만 수행
