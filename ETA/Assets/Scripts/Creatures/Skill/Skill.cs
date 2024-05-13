@@ -53,6 +53,9 @@ public abstract class Skill : MonoBehaviour
     {
         _lastExcuteTime = Time.time;
         _currentCoroutine = Managers.Coroutine.Run(StartSkillCast());
+
+
+        
     }
 
     public void CollavoCast()
@@ -81,6 +84,10 @@ public abstract class Skill : MonoBehaviour
 
     public void ChangeToPlayerMoveState()
     {
+        if (this is not WarriorNormalAttackSkill && this is not ArcherNormalAttackSkill && this is not MageNormalAttackSkill)
+        {
+            _controller.SkillSlot.PreviousSkill = this;
+        }
         if (_controller.photonView.IsMine) _controller.ChangeState(_controller.MOVE_STATE);
     }
 
