@@ -5,13 +5,10 @@ using UnityEngine;
 public class IprisPatternOneAttack : Pattern
 {
     [Header("개발 편의성")]
-    [SerializeField] float _hitboxRadius = 2.5f;
     [SerializeField] float _spreadInitRadius = 2.0f;
     [SerializeField] float _upPos = 1.5f;
     [SerializeField] float _expandSpeed = 40f;
     [SerializeField] float _duration = 0.4f;
-
-    IprisAnimationData _animData;
 
     public override void Init()
     {

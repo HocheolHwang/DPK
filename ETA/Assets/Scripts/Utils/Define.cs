@@ -184,6 +184,8 @@ public class Define
         Ipris_CounterAttack,
         Ipris_CounterAttackExplo,
         Ipris_PatternOneAttack,
+        Ipris_PatternTwo,
+        Ipris_BackPos,
         // ------------------------ Ipris ------------------------------
         MaxCount
     }

@@ -60,7 +60,7 @@ public class IprisCounterAttack : Pattern
                 // hit event를 여기서 실행시키면 됨
                 // Stop Action -> Destroy
                 ParticleSystem hitPs = Managers.Effect.Play(Define.Effect.Ipris_CounterAttackExplo, 0);
-                hitPs.transform.localScale += new Vector3(1.5f, 1.5f, 1.5f);
+                hitPs.transform.localScale += new Vector3(2.5f, 2.5f, 2.5f);
                 hitPs.transform.position = ps.transform.position;
 
                 Managers.Resource.Destroy(hitbox.gameObject);

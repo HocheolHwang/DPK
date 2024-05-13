@@ -25,7 +25,6 @@ namespace IprisStateItem
             if (_detector.Target != null)
             {
                 Debug.Log("IDLE TO CHASE");
-                _controller.MeetPlayer = true;
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
         }
@@ -50,6 +49,8 @@ namespace IprisStateItem
         {
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
+
+            _controller.MeetPlayer = true;
         }
 
         public override void Execute()
@@ -333,36 +334,60 @@ namespace IprisStateItem
     #region PATTERN_TWO
     public class PatternTwoState : IprisState
     {
+        float animSpeed;
+        float tempStopDist;
+        float rushTime;
+
         public PatternTwoState(IprisController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
-            _agent.velocity = Vector3.zero;
             _controller.WindMillCnt++;
 
+            // 돌진에 대한 세팅
+            _controller.StartPos = _controller.transform.position;
+            _controller.DestPos = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
+            tempStopDist = _agent.stoppingDistance;
+            _agent.stoppingDistance = 0;
+            _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
+
+
             InitTime(_animData.PatternTwoAnim.length);
-            _animator.SetFloat("PatternTwoSpeed", 0.5f);
+            rushTime = CalcTimeToDest(_controller.DestPos);
+            animSpeed = rushTime / _threadHold;
+
+            _animator.SetFloat("PatternTwoSpeed", animSpeed);
             _animator.CrossFade(_animData.PatternTwoParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.PatternTwo);
+
+            _agent.SetDestination(_controller.DestPos);
         }
 
         public override void Execute()
         {
-            _animTime += Time.deltaTime;
-            if (_animTime >= (_threadHold * 2.0f) && _controller.WindMillCnt >= _controller.ThreadHoldWindMill)
+            if (Vector3.Distance(_controller.transform.position, _controller.DestPos) <= 2.0f)
+            {
+                _agent.velocity = Vector3.zero;
+            }
+            if (IsStayForSeconds(rushTime) && _controller.WindMillCnt >= _controller.ThreadHoldWindMill)
             {
                 //Debug.Log("PATTERN_TWO TO WIND_MILL");
                 _controller.ChangeState(_controller.PATTERN_TWO_WINDMILL_STATE);
             }
-            else if (_animTime >= (_threadHold * 2.0f))
+            else if (IsStayForSeconds(rushTime))
             {
-                //Debug.Log("PATTERN_TWO TO IDLE_BATTLE");
-                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+                //Debug.Log("PATTERN_TWO TO BACK_POSITION");
+                _controller.ChangeState(_controller.BACK_POSITION_STATE); 
             }
         }
         public override void Exit()
         {
+            _agent.ResetPath();
+            _agent.stoppingDistance = tempStopDist;
+            _agent.speed = _controller.Stat.MoveSpeed;
             _controller.PatternTwoTime = 0;
         }
     }
@@ -391,12 +416,49 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= (_threadHold * 2.0f))
             {
-                //Debug.Log("PATTERN_TWO_WINDMILL TO IDLE_BATTLE");
+                //Debug.Log("PATTERN_TWO_WINDMILL TO BACK_POSITION");
+                _controller.ChangeState(_controller.BACK_POSITION_STATE);
+            }
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- BACK_POSITION ------------------------------------------------
+    #region BACK_POSITION
+    public class BackPositionState : IprisState
+    {
+        public BackPositionState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            _agent.enabled = false;
+
+            _controller.DestPos = _controller.StartPos;
+
+            _animator.CrossFade(_animData.IdleBattleParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            // N초 뒤에 IDLE_BATTLE 상태로 전환
+            if (IsStayForSeconds(1.0f))
+            {
+                // EFFECT, SOUND
+                Managers.Effect.Play(Define.Effect.Ipris_BackPos, 0, _controller.transform);
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
         public override void Exit()
         {
+            // 원래 자리로 돌아가기
+            _controller.transform.position = _controller.DestPos;
+            _agent.enabled = true;
         }
     }
     #endregion
