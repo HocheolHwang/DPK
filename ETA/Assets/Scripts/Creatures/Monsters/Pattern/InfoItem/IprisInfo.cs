@@ -11,6 +11,7 @@ using UnityEngine;
 /// PATTERN_ONE_STRONG_ATTACK: [ ATK + P_ATK(50) ] * 3번
 /// COUNTER_ATTACK: ATK + P_ATK(100)
 /// PATTERN_TWO: ATK + P_ATK(50)
+/// PATTERN_TWO_WindMill: [ ATK + P_ATK(50) ] * 2번
 /// </summary>
 public class IprisInfo : PatternInfo
 {
@@ -25,5 +26,6 @@ public class IprisInfo : PatternInfo
         PatternList.Add(gameObject.GetOrAddComponent<IprisCounterEnable>());
         PatternList.Add(gameObject.GetOrAddComponent<IprisCounterAttack>());
         PatternList.Add(gameObject.GetOrAddComponent<IprisPatternTwo>());
+        PatternList.Add(gameObject.GetOrAddComponent<IprisPatternTwoWindMill>());
     }
 }

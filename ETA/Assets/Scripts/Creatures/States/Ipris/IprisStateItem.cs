@@ -409,6 +409,8 @@ namespace IprisStateItem
             InitTime(_animData.PatternTwoWindMillAnim.length);
             _animator.SetFloat("WindMillSpeed", 0.5f);
             _animator.CrossFade(_animData.PatternTwoWindMillParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.PatternTwoWindMill);
         }
 
         public override void Execute()

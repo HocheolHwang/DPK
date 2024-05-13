@@ -11,6 +11,7 @@ enum EIprisPattern
     CounterEnable,
     CounterAttack,
     PatternTwo,
+    PatternTwoWindMill,
     MAX_LEN,
 }
 
