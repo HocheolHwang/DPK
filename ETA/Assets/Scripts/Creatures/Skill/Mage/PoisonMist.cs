@@ -36,7 +36,7 @@ public class PoisonMist : Skill
         for (int i = 0; i < 20; i++)
         {
             HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-            hitbox.SetUp(transform, Damage, -1, true);
+            hitbox.SetUp(transform, Damage);
             hitbox.transform.position = targetPos;
             hitbox.transform.localScale = skillRange;
 

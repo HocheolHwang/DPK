@@ -119,6 +119,8 @@ public class Define
         AuraChargeRed,
         FlashLight,
         PoisonMist,
+        BubbleShot,
+        BubbleShotExplosion,
         QuickFreeze,
         Thunder1,
         Thunder2,
