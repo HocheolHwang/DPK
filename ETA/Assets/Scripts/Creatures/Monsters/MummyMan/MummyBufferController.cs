@@ -43,6 +43,7 @@ public class MummyBufferController : BaseMonsterController
 
     protected override void Start()
     {
+        base.Start();
         ChangeState(IDLE_STATE);
     }
 
