@@ -18,7 +18,7 @@ public class Massacre : Skill
     {
         StartCoroutine(MassacreCoroutine());
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.2f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }
@@ -26,7 +26,7 @@ public class Massacre : Skill
     private IEnumerator MassacreCoroutine()
     {
         // 애니메이션과 이펙트 재생
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 8; i++)
         {
             Managers.Sound.Play("Skill/NormalAttack");
             Define.Effect effectName = (i % 2 == 0) ? Define.Effect.StoneSlash1 : Define.Effect.StoneSlash2;
@@ -42,9 +42,9 @@ public class Massacre : Skill
             HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
             hitbox.SetUp(transform, Damage);
             hitbox.transform.position = _skillSystem.TargetPosition + transform.forward * 1.5f;
-            hitbox.transform.localScale = skillRange;
+            hitbox.transform.localScale = new Vector3(2,2,2);
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.15f);
             Managers.Resource.Destroy(hitbox.gameObject);
         }
     }

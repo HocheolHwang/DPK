@@ -145,6 +145,11 @@ public class Define
         DarknessSlash,
         MagicMissileGreen,
         MagicMissileBlue,
+        DoubleSlash1,
+        DoubleSlash2,
+        TripleSlash1,
+        TripleSlash2,
+        TripleSlash3,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
@@ -177,6 +182,8 @@ public class Define
         Gravity02,
         SparkleMissileGreen,
         ArcherMageUIEffect,
+        WarriorMageUIEffect,
+        WarriorArcherUIEffect,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         // ------------------------ Ipris ------------------------------

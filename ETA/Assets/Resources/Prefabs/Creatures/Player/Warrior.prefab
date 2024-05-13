@@ -1470,8 +1470,8 @@ MonoBehaviour:
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 8
-    InterpolateLerpSpeed: 8
-    ExtrapolateOption: 2
+    InterpolateLerpSpeed: 10
+    ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
