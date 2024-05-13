@@ -449,10 +449,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee81152ef09fb14bb6d8decaa883507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
-  _hp: 100
+  _maxHp: 150
+  _hp: 150
   _moveSpeed: 3
-  _attackDamage: 3
+  _attackDamage: 15
   _defense: 0
   _shield: 0
 --- !u!114 &3530235324221318003
@@ -525,7 +525,6 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 7150282103821637403}
   - {fileID: 3186263045241259203}
   sceneViewId: 0
   InstantiationId: 0
