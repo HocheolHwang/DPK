@@ -80,7 +80,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     public void ChangeState(State newState, bool forceReset = false)
     {
         // controller의 curState를 계속 갱신할 수 있다.
-        if (photonView.IsMine == false) return;
         _curState = newState;
         _stateMachine.ChangeState(newState, forceReset);
     }
