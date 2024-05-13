@@ -23,6 +23,14 @@ public class MummyBufferController : BaseMonsterController
     public State GLOBAL_STATE;
     #endregion
 
+    #region STATE VARIABLE
+    private const float _threadHoldBuff = 12.0f;
+    private float _buffTime = _threadHoldBuff - 2.0f;
+
+    public float BuffTime { get => _buffTime; set => _buffTime = value; }
+    public float ThreadHoldBuff { get => _threadHoldBuff; }
+    #endregion
+
     private MummyBufferAnimationData _animData;
     public MummyBufferAnimationData AnimData { get => _animData; }
     public Action OnDeath;

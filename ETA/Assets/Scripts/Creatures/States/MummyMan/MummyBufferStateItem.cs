@@ -55,7 +55,7 @@ namespace MummyBufferStateItem
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            if (_buffTime >= _threadHoldBuff)
+            if (_controller.BuffTime >= _controller.ThreadHoldBuff)
             {
                 _controller.ChangeState(_controller.COUNTER_ENABLE_STATE);
             }
@@ -170,7 +170,7 @@ namespace MummyBufferStateItem
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.CounterEnableAnim.length);
-            _animator.SetFloat("CounterEnableSpeed", 0.5f);
+            _animator.SetFloat("CounterEnableSpeed", 0.25f);
             _animator.CrossFade(_animData.CounterEnableParamHash, 0.1f);
 
             StartCast((int)EBufferPattern.CounterEnable);
@@ -185,14 +185,14 @@ namespace MummyBufferStateItem
             {
                 _controller.ChangeState(_controller.GROGGY_STATE);
             }
-            else if (_animTime >= _threadHold * 2.0f)
+            else if (_animTime >= _threadHold * 4.0f)
             {
                 _controller.ChangeState(_controller.BUFF_STATE);
             }
         }
         public override void Exit()
         {
-            _buffTime = 0;
+            _controller.BuffTime = 0;
         }
     }
     #endregion
@@ -317,7 +317,7 @@ namespace MummyBufferStateItem
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            _buffTime += Time.deltaTime;
+            _controller.BuffTime += Time.deltaTime;
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;

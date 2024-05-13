@@ -19,7 +19,7 @@ public class MummyBufferCounterEnable : Pattern
         base.Init();
         _animData = _controller.GetComponent<MummyBufferAnimationData>();
         _mcontroller = _controller.GetComponent<MummyBufferController>();
-        _duration = _animData.CounterEnableAnim.length * 2.0f;
+        _duration = _animData.CounterEnableAnim.length * 4.0f;
 
         _createTime = 0.1f;
         _patternRange = _hitboxRange;
@@ -42,7 +42,7 @@ public class MummyBufferCounterEnable : Pattern
         _ps = Managers.Effect.Play(Define.Effect.CounterEnable, 0, _controller.transform);
         _ps.transform.position = _hitbox.transform.position;
         ParticleSystem.MainModule _psMainModule = _ps.main;
-        _psMainModule.startLifetime = _animData.CounterEnableAnim.length * 2.0f;
+        _psMainModule.startLifetime = _animData.CounterEnableAnim.length * 4.0f;
 
         // 카운터 도중에 내는 소리
         Managers.Sound.Play("Monster/CounterEnergy_SND", Define.Sound.Effect);

@@ -48,9 +48,11 @@ public class BaseMonsterController : BaseController
         while (true)
         {
             yield return new WaitForSeconds(0.15f);
+            Debug.Log("Init Counter");
             // counter 맞고 0.15초 뒤에 맞았다는 상태를 초기화
             if (_isHitCounter)
             {
+                Debug.Log("HIT COUNTERRRRRRRRRRRRRRRRRR");
                 _isHitCounter = false;
             }
         }
