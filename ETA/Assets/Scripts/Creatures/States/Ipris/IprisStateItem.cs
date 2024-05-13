@@ -121,7 +121,7 @@ namespace IprisStateItem
                 //Debug.Log("IDLE_BATTLE TO PATTERN_TWO");
                 _controller.ChangeState(_controller.PATTERN_TWO_STATE);
             }
-            else if (IsStayForSeconds(1.0f))
+            else if (IsStayForSeconds(2.0f))
             {
                 //Debug.Log("IDLE_BATTLE TO ATTACK");
                 _controller.ChangeState(_controller.ATTACK_STATE);
@@ -478,6 +478,8 @@ namespace IprisStateItem
             _agent.velocity = Vector3.zero;
             InitTime(_animData.AttackFirstAnim.length + _animData.AttackSecondAnim.length);
             _animator.CrossFade(_animData.AttackParamHash, 0.2f);
+
+            StartCast((int)EIprisPattern.ATTACK);
         }
 
         public override void Execute()

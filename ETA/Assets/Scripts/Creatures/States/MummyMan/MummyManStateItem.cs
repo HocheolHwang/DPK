@@ -88,7 +88,7 @@ namespace MummyManStateItem
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-            else if (IsStayForSeconds())
+            else if (IsStayForSeconds(2.0f))
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
             }

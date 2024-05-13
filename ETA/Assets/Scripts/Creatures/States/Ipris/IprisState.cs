@@ -4,7 +4,7 @@ using UnityEngine;
 
 enum EIprisPattern
 {
-    BUFF,
+    BUFF                      = 0,
     PatternOneEnable,
     PatternOneAttack,
     PatternOneStrongAttack,
@@ -12,6 +12,7 @@ enum EIprisPattern
     CounterAttack,
     PatternTwo,
     PatternTwoWindMill,
+    ATTACK,
     MAX_LEN,
 }
 

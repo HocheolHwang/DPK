@@ -64,7 +64,7 @@ namespace KnightGStateItem
             {
                 _controller.ChangeState(_controller.TWO_SKILL_TRANSITION_STATE);
             } 
-            else if (IsStayForSeconds())
+            else if (IsStayForSeconds(2.0f))
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
             }
