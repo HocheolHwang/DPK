@@ -47,18 +47,19 @@ public class IprisPatternOneEnable : Pattern
         // 카운터 도중에 내는 소리
         Managers.Sound.Play("Monster/CounterEnergy_SND", Define.Sound.Effect);
 
-        // 시전 도중에 카운터 스킬을 맞으면 hit box가 사라진다
         float timer = 0;
+        bool isCounter = false;
         while (timer <= _duration)
         {
-            if (_icontroller.IsHitCounter)
+            if (_icontroller.IsHitCounter && !isCounter )
             {
-                Managers.Resource.Destroy(_hitbox.gameObject);
-                Managers.Sound.Play("Monster/CounterEnable_SND", Define.Sound.Effect);
-
                 ParticleSystem hitRedPs = Managers.Effect.Play(Define.Effect.CounteredEffect_Red, 1, _controller.transform);
                 hitRedPs.transform.SetParent(_controller.transform);
                 hitRedPs.transform.localPosition = new Vector3(0, 1.5f, 0);
+
+                Managers.Resource.Destroy(_hitbox.gameObject);
+                Managers.Sound.Play("Monster/CounterEnable_SND", Define.Sound.Effect);
+                isCounter = true;
             }
             timer += Time.deltaTime;
             yield return null;
