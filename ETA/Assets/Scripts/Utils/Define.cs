@@ -84,8 +84,10 @@ public class Define
         Puffe,
         Octopus,
         Planta,
+        Shellfish,
         // ------------------- 보스 몬스터 -----------------------
         FlowerDryad,
+        Whale,
         KnightG,
         MummyMan,
         MummyManWarrior,
@@ -140,6 +142,7 @@ public class Define
         MagicSphereBlue,
         DarknessSlash,
         MagicMissileGreen,
+        MagicMissileBlue,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
@@ -157,7 +160,6 @@ public class Define
         WindBall,
         FlowerDryadAttack,
         FlowerDryad_CounterAttack,
-        CycloneUIEffect,
         LightningShot,
         ArrowShower,
         RapidArrowHit,
@@ -172,6 +174,7 @@ public class Define
         Gravity01,
         Gravity02,
         SparkleMissileGreen,
+        ArcherMageUIEffect,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         // ------------------------ Ipris ------------------------------

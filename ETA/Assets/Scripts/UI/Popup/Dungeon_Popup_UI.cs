@@ -27,8 +27,9 @@ public class Dungeon_Popup_UI : UI_Popup
         // 던전 아이콘
         Tutorial_Icon,
         StarShardPlain_Icon,
+        ForgottenTemple_Icon,
         SeaOfAbyss_Icon,
-        DeepForest_Icon,
+        
 
         // 보스 상태
         Boss_Status,
@@ -282,8 +283,10 @@ public class Dungeon_Popup_UI : UI_Popup
         // 던전 아이콘 초기화를 반복문으로 처리
         for (int i = 0; i < dungeonIcons.Length; i++)
         {
+           
             // 던전 아이콘 배열 초기화
             dungeonIcons[i] = GetObject((int)GameObjects.Tutorial_Icon + i);
+            Debug.Log(dungeonIcons[i].gameObject.name);
         }
 
         // 던전 등급 및 이름 초기화
@@ -451,6 +454,7 @@ public class Dungeon_Popup_UI : UI_Popup
     {
         // 등록된 이벤트 핸들러 해제
         KnightGController.OnBossDestroyed -= HandleBossDestroyed;
+        MummyManController.OnMummyDestroyed -= HandleBossDestroyed;
         PlayerController.OnPlayerDestroyed -= HandlePlayerDestroyed;
 
         if (isTutorialScene)
@@ -537,6 +541,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 보스 파괴 이벤트 핸들러 등록
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
+        MummyManController.OnMummyDestroyed += HandleBossDestroyed;
     }
 
     // 파티원 정보 업데이트 메서드
