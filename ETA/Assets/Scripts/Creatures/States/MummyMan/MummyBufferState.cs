@@ -6,6 +6,7 @@ using UnityEngine;
 enum EBufferPattern
 {
     RangedAutoAttack = 0,
+    CounterEnable,
     Buff,
     MAX_LEN
 }

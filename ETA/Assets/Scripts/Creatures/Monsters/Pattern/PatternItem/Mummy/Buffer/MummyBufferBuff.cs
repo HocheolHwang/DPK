@@ -25,10 +25,10 @@ public class MummyBufferBuff : Pattern
         _patternRange = _hitboxRange;
 
         // Buff Stat
-        duration = 35.0f;       // effect 파괴 시간
-        buffDuration = 30.0f;   // effect 비활성화 시간 및 버프 효과 적용 시간
+        duration = 25.0f;       // effect 파괴 시간
+        buffDuration = 20.0f;   // effect 비활성화 시간 및 버프 효과 적용 시간
         upAmountATK = 10;
-        upAmountDEF = 5;
+        upAmountDEF = 500;
     }
 
     public override IEnumerator StartPatternCast()
