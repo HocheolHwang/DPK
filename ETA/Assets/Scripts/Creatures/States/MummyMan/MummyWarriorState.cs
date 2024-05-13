@@ -11,8 +11,6 @@ enum EMummyWarriorPattern
 
 public class MummyWarriorState : State
 {
-    protected static float _windMillTime;
-
     protected MummyWarriorController _controller;
     protected MummyWarriorAnimationData _animData;
 

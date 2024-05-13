@@ -39,7 +39,6 @@ namespace MummyWarriorStateItem
     #region IDLE_BATTLE
     public class IdleBattleState : MummyWarriorState
     {
-        private const float _threadHoldWindMill = 15.0f;
         public IdleBattleState(MummyWarriorController controller) : base(controller)
         {
         }
@@ -55,7 +54,7 @@ namespace MummyWarriorStateItem
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            if (_windMillTime >= _threadHoldWindMill)
+            if (_controller.WindMillTime >= _controller.ThreadHoldWindMill)
             {
                 _controller.ChangeState(_controller.WIND_MILL_STATE);
             }
@@ -185,7 +184,7 @@ namespace MummyWarriorStateItem
 
         public override void Exit()
         {
-            _windMillTime = 0;
+            _controller.WindMillTime = 0;
         }
     }
     #endregion
@@ -225,7 +224,7 @@ namespace MummyWarriorStateItem
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            _windMillTime += Time.deltaTime;
+            _controller.WindMillTime += Time.deltaTime;
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
