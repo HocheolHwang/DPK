@@ -2047,9 +2047,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7873254034507630141, guid: 8af508fbbf76c6c4fae6bcdf1902cf99, type: 3}
+      propertyPath: sceneViewId
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 478791863707027834, guid: 8af508fbbf76c6c4fae6bcdf1902cf99, type: 3}
       propertyPath: m_Name
       value: WindSpirit
+      objectReference: {fileID: 0}
+    - target: {fileID: 478791863707027834, guid: 8af508fbbf76c6c4fae6bcdf1902cf99, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1003970687329276864, guid: 8af508fbbf76c6c4fae6bcdf1902cf99, type: 3}
       propertyPath: m_LocalScale.x
@@ -2359,7 +2367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3360680965622305865, guid: ee1f75a9120a0494094143838a1883dd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3192,7 +3200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &6284607861086787022
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class WindSpirit : Skill
     {
         SetCoolDownTime(1);
         base.Init();
-        SkillType = Define.SkillType.Range;
+        SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
     }
 
