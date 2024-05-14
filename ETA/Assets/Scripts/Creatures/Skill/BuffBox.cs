@@ -11,21 +11,23 @@ public class BuffBox : MonoBehaviour
     private int _amount;
     private float _duration;
     private stat _stat;
-    public enum stat { Hp, Shield, Defense };
+    private String _target;
+    public enum stat { Hp, Shield, Defense, MoveSpeed, AttackDamage };
 
-    public void SetUp(Transform caster, int amount, stat stat, float duration = 1.0f)
+    public void SetUp(Transform caster, int amount, stat stat, float duration = 1.0f, String target = "Player")
     {
         _caster = caster;
         _amount = amount;
         _stat = stat;
         _duration = duration;
+        _target = target;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other == null) return;
 
-        if (_caster.gameObject.CompareTag("Player") && other.gameObject.CompareTag("Player"))
+        if (_caster.gameObject.CompareTag("Player") && other.gameObject.CompareTag(_target))
         {
             ApplyBuff(other);
         }
@@ -50,6 +52,12 @@ public class BuffBox : MonoBehaviour
                     other.GetComponent<IBuffStat>().RemoveShield(-_amount);
                 break;
             case stat.Defense:
+                if (_amount > 0)
+                    other.GetComponent<IBuffStat>().IncreaseDefense(_amount);
+                else if (_amount < 0)
+                    other.GetComponent<IBuffStat>().DecreaseDefense(-_amount);
+                break;
+            case stat.MoveSpeed:
                 if (_amount > 0)
                     other.GetComponent<IBuffStat>().IncreaseDefense(_amount);
                 else if (_amount < 0)

@@ -23,7 +23,7 @@ public class Character_Select : MonoBehaviour
     private TMP_Text characterDetailText;
     private TMP_Text characterClassText;
     private TMP_Text characterDifficultyText;
-    // private TMP_Text characterLevelText;
+    private TMP_Text characterLevelText;
     private TMP_Text hpText;
     private TMP_Text apText;
     private TMP_Text dpText;
@@ -84,7 +84,7 @@ public class Character_Select : MonoBehaviour
         characterDetailText = GameObject.Find("Character_Detail_Text").GetComponent<TMP_Text>();
         characterClassText = GameObject.Find("Character_Class_Text").GetComponent<TMP_Text>();
         characterDifficultyText = GameObject.Find("Character_Difficulty_Text").GetComponent<TMP_Text>();
-        // characterLevelText = GameObject.Find("Character_Level_Text").GetComponent<TMP_Text>();
+        characterLevelText = GameObject.Find("Character_Level_Text").GetComponent<TMP_Text>();
         hpText = GameObject.Find("HP_Text").GetComponent<TMP_Text>();
         apText = GameObject.Find("AP_Text").GetComponent<TMP_Text>();
         dpText = GameObject.Find("DP_Text").GetComponent<TMP_Text>();
@@ -145,7 +145,7 @@ public class Character_Select : MonoBehaviour
     private void WarriorSelect()
     {
         // 캐릭터 정보 업데이트
-        UpdateCharacterInfo("레오", "Warrior", "보통", 1, 250, 50, 10);
+        UpdateCharacterInfo("레오", "Warrior", "보통", Managers.Player.GetWarriorLevel(), 250, 50, 10);
 
         // 선택된 캐릭터 코드 업데이트
         selectedClassCode = "C001";
@@ -155,7 +155,7 @@ public class Character_Select : MonoBehaviour
     private void ArcherSelect()
     {
         // 캐릭터 정보 업데이트
-        UpdateCharacterInfo("아리아", "Archer", "쉬움", 1, 250, 50, 10);
+        UpdateCharacterInfo("아리아", "Archer", "쉬움", Managers.Player.GetArcherLevel(), 250, 50, 10);
 
         // 선택된 캐릭터 코드 업데이트
         selectedClassCode = "C002";
@@ -165,7 +165,7 @@ public class Character_Select : MonoBehaviour
     private void MageSelect()
     {
         // 캐릭터 정보 업데이트
-        UpdateCharacterInfo("이안", "Mage", "어려움", 1, 250, 50, 10);
+        UpdateCharacterInfo("이안", "Mage", "어려움", Managers.Player.GetMageLevel(), 250, 50, 10);
 
         // 선택된 캐릭터 코드 업데이트
         selectedClassCode = "C003";
@@ -189,9 +189,9 @@ public class Character_Select : MonoBehaviour
         // 텍스트 업데이트
         characterNameText.text = name;
         characterDetailText.text = UpdateDetail(className);
-        characterClassText.text = className;
+        characterClassText.text = className + " " + level + "레벨";
         characterDifficultyText.text = difficulty;
-        // characterLevelText.text = $"Lv. {level}";
+        characterLevelText.text = $"Lv. {level}";
         hpText.text = $"{hp}";
         apText.text = $"{ap}";
         dpText.text = $"{dp}";

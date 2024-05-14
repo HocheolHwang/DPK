@@ -127,6 +127,8 @@ public class Define
         Thunder1,
         Thunder2,
         SpikeIce,
+        Plague,
+        PlagueEffect,
         FireTrail,
         FireWall,
         BloodExplosion,
@@ -159,6 +161,7 @@ public class Define
         TripleSlash3,
         ThrowingShield,
         ShieldSlam,
+        HolyHammerEffect2,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,

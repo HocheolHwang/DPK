@@ -232,6 +232,23 @@ public class NetworkManager : MonoBehaviour
             callback?.Invoke(data);
         }
     }
+    // 모든 레벨 받아오기
+    IEnumerator AllLevelRequest(UnityWebRequest request, Action<AllCalssLevelResDto> callback)
+    {
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"[Current Class Error] {request.error}\n{request.downloadHandler.text}");
+        }
+        else
+        {
+            Debug.Log("Response: " + request.downloadHandler.text);
+            AllCalssLevelResDto data = JsonUtility.FromJson<AllCalssLevelResDto>(request.downloadHandler.text);
+
+            // 직업 변화 
+            callback?.Invoke(data);
+        }
+    }
 
 
     UnityWebRequest CreateRequest(string method, string path, string json = null)
@@ -350,6 +367,11 @@ public class NetworkManager : MonoBehaviour
     public void AllSkillCall(Action<SkillResDto> callback)
     {
         StartCoroutine(AllSkillRequest(CreateRequest("GET", "skill/learned"), callback));
+    }
+    // 모든 레벨 불러오기
+    public void AllLevelCall(Action<AllCalssLevelResDto> callback)
+    {
+        StartCoroutine(AllLevelRequest(CreateRequest("GET", "class"), callback)); ;
     }
 }
 
