@@ -33,7 +33,7 @@ public class ChargeArrow : Skill
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/WindBlast");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, false);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage + 30, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = _skillSystem.TargetPosition + transform.forward * 2.0f;
         hitbox.transform.localScale = skillRange;

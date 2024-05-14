@@ -8,7 +8,7 @@ public class WindBall : Skill
     protected override void Init()
     {
         SetCoolDownTime(20);
-        Damage = 10;
+        Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Holding;
         skillRange = new Vector3(5, 5, 5);
@@ -73,7 +73,7 @@ public class WindBall : Skill
     {
         Managers.Sound.Play("Skill/ArrowStab");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, false);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;

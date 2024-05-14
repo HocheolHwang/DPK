@@ -6,7 +6,7 @@ public class ArrowShower : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(10);
+        SetCoolDownTime(8);
         Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Range;
@@ -52,7 +52,7 @@ public class ArrowShower : Skill
         yield return new WaitForSeconds(0.7f);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage+10);
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
         yield return new WaitForSeconds(0.1f);
