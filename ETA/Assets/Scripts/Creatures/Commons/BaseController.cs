@@ -269,6 +269,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
     IEnumerator ChangeDamagedColorTemporarily()
     {
+        if (_allRenderers == null) yield break;
         foreach (Renderer renderer in _allRenderers)
         {
             renderer.material.SetColor("_Color", _damagedColor);

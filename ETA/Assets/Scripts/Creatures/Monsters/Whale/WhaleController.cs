@@ -26,7 +26,22 @@ public class WhaleController : BaseMonsterController
 
     protected override void Awake()
     {
-        base.Awake();
+        //base.Awake();
+
+        Animator = GetComponent<Animator>();
+        Agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        Detector = GetComponent<IDetector>();
+        Stat = GetComponent<Stat>();
+        photonView = GetComponent<PhotonView>();
+
+        // Stat 세팅
+        Agent.speed = Stat.MoveSpeed;
+
+
+        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+
+        _patternInfo = GetComponent<PatternInfo>();
+
         Init();
     }
 
