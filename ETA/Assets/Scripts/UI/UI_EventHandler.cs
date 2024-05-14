@@ -41,7 +41,7 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
         if (OnBeginDragHandler == null) return;
         OnBeginDragHandler.Invoke(eventData);
-        throw new NotImplementedException();
+        // throw new NotImplementedException();
     }
 
     public void OnDrag(PointerEventData eventData)
