@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using System.Collections;
 public class Party_Join_Confirm_Popup_UI : UI_Popup
 {
     // ------------------------------ 변수 정의 ------------------------------
@@ -50,13 +50,30 @@ public class Party_Join_Confirm_Popup_UI : UI_Popup
     // 참가하기 메서드
     private void PartyJoin(PointerEventData data)
     {
-        // 파티 참가
-        Managers.Photon.roomEnter();
 
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
 
         // 로비 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
+        // 파티 참가
+        try{
+            Managers.Photon.roomEnter();
+
+        }
+        catch (RoomCreationException ex)
+        {
+            Debug.Log("던전 입장에서 예외 발생!!!!!!!!!!!!!!");
+            var popupUI = GameObject.FindFirstObjectByType<Lobby_Popup_UI>();
+            if (popupUI != null)
+            {
+                Managers.Coroutine.StartCoroutine(popupUI.ShowWarningPopupCoroutine(ex.Title, ex.Message));
+            }
+            else
+            {
+                Debug.LogError("Lobby_Popup_UI is not found in the scene.");
+            }
+        }
     }
+
 }
