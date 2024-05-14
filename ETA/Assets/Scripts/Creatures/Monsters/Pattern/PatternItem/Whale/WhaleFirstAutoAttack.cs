@@ -5,9 +5,10 @@ using UnityEngine;
 public class WhaleFirstAutoAttack : Pattern
 {
     [Header("개발 편의성")]
-    [SerializeField] float _hitboxForwardLoc = 0.7f;
-    [SerializeField] Vector3 _hitboxRange = new Vector3(4f, 4f, 4.5f);
-    [SerializeField] float _upLoc = 0.4f;
+    [SerializeField] float _hitboxForwardLoc = 2.5f;
+    [SerializeField] Vector3 _hitboxRange = new Vector3(3.5f, 3.0f, 3.5f);
+    [SerializeField] float _upLoc = 1.0f;
+    [SerializeField] float _rightLoc = 0f;
 
     public override void Init()
     {
@@ -20,11 +21,11 @@ public class WhaleFirstAutoAttack : Pattern
 
     public override IEnumerator StartPatternCast()
     {
-
         // 멈췄을 때 target을 향해 hitbox, effect 생성
         Vector3 rootForward = transform.TransformDirection(Vector3.forward * (_controller.Detector.AttackRange - _hitboxForwardLoc)); // Target이 null일 수 있기 때문에 임의로 지정
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
-        Vector3 objectLoc = transform.position + new Vector3(-3,1.5f,0);
+        Vector3 rootRight = transform.TransformDirection(Vector3.right * _rightLoc);
+        Vector3 objectLoc = transform.position + rootForward + rootUp + rootRight;
 
         yield return new WaitForSeconds(_createTime);
 
@@ -38,9 +39,9 @@ public class WhaleFirstAutoAttack : Pattern
         hitbox.transform.position = objectLoc;
 
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.KnightG_PhaseAttack, _controller.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WaterSplatWide, _controller.transform);
         ps.transform.rotation = hitbox.transform.rotation;
-        ps.transform.position = transform.position + new Vector3(0, 2f, 0);
+        ps.transform.position = objectLoc;
 
         //ps.transform.position = hitbox.transform.position;
 

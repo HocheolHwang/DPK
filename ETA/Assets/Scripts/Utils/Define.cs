@@ -143,6 +143,8 @@ public class Define
         DarknessSlash,
         MagicMissileGreen,
         MagicMissileBlue,
+        WaterSplashSoft,
+        WaterSplatWide, 
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
