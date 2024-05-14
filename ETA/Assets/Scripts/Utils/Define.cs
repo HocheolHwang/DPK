@@ -159,6 +159,7 @@ public class Define
         TripleSlash3,
         ThrowingShield,
         ShieldSlam,
+        HolyHammerEffect2,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
