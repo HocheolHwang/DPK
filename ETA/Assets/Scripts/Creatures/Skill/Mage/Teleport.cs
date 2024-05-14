@@ -15,12 +15,10 @@ public class Teleport : Skill
     {
         _animator.CrossFade("TELEPORT_IN", 0.1f);
         Managers.Sound.Play("Skill/Teleport");
-        StartCoroutine(TeleportCoroutine());
 
         yield return new WaitForSeconds(0.2f);
+        StartCoroutine(TeleportCoroutine());
         gameObject.transform.position -= gameObject.transform.forward * 3;
-
-        yield return new WaitForSeconds(0.1f);
         _animator.CrossFade("TELEPORT_OUT", 0.1f);
 
         yield return new WaitForSeconds(0.5f);
