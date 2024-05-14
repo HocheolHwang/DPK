@@ -6,7 +6,6 @@ public class WhaleCounterAttackPattern : Pattern
 {
     [Header("개발 편의성")]
     [SerializeField] float _hitboxForwardLoc = 0.3f;
-    [SerializeField] float _hitboxRadius = 6.0f;
     [SerializeField] float _upLoc = 1.0f;
     [SerializeField] float _rightLoc = 0f;
     [SerializeField] Vector3 _hitboxRange = new Vector3(7f, 7f, 7f);
