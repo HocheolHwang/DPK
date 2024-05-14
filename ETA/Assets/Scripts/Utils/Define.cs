@@ -127,6 +127,7 @@ public class Define
         Thunder1,
         Thunder2,
         SpikeIce,
+        Teleport,
         Plague,
         PlagueEffect,
         FireTrail,
