@@ -156,7 +156,7 @@ public class Skill_Select : MonoBehaviour
         for (int i = 0; i < 16; i++)
         {
             // SkillSO 객체 로드
-            SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{classSkills[classCode][i]}");
+            SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{ChangeCodeToName(classCode)}/{classSkills[classCode][i]}");
             if (skillData == null) continue;
 
             skillIcons[i].sprite = skillData.Icon;
@@ -200,7 +200,7 @@ public class Skill_Select : MonoBehaviour
         // 스킬 개수만큼 반복
         for (int i = 0; i < skills.Length; i++)
         {
-            SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{skills[i].skillName}");
+            SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{ChangeCodeToName(classCode)}/{skills[i].skillName}");
 
             // 이미지 컴포넌트에 Sprite 할당
             if (skillData != null)
@@ -247,7 +247,20 @@ public class Skill_Select : MonoBehaviour
             Skill_Info skillInfoComponent = GameObject.Find("Skill_Info").GetComponent<Skill_Info>();
 
             // 버튼 클릭 이벤트 추가
-            skillContainers[i].onClick.AddListener(() => skillInfoComponent.UpdateSkillInfo(skillName));
+            skillContainers[i].onClick.AddListener(() => skillInfoComponent.UpdateSkillInfo(ChangeCodeToName(classCode), skillName));
         }
+    }
+
+    // 클래스 코드로 클래스 이름을 string으로 반환하는 메서드
+    private string ChangeCodeToName(string classCode)
+    {
+        string className = classCode switch
+        {
+            "C001" => "Warrior",
+            "C002" => "Archer",
+            "C003" => "Mage",
+            _ => null
+        };
+        return className;
     }
 }

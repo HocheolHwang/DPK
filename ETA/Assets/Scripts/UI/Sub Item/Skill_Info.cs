@@ -75,10 +75,10 @@ public class Skill_Info : MonoBehaviour
     // ------------------------------ 메서드 정의 ------------------------------
 
     // 모든 스킬 정보를 업데이트하는 메서드
-    public void UpdateSkillInfo(string skillName)
+    public void UpdateSkillInfo(string className, string skillName)
     {
         // SkillSO 객체 로드
-        SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{skillName}");
+        SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{className}/{skillName}");
 
         if (skillData != null)
         {
