@@ -149,6 +149,17 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
         if (Stat.AttackDamage < 0) Stat.AttackDamage = 0;
     }
 
+    public virtual void IncreaseSpeed(int amount)
+    {
+        Stat.MoveSpeed += amount;
+    }
+
+    public virtual void DecreaseSpeed(int amount)
+    {
+        Stat.MoveSpeed -= amount;
+        if (Stat.MoveSpeed < 0) Stat.AttackDamage = 0;
+    }
+
     // ---------------------------------- IDamage ------------------------------------------
 
     // 내 캐리

@@ -8,11 +8,11 @@ public class HolyHammer : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(10);
+        SetCoolDownTime(2);
         base.Init();
         SkillType = Define.SkillType.Range;
         Damage = 30;
-        skillRange = new Vector3(3, 3, 3);
+        skillRange = new Vector3(6, 6, 6);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/HolyHammer.png");
     }
     public override IEnumerator StartSkillCast()
@@ -33,6 +33,8 @@ public class HolyHammer : Skill
         GameObject hammerPrefab = Managers.Resource.Instantiate("Effect/Hammer");
         // Hammer prefab을 타겟 위치로 이동
         hammerPrefab.transform.position = transform.position + new Vector3(0f, 5f, 0f);
+        ParticleSystem aura = Managers.Effect.Play(Define.Effect.HolyHammerEffect2, 0, transform);
+        aura.transform.position = transform.position;
         yield return new WaitForSeconds(0.8f);
 
         // Hammer prefab을 플레이어를 향하도록 회전
