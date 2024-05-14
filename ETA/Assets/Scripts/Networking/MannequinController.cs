@@ -27,7 +27,6 @@ public class MannequinController : MonoBehaviour
 
     public void EnterPlayer(string nickName, string classCode)
     {
-        Debug.Log("123sadasdasda");
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(0).GetComponent<TextMeshPro>().text = nickName;
         ClassUpdate(classCode);

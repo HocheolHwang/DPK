@@ -134,6 +134,10 @@ public class Login_Popup_UI : UI_Popup
             CloseAllPopupUI();
             // 현재 직업 정보를 요청함
             Managers.Network.CurrentClassCall(CurrentClass);
+
+            // 모든 직업 정보 요청
+            Managers.Network.AllLevelCall(AllClassLevel);
+
         }
         else if (message == "Database error.")
         {
@@ -160,6 +164,15 @@ public class Login_Popup_UI : UI_Popup
         // 포톤(서버)에 연결
         Managers.Photon.Connect(); // 연결시 자동으로 Lobby로 가게됨;
     }
+
+    public void AllClassLevel(AllCalssLevelResDto dto)
+    {
+        foreach(MyClasses mclass in dto.myClasses)
+        {            
+            Managers.Player.SetAllLevel(mclass.classCode, mclass.level);
+        }
+    }
+
 
     // 회원가입 Popup UI로 전환하는 메서드
     private void SwitchSignup(PointerEventData data)

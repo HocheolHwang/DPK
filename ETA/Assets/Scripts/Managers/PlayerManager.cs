@@ -23,7 +23,8 @@ public class PlayerManager
     public SkillInfo[] archerSkills = new SkillInfo[8];
     public SkillInfo[] mageSkills = new SkillInfo[8];
 
-
+    // 워리어 아처 메이지
+    public int[] playerAllLevel = new int[3];
 
     public PlayerManager() { }
 
@@ -123,6 +124,10 @@ public class PlayerManager
                 needExp = CalculateExpRequirement(playerLevel);
                 Managers.Photon.SetPlayerLevel();
                 Debug.Log("Cur Level : " + playerLevel);
+
+                if (curClass == "C001") playerAllLevel[0] = playerLevel;
+                else if (curClass == "C002") playerAllLevel[1] = playerLevel;
+                else if (curClass == "C003") playerAllLevel[2] = playerLevel;
             }
             else
             {
@@ -149,6 +154,17 @@ public class PlayerManager
     public void SetLevel(int level)
     {
         this.playerLevel = level;
+    }
+    public void SetAllLevel(string classCode,int level)
+    {
+        Debug.Log($"{classCode}의 레벨은 {level}");
+        int index = 0;
+        if(classCode == "C001") index = 0;
+        else if(classCode == "C002") index = 1;
+        else if(classCode == "C003") index = 2;
+
+        Debug.Log($"{index}의 레벨은 {level}");
+        this.playerAllLevel[index] = level;
     }
 
     #endregion
@@ -210,6 +226,19 @@ public class PlayerManager
     public int GetSkillPoint()
     {
         return skillPoint;
+    }
+
+    public int GetWarriorLevel()
+    {
+        return playerAllLevel[0];
+    }
+    public int GetArcherLevel()
+    {
+        return playerAllLevel[1];
+    }
+    public int GetMageLevel()
+    {
+        return playerAllLevel[2];
     }
 
     #endregion
