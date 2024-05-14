@@ -359,8 +359,6 @@ public class Skill_Select : MonoBehaviour
     // 드래그 시작 메서드
     public void OnDragBegin(int skillIndex, PointerEventData eventData)
     {
-        Debug.Log("드래그 시작");
-
         // 드래그 시작 시 드래그 중인 스킬 정보를 활성화하고 해당 슬롯의 이미지와 이름을 복제
         draggingSkill.Icon.sprite = slotSkillIcons[skillIndex].sprite;
         draggingSkill.Name = skillNames[skillIndex];
@@ -379,9 +377,6 @@ public class Skill_Select : MonoBehaviour
     // 드래그 종료 메서드
     public void OnDragEnd(PointerEventData eventData)
     {
-        Debug.Log("드래그 끝");
-        Debug.Log($"번호 제에에발 {currentSlotIndex} !!!!!!!!!!!!");
-
         // 드래그 종료 시 드래그 중인 스킬 아이콘의 Raycast Target을 활성화
         draggingSkill.Icon.raycastTarget = true;
 
@@ -424,8 +419,6 @@ public class Skill_Select : MonoBehaviour
     // 드래그 중 메서드
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("드래그 중");
-
         // 드래그 중인 스킬 아이콘의 위치를 마우스 커서 위치로 업데이트
         draggingSkill.Icon.transform.position = eventData.position;
     }
@@ -433,15 +426,12 @@ public class Skill_Select : MonoBehaviour
     // 포인터가 슬롯에 진입했을 때
     public void OnPointerEnterSlot(int slotIndex)
     {
-        Debug.Log($"현재 인덱스? {slotIndex} *****************");
         currentSlotIndex = slotIndex;
     }
 
     // 포인터가 슬롯에서 나갔을 때
     public void OnPointerExitSlot()
     {
-        Debug.Log($"나갑니다~ 여기서 나가요: {currentSlotIndex} ^^^^^^^^^^^^^^^^");
         currentSlotIndex = -1;
-        Debug.Log($"진짜 나감 {currentSlotIndex} ^^^^^^^^^^^^^^^^");
     }
 }
