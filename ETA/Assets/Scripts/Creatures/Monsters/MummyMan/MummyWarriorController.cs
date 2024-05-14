@@ -63,6 +63,7 @@ public class MummyWarriorController : BaseMonsterController
 
         Agent.stoppingDistance = Detector.AttackRange;      // 공격 사거리와 멈추는 거리를 같게 세팅
         UnitType = Define.UnitType.MummyManWarrior;
+        Stat.Defense = 200;
     }
 
     // ---------------------------------- IDamage ------------------------------------------
