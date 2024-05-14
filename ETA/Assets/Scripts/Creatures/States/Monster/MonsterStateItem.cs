@@ -119,6 +119,7 @@ namespace MonsterStateItem
         public override void Enter()
         {
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToAttackState();
+            _agent.velocity = Vector3.zero;
             InitTime(_animData.AttackAnim.length);
             _animator.SetFloat("AttackSpeed", 0.5f);                // 원래 시간의 1/2 동안 공격 애니메이션을 재생할 수 있도록 속도 조절
             _animator.CrossFade(_animData.AttackParamHash, 0.2f);
