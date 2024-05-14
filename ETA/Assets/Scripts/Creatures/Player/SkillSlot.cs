@@ -36,7 +36,7 @@ public class SkillSlot : MonoBehaviour
         switch (gameObject.name.Replace("(Clone)",""))
         {
             case "Warrior": // 워리어
-                loadedSkills = new string[] { "DoubleSlash", "TripleSlash", "DrawSword", "WhirlWind", "Guard", "BackStep", "ThrowingShield", "WindSlash" };
+                loadedSkills = new string[] { "DoubleSlash", "TripleSlash", "DrawSword", "WhirlWind", "Guard", "BackStep", "ShieldSlam", "WindSlash" };
                 //for(int i = 0; i < 8; i++)
                 //{
                 //    loadedSkills[i] = Managers.Player.warriorSkills[i].skillName;
