@@ -43,6 +43,8 @@ public class IprisPatternOneAttack : Pattern
         SphereCollider spreadCollider = spreadHitbox.GetComponent<SphereCollider>();
         spreadCollider.radius = _spreadInitRadius;
 
+        Managers.Sound.Play("Sounds/Monster/Ipris/IprisPatternOne_SND", Define.Sound.Effect);
+
         float timer = 0;
         while (timer <= _duration)
         {

@@ -28,6 +28,7 @@ public class IprisPatternOneStrongAttack : Pattern
         yield return new WaitForSeconds(_createTime);
 
         Managers.Coroutine.Run(expandCollider(objectPos));
+        Managers.Sound.Play("Sounds/Monster/Ipris/IprisPatternOne_SND", Define.Sound.Effect);
 
         yield return new WaitForSeconds(_interval);
 
