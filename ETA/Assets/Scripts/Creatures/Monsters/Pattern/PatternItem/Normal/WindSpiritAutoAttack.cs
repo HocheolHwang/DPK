@@ -25,12 +25,11 @@ public class WindSpiritAutoAttack : Pattern
         Vector3 rootForward = transform.TransformDirection(Vector3.forward * (_controller.Detector.AttackRange - _hitboxForwardLoc)); // Target이 null일 수 있기 때문에 임의로 지정
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
         Vector3 objectLoc = transform.position + rootForward + rootUp;
-        //Vector3 dir = _controller.Detector.Target.position - transform.position;
-        //Vector3 _objectPosition = transform.position + dir.normalized * _controller.Detector.AttackRange;
+
 
         yield return new WaitForSeconds(_createTime);
 
-        Managers.Sound.Play("Monster/ForestSpirit/ForestSpiritAttack_SND", Define.Sound.Effect);
+        Managers.Sound.Play("Monster/WindSpiritt/WindSpiritAttack_SND", Define.Sound.Effect);
 
         
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();

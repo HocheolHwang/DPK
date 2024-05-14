@@ -213,6 +213,10 @@ public class Define
         ForestBlessAura,
         Tempest,
         WindSpiritAttack,
+        StormStrikeCharge,
+        StormStrikeFire01,
+        StormStrikeFire02,
+        StormStrikeHit,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         Ipris_Shield,
