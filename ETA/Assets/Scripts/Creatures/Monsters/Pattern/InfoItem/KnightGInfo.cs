@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Pattern DMG( ATK: 공격력, P_ATK: 패턴 공격력 )
+/// Pattern INFO( ATK: 공격력, P_ATK: 패턴 공격력 )
 /// 1. FirstAuto: ATK + P_ATK(5)  ( 내려찍기 )
 /// 2. SecondAuto: ATK     ( 올려치기 )
 /// 3. TwoSkill: ATK + P_ATK(80)
