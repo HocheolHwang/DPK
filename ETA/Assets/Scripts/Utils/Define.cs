@@ -162,6 +162,7 @@ public class Define
         ThrowingShield,
         ShieldSlam,
         HolyHammerEffect2,
+        MoonSwordEffect,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
