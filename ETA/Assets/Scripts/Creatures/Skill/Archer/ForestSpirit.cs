@@ -7,7 +7,7 @@ public class ForestSpirit : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(15);
+        SetCoolDownTime(20);
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(3, 3, 3);

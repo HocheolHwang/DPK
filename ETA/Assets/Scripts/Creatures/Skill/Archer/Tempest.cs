@@ -7,7 +7,7 @@ public class Tempest : Skill
     protected override void Init()
     {
         SetCoolDownTime(8);
-        Damage = 5;
+        Damage = 10;
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
