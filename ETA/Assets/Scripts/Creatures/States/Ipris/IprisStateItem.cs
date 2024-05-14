@@ -16,12 +16,14 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToIdleState();
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (_detector.Target != null)
             {
                 //Debug.Log("IDLE TO CHASE");
@@ -47,6 +49,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToChaseState();
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
 
@@ -55,6 +58,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (_detector.Target == null)
             {
                 //Debug.Log("CHASE TO IDLE");
@@ -89,6 +93,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToIdleBattleState();
             _agent.velocity = Vector3.zero;
             LookAtEnemy();
             _animator.CrossFade(_animData.IdleBattleParamHash, 0.25f);
@@ -96,6 +101,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (!_detector.IsArriveToTarget())
             {
                 //Debug.Log("IDLE_BATTLE TO IDLE");
@@ -145,6 +151,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToBuffState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.BuffAnim.length);
@@ -155,6 +162,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
@@ -179,6 +187,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToPatternOneEnableState();
             // 0.15초 동안 유지되기 떄문에 카운터를 치지 않았음에도 true 조건을 만족하는 경우를 배제
             _controller.IsHitCounter = false;
 
@@ -194,6 +203,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             if ( !_controller.IsCounterTrigger && _controller.IsHitCounter )
@@ -223,6 +233,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToPatternOneState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.PatternOneAnim.length);
@@ -243,6 +254,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= (_threadHold * 2.0f))
             {
@@ -266,6 +278,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToCounterEnableState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.CounterEnableAnim.length);
@@ -277,6 +290,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_controller.IsHitCounter)
             {
@@ -305,6 +319,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToCounterAttackState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.CounterAttackAnim.length);
@@ -316,6 +331,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold * 2.0f)
             {
@@ -344,6 +360,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToPatternTwoState();
             _controller.WindMillCnt++;
 
             // 돌진에 대한 세팅
@@ -369,6 +386,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (Vector3.Distance(_controller.transform.position, _controller.DestPos) <= 3.0f)
             {
                 _agent.velocity = Vector3.zero;
@@ -380,7 +398,7 @@ namespace IprisStateItem
             }
             else if (IsStayForSeconds(rushTime))
             {
-                //Debug.Log("PATTERN_TWO TO BACK_POSITION");
+                Debug.Log("PATTERN_TWO TO BACK_POSITION");
                 _controller.ChangeState(_controller.BACK_POSITION_STATE); 
             }
         }
@@ -404,6 +422,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToPatternTwoWindmillState();
             _agent.velocity = Vector3.zero;
             _controller.WindMillCnt = 0;
 
@@ -416,6 +435,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= (_threadHold * 2.0f))
             {
@@ -439,6 +459,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToBackPositionState();
             _agent.velocity = Vector3.zero;
             _agent.enabled = false;
 
@@ -449,6 +470,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             // N초 뒤에 IDLE_BATTLE 상태로 전환
             if (IsStayForSeconds(1.0f))
             {
@@ -476,6 +498,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToAttackState();
             _agent.velocity = Vector3.zero;
             InitTime(_animData.AttackFirstAnim.length + _animData.AttackSecondAnim.length);
             _animator.CrossFade(_animData.AttackParamHash, 0.2f);
@@ -485,6 +508,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
@@ -509,6 +533,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToDieState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.DieAnim.length);
@@ -519,6 +544,8 @@ namespace IprisStateItem
         public override void Execute()
         {
             _stat.Hp = (int)(_stat.MaxHp * 0.1f);
+            if (PhotonNetwork.IsMasterClient == false) return;
+            
 
             if (IsStayForSeconds(_threadHold * 2.0f))
             {
@@ -541,6 +568,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToToDrangonState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.ToDragonAnim.length);
@@ -555,11 +583,13 @@ namespace IprisStateItem
         public override void Execute()
         {
             _stat.Hp = (int)(_stat.MaxHp * 0.1f);
+            
 
             if (IsStayForSeconds(_threadHold * 2.0f))
             {
                 GameObject.Destroy(_controller.gameObject);
             }
+            if (PhotonNetwork.IsMasterClient == false) return;
         }
         public override void Exit()
         {
@@ -580,8 +610,7 @@ namespace IprisStateItem
 
         public override void Enter()
         {
-
-
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             if (_controller.PrevState is CounterEnableState)      // Counter Enable
             {
                 groggyTime = 2.5f;
@@ -592,6 +621,7 @@ namespace IprisStateItem
                 ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
                 ps.transform.SetParent(_controller.transform);
                 ps.transform.position = new Vector3(0, 2.0f, 0);
+                _controller.CounterTime = 0;
             }
             else
             {
@@ -604,9 +634,10 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (IsStayForSeconds(groggyTime))
             {
-                _controller.RevertToPrevState();
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
         public override void Exit()
@@ -625,6 +656,7 @@ namespace IprisStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (_controller.MeetPlayer)
             {
                 _controller.CounterTime += Time.deltaTime;

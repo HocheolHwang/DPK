@@ -691,6 +691,8 @@ GameObject:
   - component: {fileID: -2939625899651412242}
   - component: {fileID: -8733523994994036906}
   - component: {fileID: 6242981767869721767}
+  - component: {fileID: -3418264213985894164}
+  - component: {fileID: -5002763968101091226}
   m_Layer: 7
   m_Name: Ipris
   m_TagString: Monster
@@ -820,8 +822,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee81152ef09fb14bb6d8decaa883507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
-  _hp: 100
+  _maxHp: 1000
+  _hp: 1000
   _moveSpeed: 5
   _attackDamage: 5
   _defense: 5
@@ -906,6 +908,9 @@ MonoBehaviour:
   _patternTwoTime: 0
   _windMillCnt: 0
   _patternOneCnt: 0
+  _isCounterTrigger: 0
+  _startPos: {x: 0, y: 0, z: 0}
+  _destPos: {x: 0, y: 0, z: 0}
 --- !u!114 &6242981767869721767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -918,6 +923,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814bad0cd7a874747aca0705a2025a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3418264213985894164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417164047586525017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: -5002763968101091226}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-5002763968101091226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417164047586525017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &3730044426861352560
 GameObject:
   m_ObjectHideFlags: 0
