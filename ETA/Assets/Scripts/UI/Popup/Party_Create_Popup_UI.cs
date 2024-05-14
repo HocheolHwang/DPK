@@ -98,13 +98,16 @@ public class Party_Create_Popup_UI : UI_Popup
             return;
         }
 
-        // 파티 생성
-        Managers.Photon.MakeRoom(partyNameInputField.text);
-
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
 
         // 로비 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
+
+        // 파티 생성
+        Managers.Photon.MakeRoom(partyNameInputField.text);
     }
+
 }
+
+

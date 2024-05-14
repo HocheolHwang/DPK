@@ -9,6 +9,8 @@ public class Skill_Info : MonoBehaviour
     // ------------------------------ 변수 정의 ------------------------------
 
     // UI 컴포넌트 바인딩 변수
+    private GameObject skillInfoContent; // 스킬 정보 패널
+
     private TMP_Text skillKoreanName; // 스킬 한글 이름
     private TMP_Text requiredLevel; // 필요 레벨
 
@@ -48,6 +50,8 @@ public class Skill_Info : MonoBehaviour
     private void Start()
     {
         // 스킬 정보 초기화
+        skillInfoContent = GameObject.Find("Skill_Info_Content");
+
         skillKoreanName = GameObject.Find("Skill_Korean_Name").GetComponent<TMP_Text>();
         requiredLevel = GameObject.Find("Required_Level").GetComponent<TMP_Text>();
 
@@ -69,19 +73,25 @@ public class Skill_Info : MonoBehaviour
         connectedSkillKoreanName = GameObject.Find("Connected_Skill_Name").GetComponent<TMP_Text>();
 
         connectedSkillNameContainer = GameObject.Find("Connected_Skill_Name_Container");
+
+        // 스킬 패널 비활성화
+        skillInfoContent.SetActive(false);
     }
 
 
     // ------------------------------ 메서드 정의 ------------------------------
 
     // 모든 스킬 정보를 업데이트하는 메서드
-    public void UpdateSkillInfo(string skillName)
+    public void UpdateSkillInfo(string className, string skillName)
     {
         // SkillSO 객체 로드
-        SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{skillName}");
+        SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{className}/{skillName}");
 
         if (skillData != null)
         {
+            // 스킬 패널 활성화
+            skillInfoContent.SetActive(true);
+
             // 스킬 이름 업데이트
             skillKoreanName.text = skillData.SkillKoreanName;
 
@@ -140,6 +150,9 @@ public class Skill_Info : MonoBehaviour
         }
         else
         {
+            // 스킬 패널 비활성화
+            skillInfoContent.SetActive(false);
+
             Debug.LogError("해당 스킬 이름의 SkillSO를 찾을 수 없습니다: " + skillName);
         }
     }
@@ -184,7 +197,7 @@ public class Skill_Info : MonoBehaviour
         collavoSkillKoreanName.gameObject.SetActive(false);
 
         // 카운터 스킬 설명 업데이트
-        skillCategoryDescription.text = "보스 몬스터를 3초간 그로기 상태에 빠뜨립니다.";
+        skillCategoryDescription.text = "보스 몬스터를 일정 시간 동안 그로기 상태에 빠뜨립니다.";
 
         // 콜라보 연동 스킬 컨테이너 비활성화
         connectedSkillNameContainer.SetActive(false);

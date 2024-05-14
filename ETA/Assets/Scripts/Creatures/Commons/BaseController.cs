@@ -231,7 +231,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
         }
         else if (isCounter)
         {
-            if (PhotonNetwork.IsMasterClient) 
+            if (PhotonNetwork.IsMasterClient)
                 CounterEvent();
 
         }

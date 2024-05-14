@@ -24,7 +24,7 @@ namespace IprisStateItem
         {
             if (_detector.Target != null)
             {
-                Debug.Log("IDLE TO CHASE");
+                //Debug.Log("IDLE TO CHASE");
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
         }
@@ -357,7 +357,7 @@ namespace IprisStateItem
             InitTime(_animData.PatternTwoAnim.length);
             rushTime = CalcTimeToDest(_controller.DestPos);
             animSpeed = _threadHold / rushTime - 0.05f;
-            Debug.Log($"rushTime: {rushTime} | threadHold: {_threadHold} | animSpeed: {animSpeed}");
+            //Debug.Log($"rushTime: {rushTime} | threadHold: {_threadHold} | animSpeed: {animSpeed}");
 
             _animator.SetFloat("PatternTwoSpeed", animSpeed);
             _animator.CrossFade(_animData.PatternTwoParamHash, 0.1f);
@@ -548,10 +548,8 @@ namespace IprisStateItem
             _animator.CrossFade(_animData.ToDragonParamHash, 0.1f);
 
             // 산화하는 애니메이션 재생
-            Vector3 rootUp = _controller.transform.TransformDirection(Vector3.up * 1.5f);
             ParticleSystem ps = Managers.Effect.ContinuePlay(Define.Effect.Ipris_ToDragon, _controller.transform);
             ps.transform.SetParent(_controller.transform);
-            ps.transform.localPosition = _controller.transform.position + rootUp;
         }
 
         public override void Execute()

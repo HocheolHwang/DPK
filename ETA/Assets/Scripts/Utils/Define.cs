@@ -93,6 +93,7 @@ public class Define
         MummyManWarrior,
         MummyManBuffer,
         Ipris,
+        Dragon,
     }
 
     public enum Effect
@@ -127,6 +128,7 @@ public class Define
         Thunder1,
         Thunder2,
         SpikeIce,
+        Teleport,
         Plague,
         PlagueEffect,
         FireTrail,
@@ -208,6 +210,7 @@ public class Define
         ChargeArrowCharge,
         ForestBless,
         ForestBlessAura,
+        Tempest,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         Ipris_Shield,

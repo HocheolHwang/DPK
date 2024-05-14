@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 
 public class Skill_Select : MonoBehaviour
@@ -151,30 +152,53 @@ public class Skill_Select : MonoBehaviour
     private void UpdateSkillList(string classCode)
     {
         // 플레이어 레벨 가져오기
-        int playerLevel = Managers.Player.GetLevel();
+        int classLevel = classCode switch
+        {
+            "C001" => Managers.Player.GetWarriorLevel(),
+            "C002" => Managers.Player.GetArcherLevel(),
+            "C003" => Managers.Player.GetMageLevel(),
+            _ => 0
+        };
 
         for (int i = 0; i < 16; i++)
         {
-            // SkillSO 객체 로드
-            SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{classSkills[classCode][i]}");
-            if (skillData == null) continue;
-
-            skillIcons[i].sprite = skillData.Icon;
-            skillNames[i].text = skillData.SkillKoreanName;
-            skillRequiredLevels[i].text = $"필요레벨 {skillData.RequiredLevel}";
-
-            // 필요 레벨이 플레이어 레벨보다 클 경우 텍스트 색상을 빨간색으로, 그렇지 않으면 흰색으로 설정
-            if (skillData.RequiredLevel > playerLevel)
+            try
             {
-                skillCanNotBeUsedIcons[i].gameObject.SetActive(true);
-                skillNames[i].color = new Color(1, 0, 0, 0.8f);
-                skillRequiredLevels[i].color = new Color(1, 0, 0, 0.8f);
+                // SkillSO 객체 로드
+                SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{ChangeCodeToName(classCode)}/{classSkills[classCode][i]}");
+                if (skillData == null)
+                {
+                    skillIcons[i].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
+                    skillCanNotBeUsedIcons[i].gameObject.SetActive(true);
+
+                    skillNames[i].text = "";
+                    skillRequiredLevels[i].text = "";
+                    continue;
+                }
+
+                skillIcons[i].sprite = skillData.Icon;
+                skillNames[i].text = skillData.SkillKoreanName;
+                skillRequiredLevels[i].text = $"필요레벨 {skillData.RequiredLevel}";
+
+                // 필요 레벨이 플레이어 레벨보다 클 경우 텍스트 색상을 빨간색으로, 그렇지 않으면 흰색으로 설정
+                if (skillData.RequiredLevel > classLevel)
+                {
+                    skillCanNotBeUsedIcons[i].gameObject.SetActive(true);
+                    skillNames[i].color = new Color(1, 0, 0, 0.8f);
+                    skillRequiredLevels[i].color = new Color(1, 0, 0, 0.8f);
+                }
+                else
+                {
+                    skillCanNotBeUsedIcons[i].gameObject.SetActive(false);
+                    skillNames[i].color = Color.white;
+                    skillRequiredLevels[i].color = Color.white;
+                }
             }
-            else
+            catch (Exception e)
             {
-                skillCanNotBeUsedIcons[i].gameObject.SetActive(false);
-                skillNames[i].color = Color.white;
-                skillRequiredLevels[i].color = Color.white;
+                // SkillSO가 없을 경우 기본 이미지 할당
+                Debug.Log("Error loading skill data: " + e.Message);
+                skillIcons[i].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
             }
         }
     }
@@ -190,39 +214,25 @@ public class Skill_Select : MonoBehaviour
             _ => null
         };
 
-        if (skills == null)
-        {
-            // 스킬이 없는 경우 모든 슬롯을 기본 이미지로 설정
-            FillRemainingSlots(0);
-            return;
-        }
-
-        // 스킬 개수만큼 반복
         for (int i = 0; i < skills.Length; i++)
         {
-            SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{skills[i].skillName}");
-
-            // 이미지 컴포넌트에 Sprite 할당
-            if (skillData != null)
+            try
             {
-                slotSkillIcons[i].sprite = skillData.Icon;
+                SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{ChangeCodeToName(classCode)}/{skills[i].skillName}");
+
+                if (skillData != null)
+                {
+                    slotSkillIcons[i].sprite = skillData.Icon;
+                }
+                else
+                {
+                    slotSkillIcons[i].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
+                }
             }
-        }
-
-        // 남은 슬롯들을 기본 이미지로 채우기
-        if (skills.Length < slotSkillIcons.Length)
-        {
-            FillRemainingSlots(skills.Length);
-        }
-    }
-
-    // 남은 슬롯들을 기본 이미지로 채우는 메서드
-    private void FillRemainingSlots(int startIndex)
-    {
-        for (int i = startIndex; i < slotSkillIcons.Length; i++)
-        {
-            if (slotSkillIcons[i] != null)
+            catch (Exception e)
             {
+                // SkillSO가 없을 경우 기본 이미지 할당
+                Debug.Log("Error loading skill data: " + e.Message);
                 slotSkillIcons[i].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
             }
         }
@@ -233,7 +243,7 @@ public class Skill_Select : MonoBehaviour
     {
         if (classCode == null || !classSkills.ContainsKey(classCode))
         {
-            Debug.LogError("Invalid classCode: " + classCode);
+            Debug.Log("Invalid classCode: " + classCode);
             return;
         }
 
@@ -247,7 +257,20 @@ public class Skill_Select : MonoBehaviour
             Skill_Info skillInfoComponent = GameObject.Find("Skill_Info").GetComponent<Skill_Info>();
 
             // 버튼 클릭 이벤트 추가
-            skillContainers[i].onClick.AddListener(() => skillInfoComponent.UpdateSkillInfo(skillName));
+            skillContainers[i].onClick.AddListener(() => skillInfoComponent.UpdateSkillInfo(ChangeCodeToName(classCode), skillName));
         }
+    }
+
+    // 클래스 코드로 클래스 이름을 string으로 반환하는 메서드
+    private string ChangeCodeToName(string classCode)
+    {
+        string className = classCode switch
+        {
+            "C001" => "Warrior",
+            "C002" => "Archer",
+            "C003" => "Mage",
+            _ => null
+        };
+        return className;
     }
 }
