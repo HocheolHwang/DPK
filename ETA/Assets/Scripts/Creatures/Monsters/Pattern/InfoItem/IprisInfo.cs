@@ -12,6 +12,7 @@ using UnityEngine;
 /// COUNTER_ATTACK: ATK + P_ATK(100) | P_ATK(100)
 /// PATTERN_TWO: ATK + P_ATK(50)
 /// PATTERN_TWO_WindMill: [ ATK + P_ATK(50) ] * 2번
+/// ATTACK: ATK
 /// </summary>
 public class IprisInfo : PatternInfo
 {

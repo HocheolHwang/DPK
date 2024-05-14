@@ -203,6 +203,8 @@ public class Define
         Ipris_PatternTwoWindMill,
         Ipris_BackPos,
         Ipris_AttackFirst,
+        Ipris_AttackSecond,
+        Ipris_ToDragon,
         // ------------------------ Ipris ------------------------------
         MaxCount
     }
