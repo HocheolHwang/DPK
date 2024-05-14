@@ -62,8 +62,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
         if (Stat.Shield > 0 && _shieldEffect == null)
         {
-            _shieldEffect = Managers.Resource.Instantiate("Effect/Shield", transform).GetComponent<ParticleSystem>();
-            _shieldEffect.transform.localPosition += transform.up;
+            if(this is PlayerController)
+            {
+                _shieldEffect = Managers.Resource.Instantiate("Effect/Shield", transform).GetComponent<ParticleSystem>();
+                _shieldEffect.transform.localPosition += transform.up;
+            }
+
         }
         else
         {
@@ -184,6 +188,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
     public void CalcDamage(int attackDamage, bool isCounter ,int shield, bool evasion, int defense)
     {
+        if (isCounter)
+        {
+            if (PhotonNetwork.IsMasterClient)
+                CounterEvent();
+
+        }
         UI_AttackedDamage attackedDamage_ui = null;
         if (evasion)
         {
@@ -229,12 +239,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
             Stat.Hp = 0;
             DestroyObject();
         }
-        else if (isCounter)
-        {
-            if (PhotonNetwork.IsMasterClient)
-                CounterEvent();
 
-        }
     }
 
     public virtual void AttackedEvent()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using IprisStateItem;
+using Photon.Pun;
 
 public class IprisController : BaseMonsterController
 {
@@ -69,7 +70,7 @@ public class IprisController : BaseMonsterController
     protected override void Start()
     {
         base.Start();
-        ChangeState(IDLE_STATE);
+        
     }
 
     protected override void Init()
@@ -86,6 +87,7 @@ public class IprisController : BaseMonsterController
         DIE_STATE = new DieState(this);
         GLOBAL_STATE = new GlobalState(this);
         _stateMachine.SetGlobalState(GLOBAL_STATE);
+        ChangeState(IDLE_STATE);
 
         COUNTER_ENABLE_STATE = new CounterEnableState(this);
         COUNTER_ATTACK_STATE = new CounterAttackState(this);
@@ -103,5 +105,173 @@ public class IprisController : BaseMonsterController
 
         _counterTime = 4.0f;
         _buffTime = 10.0f;
+    }
+
+    public void ChangeToIdleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToIdleState()
+    {
+        ChangeState(IDLE_STATE);
+    }
+
+    public void ChangeToIdleBattleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleBattleState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToIdleBattleState()
+    {
+        ChangeState(IDLE_BATTLE_STATE);
+    }
+
+    public void ChangeToChaseState()
+    {
+        photonView.RPC("RPC_ChangeToChaseState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToChaseState()
+    {
+        ChangeState(CHASE_STATE);
+    }
+
+    public void ChangeToAttackState()
+    {
+        photonView.RPC("RPC_ChangeToAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToAttackState()
+    {
+        ChangeState(ATTACK_STATE);
+    }
+
+    public void ChangeToGroggyState()
+    {
+        photonView.RPC("RPC_ChangeToGroggyState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToGroggyState()
+    {
+        ChangeState(GROGGY_STATE);
+    }
+
+    public void ChangeToDieState()
+    {
+        photonView.RPC("RPC_ChangeToDieState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToDieState()
+    {
+        ChangeState(DIE_STATE);
+    }
+
+    public void ChangeToCounterEnableState()
+    {
+        photonView.RPC("RPC_ChangeToCounterEnableState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToCounterEnableState()
+    {
+        ChangeState(COUNTER_ENABLE_STATE);
+    }
+    public void ChangeToCounterAttackState()
+    {
+        photonView.RPC("RPC_ChangeToCounterAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToCounterAttackState()
+    {
+        ChangeState(COUNTER_ATTACK_STATE);
+    }
+    public void ChangeToBuffState()
+    {
+        photonView.RPC("RPC_ChangeToBuffState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToBuffState()
+    {
+        ChangeState(BUFF_STATE);
+    }
+
+
+    public void ChangeToPatternOneEnableState()
+    {
+        photonView.RPC("RPC_ChangeToPatternOneEnableState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToPatternOneEnableState()
+    {
+        ChangeState(PATTERN_ONE_ENABLE_STATE);
+    }
+    public void ChangeToPatternOneState()
+    {
+        photonView.RPC("RPC_ChangeToPatternOneState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToPatternOneState()
+    {
+        ChangeState(PATTERN_ONE_STATE);
+    }
+    public void ChangeToPatternTwoState()
+    {
+        photonView.RPC("RPC_ChangeToPatternTwoState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToPatternTwoState()
+    {
+        ChangeState(PATTERN_TWO_STATE);
+    }
+    public void ChangeToPatternTwoWindmillState()
+    {
+        photonView.RPC("RPC_ChangeToPatternTwoWindmillState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToPatternTwoWindmillState()
+    {
+        ChangeState(PATTERN_TWO_WINDMILL_STATE);
+    }
+    public void ChangeToBackPositionState()
+    {
+        photonView.RPC("RPC_ChangeToBackPositionState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToBackPositionState()
+    {
+        ChangeState(BACK_POSITION_STATE);
+    }
+    public void ChangeToToDrangonState()
+    {
+        photonView.RPC("RPC_ChangeToToDrangonState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToToDrangonState()
+    {
+        ChangeState(TO_DRAGON_STATE);
+    }
+
+
+
+
+    [PunRPC]
+    void RPC_TakeDamage(int attackDamage, bool isCounter, int shield, bool evasion, int defense)
+    {
+        CalcDamage(attackDamage, isCounter, shield, evasion, defense);
     }
 }

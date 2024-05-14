@@ -20,8 +20,9 @@ public class IprisPatternTwo : Pattern
     public override IEnumerator StartPatternCast()
     {
         Vector3 destToTarget = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
+        
         float duration = CalcTimeToDest(destToTarget);
-
+        Debug.Log($"이게 몇초나 나올까 {duration}");
         yield return new WaitForSeconds(duration);
 
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upPos);
