@@ -59,7 +59,7 @@ namespace MummyWarriorStateItem
                 _controller.ChangeState(_controller.WIND_MILL_STATE);
             }
 
-            if (IsStayForSeconds())
+            if (IsStayForSeconds(2.0f))
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
             }

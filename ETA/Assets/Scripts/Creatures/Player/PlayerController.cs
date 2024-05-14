@@ -57,8 +57,8 @@ public class PlayerController : BaseController
 
         // TODO : 번호에 따른 목적지 변경 해줘야함
 
-        UI_CharacterNickName ui = Managers.UI.MakeWorldSpaceUI<UI_CharacterNickName>(transform);
-        ui.NickName = photonView.Owner.NickName;
+        //UI_CharacterNickName ui = Managers.UI.MakeWorldSpaceUI<UI_CharacterNickName>(transform);
+        //ui.NickName = photonView.Owner.NickName;
 
 
         _stateMachine.CurState = IDLE_STATE;
@@ -187,14 +187,10 @@ public class PlayerController : BaseController
         _destination = GameObject.Find(pos).transform;
         transform.position = _destination.position;
         Debug.Log(Managers.Scene.CurrentScene.SceneType);
-        if(Managers.Scene.CurrentScene.SceneType == Define.Scene.Tutorial)
-        {
-            Camera.main.GetComponent<CameraController>()._player = gameObject;
-        }
-        else
-        {
-            Camera.main.GetComponent<CameraController>()._player = _destination.parent.gameObject;
-        }
+
+
+        Camera.main.GetComponent<CameraController>()._player = gameObject;
+
         
 
     }

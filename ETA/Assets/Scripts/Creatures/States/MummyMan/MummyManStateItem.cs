@@ -72,7 +72,7 @@ namespace MummyManStateItem
             {
                 SommonMonsterEvent();
             }
-            else if (IsDeadBuffer())
+            else if (IsDeadBuffer())        // 2번 사용하도록 수정
             {
                 _controller.ChangeState(_controller.FORE_SHADOWING_STATE);
             }
@@ -88,7 +88,7 @@ namespace MummyManStateItem
             {
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
-            else if (IsStayForSeconds())
+            else if (IsStayForSeconds(2.0f))
             {
                 _controller.ChangeState(_controller.ATTACK_STATE);
             }
@@ -353,7 +353,7 @@ namespace MummyManStateItem
     public class RushState : MummyManState
     {
         Vector3 destination;
-        float tempDist;
+        float tempStopDist;
         float rushTime;
 
         public RushState(MummyManController controller) : base(controller)
@@ -363,12 +363,11 @@ namespace MummyManStateItem
         public override void Enter()
         {
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToRushState();
-            tempDist = _agent.stoppingDistance;
+            tempStopDist = _agent.stoppingDistance;
             _agent.stoppingDistance = 0;
             _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
 
             destination = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
-            destination.y = _controller.transform.position.y;
 
             SetStartAndDestPos(_controller.transform.position, destination);
 
@@ -376,10 +375,11 @@ namespace MummyManStateItem
             _animator.SetFloat("RushSpeed", 2.0f);
             _animator.CrossFade(_animData.RushParamHash, 0.1f);
 
-            _agent.SetDestination(_controller.DestPos);
             StartCast((int)EMummyManPattern.Rush);
 
-            rushTime = CalcTimeToDest(_controller.DestPos);
+            // _controller.DestPos => destination
+            _agent.SetDestination(destination);
+            rushTime = CalcTimeToDest(destination);
         }
 
         public override void Execute()
@@ -392,7 +392,8 @@ namespace MummyManStateItem
         }
         public override void Exit()
         {
-            _agent.stoppingDistance = tempDist;
+            _agent.ResetPath();
+            _agent.stoppingDistance = tempStopDist;
             _agent.speed = _controller.Stat.MoveSpeed;
         }
     }
@@ -411,7 +412,6 @@ namespace MummyManStateItem
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToWindMillState();
             _agent.velocity = Vector3.zero;
 
-            Debug.Log("Wind Mill 상태 됐다");
             InitTime(_animData.WindMillAnim.length);
             _animator.CrossFade(_animData.WindMillParamHash, 0.1f);
 
