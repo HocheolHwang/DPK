@@ -128,6 +128,7 @@ public class Define
         Thunder2,
         SpikeIce,
         FireTrail,
+        FireWall,
         BloodExplosion,
         Explosion,
         GroundCrash,
@@ -155,6 +156,7 @@ public class Define
         TripleSlash2,
         TripleSlash3,
         ThrowingShield,
+        ShieldSlam,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
