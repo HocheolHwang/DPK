@@ -14,4 +14,6 @@ public interface IBuffStat
     void RemoveShield(int amount);
     void IncreaseDamage(int amount);
     void DecreaseDamage(int amount);
+    void IncreaseSpeed(int amount);
+    void DecreaseSpeed(int amount);
 }
