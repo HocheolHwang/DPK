@@ -42,6 +42,8 @@ public class WhirlWind : Skill
         _animator.CrossFade("WHIRLWIND", 0.1f);
         StartCoroutine(WhirlWindCoroutine());
 
+        ParticleSystem psUI = Managers.Effect.Play(Define.Effect.WarriorMageUIEffect, 2.0f, gameObject.transform);
+
         for (int i = 0; i < 5; i++)
         {
             Vector3 randomPos = gameObject.transform.position + new Vector3

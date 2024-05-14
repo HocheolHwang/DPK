@@ -12,7 +12,7 @@ public class BloodBoom : Skill
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(5, 5, 5);
-        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/BloodBoom.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/BloodBoom.png");
     }
     public override IEnumerator StartSkillCast()
     {

@@ -15,7 +15,7 @@ public class Meteor : Skill
         skillRange = new Vector3(5, 5, 5);
         RangeType = Define.RangeType.Round;
         Damage = 100;
-        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Meteor.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/Meteor.png");
         // endPos.position = _skillSystem.TargetPosition;
         // startPos.position = endPos.position +  new Vector3(0f, 15f, 0f);
     }
