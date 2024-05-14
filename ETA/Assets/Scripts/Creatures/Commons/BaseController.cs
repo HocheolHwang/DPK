@@ -170,6 +170,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
     }
 
+
     public void CalcDamage(int attackDamage, bool isCounter ,int shield, bool evasion, int defense)
     {
         UI_AttackedDamage attackedDamage_ui = null;
@@ -312,6 +313,21 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
         photonView.RPC("RPC_TakeDamage", RpcTarget.Others, attackDamage, isCounter, shield, evasion, defense);
     }
 
+    public void Pushed(int power, float duration)
+    {
+        StartCoroutine(PushedCoroutine(power, duration));
+    }
 
+    IEnumerator PushedCoroutine(int power, float duration)
+    {
+        float time = 0;
+        while(time < duration)
+        {
+            Agent?.Move(transform.forward * -1 * power * Time.deltaTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        
+    }
 }
 
