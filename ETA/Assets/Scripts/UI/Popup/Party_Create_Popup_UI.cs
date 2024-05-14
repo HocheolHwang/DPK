@@ -106,22 +106,8 @@ public class Party_Create_Popup_UI : UI_Popup
 
         // 파티 생성
         Managers.Photon.MakeRoom(partyNameInputField.text);
-        try
-        {
-        }
-        catch(RoomCreationException ex)
-        {
-            var popupUI = GameObject.FindFirstObjectByType<Lobby_Popup_UI>();
-            if (popupUI != null)
-            {
-                Managers.Coroutine.StartCoroutine(popupUI.ShowWarningPopupCoroutine(ex.Title, ex.Message));
-            }
-            else
-            {
-                Debug.LogError("Lobby_Popup_UI is not found in the scene.");
-            }
-        }
-
     }
 
 }
+
+
