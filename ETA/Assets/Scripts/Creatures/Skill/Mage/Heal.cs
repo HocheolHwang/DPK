@@ -11,7 +11,7 @@ public class Heal : Skill
         SetCoolDownTime(10);
         SkillType = Define.SkillType.Immediately;
         base.Init();
-        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Heal.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/Heal.png");
     }
 
     public override IEnumerator StartSkillCast()

@@ -11,7 +11,7 @@ public class FlashLight : Skill
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(30, 10, 30);
-        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/FlashLight.png");
+        skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/FlashLight.png");
     }
     public override IEnumerator StartSkillCast()
     {

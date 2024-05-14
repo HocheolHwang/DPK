@@ -126,6 +126,7 @@ public class Define
         Thunder2,
         SpikeIce,
         FireTrail,
+        FireWall,
         BloodExplosion,
         Explosion,
         GroundCrash,
