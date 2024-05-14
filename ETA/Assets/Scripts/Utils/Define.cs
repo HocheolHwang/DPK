@@ -202,6 +202,7 @@ public class Define
         ChargeArrowCharge,
         ForestBless,
         ForestBlessAura,
+        Tempest,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         Ipris_Shield,
