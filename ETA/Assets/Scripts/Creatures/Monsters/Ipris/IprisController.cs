@@ -22,6 +22,7 @@ public class IprisController : BaseMonsterController
     public State PATTERN_ONE_STATE;
     public State PATTERN_TWO_STATE;
     public State PATTERN_TWO_WINDMILL_STATE;
+    public State BACK_POSITION_STATE;
     #endregion
 
     #region STATE VARIABLE
@@ -30,13 +31,15 @@ public class IprisController : BaseMonsterController
     [SerializeField] private float _counterTime;
     private const float _threadHoldCounter = 11.0f;       // 11초
     [SerializeField] private float _buffTime;
-    private const float _threadHoldBuff = 30.0f;          // 30초
+    private const float _threadHoldBuff = 15.0f;          // 15초
     [SerializeField] private float _patternTwoTime;       
-    private const float _threadHoldPatternTwo = 20.0f;    // 20초
+    private const float _threadHoldPatternTwo = 21.0f;    // 21초
     [SerializeField] private float _windMillCnt;
     [SerializeField] private int _patternOneCnt;          // HP가 MAX_HP의 절반
     private int _threadHoldPatternOne = 1;                // 1번만 수행
-    private bool _isCounterTrigger;                       // Counter 스킬에 맞았는지
+    [SerializeField] private bool _isCounterTrigger;      // Counter 스킬에 맞았는지
+    [SerializeField] private Vector3 _startPos;
+    [SerializeField] private Vector3 _destPos;
 
     public bool MeetPlayer { get => _meetPlayer; set => _meetPlayer = value; }
     public float CounterTime { get => _counterTime; set => _counterTime = value; }
@@ -50,6 +53,8 @@ public class IprisController : BaseMonsterController
     public int PatternOneCnt { get => _patternOneCnt; set => _patternOneCnt = value; }
     public int ThreadHoldPatternOne { get => _threadHoldPatternOne; }
     public bool IsCounterTrigger { get => _isCounterTrigger; set => _isCounterTrigger = value; }
+    public Vector3 StartPos { get => _startPos; set => _startPos = value; }
+    public Vector3 DestPos { get => _destPos; set => _destPos = value; }
     #endregion
 
     private IprisAnimationData _animData;
@@ -87,6 +92,7 @@ public class IprisController : BaseMonsterController
         BUFF_STATE = new BuffState(this);
         PATTERN_TWO_STATE = new PatternTwoState(this);
         PATTERN_TWO_WINDMILL_STATE = new PatternTwoWindMillState(this);
+        BACK_POSITION_STATE = new BackPositionState(this);
         PATTERN_ONE_ENABLE_STATE = new PatternOneEnableState(this);
         PATTERN_ONE_STATE = new PatternOneState(this);
         TO_DRAGON_STATE = new ToDragonState(this);
@@ -94,5 +100,8 @@ public class IprisController : BaseMonsterController
 
         Agent.stoppingDistance = Detector.AttackRange - 0.3f;
         UnitType = Define.UnitType.Ipris;
+
+        _counterTime = 4.0f;
+        _buffTime = 10.0f;
     }
 }

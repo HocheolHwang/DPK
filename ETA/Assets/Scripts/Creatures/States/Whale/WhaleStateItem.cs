@@ -134,7 +134,6 @@ namespace WhaleStateItem
             _animator.CrossFade(_animData.AttackParamHash, 0.4f);
 
             StartCast((int)EWhalePattern.FirstAuto);
-            
         }
 
         public override void Execute()

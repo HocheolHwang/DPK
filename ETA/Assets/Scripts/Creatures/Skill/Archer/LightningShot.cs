@@ -7,7 +7,7 @@ public class LightningShot : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(20);
         Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Holding;
@@ -75,6 +75,9 @@ public class LightningShot : Skill
         //}
         //Managers.Effect.Stop(ps1);
         //ParticleSystem psUI = Managers.Effect.Play(Define.Effect.ArcherMageUIEffect, 1.0f, gameObject.transform);
+
+        ParticleSystem psUI = Managers.Effect.Play(Define.Effect.ArcherMageUIEffect, 2.0f, gameObject.transform);
+
         Managers.Coroutine.Run(LightningShotCollavoCoroutine());
 
         yield return new WaitForSeconds(0.1f);
@@ -90,7 +93,7 @@ public class LightningShot : Skill
         //ps.Play();
         Managers.Sound.Play("Skill/LightningShot");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, false);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2.0f;
         hitbox.transform.rotation = gameObject.transform.rotation;
@@ -102,14 +105,13 @@ public class LightningShot : Skill
 
     IEnumerator LightningShotCollavoCoroutine()
     {
-        ParticleSystem psUI = Managers.Effect.Play(Define.Effect.ArcherMageUIEffect, 2.0f, gameObject.transform);
         ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.CollavoBlackHole, 2.0f, gameObject.transform);
         ps1.transform.position = transform.position;
         //ps1.Play();
         Managers.Sound.Play("Skill/CollavoBlackhole");
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 8;
         hitbox.transform.localScale = CollavoSkillRange;
 

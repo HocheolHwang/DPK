@@ -1,4 +1,3 @@
-using MummyManStateItem;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +25,6 @@ namespace IprisStateItem
             if (_detector.Target != null)
             {
                 Debug.Log("IDLE TO CHASE");
-                _controller.MeetPlayer = true;
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
         }
@@ -51,18 +49,20 @@ namespace IprisStateItem
         {
             _agent.speed = _stat.MoveSpeed;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
+
+            _controller.MeetPlayer = true;
         }
 
         public override void Execute()
         {
             if (_detector.Target == null)
             {
-                Debug.Log("CHASE TO IDLE");
+                //Debug.Log("CHASE TO IDLE");
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
             else if (_detector.Target != null && _detector.IsArriveToTarget())
             {
-                Debug.Log("CHASE TO IDLE_BATTLE");
+                //Debug.Log("CHASE TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
             else
@@ -98,7 +98,7 @@ namespace IprisStateItem
         {
             if (!_detector.IsArriveToTarget())
             {
-                Debug.Log("IDLE_BATTLE TO IDLE");
+                //Debug.Log("IDLE_BATTLE TO IDLE");
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
             else if (_controller.BuffTime >= _controller.ThreadHoldBuff)
@@ -121,7 +121,7 @@ namespace IprisStateItem
                 //Debug.Log("IDLE_BATTLE TO PATTERN_TWO");
                 _controller.ChangeState(_controller.PATTERN_TWO_STATE);
             }
-            else if (IsStayForSeconds(1.0f))
+            else if (IsStayForSeconds(2.0f))
             {
                 //Debug.Log("IDLE_BATTLE TO ATTACK");
                 _controller.ChangeState(_controller.ATTACK_STATE);
@@ -149,6 +149,8 @@ namespace IprisStateItem
 
             InitTime(_animData.BuffAnim.length);
             _animator.CrossFade(_animData.BuffParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.BUFF);
         }
 
         public override void Execute()
@@ -156,7 +158,7 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
-                Debug.Log("BUFF TO IDLE_BATTLE");
+                //Debug.Log("BUFF TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
@@ -177,19 +179,24 @@ namespace IprisStateItem
 
         public override void Enter()
         {
+            // 0.15초 동안 유지되기 떄문에 카운터를 치지 않았음에도 true 조건을 만족하는 경우를 배제
+            _controller.IsHitCounter = false;
+
             _agent.velocity = Vector3.zero;
             _controller.PatternOneCnt++;
 
             InitTime(_animData.PatternOneEnableAnim.length);
             _animator.SetFloat("PatternOneEnableSpeed", 0.5f);
             _animator.CrossFade(_animData.PatternOneEnableParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.PatternOneEnable);
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
 
-            if (_controller.IsHitCounter)
+            if ( !_controller.IsCounterTrigger && _controller.IsHitCounter )
             {
                 _controller.IsCounterTrigger = true;
             }
@@ -225,10 +232,12 @@ namespace IprisStateItem
             if (_controller.IsCounterTrigger)
             {
                 // 더 강한 공격
+                StartCast((int)EIprisPattern.PatternOneStrongAttack);
             }
             else
             {
                 // 보통 PATTER ONE
+                StartCast((int)EIprisPattern.PatternOneAttack);
             }
         }
 
@@ -262,6 +271,8 @@ namespace IprisStateItem
             InitTime(_animData.CounterEnableAnim.length);
             _animator.SetFloat("CounterEnableSpeed", 0.5f);
             _animator.CrossFade(_animData.CounterEnableParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.CounterEnable);
         }
 
         public override void Execute()
@@ -269,12 +280,12 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_controller.IsHitCounter)
             {
-                Debug.Log("COUNTER_ENABLE TO GROGGY");
+                //Debug.Log("COUNTER_ENABLE TO GROGGY");
                 _controller.ChangeState(_controller.GROGGY_STATE);
             }
             else if (_animTime >= _threadHold * 2.0f)
             {
-                Debug.Log("COUNTER_ENABLE TO COUNTER_ATTACK");
+                //Debug.Log("COUNTER_ENABLE TO COUNTER_ATTACK");
                 _controller.ChangeState(_controller.COUNTER_ATTACK_STATE);
             }
         }
@@ -299,6 +310,8 @@ namespace IprisStateItem
             InitTime(_animData.CounterAttackAnim.length);
             _animator.SetFloat("CounterAttackSpeed", 0.5f);
             _animator.CrossFade(_animData.CounterAttackParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.CounterAttack);
         }
 
         public override void Execute()
@@ -306,7 +319,7 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold * 2.0f)
             {
-                Debug.Log("COUNTER_ATTACK TO IDLE_BATTLE");
+                //Debug.Log("COUNTER_ATTACK TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
@@ -321,36 +334,61 @@ namespace IprisStateItem
     #region PATTERN_TWO
     public class PatternTwoState : IprisState
     {
+        float animSpeed;
+        float tempStopDist;
+        float rushTime;
+
         public PatternTwoState(IprisController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
-            _agent.velocity = Vector3.zero;
             _controller.WindMillCnt++;
 
+            // 돌진에 대한 세팅
+            _controller.StartPos = _controller.transform.position;
+            _controller.DestPos = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
+            tempStopDist = _agent.stoppingDistance;
+            _agent.stoppingDistance = 0;
+            _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
+
+
             InitTime(_animData.PatternTwoAnim.length);
-            _animator.SetFloat("PatternTwoSpeed", 0.5f);
+            rushTime = CalcTimeToDest(_controller.DestPos);
+            animSpeed = _threadHold / rushTime - 0.05f;
+            Debug.Log($"rushTime: {rushTime} | threadHold: {_threadHold} | animSpeed: {animSpeed}");
+
+            _animator.SetFloat("PatternTwoSpeed", animSpeed);
             _animator.CrossFade(_animData.PatternTwoParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.PatternTwo);
+
+            _agent.SetDestination(_controller.DestPos);
         }
 
         public override void Execute()
         {
-            _animTime += Time.deltaTime;
-            if (_animTime >= (_threadHold * 2.0f) && _controller.WindMillCnt >= _controller.ThreadHoldWindMill)
+            if (Vector3.Distance(_controller.transform.position, _controller.DestPos) <= 3.0f)
+            {
+                _agent.velocity = Vector3.zero;
+            }
+            if (IsStayForSeconds(rushTime) && _controller.WindMillCnt >= _controller.ThreadHoldWindMill)
             {
                 //Debug.Log("PATTERN_TWO TO WIND_MILL");
                 _controller.ChangeState(_controller.PATTERN_TWO_WINDMILL_STATE);
             }
-            else if (_animTime >= (_threadHold * 2.0f))
+            else if (IsStayForSeconds(rushTime))
             {
-                //Debug.Log("PATTERN_TWO TO IDLE_BATTLE");
-                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+                //Debug.Log("PATTERN_TWO TO BACK_POSITION");
+                _controller.ChangeState(_controller.BACK_POSITION_STATE); 
             }
         }
         public override void Exit()
         {
+            _agent.ResetPath();
+            _agent.stoppingDistance = tempStopDist;
+            _agent.speed = _controller.Stat.MoveSpeed;
             _controller.PatternTwoTime = 0;
         }
     }
@@ -372,6 +410,8 @@ namespace IprisStateItem
             InitTime(_animData.PatternTwoWindMillAnim.length);
             _animator.SetFloat("WindMillSpeed", 0.5f);
             _animator.CrossFade(_animData.PatternTwoWindMillParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.PatternTwoWindMill);
         }
 
         public override void Execute()
@@ -379,12 +419,49 @@ namespace IprisStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= (_threadHold * 2.0f))
             {
-                //Debug.Log("PATTERN_TWO_WINDMILL TO IDLE_BATTLE");
+                //Debug.Log("PATTERN_TWO_WINDMILL TO BACK_POSITION");
+                _controller.ChangeState(_controller.BACK_POSITION_STATE);
+            }
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- BACK_POSITION ------------------------------------------------
+    #region BACK_POSITION
+    public class BackPositionState : IprisState
+    {
+        public BackPositionState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            _agent.enabled = false;
+
+            _controller.DestPos = _controller.StartPos;
+
+            _animator.CrossFade(_animData.IdleBattleParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            // N초 뒤에 IDLE_BATTLE 상태로 전환
+            if (IsStayForSeconds(1.0f))
+            {
+                // EFFECT, SOUND
+                Managers.Effect.Play(Define.Effect.Ipris_BackPos, 0, _controller.transform);
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
         public override void Exit()
         {
+            // 원래 자리로 돌아가기
+            _controller.transform.position = _controller.DestPos;
+            _agent.enabled = true;
         }
     }
     #endregion
@@ -402,6 +479,8 @@ namespace IprisStateItem
             _agent.velocity = Vector3.zero;
             InitTime(_animData.AttackFirstAnim.length + _animData.AttackSecondAnim.length);
             _animator.CrossFade(_animData.AttackParamHash, 0.2f);
+
+            StartCast((int)EIprisPattern.ATTACK);
         }
 
         public override void Execute()
@@ -469,6 +548,10 @@ namespace IprisStateItem
             _animator.CrossFade(_animData.ToDragonParamHash, 0.1f);
 
             // 산화하는 애니메이션 재생
+            Vector3 rootUp = _controller.transform.TransformDirection(Vector3.up * 1.5f);
+            ParticleSystem ps = Managers.Effect.ContinuePlay(Define.Effect.Ipris_ToDragon, _controller.transform);
+            ps.transform.SetParent(_controller.transform);
+            ps.transform.localPosition = _controller.transform.position + rootUp;
         }
 
         public override void Execute()
@@ -503,7 +586,7 @@ namespace IprisStateItem
 
             if (_controller.PrevState is CounterEnableState)      // Counter Enable
             {
-                groggyTime = 1.7f;
+                groggyTime = 2.5f;
                 ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
                 ps.transform.SetParent(_controller.transform);
                 ps.transform.localPosition = new Vector3(0, 1.0f, 0);

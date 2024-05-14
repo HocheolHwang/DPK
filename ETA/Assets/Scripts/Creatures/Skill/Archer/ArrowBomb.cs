@@ -51,7 +51,7 @@ public class ArrowBomb : Skill
         yield return new WaitForSeconds(0.7f);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, true);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage+10, -1, true);
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
         yield return new WaitForSeconds(0.1f);

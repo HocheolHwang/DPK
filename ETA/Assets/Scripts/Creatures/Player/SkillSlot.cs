@@ -15,6 +15,7 @@ public class SkillSlot : MonoBehaviour
     private Animator _animator;
 
     private Skill _currentSkill;
+    public Skill PreviousSkill;
     public Skill CurrentSkill { get { return _currentSkill; } }
 
     private string[] loadedSkills = new string[8];
@@ -35,17 +36,17 @@ public class SkillSlot : MonoBehaviour
         switch (gameObject.name.Replace("(Clone)",""))
         {
             case "Warrior": // 워리어
-                loadedSkills = new string[] { "HolyHammer", "TelekineticSwords", "DrawSword", "WhirlWind", "Guard", "Blessing", "Massacre", "WindSlash" };
+                loadedSkills = new string[] { "DoubleSlash", "TripleSlash", "DrawSword", "WhirlWind", "Guard", "BackStep", "ShieldSlam", "WindSlash" };
                 //for(int i = 0; i < 8; i++)
                 //{
                 //    loadedSkills[i] = Managers.Player.warriorSkills[i].skillName;
                 //}
                 break;
             case "Archer": // 아처
-                loadedSkills = new string[]{ "ArrowShower", "RapidArrow", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "ForestSpirit", "LightningShot" };
+                loadedSkills = new string[]{ "ForestBless", "ScatterArrow", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "ForestSpirit", "LightningShot" };
                 break;
             case "Mage": // 메이지
-                loadedSkills = new string[] { "Meteor", "IceBone", "FlashLight", "Thunder", "Heal", "Protection", "BloodBoom", "Gravity" };
+                loadedSkills = new string[] { "Meteor", "IceBone", "FlashLight", "Thunder", "Heal", "Protection", "BloodBoom", "FireWall" };
                 break;
         }
 

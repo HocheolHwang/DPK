@@ -84,6 +84,8 @@ public class WindSlash : Skill
         //yield return new WaitForSeconds(0.1f);
         //Managers.Resource.Destroy(hitbox.gameObject);
 
+        ParticleSystem psUI = Managers.Effect.Play(Define.Effect.WarriorArcherUIEffect, 2.0f, gameObject.transform);
+
         Managers.Coroutine.Run(WindSlashCollavoCoroutine());
 
         yield return new WaitForSeconds(1.0f);

@@ -1123,7 +1123,7 @@ Transform:
   m_GameObject: {fileID: 5081131588909657924}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 277.71, y: 0.5833333, z: -3.1000004}
+  m_LocalPosition: {x: 82.98, y: 0.5833333, z: -3.0000005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1258,7 +1258,7 @@ MonoBehaviour:
   _hp: 100
   _moveSpeed: 3
   _attackDamage: 3
-  _defense: 5
+  _defense: 200
   _shield: 0
 --- !u!114 &1245111619745573614
 MonoBehaviour:
@@ -1278,6 +1278,7 @@ MonoBehaviour:
   Agent: {fileID: 0}
   Stat: {fileID: 0}
   _isHitCounter: 0
+  _windMillTime: 0
 --- !u!114 &2969820035003128348
 MonoBehaviour:
   m_ObjectHideFlags: 0

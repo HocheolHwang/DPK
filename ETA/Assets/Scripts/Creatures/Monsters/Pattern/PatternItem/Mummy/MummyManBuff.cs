@@ -69,8 +69,6 @@ public class MummyManBuff : Pattern
 
     IEnumerator DestroyShield(ParticleSystem ps, Transform controller, float afterTime, int shield)
     {
-        Debug.Log($"Shield : {controller.GetComponent<Stat>().Shield}");
-
         float timer = 0;
         while (timer <= afterTime)
         {

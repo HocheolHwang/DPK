@@ -10,7 +10,7 @@ public class MummyBufferBuff : Pattern
     [Header("개발 편의성")]
     [SerializeField] Vector3 _hitboxRange = new Vector3(2.0f, 2.0f, 2.0f);
 
-    private Transform[] _closedMonsterList;
+    private List<Transform> _closedMonsterList;
     private float duration;
     private float buffDuration;
     private int healAmount;
@@ -67,11 +67,11 @@ public class MummyBufferBuff : Pattern
             return;
         }
 
-        _closedMonsterList = new Transform[monsters.Length];
-
+        _closedMonsterList = new List<Transform>();
         for (int i = 0; i < monsters.Length; ++i)
         {
-            _closedMonsterList[i] = monsters[i].transform;
+            if (monsters[i].gameObject.GetComponent<MummyBufferController>() != null) continue;
+            _closedMonsterList.Add(monsters[i].transform);
         }
     }
 

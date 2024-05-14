@@ -9,8 +9,6 @@ using static UnityEngine.Rendering.DebugUI;
 // 몬스터는 던전 씬에서만 로직이 필요하기 때문이다.
 public class MonsterManager : MonoBehaviour
 {
-    //[SerializeField] private List<GameObject> _existPlayerList;
-    //[SerializeField] private List<GameObject> _existMonsterList;
 
     // 싱글톤
     private static MonsterManager _instance;
@@ -38,17 +36,6 @@ public class MonsterManager : MonoBehaviour
         {
             _instance = this;
         }
-    }
-
-    private void Start()
-    {
-
-        // TODO : 고처야할것
-
-        //_existPlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        //_existMonsterList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Monster"));
-        //_monsterCoList = new List<Coroutine>();
-        //_coStateDic = new Dictionary<Coroutine, bool>();
     }
 
     // --------------------------- Get the Destination using the players ----------------------------------
@@ -148,11 +135,6 @@ public class MonsterManager : MonoBehaviour
             {
                 tmp.Add(player.gameObject);
             }
-            //_existPlayerList.RemoveAll(player => player.GetComponent<Stat>().Hp <= 0);
-            //foreach (GameObject player in _existPlayerList)
-            //{
-            //    Debug.Log($"exist player: {player.name}");
-            //}
             return tmp;
         }
     }
@@ -166,23 +148,9 @@ public class MonsterManager : MonoBehaviour
             {
                 tmp.Add(monster.gameObject);
             }
-            //_existMonsterList.RemoveAll(monster => monster.GetComponent<Stat>().Hp <= 0);
-            //foreach (GameObject monster in _existMonsterList)
-            //{
-            //    Debug.Log($"exist monster: {monster.name}");
-            //}
-            //return _existMonsterList;
             return tmp;
         }
     }
 
-    //public List<Coroutine> MonsterCoList
-    //{
-    //    get
-    //    {
-    //        RemoveFinishCoroutines();
-    //        return _monsterCoList;
-    //    }
-    //}
     #endregion
 }

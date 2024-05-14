@@ -7,7 +7,7 @@ public class KnightGPhaseAttack : Pattern
 {
     [Header("개발 편의성")]
     [SerializeField] float _hitboxRadius = 2.5f;
-    [SerializeField] float _upLoc = 1.0f;
+    [SerializeField] float _upPos = 1.0f;
     [SerializeField] float _expandSpeed = 10.5f;
     [SerializeField] float _duration = 0.4f;
 
@@ -26,7 +26,7 @@ public class KnightGPhaseAttack : Pattern
     {
         // 멈췄을 때 target을 향해 hitbox, effect 생성
         Vector3 rootForward = transform.TransformDirection(Vector3.forward * _controller.Detector.AttackRange);
-        Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
+        Vector3 rootUp = transform.TransformDirection(Vector3.up * _upPos);
         Vector3 objectLoc = transform.position + rootForward + rootUp;
 
         yield return new WaitForSeconds(_createTime);

@@ -62,7 +62,7 @@ public class RapidArrow : Skill
         //ps1.Play();
         //Managers.Sound.Play("Skill/ArrowShowerHit");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage-5);
         hitbox.transform.position = _skillSystem.TargetPosition;
 
 
@@ -76,7 +76,7 @@ public class RapidArrow : Skill
             ps02.transform.rotation = gameObject.transform.rotation;
             Managers.Resource.Destroy(hitbox.gameObject);
             hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-            hitbox.SetUp(transform, Damage);
+            hitbox.SetUp(transform, _controller.Stat.AttackDamage - 5);
             hitbox.transform.position = _skillSystem.TargetPosition;
             Managers.Sound.Play("Skill/ArrowShowerHit");
         }
