@@ -108,7 +108,9 @@ public class Define
         KnightG_PhaseAttack,
         // ------------------------ Common ------------------------------
         CounterEnable,
+        CounterEnable_Red,
         CounteredEffect_Blue,
+        CounteredEffect_Red,
         Groggy,
         // ------------------------ Common  ------------------------------
         EnergyNovaBlue,
@@ -195,6 +197,16 @@ public class Define
         ChargeArrowCharge,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
+        Ipris_Shield,
+        Ipris_CounterAttack,
+        Ipris_CounterAttackExplo,
+        Ipris_PatternOneAttack,
+        Ipris_PatternTwo,
+        Ipris_PatternTwoWindMill,
+        Ipris_BackPos,
+        Ipris_AttackFirst,
+        Ipris_AttackSecond,
+        Ipris_ToDragon,
         // ------------------------ Ipris ------------------------------
         MaxCount
     }

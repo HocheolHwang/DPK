@@ -7,6 +7,7 @@ public class IprisBuff : Pattern
     [Header("개발 편의성")]
     [SerializeField] Vector3 _buffRange = new Vector3(2.0f, 2.0f, 2.0f);
     [SerializeField] Vector3 _shieldRange = new Vector3(0.7f, 0.7f, 0.7f);
+    [SerializeField] float _upPos = 1.5f;
 
     private float duration;
     private int upAmountATK;
@@ -21,24 +22,23 @@ public class IprisBuff : Pattern
         _patternRange = _buffRange;
 
         // Buff Stat
-        duration = 30.0f;
-        upAmountATK = 10;
-        upAmountDEF = 5;
-        upShield = _controller.Stat.MaxHp / 10;
+        upAmountATK = 2;
+        upAmountDEF = 1;
+        upShield = (int)(_controller.Stat.MaxHp * 0.15f);
     }
 
     public override IEnumerator StartPatternCast()
     {
-        Vector3 rootUp = transform.TransformDirection(Vector3.up);
+        Vector3 rootUp = transform.TransformDirection(Vector3.up * _upPos);
 
         yield return new WaitForSeconds(_createTime);
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Ipris_Buff, duration, null);
+        ParticleSystem ps = Managers.Effect.ContinuePlay(Define.Effect.Ipris_Buff);
         ps.transform.localScale = _patternRange;
         ps.transform.SetParent(_controller.transform);
         ps.transform.position = _controller.transform.position;
 
-        ParticleSystem shieldPS = Managers.Effect.Play(Define.Effect.Mummy_Shield, duration, null);
+        ParticleSystem shieldPS = Managers.Effect.ContinuePlay(Define.Effect.Ipris_Shield);
         shieldPS.transform.localScale = _shieldRange;
         shieldPS.transform.SetParent(_controller.transform);
         shieldPS.transform.position = _controller.transform.position + rootUp;
@@ -46,5 +46,20 @@ public class IprisBuff : Pattern
         _controller.IncreaseDamage(upAmountATK);
         _controller.IncreaseDefense(upAmountDEF);
         _controller.GetShield(upShield);
+
+        StartCoroutine(DestroyShield(shieldPS, _controller.transform));
+    }
+
+    IEnumerator DestroyShield(ParticleSystem ps, Transform controller)
+    {
+        while (true)
+        {
+            if (controller.GetComponent<Stat>().Shield <= 0)
+            {
+                Managers.Effect.Stop(ps);
+                yield break;
+            }
+            yield return null;
+        }
     }
 }
