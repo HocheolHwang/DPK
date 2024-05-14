@@ -53,6 +53,7 @@ public class WhaleCounterEnable : Pattern
         
         _ps = Managers.Effect.Play(Define.Effect.CounterEnable, _controller.transform);
         _ps.transform.position = _hitbox.transform.position;
+        _ps.transform.localScale = _ps.transform.localScale* 0.7f;
         ParticleSystem.MainModule _psMainModule = _ps.main;
         _psMainModule.startLifetime = _animData.CounterEnableAnim.length * 4.0f;
 

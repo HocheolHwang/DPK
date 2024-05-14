@@ -49,7 +49,7 @@ public class ArrowStab : Skill
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/ArrowStab");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, false);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage+10, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = _skillSystem.TargetPosition + transform.forward;
         hitbox.transform.localScale = skillRange;
