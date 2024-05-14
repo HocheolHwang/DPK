@@ -551,7 +551,6 @@ namespace IprisStateItem
             Vector3 rootUp = _controller.transform.TransformDirection(Vector3.up * 1.5f);
             ParticleSystem ps = Managers.Effect.ContinuePlay(Define.Effect.Ipris_ToDragon, _controller.transform);
             ps.transform.SetParent(_controller.transform);
-            ps.transform.localPosition = _controller.transform.position + rootUp;
         }
 
         public override void Execute()
