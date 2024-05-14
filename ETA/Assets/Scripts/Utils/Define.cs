@@ -73,6 +73,7 @@ public class Define
         Player = 0,
         // ------------------- 소환수 ----------------------- 
         ForestSpirit,
+        WindSpirit,
         // ------------------- 일반 몬스터 -----------------------
         Boar,
         Tree,
@@ -205,6 +206,7 @@ public class Define
         ForestBless,
         ForestBlessAura,
         Tempest,
+        WindSpiritAttack,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         Ipris_Shield,
