@@ -157,7 +157,7 @@ public class PlayerManager
     }
     public void SetAllLevel(string classCode,int level)
     {
-        Debug.Log($"{classCode}의 레벨은 {level}");
+        //Debug.Log($"{classCode}의 레벨은 {level}");
         int index = 0;
         if(classCode == "C001") index = 0;
         else if(classCode == "C002") index = 1;

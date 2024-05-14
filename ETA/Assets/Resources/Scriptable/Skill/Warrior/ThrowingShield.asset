@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729891a97877d1548b59da4304320aef, type: 3}
   m_Name: ThrowingShield
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: f32a089e76c7fe445ba656d1a6371df7, type: 3}
   IsCollavo: 0
-  IsCounter: 0
-  SkillType: 0
-  RequiredLevel: 11
-  Damage: 0
-  CoolDownTime: 0
-  SkillCode: 
-  SkillName: 
-  SkillKoreanName: 
+  IsCounter: 1
+  SkillType: 1
+  RequiredLevel: 5
+  Damage: 50
+  CoolDownTime: 4
+  SkillCode: W104
+  SkillName: ThrowingShield
+  SkillKoreanName: "\uBC29\uD328 \uB358\uC9C0\uAE30"
   SkillDescription: 
   ConnectedSkillKoreanName: 
   CollavoSkillKoreanName: 
