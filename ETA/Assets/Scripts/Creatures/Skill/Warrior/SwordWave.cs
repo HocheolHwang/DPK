@@ -8,7 +8,7 @@ public class SwordWave : Skill
     {
         SetCoolDownTime(10);
         Damage = 20;
-        skillRange = new Vector3(2, 2, 2);
+        skillRange = new Vector3(4, 2, 6);
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/SwordWave.png");
     }
@@ -23,28 +23,41 @@ public class SwordWave : Skill
         _animator.CrossFade("ATTACK3", 0.1f);
         //SwordVolleyBlue
         yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < 2; i++)
+        {
+            ParticleSystem ps = Managers.Effect.Play(Define.Effect.SwordWaveWhite, 0.0f, gameObject.transform);
+            Managers.Sound.Play("Skill/TargetSkill");
 
-        StartCoroutine(SwordWaveCoroutine());
+
+            StartCoroutine(SwordWaveCoroutine(ps));
+
+            yield return new WaitForSeconds(0.2f);
+            
+        }
+        
+
+        
 
         yield return new WaitForSeconds(0.4f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }
 
-    private IEnumerator SwordWaveCoroutine()
+    private IEnumerator SwordWaveCoroutine(ParticleSystem ps)
     {
-        for (int i = 0; i < 2; i++)
+        float duration = 0.5f;
+        float time = 0;
+        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+        hitbox.SetUp(transform, Damage);
+        hitbox.transform.position = gameObject.transform.position + transform.forward * 5f;
+        hitbox.transform.localScale = skillRange;
+        while (time < duration)
         {
-            ParticleSystem ps = Managers.Effect.Play(Define.Effect.SwordWaveWhite, gameObject.transform);
-            Managers.Sound.Play("Skill/TargetSkill");
-            HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-            hitbox.SetUp(transform, Damage);
-            hitbox.transform.position = gameObject.transform.position + transform.forward * 1f;
-            hitbox.transform.localScale = skillRange;
-
-            yield return new WaitForSeconds(0.2f);
-            Managers.Resource.Destroy(hitbox.gameObject);
-            Managers.Effect.Stop(ps);
+            hitbox.transform.position += gameObject.transform.forward * 16 * Time.deltaTime;
+            ps.transform.position += gameObject.transform.forward * 16 * Time.deltaTime;
+            time += Time.deltaTime;
+            yield return null;
         }
+        Managers.Resource.Destroy(hitbox.gameObject);
     }
 }
