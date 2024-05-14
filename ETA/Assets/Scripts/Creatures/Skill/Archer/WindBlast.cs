@@ -6,7 +6,7 @@ public class WindBlast : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(10);
         Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Immediately;
@@ -31,7 +31,8 @@ public class WindBlast : Skill
         ParticleSystem ps02 = Managers.Effect.Play(Define.Effect.WindBlast, 1.0f, gameObject.transform);
         Managers.Sound.Play("Skill/WindBlast");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, true);
+        //hitbox.SetUp(transform, Damage, -1, true);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage + 10, -1, true);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = _skillSystem.TargetPosition + transform.forward;
         hitbox.transform.localScale = skillRange;

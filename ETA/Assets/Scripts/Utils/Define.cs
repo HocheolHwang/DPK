@@ -191,6 +191,8 @@ public class Define
         WindBlast,
         ChargeArrow,
         ChargeArrowCharge,
+        ForestBless,
+        ForestBlessAura,
         // ------------------------ Ipris ------------------------------
         Ipris_Buff,
         // ------------------------ Ipris ------------------------------
