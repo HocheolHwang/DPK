@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729891a97877d1548b59da4304320aef, type: 3}
   m_Name: WhirlWind
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  IsCollavo: 0
+  Icon: {fileID: 21300000, guid: 702502de1226bd940a0b7fee57fb1072, type: 3}
+  IsCollavo: 1
   IsCounter: 0
-  SkillType: 0
+  SkillType: 3
   RequiredLevel: 3
   Damage: 10
-  CoolDownTime: 0
-  SkillCode: 
-  SkillName: 
-  SkillKoreanName: 
-  SkillDescription: 
-  ConnectedSkillKoreanName: 
-  CollavoSkillKoreanName: 
-  CollavoSkillDescription: 
+  CoolDownTime: 20
+  SkillCode: W401
+  SkillName: WhirlWind
+  SkillKoreanName: "\uD6E8\uC708\uB4DC"
+  SkillDescription: "\uC544\uC8FC \uBE60\uB974\uAC8C \uD68C\uC804\uBCA0\uAE30\uB97C
+    \uD558\uC5EC \uD68C\uC624\uB9AC\uB97C \uB9CC\uB4E0\uB2E4"
+  ConnectedSkillKoreanName: "\uC36C\uB354"
+  CollavoSkillKoreanName: "\uB1CC\uC6B0"
+  CollavoSkillDescription: "\uB113\uC740 \uBC94\uC704\uC5D0 \uD68C\uC624\uB9AC\uC640
+    \uBC88\uAC1C\uAC00 \uBAB0\uC544\uCCD0 \uC801\uB4E4\uC5D0\uAC8C \uD070 \uD53C\uD574\uB97C
+    \uC785\uD799\uB2C8\uB2E4."

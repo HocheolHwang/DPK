@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729891a97877d1548b59da4304320aef, type: 3}
   m_Name: Sting
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 01dc0e4f34d38c747ae8728d33f01dc1, type: 3}
   IsCollavo: 0
-  IsCounter: 0
-  SkillType: 0
-  RequiredLevel: 6
+  IsCounter: 1
+  SkillType: 1
+  RequiredLevel: 7
   Damage: 50
   CoolDownTime: 5
-  SkillCode: 
-  SkillName: 
-  SkillKoreanName: 
-  SkillDescription: 
+  SkillCode: W103
+  SkillName: Sting
+  SkillKoreanName: "\uCC0C\uB974\uAE30"
+  SkillDescription: "\uC9C0\uC815\uD55C \uBAAC\uC2A4\uD130\uC758 \uD5DB\uC810\uC744
+    \uBE60\uB974\uAC8C \uB6F0\uC5B4\uAC00 \uACF5\uACA9\uD55C\uB2E4"
   ConnectedSkillKoreanName: 
   CollavoSkillKoreanName: 
   CollavoSkillDescription: 
