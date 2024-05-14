@@ -65,21 +65,13 @@ public class TripleSlash : Skill
 
     private IEnumerator TelekineticSwordsCoroutine()
     {
-        Managers.Sound.Play("Skill/TargetSkill");
+        Managers.Sound.Play("Skill/Lightning");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
-        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.SwordVolleyBlue, 2.0f, hitbox.transform);
+        ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.LightningStrikeBlue, 2.0f, hitbox.transform);
+        yield return null;
 
-        for (int i = 0; i < 7; i++)
-        {
-            yield return new WaitForSeconds(0.20f);
-            Managers.Resource.Destroy(hitbox.gameObject);
-            hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-            hitbox.SetUp(transform, Damage);
-            hitbox.transform.position = _skillSystem.TargetPosition;
-            Managers.Sound.Play("Skill/TargetSkill");
-        }
     }
 
 

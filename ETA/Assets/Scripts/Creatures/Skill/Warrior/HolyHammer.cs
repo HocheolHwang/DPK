@@ -5,7 +5,7 @@ using UnityEngine;
 public class HolyHammer : Skill
 {
     private Coroutine holyhammerCoroutine;
-
+    
     protected override void Init()
     {
         SetCoolDownTime(2);

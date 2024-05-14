@@ -165,6 +165,12 @@ public class Define
         ThrowingShield,
         ShieldSlam,
         HolyHammerEffect2,
+        MoonSwordEffect,
+        QuadrupleSlash1,
+        QuadrupleSlash2,
+        QuadrupleSlash3,
+        QuadrupleSlash4,
+        LightningStrikeBlue,
         // ------------------------ Mummy ------------------------------
         MummyWarrior_WindMill,
         Mummy_RangedAttack,
