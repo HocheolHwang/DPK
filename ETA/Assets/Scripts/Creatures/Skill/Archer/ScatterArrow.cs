@@ -6,7 +6,7 @@ public class ScatterArrow : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(2);
+        SetCoolDownTime(7);
         Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Immediately;
@@ -28,7 +28,7 @@ public class ScatterArrow : Skill
     {
         Managers.Sound.Play("Skill/ArrowStab");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, false);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage+10, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = _skillSystem.TargetPosition + transform.forward;
         hitbox.transform.localScale = skillRange;

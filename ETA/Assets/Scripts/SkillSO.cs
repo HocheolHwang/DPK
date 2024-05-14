@@ -27,7 +27,7 @@ public class SkillSO : ScriptableObject
     public string SkillDescription; // 스킬 설명
 
     [Header("콜라보 스킬 정보")]
-    public string CollavoSkillName; // !!!!주의!!! 콜라보를 함께 발동할 스킬의 영어 이름
+    public string ConnectedSkillKoreanName; // 콜라보를 함께 발동할 스킬의 한글 이름
     public string CollavoSkillKoreanName; // 콜라보 스킬 한글 이름
     [TextArea]
     public string CollavoSkillDescription; // 콜라보 스킬 설명
