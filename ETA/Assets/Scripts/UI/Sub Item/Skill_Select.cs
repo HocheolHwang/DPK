@@ -116,14 +116,14 @@ public class Skill_Select : MonoBehaviour
         // selectedClassCode 값이 이전 값과 다를 경우
         if (selectedClassCode != previousSelectedClassCode)
         {
-            // 모든 스킬 정보 업데이트
-            UpdateAllSkillInfo(selectedClassCode);
+            // 이전 selectedClassCode 값을 현재 값으로 업데이트
+            previousSelectedClassCode = selectedClassCode;
 
             // 선택한 스킬 정보 업데이트
             UpdateSelectedSkillInfo(selectedClassCode);
 
-            // 이전 selectedClassCode 값을 현재 값으로 업데이트
-            previousSelectedClassCode = selectedClassCode;
+            // 모든 스킬 정보 업데이트
+            UpdateAllSkillInfo(selectedClassCode);
         }
     }
 

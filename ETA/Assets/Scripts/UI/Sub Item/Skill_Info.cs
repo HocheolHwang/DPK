@@ -58,7 +58,7 @@ public class Skill_Info : MonoBehaviour
 
         skillDescription = GameObject.Find("Skill_Description").GetComponent<TMP_Text>();
 
-        skillCategoryContainer = GameObject.Find("Skill_Category_Container").GetComponent<GameObject>();
+        skillCategoryContainer = GameObject.Find("Skill_Category_Container");
 
         skillCategoryIcon = GameObject.Find("Skill_Category_Icon").GetComponent<Image>();
         skillCategoryTitleText = GameObject.Find("Skill_Category_Title_Text").GetComponent<TMP_Text>();
@@ -68,13 +68,7 @@ public class Skill_Info : MonoBehaviour
         skillCategoryDescription = GameObject.Find("Skill_Category_Description").GetComponent<TMP_Text>();
         connectedSkillKoreanName = GameObject.Find("Connected_Skill_Name").GetComponent<TMP_Text>();
 
-        connectedSkillNameContainer = GameObject.Find("Connected_Skill_Name_Container").GetComponent<GameObject>();
-
-        // 선택된 스킬 정보 초기화
-        // skillName = ;
-
-        // 모든 스킬 정보 업데이트
-        UpdateSkillInfo(skillName);
+        connectedSkillNameContainer = GameObject.Find("Connected_Skill_Name_Container");
     }
 
 
@@ -98,6 +92,8 @@ public class Skill_Info : MonoBehaviour
             icon.sprite = skillData.Icon;
 
             // 스킬 종류 업데이트
+            isCollavo = skillData.IsCollavo;
+            isCounter = skillData.IsCounter;
             skillCategory.text = isCollavo ? "[ 콜라보 스킬 ]" : (isCounter ? "[ 카운터 스킬 ]" : "[ 일반 스킬 ]");
 
             // 스킬 타입 업데이트
@@ -135,7 +131,7 @@ public class Skill_Info : MonoBehaviour
             else if (isCounter)
             {
                 skillCategoryContainer.SetActive(true);
-                UpdateCounterInfo(skillData);
+                UpdateCounterInfo();
             }
             else
             {
@@ -173,7 +169,7 @@ public class Skill_Info : MonoBehaviour
     }
 
     // 카운터 스킬 정보를 업데이트하는 메서드
-    private void UpdateCounterInfo(SkillSO skillData)
+    private void UpdateCounterInfo()
     {
         // 카운터 스킬 아이콘 업데이트
         skillCategoryIcon.sprite = Resources.Load<Sprite>($"Sprites/Skill Slot/Counter Icon");
@@ -191,6 +187,6 @@ public class Skill_Info : MonoBehaviour
         skillCategoryDescription.text = "보스 몬스터를 3초간 그로기 상태에 빠뜨립니다.";
 
         // 콜라보 연동 스킬 컨테이너 비활성화
-        connectedSkillNameContainer.gameObject.SetActive(false);
+        connectedSkillNameContainer.SetActive(false);
     }
 }
