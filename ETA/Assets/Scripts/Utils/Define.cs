@@ -150,6 +150,8 @@ public class Define
         DarknessSlash,
         MagicMissileGreen,
         MagicMissileBlue,
+        WaterSplashSoft,
+        WaterSplatWide, 
         DoubleSlash1,
         DoubleSlash2,
         TripleSlash1,
