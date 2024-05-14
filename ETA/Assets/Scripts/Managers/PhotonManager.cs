@@ -27,9 +27,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region public fields
-    public bool IsConnecting{
+    public bool IsConnecting {
         set { isConnecting = value; }
-        get { return isConnecting; } 
+        get { return isConnecting; }
     }
 
     // 방 이름
@@ -38,7 +38,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         set { roomName = value; }
         get {
 
-            
+
             return ConvertRoomName(roomName);
         }
     }
@@ -100,7 +100,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.PrecisionForFloatSynchronization = 0.1f;
         //PhotonNetwork.SendRate = 60;
         // 임시 코드         
-        if (Managers.Player.GetNickName()==null)
+        if (Managers.Player.GetNickName() == null)
             Managers.Player.SetNickName(UnityEngine.Random.Range(0, 13412).ToString());
         //Managers.Player.SetNickName(Managers.Player.GetNickName());
         //Debug.Log(Managers.PlayerInfo.GetNickName());
@@ -150,7 +150,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 새로운 유니크 아이디(UID)를 생성하고 이를 문자열로 변환
         Guid newGuid = Guid.NewGuid();  // 새 GUID 생성
         string guidString = newGuid.ToString();  // GUID를 문자열로 변환
-        
+
         // 전송 데이터 생성
         PartyReqDto partyData = new PartyReqDto();
         partyData.partyId = guidString;
@@ -161,7 +161,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 생성된 방 이름 + ` + 시드 값
         roomName = roomName + "`" + seed;
         //dungeonIndex = PlayerPrefs.GetInt("SelectedDungeonNumber", 1); 
-        if(FindObjectOfType<Lobby_Scene>() != null)
+        if (FindObjectOfType<Lobby_Scene>() != null)
         {
             dungeonIndex = FindObjectOfType<Lobby_Scene>().currentDungeonNumber;
         }
@@ -169,7 +169,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             dungeonIndex = 0;
         }
-        
+
         // 로비에 Properties 등록해야 로비에서 설정 확인 가능
         room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "partyLeader", partyLeader }, { "seed", seed }, { "roomID", guidString }, { "dungeonIndex", DungeonIndex } };
         room.CustomRoomPropertiesForLobby = new string[] { "partyLeader", "seed", "roomID", "dungeonIndex" };
@@ -181,8 +181,24 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 방장 체크
         Managers.Player.SetPartyLeader(true);
 
-        
-        PhotonNetwork.CreateRoom(roomName, room);
+        try
+        {
+            // 파티 생성
+            PhotonNetwork.CreateRoom(roomName, room);
+        }
+        catch (RoomCreationException ex)
+        {
+                Debug.Log("여기서 exceptin 처리할수있냐:????");
+            var popupUI = GameObject.FindFirstObjectByType<Lobby_Popup_UI>();
+            if (popupUI != null)
+            {
+                Managers.Coroutine.StartCoroutine(popupUI.ShowWarningPopupCoroutine(ex.Title, ex.Message));
+            }
+            else
+            {
+                Debug.LogError("Lobby_Popup_UI is not found in the scene.");
+            }
+        }
     }
 
     public string ConvertRoomName(string newRoomName)
@@ -275,13 +291,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             }
         }
 
+        if(selectRoom == null)
+        {
+            throw new RoomCreationException("파티에 입장 할 수 없습니다.", "방이 존재하지 않습니다.");
+        }
+
         if (selectRoom.MaxPlayers <= selectRoom.PlayerCount)
         {
             // 방에 모든 사람이 들어가면 더 이상 들어갈 수 없음
-            return;
+            throw new RoomCreationException("파티에 입장 할 수 없습니다.", "방이 다 찼습니다.");
+            //return;
         }
 
-        PhotonNetwork.JoinRoom(selectRoom.Name);
+        try
+        {
+
+            PhotonNetwork.JoinRoom(selectRoom.Name);
+        }
+        catch(RoomCreationException ex)
+        {
+            Debug.Log("아니 여기는 들어오냐????");
+        }
     }
 
     // 테스트용
@@ -321,7 +351,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     // 파티 구성이 바뀌면 내번호도 바뀔 수 있음
     public void updatePlayerList()
-    {  
+    {
         int idx = 0;
         foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
         {
@@ -369,7 +399,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         isConnecting = true;
         Debug.Log("1. OnConnectedToMaster : 자동으로 로비로 입장");
-        
+
         PhotonNetwork.JoinLobby();
     }
 
@@ -394,7 +424,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 {
                     // 풀방 아님
                     if (room.PlayerCount != 0)
-                        roomlist[i] = room;    
+                        roomlist[i] = room;
                     // no player, no open, no multy
                     else if (room.PlayerCount == 0 || !room.IsOpen || !room.IsVisible)
                     {
@@ -417,10 +447,37 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         printList();
     }
 
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.LogError(returnCode + " : " + message);
+        // 파티 다 찼을 때 경고 줘야함
+
+        string title = "파티 만들기 실패";
+        string content = "파티 생성에 실패했습니다.";
+
+        throw new RoomCreationException(title, content);
+    }
+
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.Log(returnCode + " : " + message);
+        Debug.LogError(returnCode + " : " + message);
         // 파티 다 찼을 때 경고 줘야함
+
+        string title = "파티에 입장 할 수 없습니다.";
+        string content = "파티 입장에 실패했습니다.";
+        if (returnCode == 32758)
+            content = "방이 존재하지 않습니다.";
+        else if (returnCode == 32764)
+            content = "방이 다 찼습니다.";
+        else if (returnCode == 32765)
+            content = "방이 닫혔습니다.";
+        else if (returnCode == 32767)
+            content = "유효하지 않은 방입니다.";
+        else if (returnCode == 32756)
+            content = "서버에 접속할 수 없습니다.";
+
+        throw new RoomCreationException(title, content);
+
     }
 
     public override void OnJoinedRoom()
@@ -429,7 +486,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // TODO: 문제가 생기는지 확인
         //if (PhotonNetwork.NickName == null)
         //    PhotonNetwork.NickName = Managers.Player.GetNickName();
-        
+
         //if (PhotonNetwork.IsMasterClient) { 
         //    Managers.Player.SetPartyLeader(true);
         //    GameObject gameSystem = PhotonNetwork.Instantiate("Prefabs/GameSystem", new Vector3(), new Quaternion());
@@ -443,7 +500,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         //Debug.Log("방 입장");
         //Debug.Log($"방 이름 : {PhotonNetwork.CurrentRoom.Name} \n 파티장 : {(string)PhotonNetwork.CurrentRoom.CustomProperties["partyLeader"]} " +
-            //$"\n 방 id : {(string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"]} \n 던전 id : {(int)PhotonNetwork.CurrentRoom.CustomProperties["dungeonIndex"]} ");
+        //$"\n 방 id : {(string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"]} \n 던전 id : {(int)PhotonNetwork.CurrentRoom.CustomProperties["dungeonIndex"]} ");
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
