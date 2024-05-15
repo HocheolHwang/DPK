@@ -74,4 +74,28 @@ public class PhotonChat : MonoBehaviour
     public List<ChatMessage> GetChatMessage(){
         return new List<ChatMessage>( chatLog);
     }
+
+
+    public void CreateParty()
+    {
+        // 파티 생성 요청 전송
+        Managers.Photon.SendRoomLog(PartyEnter);
+    }
+    public void PartyEnter()
+    {
+        photonView.RPC("SendRoomEnterLog", RpcTarget.All);
+    }
+
+    // 던전 들어갈 때 부르기
+    // 모두 파티에 등록
+    [PunRPC]
+    public void SendRoomEnterLog()
+    {
+        DungeonReqDto dto = new DungeonReqDto();
+
+        dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
+
+        Managers.Network.EnterPartyCall(dto);
+
+    }
 }

@@ -408,7 +408,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
 
         expResult = false;
-        FindObjectOfType<PhotonChat>().gameObject.GetOrAddComponent<SendRoomLog>();
+        
+        if(PhotonNetwork.IsMasterClient)
+            StartCoroutine("WaitForAllPlayersToEnterDungeon");
 
         Managers.Photon.CloseRoom();
 
@@ -996,4 +998,43 @@ public class Dungeon_Popup_UI : UI_Popup
         }
     }
 
+
+    IEnumerator WaitForAllPlayersToEnterDungeon()
+    {
+        bool allPlayersReady = false;
+        // 플레이어들의 준비 상태를 확인합니다.
+        while (!allPlayersReady)
+        {
+            allPlayersReady = CheckAllPlayersReady();
+
+            // 상태를 1초마다 확인합니다.
+            yield return new WaitForSeconds(1f);
+        }
+        // 모든 플레이어가 준비되면 던전 시작 로직을 실행합니다.
+        FindObjectOfType<PhotonChat>().CreateParty();
+    }
+
+    // 모든 플레이어의 준비 상태를 확인하는 함수
+    private bool CheckAllPlayersReady()
+    {
+        Define.Scene sceneName = (Define.Scene)PhotonNetwork.MasterClient.CustomProperties["currentScene"];
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+
+            if (player.CustomProperties.TryGetValue("currentScene", out object obj))
+            {
+                Define.Scene currentScene = (Define.Scene)obj;
+                if (currentScene != sceneName)
+                {
+                    Debug.Log("현재 없는 플레이어가 있습니다.");
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true; // 모든 플레이어가 준비되었습니다.
+    }
 }
