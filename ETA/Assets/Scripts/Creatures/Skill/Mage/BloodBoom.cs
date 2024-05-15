@@ -17,17 +17,21 @@ public class BloodBoom : Skill
     public override IEnumerator StartSkillCast()
     {
         _animator.CrossFade("CASTING_IN", 0.1f);
-        _controller.DecreaseHp(5);
 
         yield return new WaitForSeconds(0.3f);
-        bloodboomCoroutine = StartCoroutine(BloodboomCoroutine());
-        _animator.CrossFade("CASTING_WAIT", 0.1f);
+        if (_controller.Stat.Hp <= 5)
+            StartCoroutine(LowHpCoroutine());
+        else
+        {
+            bloodboomCoroutine = StartCoroutine(BloodboomCoroutine());
+            _animator.CrossFade("CASTING_WAIT", 0.1f);
 
-        yield return new WaitForSeconds(0.5f);
-        _animator.CrossFade("CASTING_OUT", 0.1f);
+            yield return new WaitForSeconds(0.5f);
+            _animator.CrossFade("CASTING_OUT", 0.1f);
 
-        yield return new WaitForSeconds(0.2f);
-        _animator.CrossFade("SKILL2", 0.1f);
+            yield return new WaitForSeconds(0.2f);
+            _animator.CrossFade("SKILL2", 0.1f);
+        }
 
 
         yield return new WaitForSeconds(1.0f);
@@ -37,12 +41,16 @@ public class BloodBoom : Skill
 
     private IEnumerator BloodboomCoroutine()
     {
+        _controller.DecreaseHp(5);
         Managers.Sound.Play("Skill/BloodBoom1");
         HitBox hiddenbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hiddenbox.transform.position = _skillSystem.TargetPosition;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BloodExplosion, 3.0f, hiddenbox.transform);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
+        Managers.Sound.Play("Skill/BloodBoom1");
+
+        yield return new WaitForSeconds(1.0f);
         Managers.Sound.Play("Skill/BloodBoom2");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
@@ -51,5 +59,11 @@ public class BloodBoom : Skill
 
         yield return new WaitForSeconds(1.5f);
         Managers.Resource.Destroy(hitbox.gameObject);
+    }
+
+    private IEnumerator LowHpCoroutine()
+    {
+        Managers.Sound.Play("Skill/LowHp");
+        yield return new WaitForSeconds(0.25f);
     }
 }

@@ -17,11 +17,14 @@ public class Plague : Skill
     }
     public override IEnumerator StartSkillCast()
     {
-        _animator.CrossFade("SKILL4", 0.1f);
+        _animator.CrossFade("SKILL2", 0.1f);
         targetPos = _skillSystem.TargetPosition;
 
         yield return new WaitForSeconds(0.1f);
-        StartCoroutine(PlagueCoroutine());
+        if (_controller.Stat.Hp <= 20)
+            StartCoroutine(LowHpCoroutine());
+        else
+            StartCoroutine(PlagueCoroutine());
 
         yield return new WaitForSeconds(0.5f);
         _controller.ChangeState(_controller.MOVE_STATE);
@@ -30,7 +33,7 @@ public class Plague : Skill
     private IEnumerator PlagueCoroutine()
     {
         Managers.Sound.Play("Skill/Plague");
-        _controller.Stat.Hp -= 20;
+        _controller.DecreaseHp(20);
         if (_controller.Stat.Hp < 0) _controller.Stat.Hp = 0;
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.Plague, 2.5f, transform);
@@ -44,7 +47,11 @@ public class Plague : Skill
 
         yield return new WaitForSeconds(0.25f);
         Managers.Resource.Destroy(buffbox.gameObject);
+    }
 
-
+    private IEnumerator LowHpCoroutine()
+    {
+        Managers.Sound.Play("Skill/LowHp");
+        yield return new WaitForSeconds(0.25f);
     }
 }
