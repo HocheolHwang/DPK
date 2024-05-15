@@ -52,17 +52,17 @@ namespace DragonStateItem
         {
             if (_detector.Target == null)
             {
-                //Debug.Log("CHASE TO IDLE");
+                Debug.Log("CHASE TO IDLE");
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
             else if (_detector.Target != null && _detector.IsArriveToTarget())
             {
-                //Debug.Log("CHASE TO IDLE_BATTLE");
+                Debug.Log("CHASE TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
             else
             {
-                //Debug.Log("CHASE");
+                Debug.Log("CHASE");
                 _agent.SetDestination(_detector.Target.position);
             }
         }
@@ -96,10 +96,6 @@ namespace DragonStateItem
                 //Debug.Log("IDLE_BATTLE TO IDLE");
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
-            else if (IsStayForSeconds(1.0f))
-            {
-                // Pattern
-            }
             else if (IsStayForSeconds(2.0f))
             {
                 //Debug.Log("IDLE_BATTLE TO ATTACK");
@@ -124,17 +120,17 @@ namespace DragonStateItem
         public override void Enter()
         {
             // 3가지 모션
-            if (_controller.AttackCnt % 3 == 2)
+            if (_controller.AttackCnt % _controller.ChangeAttackCount == 2)
             {
                 InitTime(_animData.TailAttackAnim.length);
                 _animator.CrossFade(_animData.TailAttackParamHash, 0.1f);
             }
-            else if (_controller.AttackCnt % 3 == 1)
+            else if (_controller.AttackCnt % _controller.ChangeAttackCount == 1)
             {
                 InitTime(_animData.SwingAttackAnim.length);
                 _animator.CrossFade(_animData.SwingAttackParamHash, 0.1f);
             }
-            else if (_controller.AttackCnt % 3 == 0)
+            else if (_controller.AttackCnt % _controller.ChangeAttackCount == 0)
             {
                 InitTime(_animData.DownAttackAnim.length);
                 _animator.CrossFade(_animData.DownAttackParamHash, 0.1f);
