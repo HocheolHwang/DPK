@@ -513,16 +513,31 @@ public class Skill_Select : MonoBehaviour
             }
         }
         // 좌클릭 확인
-        if (eventData.button == PointerEventData.InputButton.Left)
+        else if (eventData.button == PointerEventData.InputButton.Left)
         {
             // 스킬 정보 띄우기
-            if (skills.Length > index)
+            if (skills.Length > index && skills[index] != null) // 스킬 배열 범위 확인 및 스킬 정보가 null이 아닌지 확인
             {
                 // Skill_Info 컴포넌트 참조
-                Skill_Info skillInfoComponent = GameObject.Find("Skill_Info").GetComponent<Skill_Info>();
-
-                skillInfoComponent.UpdateSkillInfo(ChangeCodeToName(selectedClassCode), skills[index].skillName);
+                GameObject skillInfoObject = GameObject.Find("Skill_Info");
+                if (skillInfoObject != null) // skillInfoObject가 null이 아닌지 확인
+                {
+                    Skill_Info skillInfoComponent = skillInfoObject.GetComponent<Skill_Info>();
+                    if (skillInfoComponent != null) // skillInfoComponent가 null이 아닌지 확인
+                    {
+                        skillInfoComponent.UpdateSkillInfo(ChangeCodeToName(selectedClassCode), skills[index].skillName);
+                    }
+                    else
+                    {
+                        Debug.LogError("Skill_Info 컴포넌트를 찾을 수 없습니다.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Skill_Info 게임 오브젝트를 찾을 수 없습니다.");
+                }
             }
         }
     }
+
 }
