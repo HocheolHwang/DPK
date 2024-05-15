@@ -18,6 +18,7 @@ public class Skill_Select : MonoBehaviour
     private Image[] skillCanNotBeUsedIcons = new Image[16]; // 스킬 비활성화 아이콘
     private TMP_Text[] skillKoreanNames = new TMP_Text[16]; // 스킬 한글 이름
     private TMP_Text[] skillRequiredLevels = new TMP_Text[16]; // 필요 레벨
+    private TMP_Text[] skillDetail = new TMP_Text[16]; // 자세히 보기
 
 
     // --------------- 스킬 슬롯 ---------------
@@ -147,6 +148,7 @@ public class Skill_Select : MonoBehaviour
             skillCanNotBeUsedIcons[index] = GameObject.Find($"Skill_{index + 1}_Can_Not_Be_Used").GetComponent<Image>();
             skillKoreanNames[index] = GameObject.Find($"Skill_{index + 1}_Name").GetComponent<TMP_Text>();
             skillRequiredLevels[index] = GameObject.Find($"Skill_{index + 1}_Required_Level").GetComponent<TMP_Text>();
+            skillDetail[index] = GameObject.Find($"Skill_{index + 1}_Detail").GetComponent<TMP_Text>();
 
             // 드래그 이벤트 할당
             UI_Base.AddUIEvent(skillIcons[index].gameObject, (eventData) => OnDragBegin(index, eventData), Define.UIEvent.BeginDrag);
@@ -294,6 +296,7 @@ public class Skill_Select : MonoBehaviour
                     skillCanNotBeUsedIcons[i].gameObject.SetActive(true);
                     skillKoreanNames[i].text = "";
                     skillRequiredLevels[i].text = "";
+                    skillDetail[i].text = "";
                     continue;
                 }
 
@@ -301,6 +304,7 @@ public class Skill_Select : MonoBehaviour
                 skillIcons[i].sprite = skillData.Icon;
                 skillKoreanNames[i].text = skillData.SkillKoreanName;
                 skillRequiredLevels[i].text = $"필요레벨 {skillData.RequiredLevel}";
+                skillDetail[i].text = $"상세 보기 →";
 
                 // 영어 이름을 배열에 추가
                 skillNames[i] = skillData.SkillName;
@@ -314,12 +318,14 @@ public class Skill_Select : MonoBehaviour
                     skillCanNotBeUsedIcons[i].gameObject.SetActive(true);
                     skillKoreanNames[i].color = new Color(1, 0, 0, 0.8f);
                     skillRequiredLevels[i].color = new Color(1, 0, 0, 0.8f);
+                    skillDetail[i].color = new Color(1, 0, 0, 0.8f);
                 }
                 else
                 {
                     skillCanNotBeUsedIcons[i].gameObject.SetActive(false);
                     skillKoreanNames[i].color = Color.white;
                     skillRequiredLevels[i].color = new Color(1, 1, 1, 0.6f);
+                    skillDetail[i].color = new Color(1, 1, 1, 0.6f);
                 }
             }
             catch (Exception e)
