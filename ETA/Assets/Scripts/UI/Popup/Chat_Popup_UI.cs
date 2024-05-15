@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -64,6 +65,8 @@ public class Chat_Popup_UI : UI_Popup
 
         // Chat_InputField에 포커스 설정
         StartCoroutine(SetFocusOnInputField());
+
+        ShowChatLog();
     }
 
 
@@ -117,6 +120,24 @@ public class Chat_Popup_UI : UI_Popup
     {
         EventSystem.current.SetSelectedGameObject(chatMessage.gameObject);
         chatMessage.ActivateInputField();
+    }
+
+    // 채팅창 열 때 호출
+    public void ShowChatLog()
+    {
+        List<ChatMessage> chatLog = chat.GetChatMessage();
+        for(int i = 0; i <chatLog.Count; i++)
+        {
+            // Managers.Resource.Load<GameObject>();
+            GameObject chatPrefab = Managers.Resource.Instantiate("UI/SubItem/Chat_Item");
+
+            // 받는 메시지 형태 설정: "보낸 사람 : 메시지"
+            chatPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = chatLog[i].sender + " : " + chatLog[i].message;
+
+            // 메시지를 UI의 채팅 컨테이너에 배치하기
+            chatPrefab.transform.SetParent(gameObject.transform.Find("Chat_Popup_Container/Chat_Container/Scroll View/Viewport/Content"));
+
+        }
     }
 
     // 다른 플레이어로부터 메시지를 받았을 때 화면에 표시하는 메서드
