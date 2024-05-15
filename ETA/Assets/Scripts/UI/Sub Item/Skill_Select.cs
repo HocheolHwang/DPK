@@ -57,31 +57,67 @@ public class Skill_Select : MonoBehaviour
     // 선택된 캐릭터 코드 이전 값
     private string previousSelectedClassCode;
 
-    // 클래스 코드와 스킬 이름 배열을 매핑하는 딕셔너리
-    Dictionary<string, string[]> classSkills = new Dictionary<string, string[]>()
+    // 클래스 코드와 스킬 정보(SkillInfo 객체) 배열을 매핑하는 딕셔너리
+    Dictionary<string, SkillInfo[]> classSkills = new()
     {
-        {"C001",new string[]
+        {"C001", new SkillInfo[]
             {
-                "BackStep", "DoubleSlash", "DrawSword", "ShieldSlam",
-                "Guard", "WhirlWind", "WindSlash", "HolyHammer",
-                "TripleSlash", "Sting", "Blessing", "ThrowingShield",
-                "Massacre", "Guard", "Guard", "Guard"
+                new() { skillCode = "W302", skillName = "DrawSword" },
+                new() { skillCode = "W306", skillName = "DoubleSlash" },
+                new() { skillCode = "W308", skillName = "ShieldSlam" },
+                new() { skillCode = "W309", skillName = "BackStep" },
+                new() { skillCode = "W301", skillName = "Guard" },
+                new() { skillCode = "W401", skillName = "WhirlWind" },
+                new() { skillCode = "W402", skillName = "WindSlash" },
+                new() { skillCode = "W204", skillName = "HolyHammer" },
+                new() { skillCode = "W104", skillName = "ThrowingShield" },
+                new() { skillCode = "W307", skillName = "TripleSlash" },
+                new() { skillCode = "W103", skillName = "Sting" },
+                new() { skillCode = "W102", skillName = "SowrdWave" },
+                new() { skillCode = "W303", skillName = "Massacre" },
+                new() { skillCode = "W305", skillName = "Blessing" },
+                new() { skillCode = "W310", skillName = "QuadrupleSlash" },
+                new() { skillCode = "W105", skillName = "MoonSword" },
             }
         },
-        {"C002", new string[]
+        {"C002", new SkillInfo[]
             {
-                "Tumbling", "ArrowStab", "WindBlast", "ScatterArrow",
-                "WindShield", "WindBall", "LightningShot", "ForestSpirit",
-                "ArrowBomb", "RapidArrow", "Tempest", "ArrowShower",
-                "ForestBless", "ChargeArrow", "WindSpirit", "StormStrike"
+                new() { skillCode = "A301", skillName = "ArrowStab" },
+                new() { skillCode = "A303", skillName = "ScatterArrow" },
+                new() { skillCode = "A304", skillName = "Tumbling" },
+                new() { skillCode = "A305", skillName = "WindBlast" },
+                new() { skillCode = "A302", skillName = "WindShield" },
+                new() { skillCode = "A401", skillName = "WindBall" },
+                new() { skillCode = "A402", skillName = "LightningShot" },
+                new() { skillCode = "A309", skillName = "ForestSpirit" },
+                new() { skillCode = "A202", skillName = "ArrowBomb" },
+                new() { skillCode = "A101", skillName = "RapidArrow" },
+                new() { skillCode = "A308", skillName = "Tempest" },
+                new() { skillCode = "A201", skillName = "ArrowShower" },
+                new() { skillCode = "A307", skillName = "ForestBless" },
+                new() { skillCode = "A306", skillName = "ChargeArrow" },
+                new() { skillCode = "A310", skillName = "WindSpirit" },
+                new() { skillCode = "A102", skillName = "StormStrike" },
             }
         },
-        {"C003", new string[]
+        {"C003", new SkillInfo[]
              {
-                "BubbleShot", "FlashLight", "Heal", "IceBone",
-                "Protection", "Gravity", "Thunder", "Meteor",
-                "PoisonMist", "BloodBoom", "Plague", "FireWall",
-                "QuickFreeze", "Heal", "Heal", "Heal"
+                new() { skillCode = "M101", skillName = "BubbleShot" },
+                new() { skillCode = "M201", skillName = "IceBone" },
+                new() { skillCode = "M303", skillName = "FlashLight" },
+                new() { skillCode = "M301", skillName = "Heal" },
+                new() { skillCode = "M302", skillName = "Protection" },
+                new() { skillCode = "M401", skillName = "Gravity" },
+                new() { skillCode = "M402", skillName = "Thunder" },
+                new() { skillCode = "M202", skillName = "Meteor" },
+                new() { skillCode = "M204", skillName = "PoisonMist" },
+                new() { skillCode = "M203", skillName = "BloodBoom" },
+                new() { skillCode = "M206", skillName = "Plague" },
+                new() { skillCode = "M205", skillName = "FireWall" },
+                new() { skillCode = "M304", skillName = "QuickFreeze" },
+                new() { skillCode = "M301", skillName = "Heal" },
+                new() { skillCode = "M301", skillName = "Heal" },
+                new() { skillCode = "M301", skillName = "Heal" },
             }
         }
     };
@@ -243,7 +279,7 @@ public class Skill_Select : MonoBehaviour
             try
             {
                 // SkillSO 객체 로드
-                SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{ChangeCodeToName(classCode)}/{classSkills[classCode][i]}");
+                SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{ChangeCodeToName(classCode)}/{classSkills[classCode][i].skillName}");
 
                 // SkillSO 값이 null일 경우 스킬 칸을 비우고 반복문 넘어감
                 if (skillData == null)
@@ -277,7 +313,7 @@ public class Skill_Select : MonoBehaviour
                 {
                     skillCanNotBeUsedIcons[i].gameObject.SetActive(false);
                     skillKoreanNames[i].color = Color.white;
-                    skillRequiredLevels[i].color = Color.white;
+                    skillRequiredLevels[i].color = new Color(1, 1, 1, 0.6f);
                 }
             }
             catch (Exception e)
@@ -333,7 +369,7 @@ public class Skill_Select : MonoBehaviour
         for (int i = 0; i < 16; i++)
         {
             // 클래스 코드에 따른 스킬 이름 가져오기
-            string skillName = classSkills[classCode][i];
+            string skillName = classSkills[classCode][i].skillName;
 
             // 기존 클릭 이벤트 리스너를 모두 제거
             skillContainers[i].onClick.RemoveAllListeners();
@@ -361,8 +397,8 @@ public class Skill_Select : MonoBehaviour
     {
         // 드래그 시작 시 드래그 중인 스킬 정보를 활성화하고 해당 슬롯의 이미지와 이름을 복제
         draggingSkill.Icon.sprite = skillIcons[skillIndex].sprite;
-        draggingSkill.Name = skillNames[skillIndex];
-        draggingSkill.Code = skillCodes[skillIndex];
+        draggingSkill.Name = classSkills[selectedClassCode][skillIndex].skillName;
+        draggingSkill.Code = classSkills[selectedClassCode][skillIndex].skillCode;
         draggingSkill.Icon.gameObject.SetActive(true);
 
         // 스프라이트의 투명도를 50%로 설정
