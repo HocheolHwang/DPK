@@ -21,6 +21,7 @@ public class IprisController : BaseMonsterController
     public State COUNTER_ATTACK_STATE;
     public State PATTERN_ONE_ENABLE_STATE;
     public State PATTERN_ONE_STATE;
+    public State PATTERN_ONE_STRONG_STATE;
     public State PATTERN_TWO_STATE;
     public State PATTERN_TWO_WINDMILL_STATE;
     public State BACK_POSITION_STATE;
@@ -38,7 +39,6 @@ public class IprisController : BaseMonsterController
     [SerializeField] private float _windMillCnt;
     [SerializeField] private int _patternOneCnt;          // HP가 MAX_HP의 절반
     private int _threadHoldPatternOne = 1;                // 1번만 수행
-    [SerializeField] private bool _isCounterTrigger;      // Counter 스킬에 맞았는지
     [SerializeField] private Vector3 _startPos;
     [SerializeField] private Vector3 _destPos;
 
@@ -53,7 +53,6 @@ public class IprisController : BaseMonsterController
     public float ThreadHoldWindMill { get => 3; }           // 3번
     public int PatternOneCnt { get => _patternOneCnt; set => _patternOneCnt = value; }
     public int ThreadHoldPatternOne { get => _threadHoldPatternOne; }
-    public bool IsCounterTrigger { get => _isCounterTrigger; set => _isCounterTrigger = value; }
     public Vector3 StartPos { get => _startPos; set => _startPos = value; }
     public Vector3 DestPos { get => _destPos; set => _destPos = value; }
     #endregion
@@ -97,6 +96,7 @@ public class IprisController : BaseMonsterController
         BACK_POSITION_STATE = new BackPositionState(this);
         PATTERN_ONE_ENABLE_STATE = new PatternOneEnableState(this);
         PATTERN_ONE_STATE = new PatternOneState(this);
+        PATTERN_ONE_STRONG_STATE = new PatternOneStrongState(this);
         TO_DRAGON_STATE = new ToDragonState(this);
 
 
@@ -225,6 +225,17 @@ public class IprisController : BaseMonsterController
     {
         ChangeState(PATTERN_ONE_STATE);
     }
+    public void ChangeToPatternOneStrongState()
+    {
+        photonView.RPC("RPC_ChangeToPatternOneStrongState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToPatternOneStrongState()
+    {
+        ChangeState(PATTERN_ONE_STRONG_STATE);
+    }
+
     public void ChangeToPatternTwoState()
     {
         photonView.RPC("RPC_ChangeToPatternTwoState", RpcTarget.Others);
