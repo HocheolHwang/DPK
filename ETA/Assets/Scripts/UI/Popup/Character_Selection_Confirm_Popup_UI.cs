@@ -113,10 +113,10 @@ public class Character_Selection_Confirm_Popup_UI : UI_Popup
                 skillInfos = Managers.Player.warriorSkills;
                 break;
             case "C002":
-                skillInfos = Managers.Player.warriorSkills;
+                skillInfos = Managers.Player.archerSkills;
                 break;
             case "C003":
-                skillInfos = Managers.Player.warriorSkills;
+                skillInfos = Managers.Player.mageSkills;
                 break;
             default:
                 Debug.LogError("없는 직업입니다.");

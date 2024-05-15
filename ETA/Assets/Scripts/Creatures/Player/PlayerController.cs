@@ -89,12 +89,6 @@ public class PlayerController : BaseController
         // 캐릭터가 생성 될 때 마다 카운트를 해준다.
         // 내 화면에 모든 캐릭턱 생성 되기를 기다려야 하기 때문
         FindObjectOfType<GameSystem>().SendCharacherInstantiatedMsg();
-
-
-        //if(gameObject.name.StartsWith("Archer"))FindObjectOfType<CollavoSystem>().AddCurrentSkill(this, "Cyclone");
-
-
-        // if(PhotonNetwork.IsMasterClient) StartCoroutine(TESTGROGGY());
     }
 
     IEnumerator TESTGROGGY()
