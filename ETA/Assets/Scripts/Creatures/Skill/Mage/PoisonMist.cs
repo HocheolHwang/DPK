@@ -31,7 +31,12 @@ public class PoisonMist : Skill
     {
         Managers.Sound.Play("Skill/PoisonMist");
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.PoisonMist, 5.0f, transform);
-        ps.transform.position = targetPos;
+        ps.transform.position = targetPos + new Vector3(0, 0.5f, 0);
+
+        BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
+        buffbox.SetUp(transform, -1, BuffBox.stat.MoveSpeed, 5.0f, "Monster");
+        buffbox.transform.position = targetPos;
+        buffbox.transform.localScale = skillRange;
 
         for (int i = 0; i < 20; i++)
         {
@@ -42,6 +47,7 @@ public class PoisonMist : Skill
 
             yield return new WaitForSeconds(0.25f);
             Managers.Resource.Destroy(hitbox.gameObject);
+            Managers.Resource.Destroy(buffbox.gameObject);
         }
 
     }
