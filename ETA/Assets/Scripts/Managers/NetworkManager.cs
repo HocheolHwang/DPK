@@ -7,7 +7,7 @@ using System;
 
 public class NetworkManager : MonoBehaviour
 {
-    //string baseUrl = "https://localhost:8080/api/v1/";
+    //string baseUrl = "http://localhost:8080/api/v1/";
     string baseUrl = "https://k10e207.p.ssafy.io/api/v1/";
 
     IEnumerator SendWebRequest(UnityWebRequest request, Action callback = null)
@@ -205,7 +205,7 @@ public class NetworkManager : MonoBehaviour
         yield return request.SendWebRequest();
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"[Current Class Error] {request.error}\n{request.downloadHandler.text}");
+            Debug.LogError($"[Learn Skill Request Error] {request.error}\n{request.downloadHandler.text}");
         }
         else
         {
@@ -358,7 +358,7 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(SelectClassRequest(CreateRequest("POST", "class/select", classData), callback));
     }
     // 스킬 저장하기
-    public void LearnSkillCall(ClassReqDto dto, Action callback)
+    public void LearnSkillCall(SkillReqDto dto, Action callback)
     {
         string classData = JsonUtility.ToJson(dto);
         StartCoroutine(LearnSkillRequest(CreateRequest("PUT", "skill/learned", classData), callback));

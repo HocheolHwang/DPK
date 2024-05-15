@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class SkillReqDto
 {
-	public string message;
 	public string classCode;
 	public List<SkillRequestDto> skillList;
 }
