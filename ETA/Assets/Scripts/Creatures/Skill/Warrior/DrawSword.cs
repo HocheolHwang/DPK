@@ -8,11 +8,11 @@ public class DrawSword : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(10);
-        Damage = 30;
+        SetCoolDownTime(5);
+        Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Immediately;
-        skillRange = new Vector3(3, 3, 3);
+        skillRange = new Vector3(4, 3, 4);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/DrawSword.png");
     }
 
@@ -23,7 +23,7 @@ public class DrawSword : Skill
         Managers.Sound.Play("Skill/RSkill");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage, -1, true);
-        hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
+        hitbox.transform.position = gameObject.transform.position + transform.forward * 1.5f;
         hitbox.transform.localScale = skillRange;
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.SlashWideBlue, 0.0f, transform);

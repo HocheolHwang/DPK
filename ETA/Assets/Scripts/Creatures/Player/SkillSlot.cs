@@ -21,6 +21,8 @@ public class SkillSlot : MonoBehaviour
     private string[] loadedSkills = new string[8];
     public string[] LoadedSkills { get { return loadedSkills; } }
 
+    public int LoadCnt = 0; 
+
     public void Start()
     {
         SkillSystem = GetComponent<SkillSystem>();
@@ -91,6 +93,8 @@ public class SkillSlot : MonoBehaviour
 
                 }
             }
+
+            FindObjectOfType<GameSystem>().LoadedSkillCnt += 1;
             //SendSkillsInfo(loadedSkills);
 
         }
@@ -185,13 +189,17 @@ public class SkillSlot : MonoBehaviour
 
             }
         }
+
+        FindObjectOfType<GameSystem>().LoadedSkillCnt += 1;
+        
     }
 
 
     public void SelectSkill(Define.SkillKey key)
     {
         Skill current = skill[(int)key];
-
+        if (current == null) return;
+        if (FindObjectOfType<GameSystem>().LoadedSkillCnt < PhotonNetwork.CurrentRoom.PlayerCount) return;
         // 여기서 쿨타임 관리
         if (current.CanCastSkill() == false) return;
 

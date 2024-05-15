@@ -9,6 +9,7 @@ public class GameSystem : MonoBehaviourPunCallbacks
     int _loadedCnt = 0;
     int _createdCharacterCnt = 0;
     int _finishedClient = 0;
+    public int LoadedSkillCnt = 0;
     public int currentDungeonNum;
     PlayerController myController;
     // Start is called before the first frame update

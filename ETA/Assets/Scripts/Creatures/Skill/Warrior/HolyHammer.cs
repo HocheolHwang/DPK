@@ -8,7 +8,7 @@ public class HolyHammer : Skill
     
     protected override void Init()
     {
-        SetCoolDownTime(2);
+        SetCoolDownTime(10);
         base.Init();
         SkillType = Define.SkillType.Range;
         Damage = 30;
