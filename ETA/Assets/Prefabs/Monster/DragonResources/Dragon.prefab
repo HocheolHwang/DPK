@@ -2352,6 +2352,7 @@ MonoBehaviour:
   tailAttackParamName: TAIL_ATTACK
   fearEnableParamName: FEAR_ENABLE
   fearAttackParamName: FEAR_ATTACK
+  fearStrongAttackParamName: FEAR_STRONG_ATTACK
   breathEnableParamName: BREATH_ENABLE
   breathParamName: BREATH
   cryToDownName: CRY_TO_DOWN
@@ -2359,6 +2360,7 @@ MonoBehaviour:
   groundToSkyName: GROUND_TO_SKY
   skyDownAttackName: SKY_DOWN_ATTACK
   flyFireBallName: FLY_FIRE_BALL
+  cryName: CRY
   groggyAnim: {fileID: 7400000, guid: 58b6b10cf817188408178c03d92707ad, type: 3}
   dieAnim: {fileID: 7400000, guid: 2a16dc0bbe7c71b4faedf5f647f817e4, type: 3}
   idleAnim: {fileID: 7400000, guid: 82af6dc16b61b944eb529e1b838a1ed0, type: 3}
@@ -2376,6 +2378,7 @@ MonoBehaviour:
   groundToSkyAnim: {fileID: 7400000, guid: d7c9ce19f1c30934aaae552660bccd0f, type: 3}
   skyDownAttackAnim: {fileID: 7400000, guid: e525d726f077a4e418078f81e69b3d0d, type: 3}
   flyFireBallAnim: {fileID: 7400000, guid: c9c48d9f297f9f547b171f505bcbaeef, type: 3}
+  cryAnim: {fileID: 7400000, guid: a687ca67b67eb794ea62ad38c38eb832, type: 3}
 --- !u!114 &325356884078360980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2412,6 +2415,11 @@ MonoBehaviour:
   Agent: {fileID: 0}
   Stat: {fileID: 0}
   _isHitCounter: 0
+  _meetPlayer: 0
+  _attackCnt: 0
+  _fearTime: 0
+  _cryTime: 0
+  _hitCounterCnt: 0
 --- !u!114 &6403941071617238032
 MonoBehaviour:
   m_ObjectHideFlags: 0
