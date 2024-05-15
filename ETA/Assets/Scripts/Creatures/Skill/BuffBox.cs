@@ -59,9 +59,9 @@ public class BuffBox : MonoBehaviour
                 break;
             case stat.MoveSpeed:
                 if (_amount > 0)
-                    other.GetComponent<IBuffStat>().IncreaseDefense(_amount);
+                    other.GetComponent<IBuffStat>().IncreaseSpeed(_amount);
                 else if (_amount < 0)
-                    other.GetComponent<IBuffStat>().DecreaseDefense(-_amount);
+                    other.GetComponent<IBuffStat>().DecreaseSpeed(-_amount);
                 break;
         }
     }

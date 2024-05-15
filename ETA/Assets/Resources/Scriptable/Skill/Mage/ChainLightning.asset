@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 729891a97877d1548b59da4304320aef, type: 3}
-  m_Name: Protection
+  m_Name: ChainLightning
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: 78dcf72f6ca1ff341b0f0a94ca8bda9e, type: 3}
+  Icon: {fileID: 21300000, guid: 071d1ccc28800cc4abbb2c308197da4a, type: 3}
   IsCollavo: 0
   IsCounter: 0
   SkillType: 4
-  RequiredLevel: 1
-  Damage: 0
-  CoolDownTime: 5
-  SkillCode: M302
-  SkillName: Protection
-  SkillKoreanName: "\uBCF4\uD638"
-  SkillDescription: "\uC8FC\uBCC0\uC758 \uC544\uAD70\uB4E4\uC5D0\uAC8C 50\uC758 \uBCF4\uD638\uB9C9\uC744
-    \uBD80\uC5EC\uD569\uB2C8\uB2E4."
+  RequiredLevel: 10
+  Damage: 20
+  CoolDownTime: 10
+  SkillCode: M305
+  SkillName: ChainLightning
+  SkillKoreanName: "\uC5F0\uC1C4\uBC88\uAC1C"
+  SkillDescription: "\uAC00\uAE4C\uC774 \uC788\uB294 \uC801\uC5D0\uAC8C \uBC88\uAC1C\uB97C
+    \uBC1C\uC0AC\uD574 \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
   ConnectedSkillKoreanName: 
   CollavoSkillKoreanName: 
   CollavoSkillDescription: 
