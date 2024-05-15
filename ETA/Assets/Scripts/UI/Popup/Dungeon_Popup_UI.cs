@@ -445,8 +445,10 @@ public class Dungeon_Popup_UI : UI_Popup
 
 
         expResult = false;
+        
+        if(PhotonNetwork.IsMasterClient)
+            StartCoroutine("WaitForAllPlayersToEnterDungeon");
 
-        FindObjectOfType<PhotonChat>().gameObject.AddComponent<SendRoomLog>();
         Managers.Photon.CloseRoom();
 
         // 콜라보 시스템 참조
@@ -508,52 +510,66 @@ public class Dungeon_Popup_UI : UI_Popup
     // 포인터가 슬롯에 진입했을 때
     public void OnPointerEnter(PointerEventData eventData, int index)
     {
-        Canvas canvas = FindObjectOfType<Canvas>();
-        GameObject skillInfoObject = Resources.Load<GameObject>("Prefabs/UI/SubItem/Skill_Info");
-
-        if (skillInfoObject != null) // skillInfoObject가 null이 아닌지 확인
+        // 특정 이름을 가진 Canvas를 찾음
+        GameObject dungeonPopupUIGameObject = GameObject.Find("[Dungeon]_Dungeon_Popup_UI");
+        if (dungeonPopupUIGameObject != null)
         {
-            if (skillInfoPopup == null)
+            Canvas canvas = dungeonPopupUIGameObject.GetComponent<Canvas>();
+
+            GameObject skillInfoObject = Resources.Load<GameObject>("Prefabs/UI/SubItem/Skill_Info");
+
+            if (skillInfoObject != null) // skillInfoObject가 null이 아닌지 확인
             {
-                skillInfoPopup = Instantiate(skillInfoObject);
+                if (skillInfoPopup == null)
+                {
+                    skillInfoPopup = Instantiate(skillInfoObject);
+                    if (canvas != null)
+                    {
+                        // 팝업의 부모를 특정 캔버스로 설정.
+                        skillInfoPopup.transform.SetParent(canvas.transform, false);
+                    }
+                }
+
+                // 팝업 위치 조정: 마우스 위치를 기준으로 팝업 위치 설정
+                Vector3 newPosition = Input.mousePosition;
                 if (canvas != null)
                 {
-                    // 팝업의 부모를 캔버스로 설정.
-                    skillInfoPopup.transform.SetParent(canvas.transform, false);
+                    RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+                    RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRect, newPosition, canvas.worldCamera, out newPosition);
+
+                    skillInfoPopup.transform.position = newPosition;
                 }
-            }
 
-            // 팝업 위치 조정: 마우스 위치를 기준으로 팝업 위치 설정
-            Vector3 newPosition = Input.mousePosition;
-            if (canvas != null)
-            {
-                RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-                RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRect, newPosition, canvas.worldCamera, out newPosition);
-
-                skillInfoPopup.transform.position = newPosition;
-            }
-
-            // Skill_Info 컴포넌트 참조
-            Skill_Info skillInfoComponent = skillInfoObject.GetComponent<Skill_Info>();
-            string[] skills = skillSlot != null ? skillSlot.LoadedSkills : null;
-            if (skillInfoComponent != null) // skillInfoComponent가 null이 아닌지 확인
-            {
-                skillInfoComponent.Initialize();
-                skillInfoComponent.UpdateSkillInfo(Skill_Select.ChangeCodeToName(Managers.Player.GetClassCode()), skills[index]);
+                // Skill_Info 컴포넌트 참조
+                Skill_Info skillInfoComponent = skillInfoObject.GetComponent<Skill_Info>();
+                string[] skills = skillSlot != null ? skillSlot.LoadedSkills : null;
+                if (skillInfoComponent != null) // skillInfoComponent가 null이 아닌지 확인
+                {
+                    skillInfoComponent.Initialize();
+                    skillInfoComponent.UpdateSkillInfo(Skill_Select.ChangeCodeToName(Managers.Player.GetClassCode()), skills[index]);
+                }
+                else
+                {
+                    Debug.LogError("Skill_Info 컴포넌트를 찾을 수 없습니다.");
+                }
             }
             else
             {
-                Debug.LogError("Skill_Info 컴포넌트를 찾을 수 없습니다.");
+                Debug.LogError("Skill_Info 게임 오브젝트를 찾을 수 없습니다.");
             }
+
+            // 팝업 활성화
+            skillInfoPopup.SetActive(true);
+
+            // 팝업을 최상단으로
+            skillInfoPopup.transform.SetAsLastSibling();
         }
         else
         {
-            Debug.LogError("Skill_Info 게임 오브젝트를 찾을 수 없습니다.");
+            Debug.LogError("[Dungeon]_Dungeon_Popup_UI 캔버스를 찾을 수 없습니다.");
         }
-
-        // 팝업 활성화
-        skillInfoPopup.SetActive(true);
     }
+
 
     // 포인터가 슬롯에서 나갔을 때
     public void OnPointerExit(PointerEventData eventData)
@@ -741,7 +757,8 @@ public class Dungeon_Popup_UI : UI_Popup
             currentCheckpointIndex++;
 
             // 체크 포인트 통과 시 받는 경험치 증가
-            currentExp += 10 * currentCheckpointIndex;
+            currentExp += 10 * (currentCheckpointIndex-1);
+            //Debug.Log($"{currentCheckpointIndex} 웨이브 도착 현재 경험치는 {currentExp}, 얻은 경험치는 {10 * (currentCheckpointIndex - 1)}");
 
             // 체크포인트 인덱스에 따라 진행바를 업데이트
             dungeonProgressBar.value = (float) currentCheckpointIndex / totalCheckpoints;
@@ -767,7 +784,7 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 클리어
         if (selectedDungeonNumber!= 0)
         {
-            currentExp += 10 * currentCheckpointIndex;
+            currentExp += 30;
             SummaryExp(dungeonNameText.text + "던전 클리어");
         }
 
@@ -824,12 +841,8 @@ public class Dungeon_Popup_UI : UI_Popup
 
         currentExp += 10;
 
-        // 던전 난이도 보상
-        if (selectedDungeonNumber > 1)
-            currentExp = ((selectedDungeonNumber-1) * 5) * currentExp;
-        
         // 경험치 합산
-        Managers.Player.AddExp(currentExp);
+        //Managers.Player.AddExp(currentExp);
         EXPStatisticsReqDto dto = new EXPStatisticsReqDto();
         dto.classCode = Managers.Player.GetClassCode();
         dto.currentExp = Managers.Player.GetExp();
@@ -838,6 +851,7 @@ public class Dungeon_Popup_UI : UI_Popup
         dto.reason = message;
         dto.expDelta = currentExp;
         Managers.Network.EXPStatisticsCall(dto);
+        //Debug.Log($"{currentExp} 얻었다넹");
         currentExp = 0;
     }
 
@@ -1093,5 +1107,45 @@ public class Dungeon_Popup_UI : UI_Popup
                 collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
             }
         }
+    }
+
+
+    IEnumerator WaitForAllPlayersToEnterDungeon()
+    {
+        bool allPlayersReady = false;
+        // 플레이어들의 준비 상태를 확인합니다.
+        while (!allPlayersReady)
+        {
+            allPlayersReady = CheckAllPlayersReady();
+
+            // 상태를 1초마다 확인합니다.
+            yield return new WaitForSeconds(1f);
+        }
+        // 모든 플레이어가 준비되면 던전 시작 로직을 실행합니다.
+        FindObjectOfType<PhotonChat>().CreateParty();
+    }
+
+    // 모든 플레이어의 준비 상태를 확인하는 함수
+    private bool CheckAllPlayersReady()
+    {
+        Define.Scene sceneName = (Define.Scene)PhotonNetwork.MasterClient.CustomProperties["currentScene"];
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+
+            if (player.CustomProperties.TryGetValue("currentScene", out object obj))
+            {
+                Define.Scene currentScene = (Define.Scene)obj;
+                if (currentScene != sceneName)
+                {
+                    Debug.Log("현재 없는 플레이어가 있습니다.");
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true; // 모든 플레이어가 준비되었습니다.
     }
 }
