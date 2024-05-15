@@ -123,6 +123,7 @@ public class Define
         AuraChargeRed,
         FlashLight,
         PoisonMist,
+        Fear,
         WaterSlap,
         WaterSlapEffect,
         WaterSlapEffect1,
