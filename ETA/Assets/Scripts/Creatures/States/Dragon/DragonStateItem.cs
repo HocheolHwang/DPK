@@ -148,8 +148,8 @@ namespace DragonStateItem
             _animTime += Time.deltaTime;
             if (_controller.HitAttackCnt >= _controller.ThreadHoldHitAttackCnt)
             {
-                Debug.Log("BREATH_ENABLE TO CRY");
-                _controller.ChangeState(_controller.CRY_STATE);
+                Debug.Log("BREATH_ENABLE TO GROGGY");
+                _controller.ChangeState(_controller.GROGGY_STATE);
             }
             else if (_animTime >= _threadHold * 3.0f)
             {
@@ -509,7 +509,6 @@ namespace DragonStateItem
         public override void Exit()
         {
             _controller.HitCounterCnt = 0;
-            _controller.HitAttackCnt = 0;
         }
     }
     #endregion
@@ -519,45 +518,44 @@ namespace DragonStateItem
     public class GroggyState : DragonState
     {
         ParticleSystem ps;
-        float groggyTime = 0;
         public GroggyState(DragonController controller) : base(controller)
         {
         }
 
         public override void Enter()
         {
-            // Breath에 실패하면 Groggy 상태
-            //if (_controller.PrevState is CounterEnableState)
-            //{
-            //    groggyTime = 3.0f;
-            //    ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
-            //    ps.transform.SetParent(_controller.transform);
-            //    ps.transform.localPosition = new Vector3(0, 1.0f, 0);
-
-            //    ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
-            //    ps.transform.SetParent(_controller.transform);
-            //    ps.transform.localPosition = new Vector3(0, 3.0f, 0);
-            //}
-            //else
-            //{
-            //    groggyTime = 0;
-            //}
-
-
             _agent.velocity = Vector3.zero;
+            InitTime(_animData.GroggyAnim.length);
+
+            // Breath에 실패하면 Groggy 상태
+            if (_controller.PrevState is BreathEnableState)
+            {
+                // Hit Effect
+                //ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
+                //ps.transform.SetParent(_controller.transform);
+                //ps.transform.localPosition = new Vector3(0, 1.0f, 0);
+
+                ps = Managers.Effect.Play(Define.Effect.Groggy, _animData.GroggyAnim.length, _controller.transform);
+                ps.transform.SetParent(_controller.transform);
+                ps.transform.localPosition = new Vector3(0, 3.0f, 3.5f);
+            }
+
             _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
+
         }
 
         public override void Execute()
         {
             //if (PhotonNetwork.IsMasterClient == false) return;
-            if (IsStayForSeconds(groggyTime))
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold)
             {
-                _controller.ChangeState(_controller.IDLE_STATE);
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
         public override void Exit()
         {
+            _controller.HitAttackCnt = 0;
         }
     }
     #endregion
