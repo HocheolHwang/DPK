@@ -269,13 +269,43 @@ public class Leader_Board_Popup_UI : UI_Popup
         myNicknameText.text = Managers.Player.GetNickName();
         myLevelText.text = highestLevel.ToString();
 
-        // @@@@@@@@ TODO: 내 등수를 가져오는 코드 필요 @@@@@@@@
+        // @@@@@@@@ TODO: 레벨 랭킹 My 등수를 가져오는 코드 필요 @@@@@@@@
         myRankingText.text = $"{99}st";
     }
 
     // 던전 랭킹 업데이트 메서드
     private void UpdateDungeonRanking()
     {
+        // --------------- 던전 랭킹 업데이트 ---------------
 
+        for (int i = 0; i < clearTimeTexts.Length; i++)
+        {
+            // @@@@@@@@ TODO: 해당 등수 클리어 시간을 가져오는 코드 필요 @@@@@@@@
+            string clearTime = "11:11:11";
+            clearTimeTexts[i].text = clearTime;
+
+            // @@@@@@@@ TODO: 해당 등수 파티 이름을 가져오는 코드 필요 @@@@@@@@
+            string partyName = "우리의 파티";
+            nicknameTexts[i].text = partyName;
+
+            // @@@@@@@@ TODO: 해당 등수 파티 레벨을 가져오는 코드 필요 @@@@@@@@
+            int partyLevel = 55;
+            levelTexts[i].text = partyLevel.ToString();
+        }
+
+
+        // --------------- My 레벨 랭킹 업데이트 ---------------
+
+        // @@@@@@@@ TODO: 해당 등수 클리어 시간을 가져오는 코드 필요 @@@@@@@@
+        myClearTimeText.text = "00:00:30";
+
+        // @@@@@@@@ TODO: 해당 등수 파티 이름을 가져오는 코드 필요 @@@@@@@@
+        myNicknameText.text = "내 파티라고";
+
+        // @@@@@@@@ TODO: 해당 등수 파티 레벨을 가져오는 코드 필요 @@@@@@@@
+        myLevelText.text = "321";
+
+        // @@@@@@@@ TODO: 내 등수를 가져오는 코드 필요 @@@@@@@@
+        myRankingText.text = $"{selectedRankingNumber}st";
     }
 }
