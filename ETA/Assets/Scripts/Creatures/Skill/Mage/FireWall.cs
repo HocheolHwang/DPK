@@ -36,7 +36,7 @@ public class FireWall : Skill
 
     private IEnumerator FireWallCoroutine(Vector3 rangePos)
     {
-        Managers.Sound.Play("Skill/Heal");
+        Managers.Sound.Play("Skill/FireWall");
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.FireWall, 1.5f, transform);
         ps.transform.position = rangePos;
         ps.transform.rotation = Quaternion.Euler(0, 90, 0);
