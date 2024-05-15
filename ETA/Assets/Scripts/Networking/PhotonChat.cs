@@ -18,6 +18,9 @@ public class PhotonChat : MonoBehaviour
     public Chat_Popup_UI chatUI;
     PhotonView photonView;
 
+    // 채팅 리스트
+    Queue<ChatMessage> chatLog = new Queue<ChatMessage>();
+
     private void Start()
     {
         photonView = gameObject.GetComponent<PhotonView>();
@@ -27,25 +30,25 @@ public class PhotonChat : MonoBehaviour
     // rpc로 send -> get message로 전달
     public void SendMessage(string msg)
     {
-        if(photonView.Owner != PhotonNetwork.LocalPlayer)
+        // 메세지 유효성 검사
+        if (string.IsNullOrEmpty(msg)) return;
+
+        if (!photonView.IsMine)
         {
-            photonView.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            photonView.RequestOwnership();
         }
 
-        ChatMessage message = new ChatMessage();
-        message.message = msg;
-        message.sender = Managers.Player.GetNickName();
+        ChatMessage message = new ChatMessage()
+        {
+            message = msg,
+            sender = Managers.Player.GetNickName()
+        };
 
-
-        // empty message
-        if (message.message.Length < 1) return;
-
-        message.sender = Managers.Player.GetNickName();
-
-
+        // json 변환
         string messageJson = JsonUtility.ToJson(message);
 
-        if(PhotonNetwork.InRoom)
+        // 방에 접속되어 있으면 보내고 아니면 본인 채팅창에만 보여야함
+        if (PhotonNetwork.InRoom)
             photonView.RPC("ReceiveMessage", RpcTarget.All, messageJson);
         else
         {
@@ -56,10 +59,19 @@ public class PhotonChat : MonoBehaviour
     [PunRPC]
     public void ReceiveMessage(string message)
     {
-        ChatMessage chatMessage = JsonUtility.FromJson<ChatMessage>(message);   
+        ChatMessage chatMessage = JsonUtility.FromJson<ChatMessage>(message);
+        chatLog.Enqueue(chatMessage);
+
+        if (chatLog.Count > 50)
+        {
+            chatLog.Dequeue();
+        }
+
         if(chatUI!=null)
-        chatUI.ReceiveMessage(chatMessage.sender, chatMessage.message);
+            chatUI.ReceiveMessage(chatMessage.sender, chatMessage.message);
     }
 
-    
+    public List<ChatMessage> GetChatMessage(){
+        return new List<ChatMessage>( chatLog);
+    }
 }
