@@ -51,10 +51,10 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
         SetOriginColor();
 
-        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+        //Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
 
         // --------------------------------- DIE TEST -------------------------------------
-        //StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인
+        StartCoroutine(TestDie());    // 수동으로 HP를 0으로 세팅해서 DIE EVENT를 확인
     }
     protected virtual void Update()
     {
@@ -169,14 +169,14 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     // 내 캐리
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
-        if (UnitType == Define.UnitType.Player)
-        {
-            if (photonView.IsMine == false) return;
-        }
-        else
-        {
-            if (PhotonNetwork.IsMasterClient == false) return;
-        }
+        //if (UnitType == Define.UnitType.Player)
+        //{
+        //    if (photonView.IsMine == false) return;
+        //}
+        //else
+        //{
+        //    if (PhotonNetwork.IsMasterClient == false) return;
+        //}
 
         SendTakeDamageMsg(attackDamage, isCounter, Stat.Shield, Evasion, Stat.Defense);
 
@@ -188,12 +188,12 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
     public void CalcDamage(int attackDamage, bool isCounter ,int shield, bool evasion, int defense)
     {
-        if (isCounter)
-        {
-            if (PhotonNetwork.IsMasterClient)
-                CounterEvent();
+        //if (isCounter)
+        //{
+        //    if (PhotonNetwork.IsMasterClient)
+        //        CounterEvent();
+        //}
 
-        }
         UI_AttackedDamage attackedDamage_ui = null;
         if (evasion)
         {
@@ -326,7 +326,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
     public void SendTakeDamageMsg(int attackDamage, bool isCounter, int shield, bool evasion, int defense)
     {
-        photonView.RPC("RPC_TakeDamage", RpcTarget.Others, attackDamage, isCounter, shield, evasion, defense);
+        //photonView.RPC("RPC_TakeDamage", RpcTarget.Others, attackDamage, isCounter, shield, evasion, defense);
     }
 
     public void Pushed(int power, float duration)
