@@ -4,6 +4,7 @@ using UnityEngine;
 
 using DragonStateItem;
 using System;
+using Unity.VisualScripting;
 
 public class DragonController : BaseMonsterController
 {
@@ -22,8 +23,9 @@ public class DragonController : BaseMonsterController
     public State FEAR_STRONG_ATTACK_STATE;
     public State BREATH_ENABLE_STATE;
     public State BREATH_STATE;
+
     public State CRY_TO_DOWN_STATE;
-    public State CRY_TO_BREATH_STATE;
+    public State CRY_TO_FIRE_STATE;
     public State GROUND_TO_SKY_STATE;
     public State SKY_DOWN_ATTACK_STATE;
     public State FLY_FIRE_BALL_STATE;
@@ -31,21 +33,27 @@ public class DragonController : BaseMonsterController
 
     #region STATE VARIABLE
     [Header("STATE VARIABLE")]
-    [SerializeField] private bool _meetPlayer;
-    [SerializeField] private bool _isCryToSky;
+    [SerializeField] private bool _meetPlayer;      // 플레이어 만남 여부
+    [SerializeField] private bool _isCryToDown;     // CryToDown 상태 여부( Ground To Sky 상태에서 사용 )
+    [SerializeField] private bool _isBreath;        // Breath 상태 수행 여부
 
-    [SerializeField] private float _attackCnt;
-    [SerializeField] private float _fearTime;
-    [SerializeField] private float _cryTime;
+    [SerializeField] private float _attackCnt;      // 일반 공격 횟수
+    [SerializeField] private float _fearTime;       // Fear 패턴 주기
+    [SerializeField] private float _cryDownTime;    // CryDown 패턴 주기
+    [SerializeField] private int _hitAttackCnt;     // 피격 횟수
+
 
     public bool MeetPlayer { get => _meetPlayer; set => _meetPlayer = value; }
-    public bool IsCryToSky { get => _isCryToSky; set => _isCryToSky = value; }
+    public bool IsCryToDown { get => _isCryToDown; set => _isCryToDown = value; }
+    public bool IsBreath { get => _isBreath; set => _isBreath = value; }
     public float AttackCnt { get => _attackCnt; set => _attackCnt = value; }
     public int ChangeAttackCount { get => 3; }
     public float FearTime { get => _fearTime; set => _fearTime = value; }
     public float ThreadHoldFearTime { get => 15.0f; }
-    public float CryTime { get => _cryTime; set => _cryTime = value; }
+    public float CryDownTime { get => _cryDownTime; set => _cryDownTime = value; }
     public float ThreadHoldCryTime { get => 30.0f; }
+    public int HitAttackCnt { get => _hitAttackCnt; set => _hitAttackCnt = value; }
+    public int ThreadHoldHitAttackCnt { get => 20; }
 
     public int AmountDEF { get => 1000; }
     #endregion
@@ -95,6 +103,9 @@ public class DragonController : BaseMonsterController
         FEAR_ENABLE_STATE = new FearEnableState(this);
         FEAR_ATTACK_STATE = new FearAttackState(this);
         FEAR_STRONG_ATTACK_STATE = new FearStrongAttackState(this);
+
+        BREATH_ENABLE_STATE = new BreathEnableState(this);
+        BREATH_STATE = new BreathState(this);
         #endregion
 
         #region SKY PATTERN STATE
