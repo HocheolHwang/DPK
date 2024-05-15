@@ -131,7 +131,7 @@ namespace DragonStateItem
     #endregion
 
     // -------------------------------------- BREATH_ENABLE ------------------------------------------------
-    #region BREATH_ENABLE( DEF+1000 && HitCount )
+    #region BREATH_ENABLE( 70%: DEF+1000 && HitCount )
     public class BreathEnableState : DragonState
     {
         public BreathEnableState(DragonController controller) : base(controller)
@@ -206,7 +206,7 @@ namespace DragonStateItem
     #endregion
 
     // -------------------------------------- CRY_TO_FIRE ------------------------------------------------
-    #region CRY_TO_FIRE( Two And One Counter )
+    #region CRY_TO_FIRE( 30%: Two And One Counter )[ SKY ]
     public class CryToFireState : DragonState
     {
         public CryToFireState(DragonController controller) : base(controller)
@@ -245,7 +245,7 @@ namespace DragonStateItem
     #endregion
 
     // -------------------------------------- FLY_FIRE_BALL ------------------------------------------------
-    #region FLY_FIRE_BALL
+    #region FLY_FIRE_BALL[ SKY ]
     public class FlyFireballState : DragonState
     {
         public FlyFireballState(DragonController controller) : base(controller)
@@ -276,7 +276,7 @@ namespace DragonStateItem
     #endregion
 
     // -------------------------------------- CRY_TO_DOWN ------------------------------------------------
-    #region CRY_TO_DOWN( Two Counter )
+    #region CRY_TO_DOWN( TIME(30): Two Counter )[ SKY ]
     public class CryToDownState : DragonState
     {
         public CryToDownState(DragonController controller) : base(controller)
@@ -325,7 +325,7 @@ namespace DragonStateItem
     #endregion
 
     // -------------------------------------- SKY_DOWN_ATTACK ------------------------------------------------
-    #region SKY_DOWN_ATTACK
+    #region SKY_DOWN_ATTACK[ SKY ]
     public class SkyDownAttackState : DragonState
     {
         public SkyDownAttackState(DragonController controller) : base(controller)
@@ -362,7 +362,7 @@ namespace DragonStateItem
     #endregion
 
     // -------------------------------------- FEAR_ENABLE ------------------------------------------------
-    #region FEAR_ENABLE( Red Counter )
+    #region FEAR_ENABLE( TIME(15): Red Counter )
     public class FearEnableState : DragonState
     {
         public FearEnableState(DragonController controller) : base(controller)
@@ -521,7 +521,7 @@ namespace DragonStateItem
     #endregion
 
     // -------------------------------------- GROUND_TO_SKY ------------------------------------------------
-    #region GROUND_TO_SKY
+    #region GROUND_TO_SKY[ SKY ]
     public class GroundToSkyState : DragonState
     {
         public GroundToSkyState(DragonController controller) : base(controller)
