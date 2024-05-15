@@ -27,43 +27,55 @@ public class SkillSlot : MonoBehaviour
         // 내 캐릭터만 UI에 연결하기
 
 
-        // string[] loadedSkills = null;
-        // TMP
-        //Managers.Network.AllSkillCall(LoadSkills);
-
-
-        // TODO 기본스킬 정해야할것
-        switch (gameObject.name.Replace("(Clone)",""))
+        if (GetComponent<PhotonView>().IsMine)
         {
-            case "Warrior": // 워리어
-                loadedSkills = new string[] { "DoubleSlash", "TripleSlash", "DrawSword", "QuadrupleSlash", "Guard", "Sting", "ShieldSlam", "BackStep" };
-                //for(int i = 0; i < 8; i++)
-                //{
-                //    loadedSkills[i] = Managers.Player.warriorSkills[i].skillName;
-                //}
-                break;
-            case "Archer": // 아처
-                loadedSkills = new string[]{ "StormStrike", "WindSpirit", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "ForestSpirit", "LightningShot" };
-                break;
-            case "Mage": // 메이지
-                loadedSkills = new string[] { "Meteor", "ChainLightning", "FlashLight", "Thunder", "Heal", "Protection", "BloodBoom", "Gravity" };
-                break;
+            switch (gameObject.name.Replace("(Clone)", ""))
+            {
+                case "Warrior": // 워리어
+                    //loadedSkills = new string[] { "DoubleSlash", "TripleSlash", "DrawSword", "QuadrupleSlash", "Guard", "Sting", "ShieldSlam", "BackStep" };
+                    for (int i = 0; i < 8; i++)
+                    {
+                        loadedSkills[i] = Managers.Player.warriorSkills[i]?.skillName;
+                    }
+                    break;
+                case "Archer": // 아처
+                    //loadedSkills = new string[] { "StormStrike", "WindSpirit", "ArrowBomb", "WindBall", "WindShield", "ArrowStab", "ForestSpirit", "LightningShot" };
+                    for (int i = 0; i < 8; i++)
+                    {
+                        loadedSkills[i] = Managers.Player.archerSkills[i].skillName;
+                    }
+                    break;
+                case "Mage": // 메이지
+                    //loadedSkills = new string[] { "Meteor", "ChainLightning", "FlashLight", "Thunder", "Heal", "Protection", "BloodBoom", "Gravity" };
+                    for (int i = 0; i < 8; i++)
+                    {
+                        loadedSkills[i] = Managers.Player.mageSkills[i].skillName;
+                    }
+                    break;
+            }
+
+            for (int i = 0; i < loadedSkills.Length; i++)
+            {
+                string skillName = loadedSkills[i];
+                if (skillName == null) continue;
+                Type type = Type.GetType(skillName);
+
+                // Type이 유효하면 컴포넌트를 추가합니다.
+                // 후에 as를 이용한 타입캐스트 해주기
+                if (type != null && type.IsSubclassOf(typeof(Component)))
+                {
+                    skill[i] = (Skill)gameObject.AddComponent(type);
+
+                }
+            }
+        }
+        else
+        {
+
         }
 
         
-        for (int i = 0; i < loadedSkills.Length; i++)
-        {
-            string skillName = loadedSkills[i];
-            Type type = Type.GetType(skillName);
 
-            // Type이 유효하면 컴포넌트를 추가합니다.
-            // 후에 as를 이용한 타입캐스트 해주기
-            if (type != null && type.IsSubclassOf(typeof(Component)))
-            {
-                skill[i] = (Skill)gameObject.AddComponent(type);
-                
-            }
-        }
 
         if (GetComponent<PhotonView>().IsMine)
         {
@@ -71,6 +83,9 @@ public class SkillSlot : MonoBehaviour
             GameObject.FindObjectOfType<Dungeon_Popup_UI>().UpdateSlotSkillIcons();
         }
     }
+
+
+
 
     public void SelectSkill(Define.SkillKey key)
     {

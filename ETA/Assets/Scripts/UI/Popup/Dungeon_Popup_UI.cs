@@ -974,7 +974,7 @@ public class Dungeon_Popup_UI : UI_Popup
         for (int i = 0; i < 8; i++)
         {
             var skill = skillSlot.Skills[i];
-
+            if (skill == null) continue;
             if (skill.SkillType != Define.SkillType.Holding)
             {
                 collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
