@@ -9,6 +9,7 @@ import com.e207.back.dto.response.SaveLearnedSkillsResponseDto;
 import com.e207.back.entity.ClassEntity;
 import com.e207.back.entity.LearnedSkillEntity;
 import com.e207.back.entity.PlayerEntity;
+import com.e207.back.entity.id.LearnedSkillId;
 import com.e207.back.repository.ClassRepository;
 import com.e207.back.repository.LearnedSkillRepository;
 import com.e207.back.repository.PlayerRepository;
@@ -58,9 +59,25 @@ public class SkillServiceImpl implements SkillService {
             dto.getSkillList().forEach((e) ->{
 
                 Optional<LearnedSkillEntity> learnedSkill = learnedSkillRepository.findByPlayerPlayerIdAndSkillSkillCode(playerId, e.getSkillCode());
-                learnedSkill.get().setActive(true);
-                learnedSkill.get().setSkillSlot(e.getIndex());
-                learnedSkillRepository.save(learnedSkill.get());
+                if(learnedSkill.isPresent()){
+                    learnedSkill.get().setActive(true);
+                    learnedSkill.get().setSkillSlot(e.getIndex());
+                    learnedSkillRepository.save(learnedSkill.get());
+                }
+                else{
+                    LearnedSkillEntity newLearnedSkill = new LearnedSkillEntity();
+                    newLearnedSkill.setSkillSlot(e.getIndex());
+                    newLearnedSkill.setActive(true);
+                    LearnedSkillId id = new LearnedSkillId(playerId, e.getSkillCode(), classCode);
+                    newLearnedSkill.setId(id);
+                    newLearnedSkill.setPlayer(player.get());
+                    newLearnedSkill.setSkill(skillRepository.findById(e.getSkillCode()).get());
+                    newLearnedSkill.setClassEntity(classEntity.get());
+                    learnedSkillRepository.save(newLearnedSkill);
+
+                }
+
+
             });
 
 
