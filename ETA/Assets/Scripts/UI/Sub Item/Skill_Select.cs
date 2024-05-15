@@ -62,26 +62,26 @@ public class Skill_Select : MonoBehaviour
     {
         {"C001",new string[]
             {
-                "DrawSword", "Massacre", "Whirlwind", "Guard",
-                "Sting", "SwordWave", "TelekineticSwords", "Guard",
-                "WindSlash", "Guard", "Guard", "Guard",
-                "Guard", "Guard", "Guard", "Guard"
+                "BackStep", "DoubleSlash", "DrawSword", "ShieldSlam",
+                "Guard", "WhirlWind", "WindSlash", "HolyHammer",
+                "TripleSlash", "Sting", "Blessing", "ThrowingShield",
+                "Massacre", "Guard", "Guard", "Guard"
             }
         },
         {"C002", new string[]
             {
-                "ArrowBomb", "ArrowShower", "ArrowStab", "ForestSpirit",
-                "LightningShot", "RapidArrow", "WindBall", "WindShield",
-                "WindShield", "WindShield", "WindShield", "WindShield",
-                "WindShield", "WindShield", "WindShield", "WindShield"
+                "Tumbling", "ArrowStab", "WindBlast", "ScatterArrow",
+                "WindShield", "WindBall", "LightningShot", "ForestSpirit",
+                "ArrowBomb", "RapidArrow", "Tempest", "ArrowShower",
+                "ForestBless", "ChargeArrow", "WindSpirit", "StormStrike"
             }
         },
         {"C003", new string[]
              {
-                "Tornado", "Thunder", "Rage", "QuickFreeze",
-                "Protection", "Meteor", "Infusion", "IceBone",
-                "Heal", "Gravity", "FlashLight", "BloodBoom",
-                "Adrenalin", "Adrenalin", "Adrenalin", "Adrenalin"
+                "BubbleShot", "FlashLight", "Heal", "IceBone",
+                "Protection", "Gravity", "Thunder", "Meteor",
+                "PoisonMist", "BloodBoom", "Plague", "FireWall",
+                "QuickFreeze", "Heal", "Heal", "Heal"
             }
         }
     };
@@ -360,7 +360,7 @@ public class Skill_Select : MonoBehaviour
     public void OnDragBegin(int skillIndex, PointerEventData eventData)
     {
         // 드래그 시작 시 드래그 중인 스킬 정보를 활성화하고 해당 슬롯의 이미지와 이름을 복제
-        draggingSkill.Icon.sprite = slotSkillIcons[skillIndex].sprite;
+        draggingSkill.Icon.sprite = skillIcons[skillIndex].sprite;
         draggingSkill.Name = skillNames[skillIndex];
         draggingSkill.Code = skillCodes[skillIndex];
         draggingSkill.Icon.gameObject.SetActive(true);
@@ -386,28 +386,50 @@ public class Skill_Select : MonoBehaviour
             // 해당 슬롯 인덱스가 유효하면 업데이트
             if (currentSlotIndex != -1)
             {
-                try
+                // 같은 이름의 스킬이 있는지 확인
+                bool isDuplicate = false;
+                for (int i = 0; i < skills.Length; i++)
                 {
-                    // 스킬 슬롯 업데이트
-                    skills[currentSlotIndex] = new SkillInfo { skillCode = draggingSkill.Code, skillName = draggingSkill.Name };
-
-                    // SkillSO 객체 로드
-                    SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{ChangeCodeToName(selectedClassCode)}/{skills[currentSlotIndex].skillName}");
-
-                    if (skillData != null)
+                    // skills[i]가 null이 아닌지 그리고 스킬 이름이 같은지 확인
+                    if (skills[i] != null && skills[i].skillName == draggingSkill.Name)
                     {
-                        slotSkillIcons[currentSlotIndex].sprite = skillData.Icon;
-                    }
-                    else
-                    {
-                        slotSkillIcons[currentSlotIndex].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
+                        isDuplicate = true;
+                        break;
                     }
                 }
-                catch (Exception e)
+
+                // 중복된 스킬을 슬롯에 장착하려고 하면 경고 창 출력
+                if (isDuplicate)
                 {
-                    // SkillSO가 없을 경우 기본 이미지 할당
-                    Debug.Log("Error loading skill data: " + e.Message);
-                    slotSkillIcons[currentSlotIndex].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
+                    // 경고창 띄우기
+                    var popupUI = FindFirstObjectByType<Lobby_Popup_UI>();
+                    Managers.Coroutine.StartCoroutine(popupUI.ShowWarningPopupCoroutine("스킬 장착 불가", "동일한 스킬을 슬롯에 장착할 수 없습니다."));
+                }
+                else
+                {
+                    try
+                    {
+                        // 스킬 슬롯 업데이트
+                        skills[currentSlotIndex] = new SkillInfo { skillCode = draggingSkill.Code, skillName = draggingSkill.Name };
+
+                        // SkillSO 객체 로드
+                        SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{ChangeCodeToName(selectedClassCode)}/{skills[currentSlotIndex].skillName}");
+
+                        if (skillData != null)
+                        {
+                            slotSkillIcons[currentSlotIndex].sprite = skillData.Icon;
+                        }
+                        else
+                        {
+                            slotSkillIcons[currentSlotIndex].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        // SkillSO가 없을 경우 기본 이미지 할당
+                        Debug.Log("Error loading skill data: " + e.Message);
+                        slotSkillIcons[currentSlotIndex].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
+                    }
                 }
             }
         }
