@@ -975,6 +975,12 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             var skill = skillSlot.Skills[i];
 
+            if (skill == null)
+            {
+                //Debug.Log("없는 스킬입니다. 콜라보 관련 설정을 하지 않습니다.");
+                continue;
+            }
+
             if (skill.SkillType != Define.SkillType.Holding)
             {
                 collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");

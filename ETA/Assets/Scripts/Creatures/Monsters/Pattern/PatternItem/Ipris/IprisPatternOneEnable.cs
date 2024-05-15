@@ -48,18 +48,19 @@ public class IprisPatternOneEnable : Pattern
         Managers.Sound.Play("Monster/CounterEnergy_SND", Define.Sound.Effect);
 
         float timer = 0;
-        bool isCounter = false;
         while (timer <= _duration)
         {
-            if (_icontroller.IsHitCounter && !isCounter )
+            if (_icontroller.IsHitCounter )
             {
                 ParticleSystem hitRedPs = Managers.Effect.Play(Define.Effect.CounteredEffect_Red, 1, _controller.transform);
                 hitRedPs.transform.SetParent(_controller.transform);
                 hitRedPs.transform.localPosition = new Vector3(0, 1.5f, 0);
 
                 Managers.Resource.Destroy(_hitbox.gameObject);
-                Managers.Sound.Play("Monster/CounterEnable_SND", Define.Sound.Effect);
-                isCounter = true;
+                Managers.Sound.Play("Monster/CounterEnableRed_SND", Define.Sound.Effect);
+
+                Managers.Effect.Stop(_ps);
+                yield break;
             }
             timer += Time.deltaTime;
             yield return null;

@@ -35,7 +35,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     protected ParticleSystem _shieldEffect;
     public Boolean Evasion { get; set; }
 
-    float _destroyedTime = 3.0f;
+    protected float _destroyedTime = 3.0f;
 
     //-----------------------------------  Essential Functions --------------------------------------------
     protected virtual void Awake()
@@ -239,7 +239,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
             Stat.Hp = 0;
             DestroyObject();
         }
-
     }
 
     public virtual void AttackedEvent()

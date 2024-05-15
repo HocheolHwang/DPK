@@ -15,6 +15,7 @@ public class IprisAnimationData : MonsterAnimationData
     [SerializeField] protected string counterAttackParamName = "COUNTER_ATTACK";
     [SerializeField] protected string patternOneEnableParamName = "PATTERN_ONE_ENABLE";
     [SerializeField] protected string patternOneParamName = "PATTERN_ONE";
+    [SerializeField] protected string patternOneStrongParamName = "PATTERN_ONE_STRONG";
     [SerializeField] protected string patternTwoParamName = "PATTERN_TWO";
     [SerializeField] protected string patternTwoWindMillParamName = "PATTERN_TWO_WINDMILL";
 
@@ -28,6 +29,7 @@ public class IprisAnimationData : MonsterAnimationData
     public int CounterAttackParamHash { get; private set; }
     public int PatternOneEnableParamHash { get; private set; }
     public int PatternOneParamHash { get; private set; }
+    public int PatternOneStrongParamHash { get; private set; }
     public int PatternTwoParamHash { get; private set; }
     public int PatternTwoWindMillParamHash { get; private set; }
 
@@ -43,6 +45,7 @@ public class IprisAnimationData : MonsterAnimationData
     [SerializeField] private AnimationClip counterAttackAnim;
     [SerializeField] private AnimationClip patternOneEnableAnim;
     [SerializeField] private AnimationClip patternOneAnim;
+    [SerializeField] private AnimationClip patternOneStrongAnim;
     [SerializeField] private AnimationClip patternTwoAnim;
     [SerializeField] private AnimationClip patternTwoWindMillAnim;
 
@@ -56,6 +59,7 @@ public class IprisAnimationData : MonsterAnimationData
     public AnimationClip CounterAttackAnim { get => counterAttackAnim; }
     public AnimationClip PatternOneEnableAnim { get => patternOneEnableAnim; }
     public AnimationClip PatternOneAnim { get => patternOneAnim; }
+    public AnimationClip PatternOneStrongAnim { get => patternOneStrongAnim; }
     public AnimationClip PatternTwoAnim { get => patternTwoAnim; }
     public AnimationClip PatternTwoWindMillAnim { get => patternTwoWindMillAnim; }
 
@@ -74,6 +78,7 @@ public class IprisAnimationData : MonsterAnimationData
         CounterAttackParamHash = Animator.StringToHash(counterAttackParamName);
         PatternOneEnableParamHash = Animator.StringToHash(patternOneEnableParamName);
         PatternOneParamHash = Animator.StringToHash(patternOneParamName);
+        PatternOneStrongParamHash = Animator.StringToHash(patternOneStrongParamName);
         PatternTwoParamHash = Animator.StringToHash(patternTwoParamName);
         PatternTwoWindMillParamHash = Animator.StringToHash(patternTwoWindMillParamName);
     }
