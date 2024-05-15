@@ -182,6 +182,12 @@ public class Skill_Select : MonoBehaviour
             entryExit.eventID = EventTriggerType.PointerExit;
             entryExit.callback.AddListener((eventData) => { OnPointerExitSlot(); });
             eventTrigger.triggers.Add(entryExit);
+
+            // 포인터 클릭 이벤트를 추가
+            EventTrigger.Entry entryClick = new EventTrigger.Entry();
+            entryClick.eventID = EventTriggerType.PointerClick;
+            entryClick.callback.AddListener((data) => { OnPointerClickSlot((PointerEventData)data, index); });
+            eventTrigger.triggers.Add(entryClick);
         }
 
 
@@ -491,5 +497,32 @@ public class Skill_Select : MonoBehaviour
     public void OnPointerExitSlot()
     {
         currentSlotIndex = -1;
+    }
+
+    // 포인터 클릭 이벤트 핸들러
+    public void OnPointerClickSlot(PointerEventData eventData, int index)
+    {
+        // 우클릭 확인
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            // 스킬 정보 비우기
+            if (skills.Length > index)
+            {
+                skills[index] = null; // 스킬 정보를 null로 설정
+                slotSkillIcons[index].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
+            }
+        }
+        // 좌클릭 확인
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            // 스킬 정보 띄우기
+            if (skills.Length > index)
+            {
+                // Skill_Info 컴포넌트 참조
+                Skill_Info skillInfoComponent = GameObject.Find("Skill_Info").GetComponent<Skill_Info>();
+
+                skillInfoComponent.UpdateSkillInfo(ChangeCodeToName(selectedClassCode), skills[index].skillName);
+            }
+        }
     }
 }
