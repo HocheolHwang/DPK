@@ -188,7 +188,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private Image[] skillSlotIcons = new Image[8];
     private TextMeshProUGUI dungeonTierText;
     private TextMeshProUGUI dungeonNameText;
-    private TextMeshProUGUI timeText;
+    public TextMeshProUGUI timeText;
     private TextMeshProUGUI[] memberLevelTexts = new TextMeshProUGUI[3];
     private TextMeshProUGUI[] memberNicknameTexts = new TextMeshProUGUI[3];
     private TextMeshProUGUI playerTierText;
