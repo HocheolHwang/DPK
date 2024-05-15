@@ -45,6 +45,7 @@ namespace DragonStateItem
         public override void Enter()
         {
             _agent.speed = _stat.MoveSpeed;
+            _controller.MeetPlayer = true;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
         }
 
@@ -96,6 +97,11 @@ namespace DragonStateItem
                 //Debug.Log("IDLE_BATTLE TO IDLE");
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
+            else if (_controller.FearTime >= _controller.ThreadHoldFearTime)
+            {
+                Debug.Log("IDLE_BATTLE TO FEAR_ENABLE");
+                _controller.ChangeState(_controller.FEAR_ENABLE_STATE);
+            }
             else if (IsStayForSeconds(2.0f))
             {
                 //Debug.Log("IDLE_BATTLE TO ATTACK");
@@ -103,6 +109,120 @@ namespace DragonStateItem
             }
         }
 
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- FEAR_ENABLE ------------------------------------------------
+    #region FEAR_ENABLE( Red Counter )
+    public class FearEnableState : DragonState
+    {
+        public FearEnableState(DragonController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            // 0.15초 동안 유지되기 떄문에 카운터를 치지 않았음에도 true 조건을 만족하는 경우를 배제
+            _controller.IsHitCounter = false;
+
+            InitTime(_animData.FearEnableAnim.length);
+            _animator.SetFloat("FearEnableSpeed", 0.33f);
+            _animator.CrossFade(_animData.FearEnableParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            // 카운터에 맞으면 기절 부여
+            if (_controller.IsHitCounter)
+            {
+                Debug.Log("PATTERN_ONE_ENABLE TO FEAR_STRONG_ATTACK");
+                _controller.ChangeState(_controller.FEAR_STRONG_ATTACK_STATE);
+            }
+            // 카운터에 맞지 않아도 공격
+            else if (_animTime >= _threadHold * 3.0f)
+            {
+                Debug.Log("PATTERN_ONE_ENABLE TO FEAR_ATTACK");
+                _controller.ChangeState(_controller.FEAR_ATTACK_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+            _controller.FearTime = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- FEAR_ATTACK ------------------------------------------------
+    #region FEAR_ATTACK
+    public class FearStrongAttackState : DragonState
+    {
+        public FearStrongAttackState(DragonController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.FearAttackAnim.length);
+            _animator.SetFloat("FearSpeed", 0.5f);
+            _animator.CrossFade(_animData.FearAttackParamHash, 0.1f);
+
+            
+        }
+
+        public override void Execute()
+        {
+            //if (PhotonNetwork.IsMasterClient == false) return;
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold)
+            {
+                Debug.Log("FEAR_ATTACK TO IDLE_BATTLE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- FEAR_STRONG_ATTACK ------------------------------------------------
+    #region FEAR_STRONG_ATTACK
+    public class FearAttackState : DragonState
+    {
+        public FearAttackState(DragonController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.FearAttackAnim.length);
+            _animator.SetFloat("FearSpeed", 0.5f);
+            _animator.CrossFade(_animData.FearAttackParamHash, 0.1f);
+
+
+        }
+
+        public override void Execute()
+        {
+            //if (PhotonNetwork.IsMasterClient == false) return;
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold)
+            {
+                Debug.Log("FEAR_STRONG_ATTACK TO IDLE_BATTLE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
         public override void Exit()
         {
         }
@@ -144,18 +264,7 @@ namespace DragonStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
-                if (_detector.Target == null)
-                {
-                    _controller.ChangeState(_controller.IDLE_STATE);
-                }
-                else if (_detector.IsArriveToTarget())
-                {
-                    _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
-                }
-                else
-                {
-                    _controller.ChangeState(_controller.CHASE_STATE);
-                }
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
 
@@ -252,6 +361,11 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (_controller.MeetPlayer)
+            {
+                _controller.FearTime += Time.deltaTime;
+            }
+
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.
             if (_controller.CurState == _controller.DIE_STATE) return;
 

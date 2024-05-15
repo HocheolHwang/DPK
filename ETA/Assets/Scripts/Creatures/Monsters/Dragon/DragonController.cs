@@ -17,6 +17,7 @@ public class DragonController : BaseMonsterController
 
     public State FEAR_ENABLE_STATE;
     public State FEAR_ATTACK_STATE;
+    public State FEAR_STRONG_ATTACK_STATE;
     public State BREATH_ENABLE_STATE;
     public State BREATH_STATE;
     public State CRY_TO_DOWN_STATE;
@@ -27,10 +28,15 @@ public class DragonController : BaseMonsterController
     #endregion
 
     #region STATE VARIABLE
+    [SerializeField] private bool _meetPlayer;
     [SerializeField] private float _attackCnt;
+    [SerializeField] private float _fearTime;
 
+    public bool MeetPlayer { get => _meetPlayer; set => _meetPlayer = value; }
     public float AttackCnt { get => _attackCnt; set => _attackCnt = value; }
     public int ChangeAttackCount { get => 3; }
+    public float FearTime { get => _fearTime; set => _fearTime = value; }
+    public float ThreadHoldFearTime { get => 20.0f; }
     #endregion
 
     private DragonAnimationData _animData;
@@ -66,7 +72,9 @@ public class DragonController : BaseMonsterController
         #endregion
 
         #region PATTERN STATE
-
+        FEAR_ENABLE_STATE = new FearEnableState(this);
+        FEAR_ATTACK_STATE = new FearAttackState(this);
+        FEAR_STRONG_ATTACK_STATE = new FearStrongAttackState(this);
         #endregion
 
         Agent.stoppingDistance = Detector.AttackRange - 0.3f;

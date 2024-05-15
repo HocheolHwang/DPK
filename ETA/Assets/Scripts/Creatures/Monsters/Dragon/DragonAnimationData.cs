@@ -18,6 +18,7 @@ public class DragonAnimationData : MonoBehaviour
     [Header("Dragon Pattern Action")]
     [SerializeField] protected string fearEnableParamName = "FEAR_ENABLE";
     [SerializeField] protected string fearAttackParamName = "FEAR_ATTACK";
+    [SerializeField] protected string fearStrongAttackParamName = "FEAR_STRONG_ATTACK";
     [SerializeField] protected string breathEnableParamName = "BREATH_ENABLE";
     [SerializeField] protected string breathParamName = "BREATH";
     [SerializeField] protected string cryToDownName = "CRY_TO_DOWN";
@@ -38,6 +39,7 @@ public class DragonAnimationData : MonoBehaviour
     public int TailAttackParamHash { get; private set; }
     public int FearEnableParamHash { get; private set; }
     public int FearAttackParamHash { get; private set; }
+    public int FearStrongAttackParamHash { get; private set; }
     public int BreathEnableParamHash { get; private set; }
     public int BreathParamHash { get; private set; }
     public int CryToDownParamHash { get; private set; }
@@ -101,6 +103,7 @@ public class DragonAnimationData : MonoBehaviour
 
         FearEnableParamHash = Animator.StringToHash(fearEnableParamName);
         FearAttackParamHash = Animator.StringToHash(fearAttackParamName);
+        FearStrongAttackParamHash = Animator.StringToHash(fearStrongAttackParamName);
         BreathEnableParamHash = Animator.StringToHash(breathEnableParamName);
         BreathParamHash = Animator.StringToHash(breathParamName);
         CryToDownParamHash = Animator.StringToHash(cryToDownName);

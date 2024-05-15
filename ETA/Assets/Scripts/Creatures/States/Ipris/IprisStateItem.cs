@@ -188,7 +188,8 @@ namespace IprisStateItem
         public override void Enter()
         {
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToPatternOneEnableState();
-
+            // 0.15초 동안 유지되기 떄문에 카운터를 치지 않았음에도 true 조건을 만족하는 경우를 배제
+            _controller.IsHitCounter = false;
             _agent.velocity = Vector3.zero;
             _controller.PatternOneCnt++;
 
@@ -196,8 +197,6 @@ namespace IprisStateItem
             _animator.SetFloat("PatternOneEnableSpeed", 0.5f);
             _animator.CrossFade(_animData.PatternOneEnableParamHash, 0.1f);
 
-            // 0.15초 동안 유지되기 떄문에 카운터를 치지 않았음에도 true 조건을 만족하는 경우를 배제
-            _controller.IsHitCounter = false;
             StartCast((int)EIprisPattern.PatternOneEnable);
         }
 
@@ -208,6 +207,7 @@ namespace IprisStateItem
 
             if ( _controller.IsHitCounter )
             {
+                //Debug.Log("PATTERN_ONE_ENABLE TO PATTERN_ONE_STRONG");
                 _controller.ChangeState(_controller.PATTERN_ONE_STRONG_STATE);
             }
             else if (_animTime >= (_threadHold * 2.0f))
