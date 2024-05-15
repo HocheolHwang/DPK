@@ -27,8 +27,10 @@ public class DragonController : BaseMonsterController
     #endregion
 
     #region STATE VARIABLE
-    public float AttackCnt { get; set; }
-    public const int ChangeAttackCount = 3;
+    [SerializeField] private float _attackCnt;
+
+    public float AttackCnt { get => _attackCnt; set => _attackCnt = value; }
+    public int ChangeAttackCount { get => 3; }
     #endregion
 
     private DragonAnimationData _animData;
@@ -70,5 +72,6 @@ public class DragonController : BaseMonsterController
         Agent.stoppingDistance = Detector.AttackRange - 0.3f;
         // 넉백 히트박스를 몸에 가지고 다니자.
         UnitType = Define.UnitType.Dragon;
+        _destroyedTime = _animData.DieAnim.length;
     }
 }
