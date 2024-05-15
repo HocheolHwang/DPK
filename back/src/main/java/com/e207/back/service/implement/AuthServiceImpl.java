@@ -6,16 +6,11 @@ import com.e207.back.dto.request.SignUpRequestDto;
 import com.e207.back.dto.response.SelectClassResponseDto;
 import com.e207.back.dto.response.SignInResponseDto;
 import com.e207.back.dto.response.SignUpResponseDto;
-import com.e207.back.entity.ClassEntity;
-import com.e207.back.entity.PlayerClassEntity;
-import com.e207.back.entity.PlayerClassLogEntity;
-import com.e207.back.entity.PlayerEntity;
+import com.e207.back.entity.*;
+import com.e207.back.entity.id.LearnedSkillId;
 import com.e207.back.entity.id.PlayerClassId;
 import com.e207.back.provider.JwtProvider;
-import com.e207.back.repository.ClassRepository;
-import com.e207.back.repository.PlayerClassLogRepository;
-import com.e207.back.repository.PlayerClassRepository;
-import com.e207.back.repository.PlayerRepository;
+import com.e207.back.repository.*;
 import com.e207.back.service.AuthService;
 import com.e207.back.util.ValidationUtil;
 import jakarta.transaction.Transactional;
@@ -36,6 +31,8 @@ public class AuthServiceImpl implements AuthService {
     private final ClassRepository classRepository;
     private final PlayerClassRepository playerClassRepository;
     private final PlayerClassLogRepository playerClassLogRepository;
+    private final SkillRepository skillRepository;
+    private final LearnedSkillRepository learnedSkillRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtProvider jwtProvider;
     @Override
@@ -102,7 +99,50 @@ public class AuthServiceImpl implements AuthService {
             log.setClassEntity(classEntity.get());
             log.setPlayer(newPlayer);
             playerClassLogRepository.save(log);
-            
+
+
+            /// 스킬 생성
+
+            List<SkillEntity> defaultSkills = skillRepository.findAllByRequiredLevel(1);
+            int wCnt = 0;
+            int aCnt = 0;
+            int mCnt = 0;
+
+            for(int i = 0; i < defaultSkills.size(); i++){
+
+                SkillEntity skill = defaultSkills.get(i);
+                System.out.println();
+                LearnedSkillEntity newLearnedSkill = new LearnedSkillEntity();
+                newLearnedSkill.setPlayer(newPlayer);
+                newLearnedSkill.setActive(true);
+                newLearnedSkill.setSkill(skill);
+                for(int j = 0; j < classList.size(); j++){
+                    ClassEntity c = classList.get(j);
+                    System.out.println(c.getClassCode() + " " + skill.getSkillCode());
+                    if(c.getClassCode().equals("C001") && skill.getSkillCode().startsWith("W")){
+                        LearnedSkillId learnedSkillId = new LearnedSkillId(newPlayer.getPlayerId(), skill.getSkillCode(), c.getClassCode());
+                        newLearnedSkill.setId(learnedSkillId);
+                        newLearnedSkill.setSkillSlot(wCnt++);
+                        newLearnedSkill.setClassEntity(c);
+                        System.out.println("Warrior SKill Save" + skill.getSkillCode());
+                    } else if (c.getClassCode().equals("C002") && skill.getSkillCode().startsWith("A")) {
+                        LearnedSkillId learnedSkillId = new LearnedSkillId(newPlayer.getPlayerId(), skill.getSkillCode(), c.getClassCode());
+                        newLearnedSkill.setId(learnedSkillId);
+                        newLearnedSkill.setSkillSlot(aCnt++);
+                        newLearnedSkill.setClassEntity(c);
+                    } else if (c.getClassCode().equals("C003") && skill.getSkillCode().startsWith("M")){
+                        LearnedSkillId learnedSkillId = new LearnedSkillId(newPlayer.getPlayerId(), skill.getSkillCode(), c.getClassCode());
+                        newLearnedSkill.setId(learnedSkillId);
+                        newLearnedSkill.setSkillSlot(mCnt++);
+                        newLearnedSkill.setClassEntity(c);
+                    }
+                }
+                learnedSkillRepository.save(newLearnedSkill);
+            }
+
+
+
+
         }catch (Exception exception){
             exception.printStackTrace();
             return ResponseDto.databaseError();

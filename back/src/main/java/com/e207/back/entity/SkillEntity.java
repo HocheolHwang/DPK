@@ -23,4 +23,7 @@ public class SkillEntity {
     @Column(name = "skill_name", nullable = false)
     private String skillName = "None";
 
+    @Column(name = "required_level", nullable = false)
+    private int requiredLevel;
+
 }
