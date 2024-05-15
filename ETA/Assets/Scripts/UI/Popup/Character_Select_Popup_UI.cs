@@ -50,6 +50,25 @@ public class Character_Select_Popup_UI : UI_Popup
     // 저장하기 메서드
     private void SaveCharacter(PointerEventData data)
     {
+        // Skill_Select 인스턴스 찾기
+        Skill_Select skillSelectInstance = FindObjectOfType<Skill_Select>();
+
+        // 임시 슬롯을 실제 슬롯에 저장
+        switch (Character_Select.selectedClassCode)
+        {
+            case "C001":
+                Managers.Player.warriorSkills = skillSelectInstance.DeepCopySkillSlot(skillSelectInstance.tempWarriorSkills);
+                break;
+            case "C002":
+                Managers.Player.archerSkills = skillSelectInstance.DeepCopySkillSlot(skillSelectInstance.tempArcherSkills);
+                break;
+            case "C003":
+                Managers.Player.mageSkills = skillSelectInstance.DeepCopySkillSlot(skillSelectInstance.tempMageSkills);
+                break;
+            default:
+                break;
+        }
+
         // 캐릭터 선택 확인 Popup UI를 띄움
         Managers.UI.ShowPopupUI<Character_Selection_Confirm_Popup_UI>("[Lobby]_Character_Selection_Confirm_Popup_UI");
     }

@@ -24,9 +24,9 @@ public class Skill_Select : MonoBehaviour
     // --------------- 스킬 슬롯 ---------------
 
     // 임시 저장할 스킬 슬롯
-    private SkillInfo[] tempWarriorSkills;
-    private SkillInfo[] tempArcherSkills;
-    private SkillInfo[] tempMageSkills;
+    public SkillInfo[] tempWarriorSkills;
+    public SkillInfo[] tempArcherSkills;
+    public SkillInfo[] tempMageSkills;
 
     // 슬롯에 저장된 스킬 이미지
     private Image[] slotSkillIcons = new Image[8];
@@ -264,7 +264,7 @@ public class Skill_Select : MonoBehaviour
     }
 
     // 깊은 복사 메서드
-    private SkillInfo[] DeepCopySkillSlot(SkillInfo[] original)
+    public SkillInfo[] DeepCopySkillSlot(SkillInfo[] original)
     {
         if (original == null)
             return null;
