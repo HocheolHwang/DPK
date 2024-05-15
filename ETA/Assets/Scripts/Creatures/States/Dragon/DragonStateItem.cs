@@ -23,7 +23,7 @@ namespace DragonStateItem
         {
             if (_detector.Target != null)
             {
-                Debug.Log("IDLE TO CHASE");
+                //Debug.Log("IDLE TO CHASE");
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
         }
@@ -52,17 +52,17 @@ namespace DragonStateItem
         {
             if (_detector.Target == null)
             {
-                Debug.Log("CHASE TO IDLE");
+                //Debug.Log("CHASE TO IDLE");
                 _controller.ChangeState(_controller.IDLE_STATE);
             }
             else if (_detector.Target != null && _detector.IsArriveToTarget())
             {
-                Debug.Log("CHASE TO IDLE_BATTLE");
+                //Debug.Log("CHASE TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
             else
             {
-                Debug.Log("CHASE");
+                //Debug.Log("CHASE");
                 _agent.SetDestination(_detector.Target.position);
             }
         }

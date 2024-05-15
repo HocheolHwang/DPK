@@ -58,7 +58,7 @@ public class IprisPatternOneEnable : Pattern
                 hitRedPs.transform.localPosition = new Vector3(0, 1.5f, 0);
 
                 Managers.Resource.Destroy(_hitbox.gameObject);
-                Managers.Sound.Play("Monster/CounterEnable_SND", Define.Sound.Effect);
+                Managers.Sound.Play("Monster/CounterEnableRed_SND", Define.Sound.Effect);
                 isCounter = true;
             }
             timer += Time.deltaTime;
