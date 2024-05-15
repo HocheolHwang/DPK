@@ -36,6 +36,7 @@ public abstract class Skill : MonoBehaviour
 
     protected virtual void Init()
     {
+        //SkillSO skillData = Resources.Load<SkillSO>($"Scriptable/Skill/{ChangeCodeToName(classCode)}/{classSkills[classCode][i].skillName}");
         _controller = GetComponent<PlayerController>();
         _animator = GetComponent<Animator>();
         _skillSystem = GetComponent<SkillSystem>();
@@ -53,9 +54,6 @@ public abstract class Skill : MonoBehaviour
     {
         _lastExcuteTime = Time.time;
         _currentCoroutine = Managers.Coroutine.Run(StartSkillCast());
-
-
-        
     }
 
     public void CollavoCast()

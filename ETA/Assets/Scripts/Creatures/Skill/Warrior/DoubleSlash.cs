@@ -8,11 +8,11 @@ public class DoubleSlash : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(3);
-        Damage = 30;
+        SetCoolDownTime(5);
+        Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Immediately;
-        skillRange = new Vector3(3, 3, 3);
+        skillRange = new Vector3(2, 3, 2);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/DrawSword.png");
     }
 
