@@ -24,7 +24,9 @@ public class Skill_Select : MonoBehaviour
     // --------------- 스킬 슬롯 ---------------
 
     // 임시 저장할 스킬 슬롯
-    private SkillInfo[] skills;
+    public SkillInfo[] tempWarriorSkills;
+    public SkillInfo[] tempArcherSkills;
+    public SkillInfo[] tempMageSkills;
 
     // 슬롯에 저장된 스킬 이미지
     private Image[] slotSkillIcons = new Image[8];
@@ -153,7 +155,7 @@ public class Skill_Select : MonoBehaviour
             // 드래그 이벤트 할당
             UI_Base.AddUIEvent(skillIcons[index].gameObject, (eventData) => OnDragBegin(index, eventData), Define.UIEvent.BeginDrag);
             UI_Base.AddUIEvent(skillIcons[index].gameObject, OnDrag, Define.UIEvent.Drag);
-            UI_Base.AddUIEvent(skillIcons[index].gameObject, OnDragEnd, Define.UIEvent.EndDrag);
+            UI_Base.AddUIEvent(skillIcons[index].gameObject, (eventData) => OnDragEnd(selectedClassCode, eventData), Define.UIEvent.EndDrag);
         }
 
 
@@ -188,7 +190,7 @@ public class Skill_Select : MonoBehaviour
             // 포인터 클릭 이벤트를 추가
             EventTrigger.Entry entryClick = new EventTrigger.Entry();
             entryClick.eventID = EventTriggerType.PointerClick;
-            entryClick.callback.AddListener((data) => { OnPointerClickSlot((PointerEventData)data, index); });
+            entryClick.callback.AddListener((data) => { OnPointerClickSlot((PointerEventData)data, index, selectedClassCode); });
             eventTrigger.triggers.Add(entryClick);
         }
 
@@ -244,13 +246,43 @@ public class Skill_Select : MonoBehaviour
     // 클래스별 스킬 슬롯 업데이트 메서드
     private void GetSkillSlot(string classCode)
     {
-        skills = classCode switch
+        switch (classCode)
         {
-            "C001" => Managers.Player.warriorSkills,
-            "C002" => Managers.Player.archerSkills,
-            "C003" => Managers.Player.mageSkills,
-            _ => null
-        };
+            case "C001":
+                tempWarriorSkills = DeepCopySkillSlot(Managers.Player.warriorSkills);
+                break;
+            case "C002":
+                tempArcherSkills = DeepCopySkillSlot(Managers.Player.archerSkills);
+                break;
+            case "C003":
+                tempMageSkills = DeepCopySkillSlot(Managers.Player.mageSkills);
+                break;
+            default:
+                // 기본값 또는 예외 처리
+                break;
+        }
+    }
+
+    // 깊은 복사 메서드
+    public SkillInfo[] DeepCopySkillSlot(SkillInfo[] original)
+    {
+        if (original == null)
+            return null;
+
+        SkillInfo[] copy = new SkillInfo[original.Length];
+
+        for (int i = 0; i < original.Length; i++)
+        {
+            if (original[i] != null)
+            {
+                copy[i] = new SkillInfo { skillCode = original[i].skillCode, skillName = original[i].skillName };
+            }
+            else
+            {
+                copy[i] = null;
+            }
+        }
+        return copy;
     }
 
     // 모든 스킬 정보를 업데이트하는 메서드
@@ -340,6 +372,14 @@ public class Skill_Select : MonoBehaviour
     // 스킬 슬롯 아이콘 업데이트 메서드
     public void UpdateSkillSlot(string classCode)
     {
+        SkillInfo[] skills = classCode switch
+        {
+            "C001" => tempWarriorSkills,
+            "C002" => tempArcherSkills,
+            "C003" => tempMageSkills,
+            _ => null
+        };
+
         for (int i = 0; i < 8; i++)
         {
             try
@@ -423,8 +463,16 @@ public class Skill_Select : MonoBehaviour
     }
 
     // 드래그 종료 메서드
-    public void OnDragEnd(PointerEventData eventData)
+    public void OnDragEnd(string classCode, PointerEventData eventData)
     {
+        SkillInfo[] skills = classCode switch
+        {
+            "C001" => tempWarriorSkills,
+            "C002" => tempArcherSkills,
+            "C003" => tempMageSkills,
+            _ => null
+        };
+
         // 드래그 종료 시 드래그 중인 스킬 아이콘의 Raycast Target을 활성화
         draggingSkill.Icon.raycastTarget = true;
 
@@ -506,8 +554,16 @@ public class Skill_Select : MonoBehaviour
     }
 
     // 포인터 클릭 이벤트 핸들러
-    public void OnPointerClickSlot(PointerEventData eventData, int index)
+    public void OnPointerClickSlot(PointerEventData eventData, int index, string classCode)
     {
+        SkillInfo[] skills = classCode switch
+        {
+            "C001" => tempWarriorSkills,
+            "C002" => tempArcherSkills,
+            "C003" => tempMageSkills,
+            _ => null
+        };
+
         // 우클릭 확인
         if (eventData.button == PointerEventData.InputButton.Right)
         {
