@@ -11,6 +11,6 @@ public class DragonInfo : PatternInfo
     {
         base.Init();
 
-        //PatternList.Add(gameObject.GetOrAddComponent<IprisBuff>());
+        PatternList.Add(gameObject.GetOrAddComponent<DragonAttackDown>());
     }
 }

@@ -490,16 +490,22 @@ namespace DragonStateItem
             {
                 InitTime(_animData.TailAttackAnim.length);
                 _animator.CrossFade(_animData.TailAttackParamHash, 0.1f);
+
+                StartCast((int)EDragonPattern.ATTACK_TAIL);
             }
             else if (_controller.AttackCnt % _controller.ChangeAttackCount == 1)
             {
                 InitTime(_animData.SwingAttackAnim.length);
                 _animator.CrossFade(_animData.SwingAttackParamHash, 0.1f);
+
+                StartCast((int)EDragonPattern.ATTACK_SWING);
             }
             else if (_controller.AttackCnt % _controller.ChangeAttackCount == 0)
             {
                 InitTime(_animData.DownAttackAnim.length);
                 _animator.CrossFade(_animData.DownAttackParamHash, 0.1f);
+
+                StartCast((int)EDragonPattern.ATTACK_DOWN);
             }
 
             _controller.AttackCnt++;
