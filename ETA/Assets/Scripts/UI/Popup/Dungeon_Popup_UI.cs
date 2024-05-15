@@ -408,8 +408,8 @@ public class Dungeon_Popup_UI : UI_Popup
 
 
         expResult = false;
+        FindObjectOfType<PhotonChat>().gameObject.GetOrAddComponent<SendRoomLog>();
 
-        FindObjectOfType<PhotonChat>().gameObject.AddComponent<SendRoomLog>();
         Managers.Photon.CloseRoom();
 
         // 콜라보 시스템 참조
@@ -644,7 +644,8 @@ public class Dungeon_Popup_UI : UI_Popup
             currentCheckpointIndex++;
 
             // 체크 포인트 통과 시 받는 경험치 증가
-            currentExp += 10 * currentCheckpointIndex;
+            currentExp += 10 * (currentCheckpointIndex-1);
+            //Debug.Log($"{currentCheckpointIndex} 웨이브 도착 현재 경험치는 {currentExp}, 얻은 경험치는 {10 * (currentCheckpointIndex - 1)}");
 
             // 체크포인트 인덱스에 따라 진행바를 업데이트
             dungeonProgressBar.value = (float) currentCheckpointIndex / totalCheckpoints;
@@ -670,7 +671,7 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 클리어
         if (selectedDungeonNumber!= 0)
         {
-            currentExp += 10 * currentCheckpointIndex;
+            currentExp += 30;
             SummaryExp(dungeonNameText.text + "던전 클리어");
         }
 
@@ -727,12 +728,8 @@ public class Dungeon_Popup_UI : UI_Popup
 
         currentExp += 10;
 
-        // 던전 난이도 보상
-        if (selectedDungeonNumber > 1)
-            currentExp = ((selectedDungeonNumber-1) * 5) * currentExp;
-        
         // 경험치 합산
-        Managers.Player.AddExp(currentExp);
+        //Managers.Player.AddExp(currentExp);
         EXPStatisticsReqDto dto = new EXPStatisticsReqDto();
         dto.classCode = Managers.Player.GetClassCode();
         dto.currentExp = Managers.Player.GetExp();
@@ -741,6 +738,7 @@ public class Dungeon_Popup_UI : UI_Popup
         dto.reason = message;
         dto.expDelta = currentExp;
         Managers.Network.EXPStatisticsCall(dto);
+        //Debug.Log($"{currentExp} 얻었다넹");
         currentExp = 0;
     }
 
@@ -997,4 +995,5 @@ public class Dungeon_Popup_UI : UI_Popup
             }
         }
     }
+
 }
