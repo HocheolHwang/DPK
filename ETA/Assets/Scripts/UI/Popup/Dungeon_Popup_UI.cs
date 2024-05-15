@@ -10,6 +10,7 @@ using Photon.Pun;
 using WebSocketSharp;
 using System.Linq;
 using System.IO;
+using ExitGames.Client.Photon;
 
 public class Dungeon_Popup_UI : UI_Popup
 {
@@ -106,6 +107,16 @@ public class Dungeon_Popup_UI : UI_Popup
         Skill_6_Collabo_Image,
         Skill_7_Collabo_Image,
         Skill_8_Collabo_Image,
+
+        // 스킬 슬롯
+        Skill_1,
+        Skill_2,
+        Skill_3,
+        Skill_4,
+        Skill_5,
+        Skill_6,
+        Skill_7,
+        Skill_8
     }
 
     enum Texts
@@ -174,6 +185,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private Image[] skillUnableImages = new Image[8];
     private Image[] skillIcons = new Image[8];
     private Image[] collaboImages = new Image[8];
+    private Image[] skillSlotIcons = new Image[8];
     private TextMeshProUGUI dungeonTierText;
     private TextMeshProUGUI dungeonNameText;
     private TextMeshProUGUI timeText;
@@ -227,6 +239,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
     // 현재 숫자를 추적하는 외부 변수
     private int currentNum = 2;
+
+    // 스킬 정보 팝업
+    public GameObject skillInfoPopup;
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -375,9 +390,31 @@ public class Dungeon_Popup_UI : UI_Popup
         //StartCoroutine(LoadSkillSlotDataCoroutine());
 
         // 스킬 아이콘 초기화
-        for (int i = 0; i < skillIcons.Length; i++)
+        for (int i = 0; i < 8; i++)
         {
-            skillIcons[i] = GetImage((int)Images.Skill_Icon_1 + i);
+            int index = i;
+            skillIcons[index] = GetImage((int)Images.Skill_Icon_1 + index);
+            skillSlotIcons[index] = GetImage((int)Images.Skill_1 + index);
+
+            // UI 이벤트를 추가하기 위해 EventTrigger 컴포넌트를 가져옵니다.
+            EventTrigger eventTrigger = skillSlotIcons[index].gameObject.GetComponent<EventTrigger>();
+            if (eventTrigger == null)
+            {
+                // EventTrigger 컴포넌트가 없다면 추가합니다.
+                eventTrigger = skillSlotIcons[index].gameObject.AddComponent<EventTrigger>();
+            }
+
+            // 포인터 진입 이벤트를 추가
+            EventTrigger.Entry entryEnter = new EventTrigger.Entry();
+            entryEnter.eventID = EventTriggerType.PointerEnter;
+            entryEnter.callback.AddListener((data) => OnPointerEnter((PointerEventData)data, index));
+            eventTrigger.triggers.Add(entryEnter);
+
+            // 포인터 나감 이벤트를 추가
+            EventTrigger.Entry entryExit = new EventTrigger.Entry();
+            entryExit.eventID = EventTriggerType.PointerExit;
+            entryExit.callback.AddListener((data) => OnPointerExit((PointerEventData)data));
+            eventTrigger.triggers.Add(entryExit);
         }
 
         // 이미지와 텍스트 초기화를 반복문으로 처리
@@ -467,6 +504,80 @@ public class Dungeon_Popup_UI : UI_Popup
 
 
     // ------------------------------ 메서드 정의 ------------------------------
+
+    // 포인터가 슬롯에 진입했을 때
+    public void OnPointerEnter(PointerEventData eventData, int index)
+    {
+        // 특정 이름을 가진 Canvas를 찾음
+        GameObject dungeonPopupUIGameObject = GameObject.Find("[Dungeon]_Dungeon_Popup_UI");
+        if (dungeonPopupUIGameObject != null)
+        {
+            Canvas canvas = dungeonPopupUIGameObject.GetComponent<Canvas>();
+
+            GameObject skillInfoObject = Resources.Load<GameObject>("Prefabs/UI/SubItem/Skill_Info");
+
+            if (skillInfoObject != null) // skillInfoObject가 null이 아닌지 확인
+            {
+                if (skillInfoPopup == null)
+                {
+                    skillInfoPopup = Instantiate(skillInfoObject);
+                    if (canvas != null)
+                    {
+                        // 팝업의 부모를 특정 캔버스로 설정.
+                        skillInfoPopup.transform.SetParent(canvas.transform, false);
+                    }
+                }
+
+                // 팝업 위치 조정: 마우스 위치를 기준으로 팝업 위치 설정
+                Vector3 newPosition = Input.mousePosition;
+                if (canvas != null)
+                {
+                    RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+                    RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRect, newPosition, canvas.worldCamera, out newPosition);
+
+                    skillInfoPopup.transform.position = newPosition;
+                }
+
+                // Skill_Info 컴포넌트 참조
+                Skill_Info skillInfoComponent = skillInfoObject.GetComponent<Skill_Info>();
+                string[] skills = skillSlot != null ? skillSlot.LoadedSkills : null;
+                if (skillInfoComponent != null) // skillInfoComponent가 null이 아닌지 확인
+                {
+                    skillInfoComponent.Initialize();
+                    skillInfoComponent.UpdateSkillInfo(Skill_Select.ChangeCodeToName(Managers.Player.GetClassCode()), skills[index]);
+                }
+                else
+                {
+                    Debug.LogError("Skill_Info 컴포넌트를 찾을 수 없습니다.");
+                }
+            }
+            else
+            {
+                Debug.LogError("Skill_Info 게임 오브젝트를 찾을 수 없습니다.");
+            }
+
+            // 팝업 활성화
+            skillInfoPopup.SetActive(true);
+
+            // 팝업을 최상단으로
+            skillInfoPopup.transform.SetAsLastSibling();
+        }
+        else
+        {
+            Debug.LogError("[Dungeon]_Dungeon_Popup_UI 캔버스를 찾을 수 없습니다.");
+        }
+    }
+
+
+    // 포인터가 슬롯에서 나갔을 때
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (skillInfoPopup != null)
+        {
+            // 팝업 비활성화
+            skillInfoPopup.SetActive(false);
+        }
+    }
 
     // 던전 정보 업데이트 메서드
     private void UpdateDungeonInfo()

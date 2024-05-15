@@ -190,7 +190,6 @@ namespace IprisStateItem
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToPatternOneEnableState();
             // 0.15초 동안 유지되기 떄문에 카운터를 치지 않았음에도 true 조건을 만족하는 경우를 배제
             _controller.IsHitCounter = false;
-
             _agent.velocity = Vector3.zero;
             _controller.PatternOneCnt++;
 
@@ -206,12 +205,12 @@ namespace IprisStateItem
             if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
-            if ( !_controller.IsCounterTrigger && _controller.IsHitCounter )
+            if ( _controller.IsHitCounter )
             {
-                _controller.IsCounterTrigger = true;
+                //Debug.Log("PATTERN_ONE_ENABLE TO PATTERN_ONE_STRONG");
+                _controller.ChangeState(_controller.PATTERN_ONE_STRONG_STATE);
             }
-
-            if (_animTime >= (_threadHold * 2.0f))
+            else if (_animTime >= (_threadHold * 2.0f))
             {
                 //Debug.Log("PATTERN_ONE_ENABLE TO PATTERN_ONE");
                 _controller.ChangeState(_controller.PATTERN_ONE_STATE);
@@ -240,16 +239,43 @@ namespace IprisStateItem
             _animator.SetFloat("PatternOneSpeed", 0.5f);
             _animator.CrossFade(_animData.PatternOneParamHash, 0.1f);
 
-            if (_controller.IsCounterTrigger)
+            StartCast((int)EIprisPattern.PatternOneAttack);
+        }
+
+        public override void Execute()
+        {
+            if (PhotonNetwork.IsMasterClient == false) return;
+            _animTime += Time.deltaTime;
+            if (_animTime >= (_threadHold * 2.0f))
             {
-                // 더 강한 공격
-                StartCast((int)EIprisPattern.PatternOneStrongAttack);
+                //Debug.Log("PATTERN_ONE TO IDLE_BATTLE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
-            else
-            {
-                // 보통 PATTER ONE
-                StartCast((int)EIprisPattern.PatternOneAttack);
-            }
+        }
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- PATTERN_ONE_STRONG ------------------------------------------------
+    #region PATTERN_ONE_STRONG
+    public class PatternOneStrongState : IprisState
+    {
+        public PatternOneStrongState(IprisController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToPatternOneStrongState();
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.PatternOneAnim.length);
+            _animator.SetFloat("PatternOneSpeed", 0.5f);
+            _animator.CrossFade(_animData.PatternOneParamHash, 0.1f);
+
+            StartCast((int)EIprisPattern.PatternOneStrongAttack);
         }
 
         public override void Execute()

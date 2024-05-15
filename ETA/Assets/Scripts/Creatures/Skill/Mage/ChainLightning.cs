@@ -31,6 +31,9 @@ public class ChainLightning : Skill
     {
         Managers.Sound.Play("Skill/FlashLight");
         List<Transform> monstersInHitbox = new List<Transform>();
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.Thunder3, 2.0f, transform);
+        ps.transform.position = gameObject.transform.position;
+        ps.transform.localScale = skillRange / 5;
 
         // 히트박스 내부의 "Monster" 태그를 가진 오브젝트 찾기
         Collider[] colliders = Physics.OverlapBox(targetPos, skillRange / 2f);
@@ -56,7 +59,9 @@ public class ChainLightning : Skill
             hitbox.transform.localScale = new Vector3(1, 1, 1);
             hitbox.transform.position = monster.position;
 
-            ParticleSystem ps = Managers.Effect.Play(Define.Effect.FlashLight, 2.0f, transform);
+            ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.ChainLightning, 2.0f, transform);
+            ps1.transform.position = hitbox.transform.position;
+            ps1.transform.localScale = skillRange / 5;
             ps.transform.position = hitbox.transform.position;
 
             yield return new WaitForSeconds(0.1f); // 약간의 시간 차이를 두고 hitbox 생성

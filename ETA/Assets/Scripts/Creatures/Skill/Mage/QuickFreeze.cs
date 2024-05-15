@@ -23,7 +23,7 @@ public class QuickFreeze : Skill
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/QuickFreezeIn");
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.5f);
         _animator.speed = 1.0f;
         Managers.Sound.Play("Skill/QuickFreezeOut");
         ChangeToPlayerMoveState();
@@ -38,7 +38,7 @@ public class QuickFreeze : Skill
 
     IEnumerator QuickFreezeCoroutine()
     {
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.QuickFreeze, 3.0f, gameObject.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.QuickFreeze, 2.0f, gameObject.transform);
         ps.transform.position -= new Vector3(0, 1, 0);
         ps.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
         yield return new WaitForSeconds(0.1f);

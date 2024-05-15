@@ -871,6 +871,7 @@ MonoBehaviour:
   counterAttackParamName: COUNTER_ATTACK
   patternOneEnableParamName: PATTERN_ONE_ENABLE
   patternOneParamName: PATTERN_ONE
+  patternOneStrongParamName: PATTERN_ONE_STRONG
   patternTwoParamName: PATTERN_TWO
   patternTwoWindMillParamName: PATTERN_TWO_WINDMILL
   dieAnim: {fileID: 1827226128182048838, guid: e02d260090156044aad723ca905a2023, type: 3}
@@ -882,6 +883,7 @@ MonoBehaviour:
   counterAttackAnim: {fileID: 1827226128182048838, guid: 1a9ce4c68e6bd5a4f92be075cf9fe041, type: 3}
   patternOneEnableAnim: {fileID: 1827226128182048838, guid: f24db75fb9aa64a4f84dcd00cdbe27b8, type: 3}
   patternOneAnim: {fileID: 1827226128182048838, guid: 2084fa515f6f0604a9812025574f4dea, type: 3}
+  patternOneStrongAnim: {fileID: 1827226128182048838, guid: 2084fa515f6f0604a9812025574f4dea, type: 3}
   patternTwoAnim: {fileID: 1827226128182048838, guid: 16de2bdb6d65bb6438b05585f10f8de6, type: 3}
   patternTwoWindMillAnim: {fileID: 1827226128182048838, guid: 1bc4a4f3b2626df43baa1c84cddac0aa, type: 3}
 --- !u!114 &-8733523994994036906
@@ -908,7 +910,6 @@ MonoBehaviour:
   _patternTwoTime: 0
   _windMillCnt: 0
   _patternOneCnt: 0
-  _isCounterTrigger: 0
   _startPos: {x: 0, y: 0, z: 0}
   _destPos: {x: 0, y: 0, z: 0}
 --- !u!114 &6242981767869721767

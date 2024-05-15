@@ -432,7 +432,7 @@ public class Skill_Select : MonoBehaviour
     }
 
     // 클래스 코드로 클래스 이름을 string으로 반환하는 메서드
-    private string ChangeCodeToName(string classCode)
+    public static string ChangeCodeToName(string classCode)
     {
         string className = classCode switch
         {

@@ -35,7 +35,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     protected ParticleSystem _shieldEffect;
     public Boolean Evasion { get; set; }
 
-    float _destroyedTime = 3.0f;
+    protected float _destroyedTime = 3.0f;
 
     //-----------------------------------  Essential Functions --------------------------------------------
     protected virtual void Awake()
@@ -165,8 +165,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     }
 
     // ---------------------------------- IDamage ------------------------------------------
-
-    // 내 캐리
     public virtual void TakeDamage(int attackDamage, bool isCounter = false)
     {
         if (UnitType == Define.UnitType.Player)
@@ -192,8 +190,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
         {
             if (PhotonNetwork.IsMasterClient)
                 CounterEvent();
-
         }
+
         UI_AttackedDamage attackedDamage_ui = null;
         if (evasion)
         {
@@ -239,7 +237,6 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
             Stat.Hp = 0;
             DestroyObject();
         }
-
     }
 
     public virtual void AttackedEvent()

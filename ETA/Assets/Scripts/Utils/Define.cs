@@ -132,6 +132,8 @@ public class Define
         QuickFreeze,
         Thunder1,
         Thunder2,
+        Thunder3,
+        ChainLightning,
         SpikeIce,
         Teleport,
         Plague,
