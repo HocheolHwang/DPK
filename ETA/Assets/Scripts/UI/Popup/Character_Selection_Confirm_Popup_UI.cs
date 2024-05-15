@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -60,6 +61,7 @@ public class Character_Selection_Confirm_Popup_UI : UI_Popup
         // 선택된 캐릭터 코드로 ClassReqDto 객체 생성 및 네트워크 호출
         ClassReqDto dto = new ClassReqDto { classCode = selectedClassCode };
         Managers.Network.SelectClassCall(dto, SelectClass);
+        
     }
 
     // UI 업데이트 메서드
@@ -93,7 +95,43 @@ public class Character_Selection_Confirm_Popup_UI : UI_Popup
         // 플레이어 클래스 설정
         Managers.Photon.SetPlayerClass();
 
+        SetCurrentSkills();
+
         // UI 업데이트
         UpdateUI();
+    }
+
+    private void SetCurrentSkills()
+    {
+        SkillReqDto requestBody = new SkillReqDto { classCode = Managers.Player.GetClassCode() };
+        List<SkillRequestDto> list = new List<SkillRequestDto>();
+
+        SkillInfo[] skillInfos = null;
+        switch (Managers.Player.GetClassCode())
+        {
+            case "C001":
+                skillInfos = Managers.Player.warriorSkills;
+                break;
+            case "C002":
+                skillInfos = Managers.Player.archerSkills;
+                break;
+            case "C003":
+                skillInfos = Managers.Player.mageSkills;
+                break;
+            default:
+                Debug.LogError("없는 직업입니다.");
+                break;
+        }
+        for(int i = 0; i < 8; i++)
+        {
+            if (skillInfos[i] == null) continue;
+            SkillRequestDto e = new SkillRequestDto { index = i, skillCode = skillInfos[i].skillCode };
+            list.Add(e);
+        }
+
+
+        requestBody.skillList = list;
+
+        Managers.Network.LearnSkillCall(requestBody, null);
     }
 }

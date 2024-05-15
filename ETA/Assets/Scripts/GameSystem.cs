@@ -127,6 +127,7 @@ public class GameSystem : MonoBehaviourPunCallbacks
         if (_finishedClient >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
             myController.ChangeState(myController.MOVE_STATE);
+            myController.SkillSlot.SendSkillsInfo();
             FindObjectOfType<PlayerZone>().Run();
             FindObjectOfType<Dungeon_Popup_UI>().SetMembersInfo();
             
@@ -154,8 +155,5 @@ public class GameSystem : MonoBehaviourPunCallbacks
         _finishedClient = 0;
         myController = null;
     }
-
-    
-
 
 }
