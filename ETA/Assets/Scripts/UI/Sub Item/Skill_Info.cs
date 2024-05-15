@@ -33,6 +33,8 @@ public class Skill_Info : MonoBehaviour
 
     private GameObject connectedSkillNameContainer; // 콜라보 연동 스킬 컨테이너
 
+    private Image noneSkillBackground; // 스킬 없을 때 배경
+
     // 스킬 종류
     private bool isCollavo; // 콜라보 스킬 여부
     private bool isCounter; // 카운터 스킬 여부
@@ -49,34 +51,59 @@ public class Skill_Info : MonoBehaviour
 
     private void Start()
     {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
         // 스킬 정보 초기화
         skillInfoContent = GameObject.Find("Skill_Info_Content");
 
-        skillKoreanName = GameObject.Find("Skill_Korean_Name").GetComponent<TMP_Text>();
-        requiredLevel = GameObject.Find("Required_Level").GetComponent<TMP_Text>();
+        if (skillInfoContent != null)
+        {
+            skillKoreanName = FindAndGetComponent<TMP_Text>("Skill_Korean_Name");
+            requiredLevel = FindAndGetComponent<TMP_Text>("Required_Level");
 
-        icon = GameObject.Find("Icon").GetComponent<Image>();
-        skillCategory = GameObject.Find("Skill_Category").GetComponent<TMP_Text>();
-        skillType = GameObject.Find("Skill_Type").GetComponent<TMP_Text>();
-        coolDownTime = GameObject.Find("Coll_Down_Time").GetComponent<TMP_Text>();
+            icon = FindAndGetComponent<Image>("Icon");
+            skillCategory = FindAndGetComponent<TMP_Text>("Skill_Category");
+            skillType = FindAndGetComponent<TMP_Text>("Skill_Type");
+            coolDownTime = FindAndGetComponent<TMP_Text>("Coll_Down_Time");
 
-        skillDescription = GameObject.Find("Skill_Description").GetComponent<TMP_Text>();
+            skillDescription = FindAndGetComponent<TMP_Text>("Skill_Description");
 
-        skillCategoryContainer = GameObject.Find("Skill_Category_Container");
+            skillCategoryContainer = GameObject.Find("Skill_Category_Container");
 
-        skillCategoryIcon = GameObject.Find("Skill_Category_Icon").GetComponent<Image>();
-        skillCategoryTitleText = GameObject.Find("Skill_Category_Title_Text").GetComponent<TMP_Text>();
-        questionMarkText = GameObject.Find("Question_Mark_Text").GetComponent<TMP_Text>();
+            if (skillCategoryContainer != null)
+            {
+                skillCategoryIcon = FindAndGetComponent<Image>("Skill_Category_Icon");
+                skillCategoryTitleText = FindAndGetComponent<TMP_Text>("Skill_Category_Title_Text");
+                questionMarkText = FindAndGetComponent<TMP_Text>("Question_Mark_Text");
+            }
 
-        collavoSkillKoreanName = GameObject.Find("Collavo_Skill_Korean_Name").GetComponent<TMP_Text>();
-        skillCategoryDescription = GameObject.Find("Skill_Category_Description").GetComponent<TMP_Text>();
-        connectedSkillKoreanName = GameObject.Find("Connected_Skill_Name").GetComponent<TMP_Text>();
+            collavoSkillKoreanName = FindAndGetComponent<TMP_Text>("Collavo_Skill_Korean_Name");
+            skillCategoryDescription = FindAndGetComponent<TMP_Text>("Skill_Category_Description");
+            connectedSkillKoreanName = FindAndGetComponent<TMP_Text>("Connected_Skill_Name");
 
-        connectedSkillNameContainer = GameObject.Find("Connected_Skill_Name_Container");
+            connectedSkillNameContainer = GameObject.Find("Connected_Skill_Name_Container");
 
-        // 스킬 패널 비활성화
-        skillInfoContent.SetActive(false);
+            noneSkillBackground = FindAndGetComponent<Image>("None_Skill_Background");
+        }
     }
+
+    private T FindAndGetComponent<T>(string name) where T : Component
+    {
+        GameObject obj = GameObject.Find(name);
+        if (obj != null)
+        {
+            T component = obj.GetComponent<T>();
+            if (component != null)
+            {
+                return component;
+            }
+        }
+        return null;
+    }
+
 
 
     // ------------------------------ 메서드 정의 ------------------------------
@@ -89,9 +116,6 @@ public class Skill_Info : MonoBehaviour
 
         if (skillData != null)
         {
-            // 스킬 패널 활성화
-            skillInfoContent.SetActive(true);
-
             // 스킬 이름 업데이트
             skillKoreanName.text = skillData.SkillKoreanName;
 
@@ -147,11 +171,14 @@ public class Skill_Info : MonoBehaviour
             {
                 skillCategoryContainer.SetActive(false);
             }
+
+            noneSkillBackground.gameObject.SetActive(false);
         }
         else
         {
             // 스킬 패널 비활성화
             skillInfoContent.SetActive(false);
+            noneSkillBackground.gameObject.SetActive(true);
             Debug.LogError("해당 스킬 이름의 SkillSO를 찾을 수 없습니다: " + skillName);
         }
     }
@@ -177,7 +204,7 @@ public class Skill_Info : MonoBehaviour
 
         // 콜라보 연동 스킬 이름 활성화 및 업데이트
         connectedSkillNameContainer.gameObject.SetActive(true);
-        connectedSkillKoreanName.text = skillData.ConnectedSkillKoreanName;
+        connectedSkillKoreanName.text = $"콜라보 스킬: {skillData.ConnectedSkillKoreanName}";
     }
 
     // 카운터 스킬 정보를 업데이트하는 메서드
