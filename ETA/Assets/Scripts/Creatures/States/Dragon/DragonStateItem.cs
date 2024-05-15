@@ -99,8 +99,13 @@ namespace DragonStateItem
             }
             else if ( !_controller.IsBreath && _controller.Stat.Hp <= (_controller.Stat.MaxHp * 0.7f))
             {
-                Debug.Log("IDLE_BATTLE TO BREATH_ENABLE_STATE");
+                //Debug.Log("IDLE_BATTLE TO BREATH_ENABLE_STATE");
                 _controller.ChangeState(_controller.BREATH_ENABLE_STATE);
+            }
+            else if ( !_controller.IsFireball && _controller.Stat.Hp <= (_controller.Stat.MaxHp * 0.3f))
+            {
+                //Debug.Log("IDLE_BATTLE TO CRY_TO_FIRE_STATE");
+                _controller.ChangeState(_controller.CRY_TO_FIRE_STATE);
             }
             else if (_controller.CryDownTime >= _controller.ThreadHoldCryTime)
             {
@@ -148,12 +153,12 @@ namespace DragonStateItem
             _animTime += Time.deltaTime;
             if (_controller.HitAttackCnt >= _controller.ThreadHoldHitAttackCnt)
             {
-                Debug.Log("BREATH_ENABLE TO GROGGY");
+                //Debug.Log("BREATH_ENABLE TO GROGGY");
                 _controller.ChangeState(_controller.GROGGY_STATE);
             }
             else if (_animTime >= _threadHold * 3.0f)
             {
-                Debug.Log("BREATH_ENABLE TO BREATH");
+                //Debug.Log("BREATH_ENABLE TO BREATH");
                 _controller.ChangeState(_controller.BREATH_STATE);
             }
         }
@@ -196,6 +201,76 @@ namespace DragonStateItem
         public override void Exit()
         {
             _controller.HitAttackCnt = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- CRY_TO_FIRE ------------------------------------------------
+    #region CRY_TO_FIRE( Two And One Counter )
+    public class CryToFireState : DragonState
+    {
+        public CryToFireState(DragonController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            _controller.IsFireball = true;
+
+            InitTime(_animData.CryToFireAnim.length);
+            //_animator.SetFloat("BreathEnableSpeed", 0.33f);
+            _animator.CrossFade(_animData.CryToFireParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+            if (_controller.HitCounterCnt >= _controller.ThreadHoldCryFireball)
+            {
+                //Debug.Log("BREATH_ENABLE TO CRY");
+                _controller.ChangeState(_controller.CRY_STATE);
+            }
+            else if (_animTime >= _threadHold)
+            {
+                //Debug.Log("BREATH_ENABLE TO GROUND_TO_SKY");
+                _controller.ChangeState(_controller.GROUND_TO_SKY_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- FLY_FIRE_BALL ------------------------------------------------
+    #region FLY_FIRE_BALL
+    public class FlyFireballState : DragonState
+    {
+        public FlyFireballState(DragonController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            //InitTime(_animData.FlyFireBallAnim.length);
+            _animator.CrossFade(_animData.FlyFireBallParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            if (IsStayForSeconds(1.0f))
+            {
+                //Debug.Log("FLY_FIRE_BALL TO SKY_DOWN_ATTACK_STATE");
+                _controller.ChangeState(_controller.SKY_DOWN_ATTACK_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
         }
     }
     #endregion
@@ -461,6 +536,7 @@ namespace DragonStateItem
             _controller.IncreaseDefense(_controller.AmountDEF);
 
             InitTime(_animData.GroundToSkyAnim.length);
+            _animator.SetFloat("GroundToSkySpeed", 0.5f);
             _animator.CrossFade(_animData.GroundToSkyParamHash, 0.1f);
         }
 
@@ -468,9 +544,13 @@ namespace DragonStateItem
         {
             _animTime += Time.deltaTime;
 
-            if (_controller.IsCryToDown && (_animTime >= _threadHold))
+            if (_controller.IsCryToDown && (_animTime >= _threadHold * 2.0f))
             {
                 _controller.ChangeState(_controller.SKY_DOWN_ATTACK_STATE);
+            }
+            else if (_controller.IsFireball && (_animTime >= _threadHold * 2.0f))
+            {
+                _controller.ChangeState(_controller.FLY_FIRE_BALL_STATE);
             }
         }
 
@@ -509,6 +589,7 @@ namespace DragonStateItem
         public override void Exit()
         {
             _controller.HitCounterCnt = 0;
+            _controller.IsCryToDown = false;
         }
     }
     #endregion

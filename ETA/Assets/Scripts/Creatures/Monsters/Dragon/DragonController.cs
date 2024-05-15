@@ -35,7 +35,8 @@ public class DragonController : BaseMonsterController
     [Header("STATE VARIABLE")]
     [SerializeField] private bool _meetPlayer;      // 플레이어 만남 여부
     [SerializeField] private bool _isCryToDown;     // CryToDown 상태 여부( Ground To Sky 상태에서 사용 )
-    [SerializeField] private bool _isBreath;        // Breath 상태 수행 여부
+    [SerializeField] private bool _isBreath;        // Breath 상태 수행했으면 true
+    [SerializeField] private bool _isFireball;        // Fireball 상태 수행했으면 true
 
     [SerializeField] private float _attackCnt;      // 일반 공격 횟수
     [SerializeField] private float _fearTime;       // Fear 패턴 주기
@@ -46,6 +47,7 @@ public class DragonController : BaseMonsterController
     public bool MeetPlayer { get => _meetPlayer; set => _meetPlayer = value; }
     public bool IsCryToDown { get => _isCryToDown; set => _isCryToDown = value; }
     public bool IsBreath { get => _isBreath; set => _isBreath = value; }
+    public bool IsFireball { get => _isFireball; set => _isFireball = value; }
     public float AttackCnt { get => _attackCnt; set => _attackCnt = value; }
     public int ChangeAttackCount { get => 3; }
     public float FearTime { get => _fearTime; set => _fearTime = value; }
@@ -64,6 +66,7 @@ public class DragonController : BaseMonsterController
 
     public int HitCounterCnt { get => _hitCounterCnt; set => _hitCounterCnt = value; }
     public int ThreadHoldCryDown { get => 2; }
+    public int ThreadHoldCryFireball { get => 3; }
     #endregion
 
     private DragonAnimationData _animData;
@@ -112,6 +115,10 @@ public class DragonController : BaseMonsterController
         CRY_TO_DOWN_STATE = new CryToDownState(this);
         GROUND_TO_SKY_STATE = new GroundToSkyState(this);
         SKY_DOWN_ATTACK_STATE = new SkyDownAttackState(this);
+
+        CRY_TO_FIRE_STATE = new CryToFireState(this);
+        FLY_FIRE_BALL_STATE = new FlyFireballState(this);
+        // SKY TO GROUND
         #endregion
 
         Agent.stoppingDistance = Detector.AttackRange - 0.3f;
