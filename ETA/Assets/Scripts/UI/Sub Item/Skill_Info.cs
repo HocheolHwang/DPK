@@ -152,7 +152,6 @@ public class Skill_Info : MonoBehaviour
         {
             // 스킬 패널 비활성화
             skillInfoContent.SetActive(false);
-
             Debug.LogError("해당 스킬 이름의 SkillSO를 찾을 수 없습니다: " + skillName);
         }
     }

@@ -18,6 +18,7 @@ public class Skill_Select : MonoBehaviour
     private Image[] skillCanNotBeUsedIcons = new Image[16]; // 스킬 비활성화 아이콘
     private TMP_Text[] skillKoreanNames = new TMP_Text[16]; // 스킬 한글 이름
     private TMP_Text[] skillRequiredLevels = new TMP_Text[16]; // 필요 레벨
+    private TMP_Text[] skillDetail = new TMP_Text[16]; // 자세히 보기
 
 
     // --------------- 스킬 슬롯 ---------------
@@ -147,6 +148,7 @@ public class Skill_Select : MonoBehaviour
             skillCanNotBeUsedIcons[index] = GameObject.Find($"Skill_{index + 1}_Can_Not_Be_Used").GetComponent<Image>();
             skillKoreanNames[index] = GameObject.Find($"Skill_{index + 1}_Name").GetComponent<TMP_Text>();
             skillRequiredLevels[index] = GameObject.Find($"Skill_{index + 1}_Required_Level").GetComponent<TMP_Text>();
+            skillDetail[index] = GameObject.Find($"Skill_{index + 1}_Detail").GetComponent<TMP_Text>();
 
             // 드래그 이벤트 할당
             UI_Base.AddUIEvent(skillIcons[index].gameObject, (eventData) => OnDragBegin(index, eventData), Define.UIEvent.BeginDrag);
@@ -182,6 +184,12 @@ public class Skill_Select : MonoBehaviour
             entryExit.eventID = EventTriggerType.PointerExit;
             entryExit.callback.AddListener((eventData) => { OnPointerExitSlot(); });
             eventTrigger.triggers.Add(entryExit);
+
+            // 포인터 클릭 이벤트를 추가
+            EventTrigger.Entry entryClick = new EventTrigger.Entry();
+            entryClick.eventID = EventTriggerType.PointerClick;
+            entryClick.callback.AddListener((data) => { OnPointerClickSlot((PointerEventData)data, index); });
+            eventTrigger.triggers.Add(entryClick);
         }
 
 
@@ -288,6 +296,7 @@ public class Skill_Select : MonoBehaviour
                     skillCanNotBeUsedIcons[i].gameObject.SetActive(true);
                     skillKoreanNames[i].text = "";
                     skillRequiredLevels[i].text = "";
+                    skillDetail[i].text = "";
                     continue;
                 }
 
@@ -295,6 +304,7 @@ public class Skill_Select : MonoBehaviour
                 skillIcons[i].sprite = skillData.Icon;
                 skillKoreanNames[i].text = skillData.SkillKoreanName;
                 skillRequiredLevels[i].text = $"필요레벨 {skillData.RequiredLevel}";
+                skillDetail[i].text = $"상세 보기 →";
 
                 // 영어 이름을 배열에 추가
                 skillNames[i] = skillData.SkillName;
@@ -308,12 +318,14 @@ public class Skill_Select : MonoBehaviour
                     skillCanNotBeUsedIcons[i].gameObject.SetActive(true);
                     skillKoreanNames[i].color = new Color(1, 0, 0, 0.8f);
                     skillRequiredLevels[i].color = new Color(1, 0, 0, 0.8f);
+                    skillDetail[i].color = new Color(1, 0, 0, 0.8f);
                 }
                 else
                 {
                     skillCanNotBeUsedIcons[i].gameObject.SetActive(false);
                     skillKoreanNames[i].color = Color.white;
                     skillRequiredLevels[i].color = new Color(1, 1, 1, 0.6f);
+                    skillDetail[i].color = new Color(1, 1, 1, 0.6f);
                 }
             }
             catch (Exception e)
@@ -492,4 +504,46 @@ public class Skill_Select : MonoBehaviour
     {
         currentSlotIndex = -1;
     }
+
+    // 포인터 클릭 이벤트 핸들러
+    public void OnPointerClickSlot(PointerEventData eventData, int index)
+    {
+        // 우클릭 확인
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            // 스킬 정보 비우기
+            if (skills.Length > index)
+            {
+                skills[index] = null; // 스킬 정보를 null로 설정
+                slotSkillIcons[index].sprite = Resources.Load<Sprite>("Sprites/Skill Slot/Skill Cooldown Image");
+            }
+        }
+        // 좌클릭 확인
+        else if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            // 스킬 정보 띄우기
+            if (skills.Length > index && skills[index] != null) // 스킬 배열 범위 확인 및 스킬 정보가 null이 아닌지 확인
+            {
+                // Skill_Info 컴포넌트 참조
+                GameObject skillInfoObject = GameObject.Find("Skill_Info");
+                if (skillInfoObject != null) // skillInfoObject가 null이 아닌지 확인
+                {
+                    Skill_Info skillInfoComponent = skillInfoObject.GetComponent<Skill_Info>();
+                    if (skillInfoComponent != null) // skillInfoComponent가 null이 아닌지 확인
+                    {
+                        skillInfoComponent.UpdateSkillInfo(ChangeCodeToName(selectedClassCode), skills[index].skillName);
+                    }
+                    else
+                    {
+                        Debug.LogError("Skill_Info 컴포넌트를 찾을 수 없습니다.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Skill_Info 게임 오브젝트를 찾을 수 없습니다.");
+                }
+            }
+        }
+    }
+
 }

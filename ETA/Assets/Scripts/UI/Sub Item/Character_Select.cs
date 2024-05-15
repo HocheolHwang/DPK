@@ -189,7 +189,7 @@ public class Character_Select : MonoBehaviour
         // 텍스트 업데이트
         characterNameText.text = name;
         characterDetailText.text = UpdateDetail(className);
-        characterClassText.text = className + " " + level + "레벨";
+        characterClassText.text = className;
         characterDifficultyText.text = difficulty;
         characterLevelText.text = $"Lv. {level}";
         hpText.text = $"{hp}";
