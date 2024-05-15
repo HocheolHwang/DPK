@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -46,6 +47,9 @@ public class Leader_Board_Popup_UI : UI_Popup
         Nickname_Title_Text,
         Level_Title_Text,
 
+        // 랭킹 등수 My 텍스트
+        My_Ranking_Text,
+
         // 클리어 시간 텍스트
         Clear_Time_Text_1,
         Clear_Time_Text_2,
@@ -84,6 +88,7 @@ public class Leader_Board_Popup_UI : UI_Popup
     private Image[] characterImages = new Image[5];
     private Image myCharacterImage;
     private TextMeshProUGUI[] titleTexts = new TextMeshProUGUI[3];
+    private TextMeshProUGUI myRankingText;
     private TextMeshProUGUI[] clearTimeTexts = new TextMeshProUGUI[5];
     private TextMeshProUGUI myClearTimeText;
     private TextMeshProUGUI[] nicknameTexts = new TextMeshProUGUI[5];
@@ -132,7 +137,8 @@ public class Leader_Board_Popup_UI : UI_Popup
             levelTexts[i] = GetText((int)Texts.Level_Text_1 + i);
         }
 
-        // my 랭킹 아이템 초기화
+        // My 랭킹 아이템 초기화
+        myRankingText = GetText((int)Texts.My_Ranking_Text);
         myCharacterImage = GetImage((int)Images.My_Character_Image);
         myClearTimeText = GetText((int)Texts.My_Clear_Time_Text);
         myNicknameText = GetText((int)Texts.My_Nickname_Text);
@@ -150,15 +156,30 @@ public class Leader_Board_Popup_UI : UI_Popup
 
     // ------------------------------ 메서드 정의 ------------------------------
 
+    // 취소하기 메서드
+    private void Cancel(PointerEventData data)
+    {
+        ClosePopupUI();
+    }
+
     // 랭킹 보기 메서드
     private void ViewRanking(int rankingNumber, PointerEventData data)
     {
+        // 선택된 랭킹 번호 업데이트
         selectedRankingNumber = rankingNumber;
+
+        // 랭킹 버튼 비활성화 이미지 설정
         SetRankingButtonInactive();
+
+        // 레벨 랭킹과 던전 랭킹 구분
         UpdateRankingDisplay();
+
+        // 선택된 랭킹 업데이트
+        (selectedRankingNumber == 0 ? (Action)UpdateLevelRanking : UpdateDungeonRanking)();
+
     }
 
-    // 랭킹 버튼 비활성화 메서드
+    // 랭킹 버튼 비활성화 이미지 설정 메서드
     private void SetRankingButtonInactive()
     {
         for (int i = 0; i < inactiveBackgrounds.Length; i++)
@@ -185,14 +206,76 @@ public class Leader_Board_Popup_UI : UI_Popup
             clearTimeTexts[i].gameObject.SetActive(!isLevelRanking);
         }
 
-        // my 캐릭터 이미지 및 my 클리어 시간 텍스트 활성화/비활성화
+        // My 캐릭터 이미지 및 My 클리어 시간 텍스트 활성화/비활성화
         myCharacterImage.gameObject.SetActive(isLevelRanking);
         myClearTimeText.gameObject.SetActive(!isLevelRanking);
     }
 
-    // 취소하기 메서드
-    private void Cancel(PointerEventData data)
+    // 레벨 랭킹 업데이트 메서드
+    private void UpdateLevelRanking()
     {
-        ClosePopupUI();
+        // --------------- 레벨 랭킹 업데이트 ---------------
+
+        for (int i = 0; i < characterImages.Length; i++)
+        {
+            // @@@@@@@@ TODO: 해당 등수 캐릭터의 직업 코드를 가져오는 코드 필요 @@@@@@@@
+            string className = Managers.Player.GetClassCode() switch
+            {
+                "C001" => "Warrior",
+                "C002" => "Archer",
+                "C003" => "Mage",
+                _ => ""
+            };
+
+            characterImages[i].sprite = Resources.Load<Sprite>($"Sprites/Class Icon/{className}");
+
+            // @@@@@@@@ TODO: 해당 등수 캐릭터의 닉네임을 가져오는 코드 필요 @@@@@@@@
+            string nickName = "응애";
+            nicknameTexts[i].text = nickName;
+
+            // @@@@@@@@ TODO: 해당 등수 캐릭터의 레벨을 가져오는 코드 필요 @@@@@@@@
+            int level = 99;
+            levelTexts[i].text = level.ToString();
+        }
+
+
+        // --------------- My 레벨 랭킹 업데이트 ---------------
+
+        // 각 직업의 레벨을 변수에 할당
+        int archerLevel = Managers.Player.GetArcherLevel();
+        int warriorLevel = Managers.Player.GetWarriorLevel();
+        int mageLevel = Managers.Player.GetMageLevel();
+
+        // 가장 높은 레벨을 가진 직업의 이름을 저장할 변수 초기화
+        string highestLevelClassName = "Warrior"; // 기본값 전사로 설정
+        int highestLevel = warriorLevel;
+
+        // 궁수의 레벨이 현재 가장 높은 레벨보다 높은지 확인
+        if (archerLevel > highestLevel)
+        {
+            highestLevelClassName = "Archer";
+            highestLevel = archerLevel;
+        }
+
+        // 마법사의 레벨이 현재 가장 높은 레벨보다 높은지 확인
+        if (mageLevel > highestLevel)
+        {
+            highestLevelClassName = "Mage";
+            highestLevel = mageLevel;
+        }
+
+        // My 랭킹 업데이트
+        myCharacterImage.sprite = Resources.Load<Sprite>($"Sprites/Class Icon/{highestLevelClassName}");
+        myNicknameText.text = Managers.Player.GetNickName();
+        myLevelText.text = highestLevel.ToString();
+
+        // @@@@@@@@ TODO: 내 등수를 가져오는 코드 필요 @@@@@@@@
+        myRankingText.text = $"{99}st";
+    }
+
+    // 던전 랭킹 업데이트 메서드
+    private void UpdateDungeonRanking()
+    {
+
     }
 }
