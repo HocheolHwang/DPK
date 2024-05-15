@@ -508,52 +508,66 @@ public class Dungeon_Popup_UI : UI_Popup
     // 포인터가 슬롯에 진입했을 때
     public void OnPointerEnter(PointerEventData eventData, int index)
     {
-        Canvas canvas = FindObjectOfType<Canvas>();
-        GameObject skillInfoObject = Resources.Load<GameObject>("Prefabs/UI/SubItem/Skill_Info");
-
-        if (skillInfoObject != null) // skillInfoObject가 null이 아닌지 확인
+        // 특정 이름을 가진 Canvas를 찾음
+        GameObject dungeonPopupUIGameObject = GameObject.Find("[Dungeon]_Dungeon_Popup_UI");
+        if (dungeonPopupUIGameObject != null)
         {
-            if (skillInfoPopup == null)
+            Canvas canvas = dungeonPopupUIGameObject.GetComponent<Canvas>();
+
+            GameObject skillInfoObject = Resources.Load<GameObject>("Prefabs/UI/SubItem/Skill_Info");
+
+            if (skillInfoObject != null) // skillInfoObject가 null이 아닌지 확인
             {
-                skillInfoPopup = Instantiate(skillInfoObject);
+                if (skillInfoPopup == null)
+                {
+                    skillInfoPopup = Instantiate(skillInfoObject);
+                    if (canvas != null)
+                    {
+                        // 팝업의 부모를 특정 캔버스로 설정.
+                        skillInfoPopup.transform.SetParent(canvas.transform, false);
+                    }
+                }
+
+                // 팝업 위치 조정: 마우스 위치를 기준으로 팝업 위치 설정
+                Vector3 newPosition = Input.mousePosition;
                 if (canvas != null)
                 {
-                    // 팝업의 부모를 캔버스로 설정.
-                    skillInfoPopup.transform.SetParent(canvas.transform, false);
+                    RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+                    RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRect, newPosition, canvas.worldCamera, out newPosition);
+
+                    skillInfoPopup.transform.position = newPosition;
                 }
-            }
 
-            // 팝업 위치 조정: 마우스 위치를 기준으로 팝업 위치 설정
-            Vector3 newPosition = Input.mousePosition;
-            if (canvas != null)
-            {
-                RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-                RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRect, newPosition, canvas.worldCamera, out newPosition);
-
-                skillInfoPopup.transform.position = newPosition;
-            }
-
-            // Skill_Info 컴포넌트 참조
-            Skill_Info skillInfoComponent = skillInfoObject.GetComponent<Skill_Info>();
-            string[] skills = skillSlot != null ? skillSlot.LoadedSkills : null;
-            if (skillInfoComponent != null) // skillInfoComponent가 null이 아닌지 확인
-            {
-                skillInfoComponent.Initialize();
-                skillInfoComponent.UpdateSkillInfo(Skill_Select.ChangeCodeToName(Managers.Player.GetClassCode()), skills[index]);
+                // Skill_Info 컴포넌트 참조
+                Skill_Info skillInfoComponent = skillInfoObject.GetComponent<Skill_Info>();
+                string[] skills = skillSlot != null ? skillSlot.LoadedSkills : null;
+                if (skillInfoComponent != null) // skillInfoComponent가 null이 아닌지 확인
+                {
+                    skillInfoComponent.Initialize();
+                    skillInfoComponent.UpdateSkillInfo(Skill_Select.ChangeCodeToName(Managers.Player.GetClassCode()), skills[index]);
+                }
+                else
+                {
+                    Debug.LogError("Skill_Info 컴포넌트를 찾을 수 없습니다.");
+                }
             }
             else
             {
-                Debug.LogError("Skill_Info 컴포넌트를 찾을 수 없습니다.");
+                Debug.LogError("Skill_Info 게임 오브젝트를 찾을 수 없습니다.");
             }
+
+            // 팝업 활성화
+            skillInfoPopup.SetActive(true);
+
+            // 팝업을 최상단으로
+            skillInfoPopup.transform.SetAsLastSibling();
         }
         else
         {
-            Debug.LogError("Skill_Info 게임 오브젝트를 찾을 수 없습니다.");
+            Debug.LogError("[Dungeon]_Dungeon_Popup_UI 캔버스를 찾을 수 없습니다.");
         }
-
-        // 팝업 활성화
-        skillInfoPopup.SetActive(true);
     }
+
 
     // 포인터가 슬롯에서 나갔을 때
     public void OnPointerExit(PointerEventData eventData)
