@@ -97,9 +97,14 @@ namespace DragonStateItem
                 //Debug.Log("IDLE_BATTLE TO IDLE");
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
+            else if (_controller.CryTime >= _controller.ThreadHoldCryTime)
+            {
+                //Debug.Log("IDLE_BATTLE TO CRY_TO_DOWN_STATE");
+                _controller.ChangeState(_controller.CRY_TO_DOWN_STATE);
+            }
             else if (_controller.FearTime >= _controller.ThreadHoldFearTime)
             {
-                Debug.Log("IDLE_BATTLE TO FEAR_ENABLE");
+                //Debug.Log("IDLE_BATTLE TO FEAR_ENABLE");
                 _controller.ChangeState(_controller.FEAR_ENABLE_STATE);
             }
             else if (IsStayForSeconds(2.0f))
@@ -111,6 +116,92 @@ namespace DragonStateItem
 
         public override void Exit()
         {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- CRY_TO_DOWN_STATE ------------------------------------------------
+    #region CRY_TO_DOWN_STATE( Two Counter )
+    public class CryToDownState : DragonState
+    {
+        public CryToDownState(DragonController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.CryToDownAnim.length);
+            _animator.SetFloat("CryToDownSpeed", 0.75f);
+            _animator.CrossFade(_animData.CryToDownParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            // 카운터에 맞았는지 확인하는 코드가 필요함
+            // 여기서 변수를 수정하면 동기화가 어렵다
+            //      1. controller에서 dragon 생성한 counter 정보( class )를 가진다.
+            //      2. counter class에서 생성한 hit box가 counter를 맞으면 controller에게 정보를 전달
+            //      3. controller에서 bool 값으로 관리
+            //      4. 두 값이 true가 되면 상태 변경
+
+            if (_controller.HitCounterCnt == _controller.ThreadHoldCryDown)
+            {
+                //Debug.Log("CRY_TO_DOWN_STATE TO CRY_STATE");
+                _controller.ChangeState(_controller.CRY_STATE);
+            }
+            // 카운터에 실패하면 공격
+            else if (_animTime >= _threadHold * 1.34f)
+            {
+                //Debug.Log("CRY_TO_DOWN_STATE TO GROUND_TO_SKY_STATE");
+                _controller.ChangeState(_controller.GROUND_TO_SKY_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+            _controller.IsCryToSky = true;
+            _controller.CryTime = 0;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- SKY_DOWN_ATTACK_STATE ------------------------------------------------
+    #region SKY_DOWN_ATTACK_STATE
+    public class SkyDownAttackState : DragonState
+    {
+        public SkyDownAttackState(DragonController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            InitTime(_animData.SkyDownAttackAnim.length);
+            _animator.SetFloat("SkyDownAttackSpeed", 0.5f);
+            _animator.CrossFade(_animData.SkyDownAttackParamHash, 0.1f);
+
+            // 내려찍는곳에 넉백 히트박스 생성
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            if (_animTime >= _threadHold * 2.0f)
+            {
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+            // 내려온 뒤에 방어력을 원래 값으로 되돌림
+            _controller.DecreaseDefense(_controller.AmountDEF);
         }
     }
     #endregion
@@ -141,13 +232,13 @@ namespace DragonStateItem
             // 카운터에 맞으면 기절 부여
             if (_controller.IsHitCounter)
             {
-                Debug.Log("PATTERN_ONE_ENABLE TO FEAR_STRONG_ATTACK");
+                //Debug.Log("PATTERN_ONE_ENABLE TO FEAR_STRONG_ATTACK");
                 _controller.ChangeState(_controller.FEAR_STRONG_ATTACK_STATE);
             }
             // 카운터에 맞지 않아도 공격
             else if (_animTime >= _threadHold * 3.0f)
             {
-                Debug.Log("PATTERN_ONE_ENABLE TO FEAR_ATTACK");
+                //Debug.Log("PATTERN_ONE_ENABLE TO FEAR_ATTACK");
                 _controller.ChangeState(_controller.FEAR_ATTACK_STATE);
             }
         }
@@ -184,7 +275,7 @@ namespace DragonStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
-                Debug.Log("FEAR_ATTACK TO IDLE_BATTLE");
+                //Debug.Log("FEAR_ATTACK TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
@@ -219,7 +310,7 @@ namespace DragonStateItem
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
-                Debug.Log("FEAR_STRONG_ATTACK TO IDLE_BATTLE");
+                //Debug.Log("FEAR_STRONG_ATTACK TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }
         }
@@ -270,6 +361,74 @@ namespace DragonStateItem
 
         public override void Exit()
         {
+        }
+    }
+    #endregion
+
+    // -------------------------------------- GROUND_TO_SKY_STATE ------------------------------------------------
+    #region GROUND_TO_SKY_STATE
+    public class GroundToSkyState : DragonState
+    {
+        public GroundToSkyState(DragonController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+
+            // 날개되면 DEF가 1000증가
+            _controller.IncreaseDefense(_controller.AmountDEF);
+
+            InitTime(_animData.GroundToSkyAnim.length);
+            _animator.CrossFade(_animData.GroundToSkyParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            _animTime += Time.deltaTime;
+
+            if (_controller.IsCryToSky && (_animTime >= _threadHold))
+            {
+                _controller.ChangeState(_controller.SKY_DOWN_ATTACK_STATE);
+            }
+        }
+
+        public override void Exit()
+        {
+            _controller.IsCryToSky = false;
+        }
+    }
+    #endregion
+
+    // -------------------------------------- CRY ------------------------------------------------
+    #region CRY
+    public class CryState : DragonState
+    {
+        public CryState(DragonController controller) : base(controller)
+        {
+        }
+
+        public override void Enter()
+        {
+            _agent.velocity = Vector3.zero;
+            InitTime(_animData.CryAnim.length);
+            _animator.CrossFade(_animData.CryParamHash, 0.1f);
+        }
+
+        public override void Execute()
+        {
+            //if (PhotonNetwork.IsMasterClient == false) return;
+            _animTime += Time.deltaTime;
+            if (_animTime >= _threadHold)
+            {
+                //Debug.Log("CRY TO IDLE_BATTLE_STATE");
+                _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
+            }
+        }
+        public override void Exit()
+        {
+            _controller.HitCounterCnt = 0;
         }
     }
     #endregion
@@ -364,6 +523,7 @@ namespace DragonStateItem
             if (_controller.MeetPlayer)
             {
                 _controller.FearTime += Time.deltaTime;
+                _controller.CryTime += Time.deltaTime;
             }
 
             // curState가 GLOBAL_STATE 상태가 관리하는 상태인 경우 Execute() 로직을 수행하지 않는다.

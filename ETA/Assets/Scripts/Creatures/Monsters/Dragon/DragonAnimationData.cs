@@ -26,6 +26,8 @@ public class DragonAnimationData : MonoBehaviour
     [SerializeField] protected string groundToSkyName = "GROUND_TO_SKY";
     [SerializeField] protected string skyDownAttackName = "SKY_DOWN_ATTACK";
     [SerializeField] protected string flyFireBallName = "FLY_FIRE_BALL";
+
+    [SerializeField] protected string cryName = "CRY";
     #endregion
 
     #region HASH
@@ -47,6 +49,7 @@ public class DragonAnimationData : MonoBehaviour
     public int GroundToSkyParamHash { get; private set; }
     public int SkyDownAttackParamHash { get; private set; }
     public int FlyFireBallParamHash { get; private set; }
+    public int CryParamHash { get; private set; }
     #endregion
 
     #region Anim List
@@ -68,6 +71,7 @@ public class DragonAnimationData : MonoBehaviour
     [SerializeField] private AnimationClip groundToSkyAnim;
     [SerializeField] private AnimationClip skyDownAttackAnim;
     [SerializeField] private AnimationClip flyFireBallAnim;
+    [SerializeField] private AnimationClip cryAnim;
     #endregion
 
     #region GET Anim
@@ -88,6 +92,7 @@ public class DragonAnimationData : MonoBehaviour
     public AnimationClip GroundToSkyAnim { get => groundToSkyAnim; }
     public AnimationClip SkyDownAttackAnim { get => skyDownAttackAnim; }
     public AnimationClip FlyFireBallAnim { get => flyFireBallAnim; }
+    public AnimationClip CryAnim { get => cryAnim; }
     #endregion
 
     public void StringAnimToHash()
@@ -111,5 +116,7 @@ public class DragonAnimationData : MonoBehaviour
         GroundToSkyParamHash = Animator.StringToHash(groundToSkyName);
         SkyDownAttackParamHash = Animator.StringToHash(skyDownAttackName);
         FlyFireBallParamHash = Animator.StringToHash(flyFireBallName);
+
+        CryParamHash = Animator.StringToHash(cryName);
     }
 }
