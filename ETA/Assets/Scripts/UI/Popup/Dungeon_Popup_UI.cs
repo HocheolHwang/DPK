@@ -98,16 +98,6 @@ public class Dungeon_Popup_UI : UI_Popup
         Skill_Icon_7,
         Skill_Icon_8,
 
-        // 콜라보 이펙트
-        Skill_1_Collabo_Image,
-        Skill_2_Collabo_Image,
-        Skill_3_Collabo_Image,
-        Skill_4_Collabo_Image,
-        Skill_5_Collabo_Image,
-        Skill_6_Collabo_Image,
-        Skill_7_Collabo_Image,
-        Skill_8_Collabo_Image,
-
         // 스킬 슬롯
         Skill_1,
         Skill_2,
@@ -184,7 +174,6 @@ public class Dungeon_Popup_UI : UI_Popup
     private Image[] skillCooldownImages = new Image[8];
     private Image[] skillUnableImages = new Image[8];
     private Image[] skillIcons = new Image[8];
-    private Image[] collaboImages = new Image[8];
     private Image[] skillSlotIcons = new Image[8];
     private TextMeshProUGUI dungeonTierText;
     private TextMeshProUGUI dungeonNameText;
@@ -242,6 +231,9 @@ public class Dungeon_Popup_UI : UI_Popup
 
     // 스킬 정보 팝업
     public GameObject skillInfoPopup;
+
+    // 콜라보 슬롯 이펙트
+    private GameObject[,] collavoSlots = new GameObject[3, 8];
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -436,14 +428,41 @@ public class Dungeon_Popup_UI : UI_Popup
             ResetCooldownUI(i);
         }
 
-
-        // 콜라보 아이콘 초기화
-        for (int i = 0; i < collaboImages.Length; i++)
+        // 콜라보 슬롯 이펙트 찾기
+        for (int classIndex = 0; classIndex < 3; classIndex++)
         {
-            collaboImages[i] = GetImage((int)Images.Skill_1_Collabo_Image + i);
+            for (int slotIndex = 0; slotIndex < 8; slotIndex++)
+            {
+                string collavoSlotName = classIndex switch
+                {
+                    0 => $"Warrior_Collavo_Skill_{slotIndex + 1}",
+                    1 => $"Archer_Collavo_Skill_{slotIndex + 1}",
+                    2 => $"Mage_Collavo_Skill_{slotIndex + 1}",
+                    _ => ""
+                };
+
+                collavoSlots[classIndex, slotIndex] = GameObject.Find(collavoSlotName);
+            }
         }
 
+        // 콜라보 슬롯 이펙트 찾기
+        for (int classIndex = 0; classIndex < 3; classIndex++)
+        {
+            for (int slotIndex = 0; slotIndex < 8; slotIndex++)
+            {
+                string collavoSlotName = slotIndex switch
+                {
+                    0 => $"Warrior_Collavo_Skill_{slotIndex + 1}",
+                    1 => $"Archer_Collavo_Skill_{slotIndex + 1}",
+                    2 => $"Mage_Collavo_Skill_{slotIndex + 1}",
+                    _ => ""
+                };
 
+                collavoSlots[classIndex, slotIndex].gameObject.SetActive(false);
+            }
+        }
+
+        
         expResult = false;
         
         if(PhotonNetwork.IsMasterClient)
@@ -453,11 +472,6 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 콜라보 시스템 참조
         collavoSystem = FindObjectOfType<CollavoSystem>();
-
-        for (int i = 0; i < 8; i++)
-        {
-            collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
-        }
     }
 
 
@@ -1102,9 +1116,19 @@ public class Dungeon_Popup_UI : UI_Popup
     private void CheckCollavo()
     {
         if (skillSlot == null) return;
+
+        int classNumber = Managers.Player.GetClassCode() switch
+        {
+            "C001" => 0,
+            "C002" => 1,
+            "C003" => 2,
+            _ => 3
+        };
+
         for (int i = 0; i < 8; i++)
         {
-            var skill = skillSlot.Skills[i];
+            int slotNumber = i;
+            var skill = skillSlot.Skills[slotNumber];
 
             if (skill == null)
             {
@@ -1114,17 +1138,20 @@ public class Dungeon_Popup_UI : UI_Popup
 
             if (skill.SkillType != Define.SkillType.Holding)
             {
-                collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
+                // 이펙트 제거
+                collavoSlots[classNumber, slotNumber].gameObject.SetActive(false);
                 continue;
             }
 
             if (collavoSystem.IsCastingSkill(skill.CollavoSkillName))
             {
-                collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (7)");
+                // 이펙트 활성화
+                collavoSlots[classNumber, slotNumber].gameObject.SetActive(true);
             }
             else
             {
-                collaboImages[i].sprite = Resources.Load<Sprite>($"Sprites/Prototype Sprites/Item_FX_2_Yellow - 복사본 (1)");
+                // 이펙트 제거
+                collavoSlots[classNumber, slotNumber].gameObject.SetActive(false);
             }
         }
     }
