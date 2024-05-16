@@ -142,16 +142,19 @@ namespace DragonStateItem
         {
             _agent.velocity = Vector3.zero;
             _controller.IsBreath = true;
+            IncreaseDEF();
 
             InitTime(_animData.BreathEnableAnim.length);
             _animator.SetFloat("BreathEnableSpeed", 0.33f);
             _animator.CrossFade(_animData.BreathEnableParamHash, 0.1f);
+
+            StartCast((int)EDragonPattern.BREATH_ENABLE);
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
-            if (_controller.HitAttackCnt >= _controller.ThreadHoldHitAttackCnt)
+            if ( _controller.IsMeetConditionHit )
             {
                 //Debug.Log("BREATH_ENABLE TO GROGGY");
                 _controller.ChangeState(_controller.GROGGY_STATE);
@@ -165,6 +168,7 @@ namespace DragonStateItem
 
         public override void Exit()
         {
+            DecreaseDEF();
         }
     }
     #endregion
@@ -185,7 +189,7 @@ namespace DragonStateItem
             _animator.SetFloat("BreathSpeed", 0.5f);
             _animator.CrossFade(_animData.BreathParamHash, 0.1f);
 
-            _controller.HitAttackCnt = 0;
+            StartCast((int)EDragonPattern.BREATH);
         }
 
         public override void Execute()
@@ -200,7 +204,6 @@ namespace DragonStateItem
 
         public override void Exit()
         {
-            _controller.HitAttackCnt = 0;
         }
     }
     #endregion
@@ -355,8 +358,7 @@ namespace DragonStateItem
 
         public override void Exit()
         {
-            // 내려온 뒤에 방어력을 원래 값으로 되돌림
-            _controller.DecreaseDefense(_controller.AmountDEF);
+            DecreaseDEF();
         }
     }
     #endregion
@@ -378,6 +380,8 @@ namespace DragonStateItem
             InitTime(_animData.FearEnableAnim.length);
             _animator.SetFloat("FearEnableSpeed", 0.33f);
             _animator.CrossFade(_animData.FearEnableParamHash, 0.1f);
+
+            StartCast((int)EDragonPattern.FEAR_ENABLE);
         }
 
         public override void Execute()
@@ -388,7 +392,7 @@ namespace DragonStateItem
             if (_controller.IsHitCounter)
             {
                 //Debug.Log("PATTERN_ONE_ENABLE TO FEAR_STRONG_ATTACK");
-                _controller.ChangeState(_controller.FEAR_STRONG_ATTACK_STATE);
+                _controller.ChangeState(_controller.FEAR_STRONG_ATTACK_STATE); // 잠시 변경
             }
             // 카운터에 맞지 않아도 공격
             else if (_animTime >= _threadHold * 3.0f)
@@ -405,8 +409,8 @@ namespace DragonStateItem
     }
     #endregion
 
-    // -------------------------------------- FEAR_ATTACK ------------------------------------------------
-    #region FEAR_ATTACK
+    // -------------------------------------- FEAR_STRONG_ATTACK ------------------------------------------------
+    #region FEAR_STRONG_ATTACK
     public class FearStrongAttackState : DragonState
     {
         public FearStrongAttackState(DragonController controller) : base(controller)
@@ -421,14 +425,14 @@ namespace DragonStateItem
             _animator.SetFloat("FearSpeed", 0.5f);
             _animator.CrossFade(_animData.FearAttackParamHash, 0.1f);
 
-            
+            StartCast((int)EDragonPattern.FEAR_STRONG);
         }
 
         public override void Execute()
         {
             //if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
-            if (_animTime >= _threadHold)
+            if (_animTime >= _threadHold * 2.0F)
             {
                 //Debug.Log("FEAR_ATTACK TO IDLE_BATTLE");
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
@@ -440,8 +444,8 @@ namespace DragonStateItem
     }
     #endregion
 
-    // -------------------------------------- FEAR_STRONG_ATTACK ------------------------------------------------
-    #region FEAR_STRONG_ATTACK
+    // -------------------------------------- FEAR_ATTACK ------------------------------------------------
+    #region FEAR_ATTACK
     public class FearAttackState : DragonState
     {
         public FearAttackState(DragonController controller) : base(controller)
@@ -456,7 +460,7 @@ namespace DragonStateItem
             _animator.SetFloat("FearSpeed", 0.5f);
             _animator.CrossFade(_animData.FearAttackParamHash, 0.1f);
 
-
+            StartCast((int)EDragonPattern.FEAR);
         }
 
         public override void Execute()
@@ -537,9 +541,7 @@ namespace DragonStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-
-            // 날개되면 DEF가 1000증가
-            _controller.IncreaseDefense(_controller.AmountDEF);
+            IncreaseDEF();
 
             InitTime(_animData.GroundToSkyAnim.length);
             _animator.SetFloat("GroundToSkySpeed", 0.5f);
@@ -642,7 +644,6 @@ namespace DragonStateItem
         }
         public override void Exit()
         {
-            _controller.HitAttackCnt = 0;
         }
     }
     #endregion
@@ -658,6 +659,7 @@ namespace DragonStateItem
         public override void Enter()
         {
             //if (PhotonNetwork.IsMasterClient) _controller.ChangeToDieState();
+            //_playerController.SkillSlot.CurrentSkill?.StopCast();
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
             //Managers.Sound.Play("Monster/KnightG/KnightGDie_SND", Define.Sound.Effect);

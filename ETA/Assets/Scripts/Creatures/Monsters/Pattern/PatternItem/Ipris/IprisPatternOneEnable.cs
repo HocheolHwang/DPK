@@ -45,7 +45,7 @@ public class IprisPatternOneEnable : Pattern
         _psMainModule.startLifetime = _animData.PatternOneEnableAnim.length * 2.0f;
 
         // 카운터 도중에 내는 소리
-        Managers.Sound.Play("Monster/CounterEnergy_SND", Define.Sound.Effect);
+        Managers.Sound.Play("Monster/CounterEnergyRed_SND", Define.Sound.Effect);
 
         float timer = 0;
         while (timer <= _duration)

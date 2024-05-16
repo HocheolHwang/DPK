@@ -45,8 +45,6 @@ public class KnightGPhaseAttack : Pattern
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
-
-
     }
 
     private IEnumerator expandCollider(Vector3 loc)

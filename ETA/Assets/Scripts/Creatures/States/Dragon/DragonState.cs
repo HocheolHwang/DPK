@@ -4,9 +4,15 @@ using UnityEngine;
 
 enum EDragonPattern
 {
-    ATTACK_DOWN,
+    // GROUND
+    ATTACK_DOWN         = 0,
     ATTACK_SWING,
     ATTACK_TAIL,
+    FEAR_ENABLE,
+    FEAR,
+    FEAR_STRONG,
+    BREATH_ENABLE,
+    BREATH,
     MAX_LEN,
 }
 
@@ -19,5 +25,16 @@ public class DragonState : State
     {
         _controller = controller;
         _animData = controller.AnimData;
+    }
+
+    // ---------------------- SET DEF --------------------------
+    public void IncreaseDEF()
+    {
+        _controller.IncreaseDefense(_controller.AmountDEF);
+    }
+
+    public void DecreaseDEF()
+    {
+        _controller.DecreaseDefense(_controller.AmountDEF);
     }
 }
