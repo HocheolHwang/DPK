@@ -97,7 +97,7 @@ namespace DragonStateItem
                 //Debug.Log("IDLE_BATTLE TO IDLE");
                 _controller.ChangeState(_controller.CHASE_STATE);
             }
-            else if ( !_controller.IsBreath && _controller.Stat.Hp <= (_controller.Stat.MaxHp * 0.7f))
+            else if (!_controller.IsBreath && _controller.Stat.Hp <= (_controller.Stat.MaxHp * 0.7f))
             {
                 //Debug.Log("IDLE_BATTLE TO BREATH_ENABLE_STATE");
                 _controller.ChangeState(_controller.BREATH_ENABLE_STATE);
@@ -224,12 +224,14 @@ namespace DragonStateItem
             InitTime(_animData.CryToFireAnim.length);
             //_animator.SetFloat("BreathEnableSpeed", 0.33f);
             _animator.CrossFade(_animData.CryToFireParamHash, 0.1f);
+
+            StartCast((int)EDragonPattern.CRY_TO_FIRE);
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
-            if (_controller.HitCounterCnt >= _controller.ThreadHoldCryFireball)
+            if (_controller.IsMeetConditionFire)
             {
                 //Debug.Log("BREATH_ENABLE TO CRY");
                 _controller.ChangeState(_controller.CRY_STATE);
@@ -261,6 +263,8 @@ namespace DragonStateItem
 
             //InitTime(_animData.FlyFireBallAnim.length);
             _animator.CrossFade(_animData.FlyFireBallParamHash, 0.1f);
+
+            StartCast((int)EDragonPattern.FLY_FIREBALL);
         }
 
         public override void Execute()
@@ -582,6 +586,8 @@ namespace DragonStateItem
             _agent.velocity = Vector3.zero;
             InitTime(_animData.CryAnim.length);
             _animator.CrossFade(_animData.CryParamHash, 0.1f);
+
+            Managers.Sound.Play("Sounds/Monster/Dragon/DragonCry_SND", Define.Sound.Effect);
         }
 
         public override void Execute()

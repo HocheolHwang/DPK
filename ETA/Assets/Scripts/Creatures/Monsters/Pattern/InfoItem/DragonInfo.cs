@@ -30,5 +30,8 @@ public class DragonInfo : PatternInfo
         // SKY
         PatternList.Add(gameObject.GetOrAddComponent<DragonCryToDown>());
         PatternList.Add(gameObject.GetOrAddComponent<DragonSkyDownAttack>());
+
+        PatternList.Add(gameObject.GetOrAddComponent<DragonCryToFire>());
+        PatternList.Add(gameObject.GetOrAddComponent<DragonFlyFireball>());
     }
 }

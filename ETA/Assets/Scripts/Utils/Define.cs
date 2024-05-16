@@ -246,6 +246,9 @@ public class Define
         Dragon_BreathGroggy,
         Dragon_SkyDown,
         Dragon_GroundToSky,
+        Dragon_Fireball,
+        Dragon_FireballExplo,
+        Dragon_FireballField,
         // ------------------------ Dragon ------------------------------
         MaxCount
     }

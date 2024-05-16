@@ -15,6 +15,8 @@ enum EDragonPattern
     BREATH_GROGGY,
     CRY_TO_DOWN,
     SKY_DOWN_ATTACK,
+    CRY_TO_FIRE,
+    FLY_FIREBALL,
     MAX_LEN,
 }
 

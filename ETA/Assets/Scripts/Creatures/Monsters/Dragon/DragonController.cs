@@ -173,6 +173,11 @@ public class DragonController : BaseMonsterController
         else if (CurState == CRY_TO_FIRE_STATE)
         {
             _hitCounterCnt++;
+            if (_hitCounterCnt >= ThreadHoldCryDown)
+            {
+                _isMeetConditionDown = true;
+            }
+
             if (_hitCounterCnt >= ThreadHoldCryFireball)
             {
                 _isMeetConditionFire = true;
