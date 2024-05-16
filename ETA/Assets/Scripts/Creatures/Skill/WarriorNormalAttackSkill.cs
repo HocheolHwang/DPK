@@ -16,6 +16,7 @@ public class WarriorNormalAttackSkill : Skill
 
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         if (_controller.StateMachine.CurState is PlayerStates.SkillState) yield break;
         _animator.CrossFade("NORMAL_ATTACK", 0.05f);
         
