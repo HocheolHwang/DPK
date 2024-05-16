@@ -142,16 +142,19 @@ namespace DragonStateItem
         {
             _agent.velocity = Vector3.zero;
             _controller.IsBreath = true;
+            IncreaseDEF();
 
             InitTime(_animData.BreathEnableAnim.length);
             _animator.SetFloat("BreathEnableSpeed", 0.33f);
             _animator.CrossFade(_animData.BreathEnableParamHash, 0.1f);
+
+            StartCast((int)EDragonPattern.BREATH_ENABLE);
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
-            if (_controller.HitAttackCnt >= _controller.ThreadHoldHitAttackCnt)
+            if ( _controller.IsMeetConditionHit )
             {
                 //Debug.Log("BREATH_ENABLE TO GROGGY");
                 _controller.ChangeState(_controller.GROGGY_STATE);
@@ -165,6 +168,7 @@ namespace DragonStateItem
 
         public override void Exit()
         {
+            DecreaseDEF();
         }
     }
     #endregion
@@ -185,7 +189,7 @@ namespace DragonStateItem
             _animator.SetFloat("BreathSpeed", 0.5f);
             _animator.CrossFade(_animData.BreathParamHash, 0.1f);
 
-            _controller.HitAttackCnt = 0;
+            StartCast((int)EDragonPattern.BREATH);
         }
 
         public override void Execute()
@@ -200,7 +204,6 @@ namespace DragonStateItem
 
         public override void Exit()
         {
-            _controller.HitAttackCnt = 0;
         }
     }
     #endregion
@@ -355,8 +358,7 @@ namespace DragonStateItem
 
         public override void Exit()
         {
-            // 내려온 뒤에 방어력을 원래 값으로 되돌림
-            _controller.DecreaseDefense(_controller.AmountDEF);
+            DecreaseDEF();
         }
     }
     #endregion
@@ -539,9 +541,7 @@ namespace DragonStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
-
-            // 날개되면 DEF가 1000증가
-            _controller.IncreaseDefense(_controller.AmountDEF);
+            IncreaseDEF();
 
             InitTime(_animData.GroundToSkyAnim.length);
             _animator.SetFloat("GroundToSkySpeed", 0.5f);
@@ -644,7 +644,6 @@ namespace DragonStateItem
         }
         public override void Exit()
         {
-            _controller.HitAttackCnt = 0;
         }
     }
     #endregion

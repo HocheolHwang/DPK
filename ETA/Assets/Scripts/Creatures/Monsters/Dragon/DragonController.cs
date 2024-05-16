@@ -33,21 +33,23 @@ public class DragonController : BaseMonsterController
 
     #region STATE VARIABLE
     [Header("STATE VARIABLE")]
-    [SerializeField] private bool _meetPlayer;      // 플레이어 만남 여부
-    [SerializeField] private bool _isCryToDown;     // CryToDown 상태 여부( Ground To Sky 상태에서 사용 )
-    [SerializeField] private bool _isBreath;        // Breath 상태 수행했으면 true
-    [SerializeField] private bool _isFireball;        // Fireball 상태 수행했으면 true
+    [SerializeField] private bool _meetPlayer;          // 플레이어 만남 여부
+    [SerializeField] private bool _isCryToDown;         // CryToDown 상태 여부( Ground To Sky 상태에서 사용 )
+    [SerializeField] private bool _isBreath;            // Breath 상태 수행했으면 true
+    [SerializeField] private bool _isFireball;          // Fireball 상태 수행했으면 true
+    [SerializeField] private bool _isMeetConditionHit;  // hitAttackCnt가 ThreadHoldHitAttackCnt를 만족
 
-    [SerializeField] private float _attackCnt;      // 일반 공격 횟수
-    [SerializeField] private float _fearTime;       // Fear 패턴 주기
-    [SerializeField] private float _cryDownTime;    // CryDown 패턴 주기
-    [SerializeField] private int _hitAttackCnt;     // 피격 횟수
+    [SerializeField] private float _attackCnt;          // 일반 공격 횟수
+    [SerializeField] private float _fearTime;           // Fear 패턴 주기
+    [SerializeField] private float _cryDownTime;        // CryDown 패턴 주기
+    [SerializeField] private int _hitAttackCnt;         // 피격 횟수
 
 
     public bool MeetPlayer { get => _meetPlayer; set => _meetPlayer = value; }
     public bool IsCryToDown { get => _isCryToDown; set => _isCryToDown = value; }
     public bool IsBreath { get => _isBreath; set => _isBreath = value; }
     public bool IsFireball { get => _isFireball; set => _isFireball = value; }
+    public bool IsMeetConditionHit { get => _isMeetConditionHit; set => _isMeetConditionHit = value; }
     public float AttackCnt { get => _attackCnt; set => _attackCnt = value; }
     public int ChangeAttackCount { get => 3; }
     public float FearTime { get => _fearTime; set => _fearTime = value; }
@@ -72,6 +74,8 @@ public class DragonController : BaseMonsterController
     [Header("Tail Effect")]
     [SerializeField] public ParticleSystem TailEffect;
     [SerializeField] public ParticleSystem FearEnableEffect;
+    [SerializeField] public ParticleSystem BreathReadyEffect;
+    [SerializeField] public ParticleSystem BreathEffect;
 
     private DragonAnimationData _animData;
     public DragonAnimationData AnimData { get => _animData; }
@@ -129,5 +133,23 @@ public class DragonController : BaseMonsterController
         // 넉백 히트박스를 몸에 가지고 다니자.
         UnitType = Define.UnitType.Dragon;
         _destroyedTime = _animData.DieAnim.length;
+    }
+
+    // ---------------------------- Breath Enable ----------------------------------
+    public override void AttackedEvent()
+    {
+        if (CurState == BREATH_ENABLE_STATE)
+        {
+            _hitAttackCnt++;
+            if (_hitAttackCnt >= ThreadHoldHitAttackCnt)
+            {
+                _isMeetConditionHit = true;
+            }
+        }
+        else
+        {
+            _hitAttackCnt = 0;
+            _isMeetConditionHit = false;
+        }
     }
 }

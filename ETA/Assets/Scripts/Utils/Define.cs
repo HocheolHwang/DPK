@@ -240,6 +240,8 @@ public class Define
         Dragon_AttackSwing,
         Dragon_AttackTail,
         Dragon_Fear,
+        Dragon_BreathEnable,
+        Dragon_BreathEnableHit,
         // ------------------------ Dragon ------------------------------
         MaxCount
     }

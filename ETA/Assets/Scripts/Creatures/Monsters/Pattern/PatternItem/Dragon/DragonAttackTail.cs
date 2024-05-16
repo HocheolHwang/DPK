@@ -10,7 +10,6 @@ public class DragonAttackTail : Pattern
     [SerializeField] Vector3 _hitboxRange = new Vector3(12.0f, 1.0f, 8.0f);
 
     [Header("knockback box options")]
-    [SerializeField] private float _knockBackCreateTime = 0.15f;
     [SerializeField] private int _knockBackPower = 1;
     [SerializeField] private float _knockBackTime = 0.5f;
 
