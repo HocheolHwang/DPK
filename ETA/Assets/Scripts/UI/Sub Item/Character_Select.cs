@@ -222,7 +222,6 @@ public class Character_Select : MonoBehaviour
         // DP 아이템 활성화
         float activeDpItems = Mathf.Clamp(dp / 10f, 0, 1);
         sliders[2].value = activeDpItems;
-
     }
 
     // 캐릭터 설명 업데이트 메서드
