@@ -141,6 +141,7 @@ public class Define
         FireTrail,
         FireWall,
         BloodExplosion,
+        Crater,
         Explosion,
         GroundCrash,
         BlessingEffect,
