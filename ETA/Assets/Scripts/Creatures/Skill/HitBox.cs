@@ -67,4 +67,10 @@ public class HitBox : MonoBehaviour
     {
         gameObject.SetActive(true);
     }
+
+    public void SetActiveColliderLimit(float duration)
+    {
+        gameObject.SetActive(true);
+        StartCoroutine(InActiveColider(duration));
+    }
 }

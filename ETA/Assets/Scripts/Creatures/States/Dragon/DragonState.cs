@@ -4,7 +4,6 @@ using UnityEngine;
 
 enum EDragonPattern
 {
-    // GROUND
     ATTACK_DOWN         = 0,
     ATTACK_SWING,
     ATTACK_TAIL,
@@ -14,6 +13,10 @@ enum EDragonPattern
     BREATH_ENABLE,
     BREATH,
     BREATH_GROGGY,
+    CRY_TO_DOWN,
+    SKY_DOWN_ATTACK,
+    CRY_TO_FIRE,
+    FLY_FIREBALL,
     MAX_LEN,
 }
 

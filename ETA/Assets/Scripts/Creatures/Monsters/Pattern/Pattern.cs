@@ -62,4 +62,11 @@ public abstract class Pattern : MonoBehaviour ,IPattern
         Vector3 dirToTarget = targetPos - curPos;
         return dirToTarget.normalized;
     }
+
+    public Vector3 DirectionToTarget(Vector3 curPos, Vector3 tgtPos)
+    {
+        Vector3 targetPos = tgtPos;
+        Vector3 dirToTarget = targetPos - curPos;
+        return dirToTarget.normalized;
+    }
 }
