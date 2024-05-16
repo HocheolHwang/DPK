@@ -105,22 +105,22 @@ public class Skill_Select : MonoBehaviour
         },
         {"C003", new SkillInfo[]
              {
-                new() { skillCode = "M101", skillName = "BubbleShot" },
+                new() { skillCode = "M306", skillName = "Teleport" },
+                new() { skillCode = "M302", skillName = "Protection" },
                 new() { skillCode = "M201", skillName = "IceBone" },
                 new() { skillCode = "M303", skillName = "FlashLight" },
-                new() { skillCode = "M301", skillName = "Heal" },
-                new() { skillCode = "M302", skillName = "Protection" },
-                new() { skillCode = "M401", skillName = "Gravity" },
+                new() { skillCode = "M101", skillName = "BubbleShot" },
                 new() { skillCode = "M402", skillName = "Thunder" },
-                new() { skillCode = "M202", skillName = "Meteor" },
-                new() { skillCode = "M204", skillName = "PoisonMist" },
-                new() { skillCode = "M203", skillName = "BloodBoom" },
-                new() { skillCode = "M206", skillName = "Plague" },
+                new() { skillCode = "M401", skillName = "Gravity" },
                 new() { skillCode = "M205", skillName = "FireWall" },
+                new() { skillCode = "M301", skillName = "Heal" },
+                new() { skillCode = "M203", skillName = "BloodBoom" },
+                new() { skillCode = "M102", skillName = "Fear" },
                 new() { skillCode = "M304", skillName = "QuickFreeze" },
-                new() { skillCode = "M301", skillName = "Heal" },
-                new() { skillCode = "M301", skillName = "Heal" },
-                new() { skillCode = "M301", skillName = "Heal" },
+                new() { skillCode = "M204", skillName = "PoisonMist" },
+                new() { skillCode = "M305", skillName = "ChainLightning" },
+                new() { skillCode = "M206", skillName = "Plague" },
+                new() { skillCode = "M202", skillName = "Meteor" },
             }
         }
     };
