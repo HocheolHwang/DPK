@@ -7,7 +7,7 @@ public class Sting : Skill
     protected override void Init()
     {
         SetCoolDownTime(10);
-        Damage = 30;
+        Damage = 50;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Sting.png");
     }

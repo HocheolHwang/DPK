@@ -76,7 +76,7 @@ public class Skill_Select : MonoBehaviour
                 new() { skillCode = "W104", skillName = "ThrowingShield" },
                 new() { skillCode = "W307", skillName = "TripleSlash" },
                 new() { skillCode = "W103", skillName = "Sting" },
-                new() { skillCode = "W102", skillName = "SowrdWave" },
+                new() { skillCode = "W102", skillName = "SwordWave" },
                 new() { skillCode = "W303", skillName = "Massacre" },
                 new() { skillCode = "W305", skillName = "Blessing" },
                 new() { skillCode = "W310", skillName = "QuadrupleSlash" },

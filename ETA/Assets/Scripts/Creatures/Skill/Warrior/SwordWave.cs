@@ -7,7 +7,7 @@ public class SwordWave : Skill
     protected override void Init()
     {
         SetCoolDownTime(10);
-        Damage = 20;
+        Damage = 100;
         skillRange = new Vector3(4, 2, 6);
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/SwordWave.png");
