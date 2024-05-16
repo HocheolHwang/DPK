@@ -48,4 +48,21 @@ public class CameraController : MonoBehaviour
         _mode = Define.CameraMode.QuarterVeiw;
         _delta = delta;
     }
+
+
+    public void ZoomOut()
+    {
+        StartCoroutine(ZoomOutCoroutine());
+    }
+    IEnumerator ZoomOutCoroutine()
+    {
+        
+        while (Camera.main.orthographicSize < 9.99f)
+        {
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 10, 0.01f);
+            yield return null;
+        }
+        
+        
+    }
 }
