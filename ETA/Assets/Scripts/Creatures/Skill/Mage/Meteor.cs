@@ -51,6 +51,7 @@ public class Meteor : Skill
 
         Managers.Resource.Destroy(stone.gameObject);
         Managers.Sound.Play("Skill/Crash");
+
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
         hitbox.transform.position = endPos;
