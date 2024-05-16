@@ -69,6 +69,9 @@ public class DragonController : BaseMonsterController
     public int ThreadHoldCryFireball { get => 3; }
     #endregion
 
+    [Header("Tail Effect")]
+    [SerializeField] public ParticleSystem TailEffect;
+
     private DragonAnimationData _animData;
     public DragonAnimationData AnimData { get => _animData; }
 
@@ -125,5 +128,6 @@ public class DragonController : BaseMonsterController
         // 넉백 히트박스를 몸에 가지고 다니자.
         UnitType = Define.UnitType.Dragon;
         _destroyedTime = _animData.DieAnim.length;
+        TailEffect.gameObject.SetActive(false);
     }
 }

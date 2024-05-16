@@ -235,7 +235,11 @@ public class Define
         Ipris_AttackFirst,
         Ipris_AttackSecond,
         Ipris_ToDragon,
-        // ------------------------ Ipris ------------------------------
+        // ------------------------ Dragon ------------------------------
+        Dragon_AttackDown,
+        Dragon_AttackSwing,
+        Dragon_AttackTail,
+        // ------------------------ Dragon ------------------------------
         MaxCount
     }
 }

@@ -37,7 +37,7 @@ public class KnockBackBox : MonoBehaviour
         }
         else if (_attacker.gameObject.CompareTag("Monster") && other.gameObject.CompareTag("Player"))
         {
-            Debug.Log($"player name : {other.gameObject.name}");
+            Debug.Log($"push player : {other.gameObject.name}");
             other.GetComponent<IDamageable>().Pushed(_power, _time);
             _penetration--;
         }
