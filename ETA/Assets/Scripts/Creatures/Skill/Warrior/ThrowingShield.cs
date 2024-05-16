@@ -18,6 +18,7 @@ public class ThrowingShield : Skill
 
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         _animator.CrossFade("THROW_SHIELD", 0.1f);
         //SwordVolleyBlue
         yield return new WaitForSeconds(0.1f);

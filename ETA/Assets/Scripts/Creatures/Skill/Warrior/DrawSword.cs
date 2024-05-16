@@ -18,6 +18,7 @@ public class DrawSword : Skill
 
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         _animator.CrossFade("TEMP", 0.1f);
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/RSkill");

@@ -18,8 +18,8 @@ public class QuadrupleSlash : Skill
 
     public override IEnumerator StartSkillCast()
     {
-        
-        
+
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 20;
         yield return new WaitForSeconds(0.05f);
         Managers.Sound.Play("Skill/RSkill");
         _animator.CrossFade("ATTACK5", 0.05f);
@@ -80,7 +80,7 @@ public class QuadrupleSlash : Skill
             yield return new WaitForSeconds(0.20f);
             Managers.Resource.Destroy(hitbox.gameObject);
             hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-            hitbox.SetUp(transform, 20);
+            hitbox.SetUp(transform, Damage / 2);
             hitbox.transform.position = _skillSystem.TargetPosition;
             Managers.Sound.Play("Skill/TargetSkill");
         }

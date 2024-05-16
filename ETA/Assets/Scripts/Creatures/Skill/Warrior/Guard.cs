@@ -14,13 +14,14 @@ public class Guard : Skill
 
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         _animator.CrossFade("GUARD", 0.05f);
         yield return new WaitForSeconds(0.05f);
         Managers.Sound.Play("Skill/GuardSkill");
-        _controller.GetShield(100);
+        _controller.GetShield(100 + Damage);
         yield return new WaitForSeconds(1.0f);
 
-        _controller.RemoveShield(100);
+        _controller.RemoveShield(100 + Damage);
 
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();

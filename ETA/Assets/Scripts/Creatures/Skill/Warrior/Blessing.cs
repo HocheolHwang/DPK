@@ -8,7 +8,7 @@ public class Blessing : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(15);
+        SetCoolDownTime(20);
         SkillType = Define.SkillType.Immediately;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Blessing.png");
@@ -27,14 +27,14 @@ public class Blessing : Skill
 
     private IEnumerator BlessingCoroutine()
     {
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BlessingEffect, 5.0f, gameObject.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BlessingEffect, 10.0f, gameObject.transform);
         if (ps != null)
             ps.transform.SetParent(gameObject.transform);
 
         _controller.IncreaseDefense(5);
 
         // 방어력 증가 후 일정 시간 대기
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(10.0f);
         _controller.DecreaseDefense(5);
 
         // 이전 코드

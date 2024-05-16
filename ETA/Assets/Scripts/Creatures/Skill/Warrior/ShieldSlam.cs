@@ -18,6 +18,7 @@ public class ShieldSlam : Skill
 
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         _animator.CrossFade("SHIELD_SLAM", 0.05f);
         yield return new WaitForSeconds(0.3f);
         Managers.Sound.Play("Skill/ShieldSlam");
