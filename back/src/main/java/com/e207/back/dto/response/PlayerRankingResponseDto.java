@@ -17,13 +17,15 @@ import java.util.List;
 public class PlayerRankingResponseDto extends ResponseDto {
 
     List<PlayerClassDto> rankingList;
-    PlayerRankingResponseDto(List<PlayerClassDto> rankingList){
+    int personalRanking;
+    PlayerRankingResponseDto(List<PlayerClassDto> rankingList, int personalRanking){
         super();
         this.rankingList = rankingList;
+        this.personalRanking = personalRanking;
     }
 
-    public static ResponseEntity<? super PlayerRankingResponseDto> success(List<PlayerClassDto> rankingList){
-        PlayerRankingResponseDto responseBody = new PlayerRankingResponseDto(rankingList);
+    public static ResponseEntity<? super PlayerRankingResponseDto> success(List<PlayerClassDto> rankingList, int personalRanking){
+        PlayerRankingResponseDto responseBody = new PlayerRankingResponseDto(rankingList, personalRanking);
         return ResponseEntity.ok(responseBody);
     }
 }

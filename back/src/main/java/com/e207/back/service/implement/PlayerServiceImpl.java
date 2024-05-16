@@ -42,7 +42,10 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public ResponseEntity<? super PlayerRankingResponseDto> getPlayerRanking(PlayerRankingRequestDto dto) {
         List<PlayerClassDto> list = new ArrayList<>();
+        int higherLevelCount = -1;
         try{
+            CustomUserDetails customUserDetails = CustomUserDetails.LoadUserDetails();
+            String playerId = customUserDetails.getPlayerId();
             // 0번째 페이지 limit만큼 들고오기
             PageRequest pageRequest = PageRequest.of(0, dto.getLimit());
             Slice<PlayerClassEntity> playerClassEntities = playerClassRepository.findByOrderByPlayerLevelDesc(pageRequest);
@@ -56,12 +59,17 @@ public class PlayerServiceImpl implements PlayerService {
                 list.add(playerClass);
             });
 
+            PlayerClassEntity entity = playerClassRepository.findTopByPlayerPlayerIdOrderByPlayerLevelDesc(playerId);
+            String highestClassCode = entity.get_class().getClassCode();
+            System.out.println(highestClassCode);
+            higherLevelCount = playerClassRepository.countByClassCodeAndPlayerLevelGreaterThan(entity.getPlayerLevel());
+            System.out.println(higherLevelCount);
 
         }catch (Exception exception){
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
-        return PlayerRankingResponseDto.success(list);
+        return PlayerRankingResponseDto.success(list, higherLevelCount + 1);
     }
 
     @Override
