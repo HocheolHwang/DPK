@@ -21,9 +21,10 @@ public class NetworkManager : MonoBehaviour
         }
         else
         {
-            callback?.Invoke();
+            if(callback != null)
+                callback?.Invoke();
             //Debug.Log(request.result);
-            //Debug.Log("Response: " + request.downloadHandler.text);
+            Debug.Log("Response: " + request.downloadHandler.text);
         }
     }
     IEnumerator SelectClassRequest(UnityWebRequest request, Action callback)
@@ -340,7 +341,7 @@ public class NetworkManager : MonoBehaviour
     // 플레이어 경험치 변화량 전송
     public void EXPStatisticsCall(EXPStatisticsReqDto dto, Action callback = null)
     {
-        //Debug.Log("경험치 변화 있나??");
+        Debug.Log("경험치 변화 있나??");
         string expData = JsonUtility.ToJson(dto);
         StartCoroutine(SendWebRequest(CreateRequest("PUT", "player/exp", expData), callback));
     }
