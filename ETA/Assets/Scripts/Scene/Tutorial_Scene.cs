@@ -17,6 +17,10 @@ public class Tutorial_Scene : BaseScene
 
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/Tutorial", Define.Sound.BGM);
+
+        ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.LocalPlayer.CustomProperties;
+        properties["currentScene"] = Define.Scene.Tutorial;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
     }
 
     public override void Clear()
