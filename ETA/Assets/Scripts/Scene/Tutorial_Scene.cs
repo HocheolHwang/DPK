@@ -17,7 +17,6 @@ public class Tutorial_Scene : BaseScene
 
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/Tutorial", Define.Sound.BGM);
-
     }
 
     public override void Clear()
