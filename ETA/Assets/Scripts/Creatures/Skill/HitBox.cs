@@ -40,6 +40,11 @@ public class HitBox : MonoBehaviour
             other.GetComponent<IDamageable>().TakeDamage(_damage);
             _penetration--;
         }
+        else if (_attacker.gameObject.CompareTag("Monster") && other.gameObject.CompareTag("Wall"))
+        {
+            Managers.Sound.Play("Skill/FireWallBurn");
+            _penetration--;
+        }
 
         // 음수일 때는 계속 관통
         // 0일 때는 비활성화 -> 파괴는 각 클래스에서 따로 처리한다.
