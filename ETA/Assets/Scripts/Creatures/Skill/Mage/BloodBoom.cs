@@ -7,7 +7,7 @@ public class BloodBoom : Skill
     private Coroutine bloodboomCoroutine;
     protected override void Init()
     {
-        SetCoolDownTime(5);
+        SetCoolDownTime(7);
         Damage = 50;
         base.Init();
         SkillType = Define.SkillType.Range;
@@ -41,11 +41,12 @@ public class BloodBoom : Skill
 
     private IEnumerator BloodboomCoroutine()
     {
-        _controller.DecreaseHp(5);
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage * 2;
+        _controller.DecreaseHp(Damage / 2);
         Managers.Sound.Play("Skill/BloodBoom1");
-        HitBox hiddenbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hiddenbox.transform.position = _skillSystem.TargetPosition;
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BloodExplosion, 3.0f, hiddenbox.transform);
+
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BloodExplosion, 3.0f, transform);
+        ps.transform.position = _skillSystem.TargetPosition;
 
         yield return new WaitForSeconds(0.5f);
         Managers.Sound.Play("Skill/BloodBoom1");

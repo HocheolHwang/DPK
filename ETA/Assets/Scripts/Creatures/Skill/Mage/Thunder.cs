@@ -18,7 +18,9 @@ public class Thunder : Skill
 
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 4;
         _animator.CrossFade("SKILL1", 0.1f);
+
         for (int i = 0; i < 4; i++)
         {
             Define.Effect effectName1 = (i % 2 == 0) ? Define.Effect.Thunder1 : Define.Effect.Thunder2;
@@ -56,6 +58,7 @@ public class Thunder : Skill
 
     public override IEnumerator StartCollavoSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         _animator.CrossFade("SKILL1", 0.1f);
         Managers.Sound.Play("Skill/ThunderStorm");
 

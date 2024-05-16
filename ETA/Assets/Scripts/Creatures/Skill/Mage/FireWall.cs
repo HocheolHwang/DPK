@@ -36,7 +36,9 @@ public class FireWall : Skill
 
     private IEnumerator FireWallCoroutine(Vector3 rangePos)
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 5;
         Managers.Sound.Play("Skill/FireWall");
+
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.FireWall, 1.5f, transform);
         ps.transform.position = rangePos;
         ps.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -45,7 +47,7 @@ public class FireWall : Skill
         {
             HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
             hitbox.SetUp(transform, Damage);
-            hitbox.transform.position = rangePos  + new Vector3(0, 0, -0.5f);
+            hitbox.transform.position = rangePos + new Vector3(0, 0, -0.5f);
             hitbox.transform.localScale = new Vector3(6, 5, 1);
 
             yield return new WaitForSeconds(0.3f);

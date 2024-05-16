@@ -7,7 +7,7 @@ public class ChainLightning : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(3);
         Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Immediately;
@@ -29,6 +29,7 @@ public class ChainLightning : Skill
 
     private IEnumerator ChainLightningCoroutine(Vector3 targetPos)
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 2;
         Managers.Sound.Play("Skill/FlashLight");
         List<Transform> monstersInHitbox = new List<Transform>();
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.Thunder3, 2.0f, transform);

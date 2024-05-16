@@ -31,9 +31,10 @@ public class QuickFreeze : Skill
 
     IEnumerator DefenseUp(float duration)
     {
-        _controller.Stat.Defense += 500;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
+        _controller.Stat.Defense += Damage;
         yield return new WaitForSeconds(duration);
-        _controller.Stat.Defense -= 500;
+        _controller.Stat.Defense -= Damage;
     }
 
     IEnumerator QuickFreezeCoroutine()

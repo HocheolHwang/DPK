@@ -26,6 +26,8 @@ public class FlashLight : Skill
 
     private IEnumerator FlashLightCoroutine()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 2;
+        
         Managers.Sound.Play("Skill/FlashLight");
         HitBox hiddenbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hiddenbox.transform.position = gameObject.transform.position + transform.up * 3;

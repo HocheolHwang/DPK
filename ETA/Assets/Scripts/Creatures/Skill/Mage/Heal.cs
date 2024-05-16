@@ -35,11 +35,12 @@ public class Heal : Skill
     private IEnumerator HealCoroutine()
     {
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.EnergyNovaGreen, 2.0f, gameObject.transform);
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 10;
 
         for (int i = 0; i < 10; i++)
         {
             BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
-            buffbox.SetUp(transform, 2, BuffBox.stat.Hp);
+            buffbox.SetUp(transform, Damage, BuffBox.stat.Hp);
             buffbox.transform.position = gameObject.transform.position;
             buffbox.transform.localScale = new Vector3(20, 3, 20);
             yield return new WaitForSeconds(0.1f);
