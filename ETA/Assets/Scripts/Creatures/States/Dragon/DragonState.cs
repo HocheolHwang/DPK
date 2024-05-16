@@ -13,6 +13,7 @@ enum EDragonPattern
     FEAR_STRONG,
     BREATH_ENABLE,
     BREATH,
+    BREATH_GROGGY,
     MAX_LEN,
 }
 

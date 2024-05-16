@@ -243,6 +243,7 @@ public class Define
         Dragon_Fear,
         Dragon_BreathEnable,
         Dragon_BreathEnableHit,
+        Dragon_BreathGroggy,
         // ------------------------ Dragon ------------------------------
         MaxCount
     }

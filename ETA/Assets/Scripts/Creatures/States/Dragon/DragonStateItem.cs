@@ -606,7 +606,6 @@ namespace DragonStateItem
     #region GROGGY
     public class GroggyState : DragonState
     {
-        ParticleSystem ps;
         public GroggyState(DragonController controller) : base(controller)
         {
         }
@@ -614,23 +613,11 @@ namespace DragonStateItem
         public override void Enter()
         {
             _agent.velocity = Vector3.zero;
+
             InitTime(_animData.GroggyAnim.length);
-
-            // Breath에 실패하면 Groggy 상태
-            if (_controller.PrevState is BreathEnableState)
-            {
-                // Hit Effect
-                //ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, _controller.transform);
-                //ps.transform.SetParent(_controller.transform);
-                //ps.transform.localPosition = new Vector3(0, 1.0f, 0);
-
-                ps = Managers.Effect.Play(Define.Effect.Groggy, _animData.GroggyAnim.length, _controller.transform);
-                ps.transform.SetParent(_controller.transform);
-                ps.transform.localPosition = new Vector3(0, 3.0f, 3.5f);
-            }
-
             _animator.CrossFade(_animData.GroggyParamHash, 0.1f);
 
+            StartCast((int)EDragonPattern.BREATH_GROGGY);
         }
 
         public override void Execute()
