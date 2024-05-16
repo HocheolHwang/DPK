@@ -195,7 +195,7 @@ public class Dungeon_Popup_UI : UI_Popup
     // 게임 위치 및 진행 상태 변수
     private GameObject checkpoints;
     private int totalCheckpoints;
-    private int currentCheckpointIndex = 0;
+    public int currentCheckpointIndex = 0;
     private float gameTime = 0f;
 
     public int CurrentCheckPointIndex { get => currentCheckpointIndex; private set => currentCheckpointIndex = value; }

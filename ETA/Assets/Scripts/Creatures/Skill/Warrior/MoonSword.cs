@@ -9,7 +9,7 @@ public class MoonSword : Skill
     protected override void Init()
     {
         SetCoolDownTime(2);
-        Damage = 10;
+        Damage = 20;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/TelekineticSwords.png");
         
@@ -56,7 +56,7 @@ public class MoonSword : Skill
         {
             Managers.Sound.Play("Skill/TargetSkill");
             HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-            hitbox.SetUp(transform, 5);
+            hitbox.SetUp(transform, Damage);
             hitbox.transform.position = dest;
             yield return new WaitForSeconds(0.1f);
         }
@@ -64,7 +64,7 @@ public class MoonSword : Skill
         yield return new WaitForSeconds(0.4f);
         Managers.Sound.Play("Skill/TargetSkill");
         HitBox box = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        box.SetUp(transform, 200);
+        box.SetUp(transform, 250);
         box.transform.position = dest;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.MoonSwordEffect, 0, box.transform);
         ps.transform.position = dest;
