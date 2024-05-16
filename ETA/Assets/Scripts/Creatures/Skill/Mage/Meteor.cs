@@ -9,7 +9,7 @@ public class Meteor : Skill
     private Vector3 endPos;
     protected override void Init()
     {
-        SetCoolDownTime(15);
+        SetCoolDownTime(20);
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(5, 5, 5);
