@@ -817,7 +817,7 @@ public class Dungeon_Popup_UI : UI_Popup
             }
 
             result.Initialize();
-            result.EarnExp(getExp + 10, originExp, originLevel, originNeedExp, "던전 클리어!");
+            result.EarnExp(getExp, originExp, originLevel, originNeedExp, "던전 클리어!");
             Managers.Photon.SendDungeonEnd(timeText.text, false);
         }
 
