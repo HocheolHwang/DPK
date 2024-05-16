@@ -57,6 +57,12 @@ public class Result_Popup_UI : UI_Popup
     // Dungeon_Popup_UI 인스턴스에 대한 참조
     private Dungeon_Popup_UI dungeonPopupUI;
 
+    // ---------------------------- 변수 -------------------------------------
+    private int curExp;
+    private long originExp;
+    private int originLevel;
+    private long originNeedExp;
+
 
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
@@ -96,8 +102,20 @@ public class Result_Popup_UI : UI_Popup
         loadLobbyButton = GetButton((int)Buttons.Load_Lobby_Button);
         AddUIEvent(loadLobbyButton.gameObject, LoadLobbyScene);
         AddUIKeyEvent(loadLobbyButton.gameObject, () => LoadLobbyScene(null), KeyCode.Return);
+
+        Debug.Log("여기서 초기화가ㅏ 됩니다.");
     }
 
+    public void Initialize()
+    {
+        // 텍스트 초기화
+        resultTitleText = GetText((int)Texts.Result_Title_Text);
+        timeText = GetText((int)Texts.Time_Text);
+        dungeonNameText = GetText((int)Texts.Dungeon_Name_Text);
+        bestRecordTitleText = GetText((int)Texts.Best_Record_Title_Text);
+        bestRecordText = GetText((int)Texts.Best_Record_Text);
+        expText = GetText((int)Texts.EXP_Text);
+    }
 
     // ------------------------------ 메서드 정의 ------------------------------
 
@@ -126,7 +144,7 @@ public class Result_Popup_UI : UI_Popup
         // @@@@@@@@ TODO: 던전 클리어 여부를 확인하는 코드 필요 @@@@@@@@
 
         // ----------------- 사망 시 -----------------
-        resultTitleText.text = "사망하였습니다.";
+         resultTitleText.text = "사망하였습니다.";
 
         // 최고기록 타이틀
         bestRecordTitleText.text = "최고 기록";
@@ -144,21 +162,23 @@ public class Result_Popup_UI : UI_Popup
 
 
         // ----------------- 클리어 시 -----------------
-        resultTitleText.text = "던전 클리어!";
+        // resultTitleText.text = "던전 클리어!";
 
         // 클리어 했을 시 && 최고 기록일 시
-        bestRecordTitleText.text = "최고 기록 (NEW!)";
-        bestRecordText.text = timeText.text; // 최고 기록 갱신
+        //bestRecordTitleText.text = "최고 기록 (NEW!)";
+        //bestRecordText.text = timeText.text; // 최고 기록 갱신
 
         // @@@@@@@@ TODO: 클리어 시 획득 경험치 가져오는 코드 필요 @@@@@@@@
-        expText.text = $"{200}";
+        expText.text = $"{curExp}";
 
         // @@@@@@@@ TODO: 직전 레벨 및 경험치와 이후 레벨 및 경험치 가져오는 코드 필요 @@@@@@@@
-        for (int i = 0; i < levelTexts.Length; i++)
-        {
-            levelTexts[i].text = $"Lv. {1}";
-            expTexts[i].text = $"00.00 %";
-        }
+
+        levelTexts[0].text = $"Lv. {originLevel}";
+        expTexts[0].text = $"{((float)originExp / originNeedExp) * 100.0f} %";
+        
+        levelTexts[1].text = $"Lv. {Managers.Player.GetLevel()}";
+        expTexts[1].text = $"{((float)Managers.Player.GetExp() / (float)Managers.Player.GetNeedExp()) * 100.0f} %";
+            
     }
 
     // 로비로 이동하기 메서드
@@ -169,5 +189,15 @@ public class Result_Popup_UI : UI_Popup
 
         // 로비 씬으로 이동
         Managers.Scene.LoadScene(Define.Scene.Lobby);
+    }
+
+    public void EarnExp(int currentExp, long exp, int level, long needExp)
+    {
+        Init();
+        curExp = currentExp;
+        originExp = exp;
+        originLevel = level;
+        originNeedExp = needExp;
+        UpdateDungeonResult();
     }
 }

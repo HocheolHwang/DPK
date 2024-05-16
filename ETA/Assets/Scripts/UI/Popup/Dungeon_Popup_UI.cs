@@ -809,15 +809,22 @@ public class Dungeon_Popup_UI : UI_Popup
         if (playerStat.Hp <= 0)
         {
             // 던전 결과 Popup UI를 띄움
-            Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
-        }
-        
-        if (selectedDungeonNumber != 0)
-        {
-            SummaryExp(dungeonNameText.text + "던전에서 사망");
-        }
+            Result_Popup_UI result = Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
 
-        Managers.Photon.SendDungeonEnd(timeText.text, false);
+            long originExp = Managers.Player.GetExp();
+            int originLevel = Managers.Player.GetLevel();
+            long originNeedExp = Managers.Player.GetNeedExp();
+            int getExp = currentExp;
+
+            if (selectedDungeonNumber != 0)
+            {
+                SummaryExp(dungeonNameText.text + "던전에서 사망");
+            }
+
+            result.Initialize();
+            result.EarnExp(getExp + 10, originExp, originLevel, originNeedExp);
+            Managers.Photon.SendDungeonEnd(timeText.text, false);
+        }
     }
 
     // 채팅 Popup UI 띄우기 메서드
@@ -842,7 +849,7 @@ public class Dungeon_Popup_UI : UI_Popup
         currentExp += 10;
 
         // 경험치 합산
-        //Managers.Player.AddExp(currentExp);
+        Managers.Player.AddExp(currentExp);
         EXPStatisticsReqDto dto = new EXPStatisticsReqDto();
         dto.classCode = Managers.Player.GetClassCode();
         dto.currentExp = Managers.Player.GetExp();
