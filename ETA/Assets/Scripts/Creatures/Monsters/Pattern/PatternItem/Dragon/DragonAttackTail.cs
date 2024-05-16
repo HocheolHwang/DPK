@@ -9,6 +9,11 @@ public class DragonAttackTail : Pattern
     [SerializeField] float _upPos = 0.5f;
     [SerializeField] Vector3 _hitboxRange = new Vector3(12.0f, 1.0f, 8.0f);
 
+    [Header("knockback box options")]
+    [SerializeField] private float _knockBackCreateTime = 0.15f;
+    [SerializeField] private int _knockBackPower = 1;
+    [SerializeField] private float _knockBackTime = 0.5f;
+
     private DragonAnimationData _animData;
     private DragonController _dcontroller;
 
@@ -27,7 +32,7 @@ public class DragonAttackTail : Pattern
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upPos);
         Vector3 Pos = transform.position + rootForward + rootUp;
 
-        _dcontroller.TailEffect.gameObject.SetActive(true);
+        _dcontroller.TailEffect.Play();
 
         yield return new WaitForSeconds(_createTime);
 
@@ -35,7 +40,7 @@ public class DragonAttackTail : Pattern
 
         yield return new WaitForSeconds(_animData.TailAttackAnim.length - _createTime);
         // coroutine 유지를 위한 잠깐의 시간
-        _dcontroller.TailEffect.gameObject.SetActive(false);
+        _dcontroller.TailEffect.Stop();
     }
 
     IEnumerator AttackTail(Vector3 Pos)
@@ -49,8 +54,14 @@ public class DragonAttackTail : Pattern
         // DragonTail_SND
         Managers.Sound.Play("Sounds/Monster/Dragon/DragonTail_SND", Define.Sound.Effect);
 
+        KnockBackBox knockBackBox = Managers.Resource.Instantiate("Skill/KnockBackBoxRect").GetComponent<KnockBackBox>();
+        knockBackBox.SetUp(transform, _knockBackPower, _knockBackTime);
+        knockBackBox.transform.localScale = _hitboxRange;
+        knockBackBox.transform.position = Pos;
+
         // remove the hitbox 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
+        Managers.Resource.Destroy(knockBackBox.gameObject);
     }
 }

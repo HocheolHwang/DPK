@@ -11,7 +11,7 @@ public class DragonAttackDown : Pattern
 
     [Header("knockback box options")]
     [SerializeField] private float _knockBackCreateTime = 0.15f;
-    [SerializeField] private int _knockBackPower = 5;
+    [SerializeField] private int _knockBackPower = 1;
     [SerializeField] private float _knockBackTime = 0.5f;
 
     private DragonAnimationData _animData;

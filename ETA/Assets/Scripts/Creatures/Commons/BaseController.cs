@@ -329,7 +329,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
     public void Pushed(int power, float duration)
     {
-        if (PhotonNetwork.IsMasterClient == false) return;
+        //if (PhotonNetwork.IsMasterClient == false) return;
         StartCoroutine(PushedCoroutine(power, duration));
     }
 

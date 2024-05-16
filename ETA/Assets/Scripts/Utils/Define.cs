@@ -239,6 +239,7 @@ public class Define
         Dragon_AttackDown,
         Dragon_AttackSwing,
         Dragon_AttackTail,
+        Dragon_Fear,
         // ------------------------ Dragon ------------------------------
         MaxCount
     }

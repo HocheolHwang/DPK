@@ -4,9 +4,12 @@ using UnityEngine;
 
 enum EDragonPattern
 {
-    ATTACK_DOWN,
+    ATTACK_DOWN         = 0,
     ATTACK_SWING,
     ATTACK_TAIL,
+    FEAR_ENABLE,
+    FEAR,
+    FEAR_STRONG,
     MAX_LEN,
 }
 
