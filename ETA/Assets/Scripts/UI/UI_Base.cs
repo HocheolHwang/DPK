@@ -32,6 +32,14 @@ public abstract class UI_Base : MonoBehaviourPunCallbacks
         // UI 객체를 저장할 배열 생성
         UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
 
+        // 딕셔너리에 타입과 객체 배열을 추가하기 전에 키가 이미 존재하는지 확인
+        Type keyType = typeof(T);
+        if (_objects.ContainsKey(keyType))
+        {
+            Debug.LogWarning($"Key {keyType} already exists in the dictionary.");
+            return;
+        }
+
         // 딕셔너리에 타입과 객체 배열을 추가
         _objects.Add(typeof(T), objects);
 

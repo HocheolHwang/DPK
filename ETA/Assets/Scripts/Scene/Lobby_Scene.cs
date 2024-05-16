@@ -36,7 +36,7 @@ public class Lobby_Scene : BaseScene
             Managers.UI.ShowPopupUI<Lobby_Popup_UI>("[Lobby]_Lobby_Popup_UI");
         }
 
-        Managers.Sound.Play("BackgroundMusic/Lobby");
+        Managers.Sound.Play("BackgroundMusic/Lobby", Define.Sound.BGM);
 
 
         SetUpMannequins();

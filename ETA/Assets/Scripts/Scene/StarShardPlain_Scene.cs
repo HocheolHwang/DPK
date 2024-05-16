@@ -8,5 +8,6 @@ public class StarShardPlain_Scene : Dungeon_Scene
     {
         base.Init();
         SceneType = Define.Scene.StarShardPlain;
+        Managers.Sound.Play("BackgroundMusic/DeepForest", Define.Sound.BGM);
     }
 }
