@@ -17,6 +17,7 @@ public class MoonSword : Skill
 
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         _animator.CrossFade("SKILL1", 0.1f);
         //SwordVolleyBlue
         yield return new WaitForSeconds(0.1f);
@@ -64,7 +65,7 @@ public class MoonSword : Skill
         yield return new WaitForSeconds(0.4f);
         Managers.Sound.Play("Skill/TargetSkill");
         HitBox box = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        box.SetUp(transform, 250);
+        box.SetUp(transform, Damage * 3);
         box.transform.position = dest;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.MoonSwordEffect, 0, box.transform);
         ps.transform.position = dest;

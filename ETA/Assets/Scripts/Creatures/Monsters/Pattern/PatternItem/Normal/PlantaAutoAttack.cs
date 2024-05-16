@@ -63,6 +63,6 @@ public class PlantaAutoAttack : Pattern
             yield return null;
         }
         Managers.Resource.Destroy(hitbox.gameObject);
-        Managers.Resource.Destroy(ps.gameObject);
+        //Managers.Resource.Destroy(ps.gameObject);
     }
 }

@@ -18,6 +18,7 @@ public class WhirlWind : Skill
 
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage - 10;
         _animator.CrossFade("WHIRLWIND", 0.1f);
         StartCoroutine(WhirlWindCoroutine());
 

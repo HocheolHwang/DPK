@@ -17,6 +17,7 @@ public class HolyHammer : Skill
     }
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 30;
         _animator.CrossFade("BUFF1", 0.1f);
         Managers.Sound.Play("Skill/Holy");
 
