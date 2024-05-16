@@ -8,7 +8,7 @@ public class TripleSlash : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(3);
+        SetCoolDownTime(5);
         Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Immediately;
