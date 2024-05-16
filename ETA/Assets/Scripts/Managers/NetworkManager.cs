@@ -122,7 +122,6 @@ public class NetworkManager : MonoBehaviour
     IEnumerator DungeonRankRequest(UnityWebRequest request, Action<DungeonRankListResDto> callback)
     {
         yield return request.SendWebRequest();
-        ResponseMessage message = JsonUtility.FromJson<ResponseMessage>(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"[Rank Error] {request.error}\n{request.downloadHandler.text}");
