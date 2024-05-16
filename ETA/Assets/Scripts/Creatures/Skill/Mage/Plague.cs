@@ -42,7 +42,7 @@ public class Plague : Skill
         ps.transform.localScale = skillRange;
 
         BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
-        buffbox.SetUp(transform, -5, BuffBox.stat.Defense, 5.0f, "Monster");
+        buffbox.SetUp(transform, -(Damage / 10), BuffBox.stat.Defense, 5.0f, "Monster");
         buffbox.transform.position = targetPos;
         buffbox.transform.localScale = skillRange;
 
