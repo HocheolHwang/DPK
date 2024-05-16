@@ -38,7 +38,10 @@ public class Leader_Board_Popup_UI : UI_Popup
         Character_Image_5,
 
         // My 레벨 랭킹 캐릭터 이미지
-        My_Character_Image
+        My_Character_Image,
+
+        // My 랭킹 아이템 컨테이너
+        My_Ranking_Item_Container
     }
 
     enum Texts
@@ -47,6 +50,9 @@ public class Leader_Board_Popup_UI : UI_Popup
         Character_Title_Text,
         Nickname_Title_Text,
         Record_Title_Text,
+
+        // 내 랭킹 타이틀 텍스트
+        My_Ranking_Title_Text,
 
         // My 랭킹 등수 텍스트
         My_Ranking_Text,
@@ -88,7 +94,9 @@ public class Leader_Board_Popup_UI : UI_Popup
     private Image[] inactiveBackgrounds = new Image[4];
     private Image[] characterImages = new Image[5];
     private Image myCharacterImage;
+    private Image myRankingItemContainer;
     private TextMeshProUGUI[] titleTexts = new TextMeshProUGUI[3];
+    private TextMeshProUGUI myRankingTitleText;
     private TextMeshProUGUI myRankingText;
     private TextMeshProUGUI[] partyNameTexts = new TextMeshProUGUI[5];
     private TextMeshProUGUI myPartyNameText;
@@ -141,7 +149,11 @@ public class Leader_Board_Popup_UI : UI_Popup
             recordTexts[i] = GetText((int)Texts.Record_Text_1 + i);
         }
 
+        // My 랭킹 아이템 컨테이너 초기화
+        myRankingItemContainer = GetImage((int)Images.My_Ranking_Item_Container);
+
         // My 랭킹 아이템 초기화
+        myRankingTitleText = GetText((int)Texts.My_Ranking_Title_Text);
         myRankingText = GetText((int)Texts.My_Ranking_Text);
         myCharacterImage = GetImage((int)Images.My_Character_Image);
         myPartyNameText = GetText((int)Texts.My_Party_Name_Text);
@@ -224,6 +236,12 @@ public class Leader_Board_Popup_UI : UI_Popup
             characterImages[i].gameObject.SetActive(isLevelRanking);
             partyNameTexts[i].gameObject.SetActive(!isLevelRanking);
         }
+
+        // 타이틀 텍스트 변경
+        myRankingTitleText.text = isLevelRanking ? "내 랭킹" : "이 달의 우수 기사";
+
+        // My 랭킹 아이템 활성화/비활성화
+        myRankingItemContainer.gameObject.SetActive(isLevelRanking);
 
         // My 캐릭터 이미지 및 My 파티 이름 텍스트 활성화/비활성화
         myCharacterImage.gameObject.SetActive(isLevelRanking);
@@ -341,7 +359,7 @@ public class Leader_Board_Popup_UI : UI_Popup
 
         // --------------- My 레벨 랭킹 업데이트 ---------------
 
-        myRecordText.text = "";
+        myPartyNameText.text = "";
         myNicknameText.text = "";
         myRecordText.text = "";
         myRankingText.text = "";
