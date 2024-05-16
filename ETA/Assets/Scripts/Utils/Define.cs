@@ -244,6 +244,8 @@ public class Define
         Dragon_BreathEnable,
         Dragon_BreathEnableHit,
         Dragon_BreathGroggy,
+        Dragon_SkyDown,
+        Dragon_GroundToSky,
         // ------------------------ Dragon ------------------------------
         MaxCount
     }

@@ -58,8 +58,6 @@ public class DragonAttackDown : Pattern
         knockBackBox.GetComponent<SphereCollider>().radius = _hitboxRadius;
         knockBackBox.transform.position = Pos;
 
-        Debug.Log($"knockBack box: {knockBackBox.gameObject.name}");
-
         yield return new WaitForSeconds(_knockBackCreateTime);
         Managers.Resource.Destroy(knockBackBox.gameObject);
     }

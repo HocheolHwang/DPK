@@ -293,20 +293,15 @@ namespace DragonStateItem
             InitTime(_animData.CryToDownAnim.length);
             _animator.SetFloat("CryToDownSpeed", 0.75f);
             _animator.CrossFade(_animData.CryToDownParamHash, 0.1f);
+
+            StartCast((int)EDragonPattern.CRY_TO_DOWN);
         }
 
         public override void Execute()
         {
             _animTime += Time.deltaTime;
 
-            // 카운터에 맞았는지 확인하는 코드가 필요함
-            // 여기서 변수를 수정하면 동기화가 어렵다
-            //      1. controller에서 dragon 생성한 counter 정보( class )를 가진다.
-            //      2. counter class에서 생성한 hit box가 counter를 맞으면 controller에게 정보를 전달
-            //      3. controller에서 bool 값으로 관리
-            //      4. 두 값이 true가 되면 상태 변경
-
-            if (_controller.HitCounterCnt >= _controller.ThreadHoldCryDown)
+            if (_controller.IsMeetConditionDown)
             {
                 //Debug.Log("CRY_TO_DOWN_STATE TO CRY_STATE");
                 _controller.ChangeState(_controller.CRY_STATE);
@@ -344,6 +339,7 @@ namespace DragonStateItem
             _animator.CrossFade(_animData.SkyDownAttackParamHash, 0.1f);
 
             // 내려찍는곳에 넉백 히트박스 생성
+            StartCast((int)EDragonPattern.SKY_DOWN_ATTACK);
         }
 
         public override void Execute()
@@ -358,7 +354,6 @@ namespace DragonStateItem
 
         public override void Exit()
         {
-            DecreaseDEF();
         }
     }
     #endregion
@@ -546,6 +541,10 @@ namespace DragonStateItem
             InitTime(_animData.GroundToSkyAnim.length);
             _animator.SetFloat("GroundToSkySpeed", 0.5f);
             _animator.CrossFade(_animData.GroundToSkyParamHash, 0.1f);
+
+            ParticleSystem ps = Managers.Effect.Play(Define.Effect.Dragon_GroundToSky, 0);
+            ps.transform.position = _controller.transform.position;
+            Managers.Sound.Play("Sounds/Monster/Dragon/DragonGroundToSky_SND", Define.Sound.Effect);
         }
 
         public override void Execute()
@@ -564,6 +563,7 @@ namespace DragonStateItem
 
         public override void Exit()
         {
+            DecreaseDEF();
             _controller.IsCryToDown = false;
         }
     }

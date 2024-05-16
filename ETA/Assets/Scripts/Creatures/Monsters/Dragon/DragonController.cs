@@ -38,6 +38,8 @@ public class DragonController : BaseMonsterController
     [SerializeField] private bool _isBreath;            // Breath 상태 수행했으면 true
     [SerializeField] private bool _isFireball;          // Fireball 상태 수행했으면 true
     [SerializeField] private bool _isMeetConditionHit;  // hitAttackCnt가 ThreadHoldHitAttackCnt를 만족
+    [SerializeField] private bool _isMeetConditionDown; // _hitCounterCnt가 ThreadHoldCryDown을 만족
+    [SerializeField] private bool _isMeetConditionFire; // _hitCounterCnt가 ThreadHoldCryFireball을 만족
 
     [SerializeField] private float _attackCnt;          // 일반 공격 횟수
     [SerializeField] private float _fearTime;           // Fear 패턴 주기
@@ -50,6 +52,8 @@ public class DragonController : BaseMonsterController
     public bool IsBreath { get => _isBreath; set => _isBreath = value; }
     public bool IsFireball { get => _isFireball; set => _isFireball = value; }
     public bool IsMeetConditionHit { get => _isMeetConditionHit; set => _isMeetConditionHit = value; }
+    public bool IsMeetConditionDown { get => _isMeetConditionDown; set => _isMeetConditionDown = value; }
+    public bool IsMeetConditionFire { get => _isMeetConditionFire; set => _isMeetConditionFire = value; }
     public float AttackCnt { get => _attackCnt; set => _attackCnt = value; }
     public int ChangeAttackCount { get => 3; }
     public float FearTime { get => _fearTime; set => _fearTime = value; }
@@ -150,6 +154,35 @@ public class DragonController : BaseMonsterController
         {
             _hitAttackCnt = 0;
             _isMeetConditionHit = false;
+        }
+    }
+
+    // ---------------------------- Multi Counter ----------------------------------
+    public override void CounterEvent()
+    {
+        base.CounterEvent();
+
+        if (CurState == CRY_TO_DOWN_STATE)
+        {
+            _hitCounterCnt++;
+            if (_hitCounterCnt >= ThreadHoldCryDown)
+            {
+                _isMeetConditionDown = true;
+            }
+        }
+        else if (CurState == CRY_TO_FIRE_STATE)
+        {
+            _hitCounterCnt++;
+            if (_hitCounterCnt >= ThreadHoldCryFireball)
+            {
+                _isMeetConditionFire = true;
+            }
+        }
+        else
+        {
+            _hitCounterCnt = 0;
+            _isMeetConditionDown = false;
+            _isMeetConditionFire = false;
         }
     }
 }
