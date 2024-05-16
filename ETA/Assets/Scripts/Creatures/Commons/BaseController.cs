@@ -111,8 +111,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
     public virtual void IncreaseHp(int amount)
     {
-        if (Stat.Hp == 0) return;
-        
+        if (Stat.Hp <= 0) return;
+
         Stat.Hp += amount;
         if (Stat.Hp > Stat.MaxHp) Stat.Hp = Stat.MaxHp;
     }
