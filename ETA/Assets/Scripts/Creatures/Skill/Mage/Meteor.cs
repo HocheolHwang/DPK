@@ -22,7 +22,7 @@ public class Meteor : Skill
     public override IEnumerator StartSkillCast()
     {
         endPos = _skillSystem.TargetPosition;
-        startPos = endPos +  new Vector3(0f, 15f, 0f);
+        startPos = gameObject.transform.position + Vector3.up * 15 + Vector3.back * 15;
         _animator.CrossFade("SKILL5", 0.1f);
         Managers.Sound.Play("Skill/Holy");
 
@@ -34,36 +34,31 @@ public class Meteor : Skill
 
     private IEnumerator MeteorCoroutine()
     {
-        ParticleSystem ps2 = Managers.Effect.Play(Define.Effect.FireTrail, 4.0f, transform);
-        ps2.transform.position = startPos;
+        // ParticleSystem ps2 = Managers.Effect.Play(Define.Effect.FireTrail, 4.0f, transform);
+        GameObject stone = Managers.Resource.Instantiate("Effect/Meteor", null);
+        stone.transform.position = startPos;
         yield return new WaitForSeconds(0.8f);
 
-        // 대상과의 거리 계산
-        float distanceToTarget = Vector3.Distance(ps2.transform.position, endPos);
-        // 이동 속도 계산 (1초에 도달할 거리)
-        float moveSpeed = 0.1f; // 이동 속도 조절
-        // 대상까지 도달하기 위한 이동 시간 계산
-        float moveTime = distanceToTarget / moveSpeed;
-        Debug.Log($"moveTime: {moveTime}");
-
         // 대상까지 이동하기
-        float elapsedTime = 0f;
-        while (elapsedTime < 2)
+        float time = 0f;
+        while (time < 2)
         {
             // 실제로 이동하기
-            ps2.transform.position = Vector3.Lerp(ps2.transform.position, endPos, elapsedTime / moveTime);
-            elapsedTime += Time.unscaledDeltaTime; // Time.unscaledDeltaTime 사용
+            stone.transform.position += (endPos - startPos) / 2 * Time.deltaTime;
+            time += Time.deltaTime; // Time.unscaledDeltaTime 사용
             yield return null; // 한 프레임 대기
         }
 
+        Managers.Resource.Destroy(stone.gameObject);
         Managers.Sound.Play("Skill/Crash");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
         hitbox.SetUp(transform, Damage);
-        hitbox.transform.position= endPos;
-        
+        hitbox.transform.position = endPos;
+
         // hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
         ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.Explosion, 3.0f, hitbox.transform);
+
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
     }
