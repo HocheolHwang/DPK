@@ -62,6 +62,7 @@ public class Result_Popup_UI : UI_Popup
     private long originExp;
     private int originLevel;
     private long originNeedExp;
+    private string dungeonResultText = "던전 클리어!";
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -144,21 +145,10 @@ public class Result_Popup_UI : UI_Popup
         // @@@@@@@@ TODO: 던전 클리어 여부를 확인하는 코드 필요 @@@@@@@@
 
         // ----------------- 사망 시 -----------------
-         resultTitleText.text = "사망하였습니다.";
+         resultTitleText.text = dungeonResultText;
 
         // 최고기록 타이틀
         bestRecordTitleText.text = "최고 기록";
-
-        // @@@@@@@@ TODO: 사망 시 획득 경험치 가져오는 코드 필요 @@@@@@@@
-        expText.text = $"{100}";
-
-        // @@@@@@@@ TODO: 직전 레벨 및 경험치와 이후 레벨 및 경험치 가져오는 코드 필요 @@@@@@@@
-        for (int i = 0; i < levelTexts.Length; i++)
-        {
-            levelTexts[i].text = $"Lv. {1}";
-            expTexts[i].text = $"00.00 %";
-        }
-
 
 
         // ----------------- 클리어 시 -----------------
@@ -191,13 +181,14 @@ public class Result_Popup_UI : UI_Popup
         Managers.Scene.LoadScene(Define.Scene.Lobby);
     }
 
-    public void EarnExp(int currentExp, long exp, int level, long needExp)
+    public void EarnExp(int currentExp, long exp, int level, long needExp, string resultText)
     {
         Init();
         curExp = currentExp;
         originExp = exp;
         originLevel = level;
         originNeedExp = needExp;
+        dungeonResultText = resultText;
         UpdateDungeonResult();
     }
 }

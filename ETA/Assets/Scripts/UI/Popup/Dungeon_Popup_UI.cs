@@ -782,16 +782,30 @@ public class Dungeon_Popup_UI : UI_Popup
     private void HandleBossDestroyed()
     {
         // 보스 클리어
-        if (selectedDungeonNumber!= 0)
-        {
-            currentExp += 30;
-            SummaryExp(dungeonNameText.text + "던전 클리어");
-        }
 
         Managers.Photon.SendDungeonEnd(timeText.text, true);
 
         // 던전 결과 Popup UI를 띄움
-        Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
+        Result_Popup_UI result = Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
+
+        if (selectedDungeonNumber!= 0)
+        {
+            currentExp += 30;
+            currentExp += 10;
+            long originExp = Managers.Player.GetExp();
+            int originLevel = Managers.Player.GetLevel();
+            long originNeedExp = Managers.Player.GetNeedExp();
+            int getExp = currentExp;
+
+            if (selectedDungeonNumber != 0)
+            {
+                SummaryExp(dungeonNameText.text + "던전에서 사망");
+            }
+
+            result.Initialize();
+            result.EarnExp(getExp + 10, originExp, originLevel, originNeedExp, "던전 클리어!");
+            Managers.Photon.SendDungeonEnd(timeText.text, false);
+        }
 
         PlayerController[] players = GameObject.FindObjectsOfType<PlayerController>();
         PlayerZone zone = GameObject.FindObjectOfType<PlayerZone>();
@@ -811,6 +825,7 @@ public class Dungeon_Popup_UI : UI_Popup
             // 던전 결과 Popup UI를 띄움
             Result_Popup_UI result = Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
 
+            currentExp += 10;
             long originExp = Managers.Player.GetExp();
             int originLevel = Managers.Player.GetLevel();
             long originNeedExp = Managers.Player.GetNeedExp();
@@ -822,7 +837,7 @@ public class Dungeon_Popup_UI : UI_Popup
             }
 
             result.Initialize();
-            result.EarnExp(getExp + 10, originExp, originLevel, originNeedExp);
+            result.EarnExp(getExp, originExp, originLevel, originNeedExp, "던전 공략 실패");
             Managers.Photon.SendDungeonEnd(timeText.text, false);
         }
     }
@@ -845,8 +860,6 @@ public class Dungeon_Popup_UI : UI_Popup
         if (expResult) return;
         expResult = true;
         if (currentExp == 0) return;
-
-        currentExp += 10;
 
         // 경험치 합산
         Managers.Player.AddExp(currentExp);
