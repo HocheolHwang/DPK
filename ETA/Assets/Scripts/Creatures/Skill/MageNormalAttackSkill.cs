@@ -42,6 +42,8 @@ public class MageNormalAttackSkill : Skill
 
     IEnumerator EnergyBall()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
+
         Vector3 rootForward = transform.TransformDirection(Vector3.forward);
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upLoc);
         Vector3 objectLoc = transform.position + rootForward + rootUp;

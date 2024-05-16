@@ -21,7 +21,7 @@ public class Plague : Skill
         targetPos = _skillSystem.TargetPosition;
 
         yield return new WaitForSeconds(0.1f);
-        if (_controller.Stat.Hp <= 20)
+        if (_controller.Stat.Hp <= Damage)
             StartCoroutine(LowHpCoroutine());
         else
             StartCoroutine(PlagueCoroutine());
@@ -32,8 +32,9 @@ public class Plague : Skill
 
     private IEnumerator PlagueCoroutine()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         Managers.Sound.Play("Skill/Plague");
-        _controller.DecreaseHp(20);
+        _controller.DecreaseHp(Damage);
         if (_controller.Stat.Hp < 0) _controller.Stat.Hp = 0;
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.Plague, 2.5f, transform);
@@ -41,7 +42,7 @@ public class Plague : Skill
         ps.transform.localScale = skillRange;
 
         BuffBox buffbox = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
-        buffbox.SetUp(transform, -10, BuffBox.stat.Defense, 5.0f, "Monster");
+        buffbox.SetUp(transform, -5, BuffBox.stat.Defense, 5.0f, "Monster");
         buffbox.transform.position = targetPos;
         buffbox.transform.localScale = skillRange;
 

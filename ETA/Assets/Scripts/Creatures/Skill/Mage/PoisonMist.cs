@@ -29,7 +29,9 @@ public class PoisonMist : Skill
 
     private IEnumerator PoisonMistCoroutine()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 10;
         Managers.Sound.Play("Skill/PoisonMist");
+
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.PoisonMist, 5.0f, transform);
         ps.transform.position = targetPos + new Vector3(0, 0.5f, 0);
 

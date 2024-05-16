@@ -35,6 +35,7 @@ public class IceBone : Skill
 
     private IEnumerator IceBoneCoroutine()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 5;
         // skillRange 내에서 랜덤한 x, z 좌표 생성
         float randomX = Random.Range(-skillRange.x / 2f, skillRange.x / 2f);
         float randomZ = Random.Range(-skillRange.z / 2f, skillRange.z / 2f);

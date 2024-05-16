@@ -68,13 +68,14 @@ public class Gravity : Skill
 
     IEnumerator GravityCoroutine()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         Managers.Sound.Play("Skill/Gravity");
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.Gravity01, 1.0f, gameObject.transform);
         ps.transform.position = gameObject.transform.position + transform.up;
         //ps.Play();
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, false);
+        hitbox.SetUp(transform, Damage + 10, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2.0f;
         hitbox.transform.rotation = gameObject.transform.rotation;

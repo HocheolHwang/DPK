@@ -34,6 +34,8 @@ public class Meteor : Skill
 
     private IEnumerator MeteorCoroutine()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
+
         // ParticleSystem ps2 = Managers.Effect.Play(Define.Effect.FireTrail, 4.0f, transform);
         GameObject stone = Managers.Resource.Instantiate("Effect/Meteor", null);
         stone.transform.position = startPos;
@@ -53,7 +55,7 @@ public class Meteor : Skill
         Managers.Sound.Play("Skill/Crash");
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, Damage * 3);
         hitbox.transform.position = endPos;
 
         // hitbox.transform.position = _skillSystem.TargetPosition;

@@ -6,7 +6,7 @@ public class Fear : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(10);
         Damage = 20;
         base.Init();
         skillRange = new Vector3(2, 2, 2);
@@ -32,6 +32,7 @@ public class Fear : Skill
     private IEnumerator FearCoroutine(Vector3 targetPos)
     {
         Managers.Sound.Play("Skill/Fear");
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
 
         // 대상을 향해 회전하기
         Vector3 directionToTarget = (targetPos - transform.position).normalized;

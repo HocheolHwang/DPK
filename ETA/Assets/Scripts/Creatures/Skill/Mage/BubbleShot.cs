@@ -6,7 +6,7 @@ public class BubbleShot : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(3);
         Damage = 20;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/BubbleShot.png");
@@ -31,6 +31,7 @@ public class BubbleShot : Skill
     private IEnumerator BubbleShotCoroutine(Vector3 targetPos)
     {
         Managers.Sound.Play("Skill/BubbleShot");
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
 
         // 대상을 향해 회전하기
         Vector3 directionToTarget = (targetPos - transform.position).normalized;
