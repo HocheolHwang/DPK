@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
-using System.Xml.Linq;
 
 public class Result_Popup_UI : UI_Popup
 {
@@ -25,12 +24,6 @@ public class Result_Popup_UI : UI_Popup
         // 던전 이름
         Dungeon_Name_Text,
 
-        // 최고 기록 타이틀
-        Best_Record_Title_Text,
-
-        // 최고 기록
-        Best_Record_Text,
-
         // 획득 경험치
         EXP_Text,
 
@@ -48,14 +41,13 @@ public class Result_Popup_UI : UI_Popup
     private TextMeshProUGUI resultTitleText;
     private TextMeshProUGUI timeText;
     private TextMeshProUGUI dungeonNameText;
-    private TextMeshProUGUI bestRecordTitleText;
-    private TextMeshProUGUI bestRecordText;
     private TextMeshProUGUI expText;
     private TextMeshProUGUI[] levelTexts = new TextMeshProUGUI[2];
     private TextMeshProUGUI[] expTexts = new TextMeshProUGUI[2];
 
     // Dungeon_Popup_UI 인스턴스에 대한 참조
     private Dungeon_Popup_UI dungeonPopupUI;
+
 
     // ---------------------------- 변수 -------------------------------------
     private int curExp;
@@ -79,8 +71,6 @@ public class Result_Popup_UI : UI_Popup
         resultTitleText = GetText((int)Texts.Result_Title_Text);
         timeText = GetText((int)Texts.Time_Text);
         dungeonNameText = GetText((int)Texts.Dungeon_Name_Text);
-        bestRecordTitleText = GetText((int)Texts.Best_Record_Title_Text);
-        bestRecordText = GetText((int)Texts.Best_Record_Text);
         expText = GetText((int)Texts.EXP_Text);
 
         // 경험치 획득 전후 레벨 및 경험치 초기화
@@ -104,7 +94,7 @@ public class Result_Popup_UI : UI_Popup
         AddUIEvent(loadLobbyButton.gameObject, LoadLobbyScene);
         AddUIKeyEvent(loadLobbyButton.gameObject, () => LoadLobbyScene(null), KeyCode.Return);
 
-        Debug.Log("여기서 초기화가ㅏ 됩니다.");
+        Debug.Log("여기서 초기화가 됩니다.");
     }
 
     public void Initialize()
@@ -113,8 +103,6 @@ public class Result_Popup_UI : UI_Popup
         resultTitleText = GetText((int)Texts.Result_Title_Text);
         timeText = GetText((int)Texts.Time_Text);
         dungeonNameText = GetText((int)Texts.Dungeon_Name_Text);
-        bestRecordTitleText = GetText((int)Texts.Best_Record_Title_Text);
-        bestRecordText = GetText((int)Texts.Best_Record_Text);
         expText = GetText((int)Texts.EXP_Text);
     }
 
@@ -134,41 +122,24 @@ public class Result_Popup_UI : UI_Popup
             3 => "심연의 바다",
             _ => ""
         };
-
-        // @@@@@@@@ TODO: 해당 던전의 최고 기록을 가져오는 코드 필요 @@@@@@@@
-        bestRecordText.text = ""; // 최고 기록
     }
 
     // 던전 결과 업데이트 메서드
     private void UpdateDungeonResult()
     {
-        // @@@@@@@@ TODO: 던전 클리어 여부를 확인하는 코드 필요 @@@@@@@@
+        // 던전 결과 타이틀 텍스트
+        resultTitleText.text = dungeonResultText;
 
-        // ----------------- 사망 시 -----------------
-         resultTitleText.text = dungeonResultText;
-
-        // 최고기록 타이틀
-        bestRecordTitleText.text = "최고 기록";
-
-
-        // ----------------- 클리어 시 -----------------
-        // resultTitleText.text = "던전 클리어!";
-
-        // 클리어 했을 시 && 최고 기록일 시
-        //bestRecordTitleText.text = "최고 기록 (NEW!)";
-        //bestRecordText.text = timeText.text; // 최고 기록 갱신
-
-        // @@@@@@@@ TODO: 클리어 시 획득 경험치 가져오는 코드 필요 @@@@@@@@
+        // 획득 경험치
         expText.text = $"{curExp}";
 
-        // @@@@@@@@ TODO: 직전 레벨 및 경험치와 이후 레벨 및 경험치 가져오는 코드 필요 @@@@@@@@
-
+        // 경험치 획득 전 
         levelTexts[0].text = $"Lv. {originLevel}";
         expTexts[0].text = $"{((float)originExp / originNeedExp) * 100.0f} %";
         
+        // 경험치 획득 후
         levelTexts[1].text = $"Lv. {Managers.Player.GetLevel()}";
         expTexts[1].text = $"{((float)Managers.Player.GetExp() / (float)Managers.Player.GetNeedExp()) * 100.0f} %";
-            
     }
 
     // 로비로 이동하기 메서드
