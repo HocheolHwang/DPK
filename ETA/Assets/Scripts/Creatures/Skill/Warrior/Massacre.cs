@@ -9,7 +9,7 @@ public class Massacre : Skill
         SetCoolDownTime(15);
         base.Init();
         SkillType = Define.SkillType.Immediately;
-        Damage = 10;
+        Damage = 20;
         skillRange = new Vector3(7, 7, 7);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Massacre.png");
     }
@@ -41,8 +41,8 @@ public class Massacre : Skill
             // 히트박스 생성
             HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
             hitbox.SetUp(transform, Damage);
-            hitbox.transform.position = _skillSystem.TargetPosition + transform.forward * 1.5f;
-            hitbox.transform.localScale = new Vector3(2,2,2);
+            hitbox.transform.position = transform.position + transform.forward * 1.5f;
+            hitbox.transform.localScale = new Vector3(3,3,3);
 
             yield return new WaitForSeconds(0.15f);
             Managers.Resource.Destroy(hitbox.gameObject);

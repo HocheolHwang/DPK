@@ -24,7 +24,7 @@ public class Dungeon_Scene : BaseScene
 
         Debug.Log("나는 첫째");
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
-        Managers.Sound.Play("BackgroundMusic/DeepForest");
+        //Managers.Sound.Play("BackgroundMusic/DeepForest");
         Managers.UI.ShowPopupUI<Fade_Effect_UI>("[Common]_Fade_Effect_UI");
 
         GameSystem gameSystem = GameObject.FindObjectOfType<GameSystem>();

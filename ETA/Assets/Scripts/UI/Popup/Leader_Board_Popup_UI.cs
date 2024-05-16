@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class Leader_Board_Popup_UI : UI_Popup
 {
@@ -36,8 +37,11 @@ public class Leader_Board_Popup_UI : UI_Popup
         Character_Image_4,
         Character_Image_5,
 
-        // 레벨 랭킹 캐릭터 My 이미지
-        My_Character_Image
+        // My 레벨 랭킹 캐릭터 이미지
+        My_Character_Image,
+
+        // My 랭킹 아이템 컨테이너
+        My_Ranking_Item_Container
     }
 
     enum Texts
@@ -45,40 +49,43 @@ public class Leader_Board_Popup_UI : UI_Popup
         // 랭킹 목록 제목 텍스트
         Character_Title_Text,
         Nickname_Title_Text,
-        Level_Title_Text,
+        Record_Title_Text,
 
-        // 랭킹 등수 My 텍스트
+        // 내 랭킹 타이틀 텍스트
+        My_Ranking_Title_Text,
+
+        // My 랭킹 등수 텍스트
         My_Ranking_Text,
 
-        // 클리어 시간 텍스트
-        Clear_Time_Text_1,
-        Clear_Time_Text_2,
-        Clear_Time_Text_3,
-        Clear_Time_Text_4,
-        Clear_Time_Text_5,
+        // 파티 이름 텍스트
+        Party_Name_Text_1,
+        Party_Name_Text_2,
+        Party_Name_Text_3,
+        Party_Name_Text_4,
+        Party_Name_Text_5,
 
-        // 클리어 시간 My 텍스트
-        My_Clear_Time_Text,
+        // My 파티 이름 텍스트
+        My_Party_Name_Text,
 
-        // 닉네임 / 파티 이름 텍스트
+        // 닉네임 / 파티원 닉네임 텍스트
         Nickname_Text_1,
         Nickname_Text_2,
         Nickname_Text_3,
         Nickname_Text_4,
         Nickname_Text_5,
 
-        // 닉네임 / 파티 이름 My 텍스트
+        // My 닉네임 / 파티원 닉네임 텍스트
         My_Nickname_Text,
 
-        // 레벨 / 파티 레벨 텍스트
-        Level_Text_1,
-        Level_Text_2,
-        Level_Text_3,
-        Level_Text_4,
-        Level_Text_5,
+        // 레벨 / 클리어 시간 텍스트
+        Record_Text_1,
+        Record_Text_2,
+        Record_Text_3,
+        Record_Text_4,
+        Record_Text_5,
 
-        // 레벨 / 파티 레벨 My 텍스트
-        My_Level_Text
+        // My 레벨 / 클리어 시간 텍스트
+        My_Record_Text
     }
 
     // UI 컴포넌트 바인딩 변수
@@ -87,18 +94,23 @@ public class Leader_Board_Popup_UI : UI_Popup
     private Image[] inactiveBackgrounds = new Image[4];
     private Image[] characterImages = new Image[5];
     private Image myCharacterImage;
+    private Image myRankingItemContainer;
     private TextMeshProUGUI[] titleTexts = new TextMeshProUGUI[3];
+    private TextMeshProUGUI myRankingTitleText;
     private TextMeshProUGUI myRankingText;
-    private TextMeshProUGUI[] clearTimeTexts = new TextMeshProUGUI[5];
-    private TextMeshProUGUI myClearTimeText;
+    private TextMeshProUGUI[] partyNameTexts = new TextMeshProUGUI[5];
+    private TextMeshProUGUI myPartyNameText;
     private TextMeshProUGUI[] nicknameTexts = new TextMeshProUGUI[5];
     private TextMeshProUGUI myNicknameText;
-    private TextMeshProUGUI[] levelTexts = new TextMeshProUGUI[5];
-    private TextMeshProUGUI myLevelText;
+    private TextMeshProUGUI[] recordTexts = new TextMeshProUGUI[5];
+    private TextMeshProUGUI myRecordText;
 
     // 선택된 랭킹 번호
     private int selectedRankingNumber = 0;
 
+    // UI가 호출되면 3개 던전 저장
+    private DungeonRankListResDto[] dungeonRankList = new DungeonRankListResDto[3];
+    private PlayerRankResDto playerRankList;
 
     // ------------------------------ UI 초기화 ------------------------------
     public override void Init()
@@ -132,22 +144,29 @@ public class Leader_Board_Popup_UI : UI_Popup
         for (int i = 0; i < characterImages.Length; i++)
         {
             characterImages[i] = GetImage((int)Images.Character_Image_1 + i);
-            clearTimeTexts[i] = GetText((int)Texts.Clear_Time_Text_1 + i);
+            partyNameTexts[i] = GetText((int)Texts.Party_Name_Text_1 + i);
             nicknameTexts[i] = GetText((int)Texts.Nickname_Text_1 + i);
-            levelTexts[i] = GetText((int)Texts.Level_Text_1 + i);
+            recordTexts[i] = GetText((int)Texts.Record_Text_1 + i);
         }
 
+        // My 랭킹 아이템 컨테이너 초기화
+        myRankingItemContainer = GetImage((int)Images.My_Ranking_Item_Container);
+
         // My 랭킹 아이템 초기화
+        myRankingTitleText = GetText((int)Texts.My_Ranking_Title_Text);
         myRankingText = GetText((int)Texts.My_Ranking_Text);
         myCharacterImage = GetImage((int)Images.My_Character_Image);
-        myClearTimeText = GetText((int)Texts.My_Clear_Time_Text);
+        myPartyNameText = GetText((int)Texts.My_Party_Name_Text);
         myNicknameText = GetText((int)Texts.My_Nickname_Text);
-        myLevelText = GetText((int)Texts.My_Level_Text);
+        myRecordText = GetText((int)Texts.My_Record_Text);
 
         // 취소하기 버튼 이벤트 등록
         cancelButton = GetButton((int)Buttons.Cancel_Button);
         AddUIEvent(cancelButton.gameObject, Cancel);
         AddUIKeyEvent(cancelButton.gameObject, () => Cancel(null), KeyCode.Escape);
+
+        Managers.Network.PlayerRankCall(5, SavePlayerRankList);
+        Managers.Network.DungeonRankCall("1", SaveFirstDungeonRankList);
 
         // 레벨 랭킹이 눌러진 상태로 시작
         ViewRanking(0, null);
@@ -155,6 +174,18 @@ public class Leader_Board_Popup_UI : UI_Popup
 
 
     // ------------------------------ 메서드 정의 ------------------------------
+
+    // 랭킹 초기화
+    private void initialize()
+    {
+        // 랭킹 아이템 초기화
+        for (int i = 0; i < partyNameTexts.Length; i++)
+        {
+            partyNameTexts[i].text = "";
+            nicknameTexts[i].text = "";
+            recordTexts[i].text = "";
+        }
+    }
 
     // 취소하기 메서드
     private void Cancel(PointerEventData data)
@@ -195,49 +226,63 @@ public class Leader_Board_Popup_UI : UI_Popup
         bool isLevelRanking = selectedRankingNumber == 0;
 
         // 랭킹 타이틀 수정
-        titleTexts[0].text = isLevelRanking ? "캐릭터" : "클리어 시간";
-        titleTexts[1].text = isLevelRanking ? "닉네임" : "파티 이름";
-        titleTexts[2].text = isLevelRanking ? "레벨" : "파티 레벨";
+        titleTexts[0].text = isLevelRanking ? "캐릭터" : "파티 이름";
+        titleTexts[1].text = isLevelRanking ? "닉네임" : "파티원";
+        titleTexts[2].text = isLevelRanking ? "레벨" : "클리어 시간";
 
         for (int i = 0; i < characterImages.Length; i++)
         {
-            // 캐릭터 이미지 및 클리어 시간 텍스트 활성화/비활성화
+            // 캐릭터 이미지 및 파티 이름 텍스트 활성화/비활성화
             characterImages[i].gameObject.SetActive(isLevelRanking);
-            clearTimeTexts[i].gameObject.SetActive(!isLevelRanking);
+            partyNameTexts[i].gameObject.SetActive(!isLevelRanking);
         }
 
-        // My 캐릭터 이미지 및 My 클리어 시간 텍스트 활성화/비활성화
+        // 타이틀 텍스트 변경
+        myRankingTitleText.text = isLevelRanking ? "내 랭킹" : "이 달의 우수 기사";
+
+        // My 랭킹 아이템 활성화/비활성화
+        myRankingItemContainer.gameObject.SetActive(isLevelRanking);
+
+        // My 캐릭터 이미지 및 My 파티 이름 텍스트 활성화/비활성화
         myCharacterImage.gameObject.SetActive(isLevelRanking);
-        myClearTimeText.gameObject.SetActive(!isLevelRanking);
+        myPartyNameText.gameObject.SetActive(!isLevelRanking);
     }
 
     // 레벨 랭킹 업데이트 메서드
     private void UpdateLevelRanking()
     {
-        // --------------- 레벨 랭킹 업데이트 ---------------
+        initialize();
 
+        // --------------- 레벨 랭킹 업데이트 ---------------
         for (int i = 0; i < characterImages.Length; i++)
         {
-            // @@@@@@@@ TODO: 해당 등수 캐릭터의 직업 코드를 가져오는 코드 필요 @@@@@@@@
-            string className = Managers.Player.GetClassCode() switch
+            // playerRankList와 rankingList가 null이 아닌지 확인
+            if (playerRankList != null && playerRankList.rankingList != null)
             {
-                "C001" => "Warrior",
-                "C002" => "Archer",
-                "C003" => "Mage",
-                _ => ""
-            };
+                var rankItem = playerRankList.rankingList[i];
 
-            characterImages[i].sprite = Resources.Load<Sprite>($"Sprites/Class Icon/{className}");
+                // 직업 사진 가져오기
+                if (rankItem != null && !string.IsNullOrEmpty(rankItem.className))
+                {
+                    string className = rankItem.className;
+                    characterImages[i].sprite = Resources.Load<Sprite>($"Sprites/Class Icon/{className}");
+                }
 
-            // @@@@@@@@ TODO: 해당 등수 캐릭터의 닉네임을 가져오는 코드 필요 @@@@@@@@
-            string nickName = "응애";
-            nicknameTexts[i].text = nickName;
+                // 닉네임 가져오기
+                if (rankItem != null && !string.IsNullOrEmpty(rankItem.nickname))
+                {
+                    string nickName = rankItem.nickname;
+                    nicknameTexts[i].text = nickName;
+                }
 
-            // @@@@@@@@ TODO: 해당 등수 캐릭터의 레벨을 가져오는 코드 필요 @@@@@@@@
-            int level = 99;
-            levelTexts[i].text = level.ToString();
+                // 등수 가져오기
+                if (rankItem != null)
+                {
+                    int level = rankItem.playerLevel;
+                    recordTexts[i].text = level.ToString();
+                }
+            }
         }
-
 
         // --------------- My 레벨 랭킹 업데이트 ---------------
 
@@ -267,45 +312,77 @@ public class Leader_Board_Popup_UI : UI_Popup
         // My 랭킹 업데이트
         myCharacterImage.sprite = Resources.Load<Sprite>($"Sprites/Class Icon/{highestLevelClassName}");
         myNicknameText.text = Managers.Player.GetNickName();
-        myLevelText.text = highestLevel.ToString();
+        myRecordText.text = highestLevel.ToString();
 
-        // @@@@@@@@ TODO: 레벨 랭킹 My 등수를 가져오는 코드 필요 @@@@@@@@
-        myRankingText.text = $"{99}st";
+        // My 랭킹 등수
+        myRankingText.text = "-";
     }
 
     // 던전 랭킹 업데이트 메서드
     private void UpdateDungeonRanking()
     {
+        initialize();
+
         // --------------- 던전 랭킹 업데이트 ---------------
 
-        for (int i = 0; i < clearTimeTexts.Length; i++)
+        int rankSize = recordTexts.Length;
+        if (recordTexts.Length > dungeonRankList[selectedRankingNumber-1].rankingList.Length)
         {
-            // @@@@@@@@ TODO: 해당 등수 클리어 시간을 가져오는 코드 필요 @@@@@@@@
-            string clearTime = "11:11:11";
-            clearTimeTexts[i].text = clearTime;
+            rankSize = dungeonRankList[selectedRankingNumber-1].rankingList.Length;
+        }
 
-            // @@@@@@@@ TODO: 해당 등수 파티 이름을 가져오는 코드 필요 @@@@@@@@
-            string partyName = "우리의 파티";
-            nicknameTexts[i].text = partyName;
+        for (int i = 0; i < dungeonRankList[selectedRankingNumber - 1].rankingList.Length; i++)
+        {
+            DungeonResDto curRank = dungeonRankList[selectedRankingNumber-1].rankingList[i];
+            
+            // 클리어 시간
+            float minutes = curRank.clearTime / 60.0f;
+            float seconds = curRank.clearTime % 60.0f;
+            string timeText = string.Format("{0:00}:{1:00}", Mathf.RoundToInt(minutes), Mathf.RoundToInt(seconds));
+            string clearTime = timeText;
+            recordTexts[i].text = clearTime;
 
-            // @@@@@@@@ TODO: 해당 등수 파티 레벨을 가져오는 코드 필요 @@@@@@@@
-            int partyLevel = 55;
-            levelTexts[i].text = partyLevel.ToString();
+            // 파티 이름
+            string partyName = curRank.partyTitle;
+            partyNameTexts[i].text = partyName;
+
+            // 파티원 닉네임 목록
+            string partyList = "";
+            
+            for(int j = 0; j< curRank.playerList.Length; j++)
+            {
+                partyList += curRank.playerList[j] + ", ";
+            }
+            nicknameTexts[i].text = partyList;
         }
 
 
         // --------------- My 레벨 랭킹 업데이트 ---------------
 
-        // @@@@@@@@ TODO: 해당 등수 클리어 시간을 가져오는 코드 필요 @@@@@@@@
-        myClearTimeText.text = "00:00:30";
+        myPartyNameText.text = "";
+        myNicknameText.text = "";
+        myRecordText.text = "";
+        myRankingText.text = "";
+    }
 
-        // @@@@@@@@ TODO: 해당 등수 파티 이름을 가져오는 코드 필요 @@@@@@@@
-        myNicknameText.text = "내 파티라고";
+    public void SavePlayerRankList(PlayerRankResDto dto)
+    {
+        playerRankList = dto;
+        UpdateLevelRanking();
+    }
 
-        // @@@@@@@@ TODO: 해당 등수 파티 레벨을 가져오는 코드 필요 @@@@@@@@
-        myLevelText.text = "321";
-
-        // @@@@@@@@ TODO: 내 등수를 가져오는 코드 필요 @@@@@@@@
-        myRankingText.text = $"{selectedRankingNumber}st";
+    public void SaveFirstDungeonRankList(DungeonRankListResDto dto)
+    {
+        dungeonRankList[0] = dto;
+        Managers.Network.DungeonRankCall("2", SaveSecondDungeonRankList);
+    }
+    public void SaveSecondDungeonRankList(DungeonRankListResDto dto)
+    {
+        dungeonRankList[1] = dto;
+        Managers.Network.DungeonRankCall("3", SaveThirdDungeonRankList);
+    }
+    public void SaveThirdDungeonRankList(DungeonRankListResDto dto)
+    {
+        dungeonRankList[2] = dto;
     }
 }

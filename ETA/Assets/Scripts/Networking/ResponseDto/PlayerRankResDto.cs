@@ -7,6 +7,7 @@ public class PlayerRankResDto
 {
     public string message;
     public PlayerRank[] rankingList;
+    public int personalRanking;
 }
 
 [System.Serializable]

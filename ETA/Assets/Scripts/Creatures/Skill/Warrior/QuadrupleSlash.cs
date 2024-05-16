@@ -8,8 +8,8 @@ public class QuadrupleSlash : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(3);
-        Damage = 30;
+        SetCoolDownTime(10);
+        Damage = 50;
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
@@ -80,7 +80,7 @@ public class QuadrupleSlash : Skill
             yield return new WaitForSeconds(0.20f);
             Managers.Resource.Destroy(hitbox.gameObject);
             hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-            hitbox.SetUp(transform, Damage);
+            hitbox.SetUp(transform, 20);
             hitbox.transform.position = _skillSystem.TargetPosition;
             Managers.Sound.Play("Skill/TargetSkill");
         }

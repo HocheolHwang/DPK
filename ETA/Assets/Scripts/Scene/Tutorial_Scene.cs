@@ -16,7 +16,7 @@ public class Tutorial_Scene : BaseScene
         gameSystem.SceneLoaded();
 
         Managers.UI.ShowPopupUI<Dungeon_Popup_UI>("[Dungeon]_Dungeon_Popup_UI");
-        Managers.Sound.Play("BackgroundMusic/Tutorial");
+        Managers.Sound.Play("BackgroundMusic/Tutorial", Define.Sound.BGM);
 
     }
 

@@ -50,10 +50,10 @@ public class MeleeDetector : MonoBehaviourPunCallbacks, IDetector
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
-            //if (GetComponent<PhotonView>().IsMine == false)
-            //{
-            //    continue;
-            //}
+            if (GetComponent<PhotonView>().IsMine == false)
+            {
+                continue;
+            }
 
             float closeDist = Mathf.Infinity;
             Collider[] enemies = Physics.OverlapSphere(transform.position, DetectRange, TargetLayerMask);
@@ -71,11 +71,11 @@ public class MeleeDetector : MonoBehaviourPunCallbacks, IDetector
                     {
                         closeDist = distToEnemy;
                         Target = enemy.transform;
-                        //viewId = Target.GetComponent<PhotonView>().ViewID;
+                        viewId = Target.GetComponent<PhotonView>().ViewID;
 
                     }
                 }
-                //if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
+                if (viewId != -1) gameObject.GetComponent<PhotonView>().RPC("RPC_UpdateTarget", RpcTarget.Others, viewId);
             }
         }
     }

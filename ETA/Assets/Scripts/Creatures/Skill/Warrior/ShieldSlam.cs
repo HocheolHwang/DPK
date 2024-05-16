@@ -8,8 +8,8 @@ public class ShieldSlam : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(2);
-        Damage = 5;
+        SetCoolDownTime(4);
+        Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);
@@ -27,7 +27,7 @@ public class ShieldSlam : Skill
         hitbox.transform.localScale = skillRange;
 
         KnockBackBox knockBackBox = Managers.Resource.Instantiate("Skill/KnockBackBoxRect").GetComponent<KnockBackBox>();
-        knockBackBox.SetUp(transform, 12, 0.5f);
+        knockBackBox.SetUp(transform, 13, 0.3f);
         //knockBackBox.transform.parent = hitbox.transform;
         knockBackBox.transform.position = gameObject.transform.position + transform.forward * 2;
         knockBackBox.transform.localScale = skillRange;

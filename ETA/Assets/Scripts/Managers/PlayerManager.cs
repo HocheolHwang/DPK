@@ -85,7 +85,7 @@ public class PlayerManager
         this.first = first;
     }
 
-    int CalculateExpRequirement(int level)
+    long CalculateExpRequirement(int level)
     {
         if (level >= 0 && level <= 5)
         {
@@ -109,7 +109,7 @@ public class PlayerManager
     {
         this.curExp += exp;
 
-        int needExp = CalculateExpRequirement(playerLevel);
+        long needExp = CalculateExpRequirement(playerLevel);
         //int needExp = 100 *(playerLevel/5);
         //(int)(100 * Math.Pow(5, playerLevel));
         Debug.Log("Cur Level : " + playerLevel);
@@ -215,7 +215,7 @@ public class PlayerManager
     {
         return curExp;
     }
-    public int GetNeedExp()
+    public long GetNeedExp()
     {
         return CalculateExpRequirement(playerLevel); ;
     }
