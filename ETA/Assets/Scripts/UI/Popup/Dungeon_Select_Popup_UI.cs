@@ -24,6 +24,7 @@ public class Dungeon_Select_Popup_UI : UI_Popup
 
     enum Texts
     {
+        Recommended_Level_Text,
         Selected_Dungeon_Text,
         Selected_Dungeon_Detail_Text
     }
@@ -46,6 +47,7 @@ public class Dungeon_Select_Popup_UI : UI_Popup
     private Button selectSeaOfAbyssButton;
     private Button cancelButton;
     private Button dungeonSelectButton;
+    private TextMeshProUGUI recommendedLevelText;
     private TextMeshProUGUI selectedDungeonText;
     private TextMeshProUGUI selectedDungeonDetailText;
     private Image[] dungeonUnselecteds = new Image[3];
@@ -112,6 +114,7 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         AddUIKeyEvent(dungeonSelectButton.gameObject, () => DungeonSelect(null), KeyCode.Return);
 
         // 선택된 던전
+        recommendedLevelText = GetText((int)Texts.Recommended_Level_Text);
         selectedDungeonText = GetText((int)Texts.Selected_Dungeon_Text);
         selectedDungeonDetailText = GetText((int)Texts.Selected_Dungeon_Detail_Text);
         selectedDungeonBackground = GetImage((int)Images.Selected_Dungeon_Background);
@@ -251,21 +254,32 @@ public class Dungeon_Select_Popup_UI : UI_Popup
         selectedDungeonBackground.sprite = Resources.Load<Sprite>($"Sprites/Dungeon Select/{dungeonName} Selected");
 
         // 선택된 던전 번호에 따라 다른 텍스트와 상세 설명을 설정
-        (selectedDungeonText.text, selectedDungeonDetailText.text) = selectedDungeonNumber switch
+        (recommendedLevelText.text, selectedDungeonText.text, selectedDungeonDetailText.text) = selectedDungeonNumber switch
         {
-            1 => ("별의 조각 평원",
+            1 => ("권장 레벨: 1~5",
+                  "별의 조각 평원",
                   "별이 쏟아진 평원을 탐험하세요. 빛나는 별의 조각들이 고대의 힘을 간직하고 있습니다.\n" +
                   "하지만 조심하세요, 평화롭게 보이는 이 평원에는 예측할 수 없는 위험이 도사리고 있습니다.\n" +
                   "용감한 모험가들만이 진정한 별의 비밀을 밝혀낼 수 있을 것입니다."),
-            2 => ("잊혀진 신전",
+            2 => ("권장 레벨: 6~10",
+                  "잊혀진 신전",
                   "숲속 깊은 곳에 숨겨진 잊혀진 신전을 탐험하세요. 고대 문명의 유산이 잠들어 있습니다.\n" +
                   "수많은 함정과 수수께끼가 모험가를 기다리고 있으며, 신전을 지키는 수호자들도 만만치 않습니다.\n" +
                   "잊혀진 신전의 비밀을 풀고, 그 속에 숨겨진 보물을 찾아내세요."),
-            3 => ("심연의 바다",
+            3 => ("권장 레벨: 11~",
+                  "심연의 바다",
                   "어둠이 내려앉은 심연의 바다로 떠나세요. 이곳은 상상을 초월하는 생명체들의 서식지입니다.\n" +
-                  "심연의 바다는 끝없는 보물과 함께, 끝없는 위험도 감추고 있습니다. 빛이 닿지 않는 곳에서,\n" +
-                  "당신의 용기와 지혜가 시험될 것입니다. 심연의 비밀을 밝혀내세요."),
-            _ => ("알 수 없는 던전입니다.", "알 수 없는 던전입니다. 선택한 던전 번호가 올바르지 않습니다.")
+                  "심연의 바다는 끝없는 보물과 함께, 끝없는 위험도 감추고 있습니다.\n" +
+                  "빛이 닿지 않는 곳에서, 당신의 용기와 지혜가 시험될 것입니다. 심연의 비밀을 밝혀내세요."),
+            _ => ("권장 레벨: ?", "알 수 없는 던전입니다.", "알 수 없는 던전입니다. 선택한 던전 번호가 올바르지 않습니다.")
+        };
+
+        recommendedLevelText.color = selectedDungeonNumber switch
+        {
+            1 => new Color(0.7f, 0.9f, 1.0f),
+            2 => new Color(0.8f, 0.7f, 0.5f),
+            3 => new Color(0.9f, 0.1f, 0.1f),
+            _ => Color.clear
         };
     }
 }
