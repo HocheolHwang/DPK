@@ -378,7 +378,6 @@ namespace IprisStateItem
     {
         float animSpeed;
         float tempStopDist;
-        float rushTime;
 
         public PatternTwoState(IprisController controller) : base(controller)
         {
@@ -395,15 +394,11 @@ namespace IprisStateItem
             tempStopDist = _agent.stoppingDistance;
             _agent.stoppingDistance = 0;
 
-
-            _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
-
+            animSpeed = CalcSpeedFromDestTime(_controller.DestPos);
+            _agent.speed = CalcSpeedFromDestTime(_controller.DestPos);
 
             InitTime(_animData.PatternTwoAnim.length);
-            rushTime = CalcTimeToDest(_controller.DestPos);
-            animSpeed = _threadHold / rushTime;
-
-            _animator.SetFloat("PatternTwoSpeed", animSpeed);
+            _animator.SetFloat("PatternTwoSpeed", _threadHold / PT_time);
             _animator.CrossFade(_animData.PatternTwoParamHash, 0.1f);
 
             StartCast((int)EIprisPattern.PatternTwo);
@@ -418,12 +413,12 @@ namespace IprisStateItem
             {
                 _agent.velocity = Vector3.zero;
             }
-            if (IsStayForSeconds(rushTime) && _controller.WindMillCnt >= _controller.ThreadHoldWindMill)
+            if (IsStayForSeconds(PT_time) && _controller.WindMillCnt >= _controller.ThreadHoldWindMill)
             {
                 //Debug.Log("PATTERN_TWO TO WIND_MILL");
                 _controller.ChangeState(_controller.PATTERN_TWO_WINDMILL_STATE);
             }
-            else if (IsStayForSeconds(rushTime))
+            else if (IsStayForSeconds(PT_time))
             {
                 //Debug.Log("PATTERN_TWO TO BACK_POSITION");
                 _controller.ChangeState(_controller.BACK_POSITION_STATE); 

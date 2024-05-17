@@ -354,7 +354,6 @@ namespace MummyManStateItem
     {
         Vector3 destination;
         float tempStopDist;
-        float rushTime;
 
         public RushState(MummyManController controller) : base(controller)
         {

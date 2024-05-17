@@ -18,6 +18,8 @@ enum EIprisPattern
 
 public class IprisState : State
 {
+    protected const float PT_time = 3.0f;       // Pattern Two 이동시간
+
     protected IprisController _controller;
     protected IprisAnimationData _animData;
 
@@ -28,30 +30,10 @@ public class IprisState : State
     }
 
     // -------------------------- PATTERN_TWO FUNCTIONS -----------------------------------
-    public float CalcTimeToDest(Vector3 Destination)
+    public float CalcSpeedFromDestTime(Vector3 Destination)
     {
-        float moveSpeed = _agent.speed;
-        if (moveSpeed <= 0.1f)
-        {
-            Debug.Log($"{_controller.gameObject.name}의 속도({moveSpeed})가 0.1f보다 낮습니다.");
-            return -1;
-        }
-        else if (moveSpeed > 8.0f)
-        {
-            moveSpeed = 8.0f;
-        }
-
         float remainDist = Vector3.Distance(Destination, _controller.transform.position);
-        if (remainDist < 2.0f)
-        {
-            remainDist = 2.0f;
-        }
 
-        float timeToDest = remainDist / moveSpeed;
-        if (timeToDest < 3.0f)
-        {
-            timeToDest = 3.0f;
-        }
-        return timeToDest;
+        return remainDist / PT_time;
     }
 }
