@@ -804,8 +804,10 @@ public class Dungeon_Popup_UI : UI_Popup
     // 보스 처치 시 실행되는 메서드
     private void HandleBossDestroyed()
     {
-        // 보스 클리어
+        // 보스 상태창 비활성화
+        bossStatus.SetActive(false);
 
+        // 보스 클리어
         Managers.Photon.SendDungeonEnd(timeText.text, true);
 
         // 던전 결과 Popup UI를 띄움
