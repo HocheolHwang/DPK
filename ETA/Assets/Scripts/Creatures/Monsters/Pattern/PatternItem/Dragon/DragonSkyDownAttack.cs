@@ -20,6 +20,7 @@ public class DragonSkyDownAttack : Pattern
         base.Init();
 
         _createTime = 0.5f;
+        _patternDmg = 150;
         _animData = GetComponent<DragonAnimationData>();
     }
 

@@ -13,8 +13,8 @@ public class DragonFlyFireball : Pattern
     [Header("hit box options")]
     [SerializeField] float _fireRadius = 12.0f;
     [SerializeField] float _fieldRadius = 8.0f;
-    [SerializeField] int _exploDMG = 100;
-    [SerializeField] int _fieldDMG = 10;
+    [SerializeField] int _exploDMG = 250;
+    [SerializeField] int _fieldDMG = 25;
 
     public override void Init()
     {
