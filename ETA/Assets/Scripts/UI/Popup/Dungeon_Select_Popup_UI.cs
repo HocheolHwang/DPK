@@ -273,5 +273,13 @@ public class Dungeon_Select_Popup_UI : UI_Popup
                   "빛이 닿지 않는 곳에서, 당신의 용기와 지혜가 시험될 것입니다. 심연의 비밀을 밝혀내세요."),
             _ => ("권장 레벨: ?", "알 수 없는 던전입니다.", "알 수 없는 던전입니다. 선택한 던전 번호가 올바르지 않습니다.")
         };
+
+        recommendedLevelText.color = selectedDungeonNumber switch
+        {
+            1 => new Color(0.7f, 0.9f, 1.0f),
+            2 => new Color(0.8f, 0.7f, 0.5f),
+            3 => new Color(0.9f, 0.1f, 0.1f),
+            _ => Color.clear
+        };
     }
 }
