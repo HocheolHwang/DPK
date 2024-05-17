@@ -21,7 +21,7 @@ public class Heal : Skill
 
         yield return new WaitForSeconds(0.2f);
         _animator.CrossFade("CASTING_WAIT", 0.1f);
-        healCoroutine = StartCoroutine(HealCoroutine());
+        Managers.Coroutine.Run(HealCoroutine());
 
         yield return new WaitForSeconds(0.5f);
         _animator.CrossFade("CASTING_OUT", 0.1f);
