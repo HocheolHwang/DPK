@@ -8,7 +8,7 @@ public class ShieldSlam : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(4);
+        SetCoolDownTime(5);
         Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Immediately;

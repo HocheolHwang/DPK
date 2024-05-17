@@ -9,7 +9,7 @@ public class ThrowingShield : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(2);
+        SetCoolDownTime(5);
         Damage = 50;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/TelekineticSwords.png");
