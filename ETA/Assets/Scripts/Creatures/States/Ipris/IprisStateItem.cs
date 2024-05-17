@@ -394,13 +394,14 @@ namespace IprisStateItem
             _controller.DestPos = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
             tempStopDist = _agent.stoppingDistance;
             _agent.stoppingDistance = 0;
+
+
             _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
 
 
             InitTime(_animData.PatternTwoAnim.length);
             rushTime = CalcTimeToDest(_controller.DestPos);
-            animSpeed = _threadHold / rushTime - 0.05f;
-            //Debug.Log($"rushTime: {rushTime} | threadHold: {_threadHold} | animSpeed: {animSpeed}");
+            animSpeed = _threadHold / rushTime;
 
             _animator.SetFloat("PatternTwoSpeed", animSpeed);
             _animator.CrossFade(_animData.PatternTwoParamHash, 0.1f);

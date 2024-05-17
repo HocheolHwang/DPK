@@ -404,6 +404,7 @@ namespace KnightGStateItem
         }
         public override void Exit()
         {
+            _controller.Stat.Defense = 0;
         }
     }
     #endregion
