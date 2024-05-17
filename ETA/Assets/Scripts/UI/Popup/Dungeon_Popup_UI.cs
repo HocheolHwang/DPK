@@ -526,6 +526,7 @@ public class Dungeon_Popup_UI : UI_Popup
         KnightGController.OnBossDestroyed -= HandleBossDestroyed;
         MummyManController.OnMummyDestroyed -= HandleBossDestroyed;
         PlayerController.OnPlayerDestroyed -= HandlePlayerDestroyed;
+        //DragonController.OnBossDestroyed -= HandlePlayerDestroyed;
 
         if (isTutorialScene)
         {
@@ -684,6 +685,7 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 파괴 이벤트 핸들러 등록
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
         MummyManController.OnMummyDestroyed += HandleBossDestroyed;
+        //DragonController.OnBossDestroyed += HandlePlayerDestroyed;
     }
 
     // 파티원 정보 업데이트 메서드

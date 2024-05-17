@@ -83,6 +83,8 @@ public class DragonController : BaseMonsterController
     [SerializeField] public ParticleSystem BreathReadyEffect;
     [SerializeField] public ParticleSystem BreathEffect;
 
+    public static event Action OnBossDestroyed;
+
     private DragonAnimationData _animData;
     public DragonAnimationData AnimData { get => _animData; }
 
@@ -186,7 +188,13 @@ public class DragonController : BaseMonsterController
             }
         }
     }
+    public override void DestroyEvent()
+    {
+        // 보스몬스터 죽었을때 이벤트 발생
+        OnBossDestroyed?.Invoke();
 
+        base.DestroyEvent();
+    }
 
     /// 
     /// @@@@@@@@@@@@@@@@@
