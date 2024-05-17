@@ -193,7 +193,7 @@ public class Character_Select : MonoBehaviour
     // 공격력 계산
     private int CalculateAP(int level)
     {
-        return 20 + level * 5;
+        return 25 + level * 5;
     }
 
     // 마우스가 자세히 보기 버튼 위로 올라갔을 때 호출될 메소드
