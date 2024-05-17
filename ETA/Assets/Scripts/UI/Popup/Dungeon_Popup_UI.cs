@@ -131,8 +131,6 @@ public class Dungeon_Popup_UI : UI_Popup
         Member_Nickname_Text_3,
 
         // 플레이어 상태
-        Player_Tier_Text,
-        Player_Nickname_Text,
         Player_HP_Text,
         Player_Level_Text,
 
@@ -196,8 +194,6 @@ public class Dungeon_Popup_UI : UI_Popup
     public TextMeshProUGUI timeText;
     private TextMeshProUGUI[] memberLevelTexts = new TextMeshProUGUI[3];
     private TextMeshProUGUI[] memberNicknameTexts = new TextMeshProUGUI[3];
-    private TextMeshProUGUI playerTierText;
-    private TextMeshProUGUI playerNicknameText;
     private TextMeshProUGUI playerHPText;
     private TextMeshProUGUI playerLevelText;
     private TextMeshProUGUI bossLevelText;
@@ -442,8 +438,6 @@ public class Dungeon_Popup_UI : UI_Popup
         // 플레이어 정보 초기화
         playerHPBar = GetObject((int)GameObjects.Player_HP_Bar);
         playerShieldBar = GetObject((int)GameObjects.Player_Shield_Bar);
-        playerTierText = GetText((int)Texts.Player_Tier_Text);
-        playerNicknameText = GetText((int)Texts.Player_Nickname_Text);
         playerHPText = GetText((int)Texts.Player_HP_Text);
         playerLevelText = GetText((int)Texts.Player_Level_Text);
         playerEXPSlider = GetSlider((int)Sliders.Player_EXP_Slider);
@@ -758,8 +752,6 @@ public class Dungeon_Popup_UI : UI_Popup
     private void UpdatePlayerInfo()
     {
         // 플레이어 등급, 닉네임 및 레벨 설정
-        playerTierText.text = isTutorialScene ? "던전처리기사 수험생" : "견습 던전처리기사";
-        playerNicknameText.text = Managers.Player.GetNickName();
         playerLevelText.text = $"Lv. {Managers.Player.GetLevel()}";
 
         // 플레이어 경험치 설정
