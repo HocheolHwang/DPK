@@ -88,6 +88,10 @@ namespace DragonStateItem
             _agent.velocity = Vector3.zero;
             LookAtEnemy();
             _animator.CrossFade(_animData.IdleBattleParamHash, 0.25f);
+
+            _controller.HitCounterCnt = 0;
+            _controller.IsMeetConditionDown = false;
+            _controller.IsMeetConditionFire = false;
         }
 
         public override void Execute()

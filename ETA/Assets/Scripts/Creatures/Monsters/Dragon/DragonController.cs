@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -182,12 +183,6 @@ public class DragonController : BaseMonsterController
             {
                 _isMeetConditionFire = true;
             }
-        }
-        else
-        {
-            _hitCounterCnt = 0;
-            _isMeetConditionDown = false;
-            _isMeetConditionFire = false;
         }
     }
 }
