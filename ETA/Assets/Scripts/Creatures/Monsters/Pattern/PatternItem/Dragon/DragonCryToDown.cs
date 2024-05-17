@@ -60,6 +60,11 @@ public class DragonCryToDown : Pattern
             {
                 Managers.Effect.Stop(ps);
                 Managers.Sound.Play("Sounds/Monster/CounterEnable_SND", Define.Sound.Effect);
+
+                ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 0, transform);
+                ps.transform.position = Pos;
+                ps.transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
+
                 yield break;
             }
             timer += Time.deltaTime;
