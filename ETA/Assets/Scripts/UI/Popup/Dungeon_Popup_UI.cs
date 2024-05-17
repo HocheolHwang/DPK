@@ -811,8 +811,8 @@ public class Dungeon_Popup_UI : UI_Popup
         bossScriptText.text = text;
         bossScriptText.color = textColor;
 
-        // 5초 동안 대기
-        yield return new WaitForSeconds(5);
+        // 4초 동안 대기
+        yield return new WaitForSeconds(4);
 
         // 대사 숨기기
         bossScriptContainer.SetActive(false);
