@@ -111,8 +111,10 @@ public class Define
         // ------------------------ Common ------------------------------
         CounterEnable,
         CounterEnable_Red,
+        CounterEnable_Green,
         CounteredEffect_Blue,
         CounteredEffect_Red,
+        CounteredEffect_Green,
         Groggy,
         // ------------------------ Common  ------------------------------
         EnergyNovaBlue,
@@ -249,6 +251,7 @@ public class Define
         Dragon_Fireball,
         Dragon_FireballExplo,
         Dragon_FireballField,
+        Dragon_Shield,
         // ------------------------ Dragon ------------------------------
         MaxCount
     }
