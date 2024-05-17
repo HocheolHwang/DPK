@@ -790,7 +790,14 @@ public class Dungeon_Popup_UI : UI_Popup
 
             // 보스 상태창을 띄움
             bossStatus.SetActive(true);
-            bossNameText.text = bossStat.gameObject.name;
+            bossNameText.text = selectedDungeonNumber switch
+            {
+                0 => "숲의 요정, 플리아드",
+                1 => "천체의 기사, 나이트-G",
+                2 => "무덤의 지배자, 톰바크",
+                3 => "심해의 수호자, 이프리스",
+                _ => "알 수 없는 보스",
+            };
         }
     }
 
