@@ -693,6 +693,7 @@ GameObject:
   - component: {fileID: 6242981767869721767}
   - component: {fileID: -3418264213985894164}
   - component: {fileID: -5002763968101091226}
+  - component: {fileID: 4999250710299480867}
   m_Layer: 7
   m_Name: Ipris
   m_TagString: Monster
@@ -963,6 +964,18 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &4999250710299480867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417164047586525017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f251232eea01f0942a2b1542720c0528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3730044426861352560
 GameObject:
   m_ObjectHideFlags: 0

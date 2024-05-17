@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,7 +6,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using PlayerStates;
-using System;
 using Photon.Pun;
 using WebSocketSharp;
 using System.Linq;
@@ -30,10 +30,12 @@ public class Dungeon_Popup_UI : UI_Popup
         StarShardPlain_Icon,
         ForgottenTemple_Icon,
         SeaOfAbyss_Icon,
-        
 
         // 보스 상태
         Boss_Status,
+
+        // 보스 대사
+        Boss_Script_Container,
 
         // 플레이어 상태
         Player_HP_Bar,
@@ -138,6 +140,9 @@ public class Dungeon_Popup_UI : UI_Popup
         Boss_Name_Text,
         Boss_HP_Text,
 
+        // 보스 대사
+        Boss_Script_Text,
+
         // 스킬 쿨타임
         Skill_1_Cooldown_Text,
         Skill_2_Cooldown_Text,
@@ -166,6 +171,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private Button openMenuButton;
     private GameObject[] dungeonIcons = new GameObject[4];
     private GameObject bossStatus;
+    private GameObject bossScriptContainer;
     private GameObject playerHPBar;
     private GameObject playerShieldBar;
     private GameObject[] memberHPBars = new GameObject[3];
@@ -189,6 +195,7 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI bossLevelText;
     private TextMeshProUGUI bossNameText;
     private TextMeshProUGUI bossHPText;
+    private TextMeshProUGUI bossScriptText;
     private TextMeshProUGUI[] skillCooldownTexts = new TextMeshProUGUI[8];
     private Slider dungeonProgressBar;
     private Slider bossHPSlider;
@@ -323,6 +330,12 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 상태창 초기화 및 비활성화
         bossStatus = GetObject((int)GameObjects.Boss_Status);
         bossStatus.SetActive(false);
+
+        // 보스 대사 초기화
+        bossScriptText = GetText((int)Texts.Boss_Script_Text);
+        bossScriptContainer = GetObject((int)GameObjects.Boss_Script_Container);
+        bossScriptContainer.SetActive(false);
+
 
         // 보스 정보 초기화
         bossLevelText = GetText((int)Texts.Boss_Level_Text);
@@ -662,10 +675,10 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 레벨 텍스트 설정
         bossLevelText.text = selectedDungeonNumber switch
         {
-            1 => "Lv. 5",
-            2 => "Lv. 12",
+            1 => "Lv. 8",
+            2 => "Lv. 14",
             3 => "Lv. 20",
-            _ => "Lv. 2"
+            _ => "Lv. 3"
         };
 
         // 보스 파괴 이벤트 핸들러 등록
@@ -762,6 +775,36 @@ public class Dungeon_Popup_UI : UI_Popup
         if (bossStatus.activeSelf == false) return;
         bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
         bossHPSlider.value = (float)bossStat.Hp / bossStat.MaxHp;
+
+        // 이프리스 체력 10% 남았을 시
+        if (selectedDungeonNumber == 3 && bossHPSlider.value <= 0.10f)
+        {
+            // 보스 상태 창 비활성화
+            bossStatus.SetActive(false);
+
+            // 이프리스 대사 활성화
+            ShowAndHideBossDialogue("나는 이프리스. 너희에게, 진정한 파멸을 보여주리라!", Color.red);
+        }
+    }
+
+    // 보스 대사를 표시하고 일정 시간 후에 다시 숨기는 메서드
+    public void ShowAndHideBossDialogue(string text, Color textColor)
+    {
+        StartCoroutine(ShowBossDialogueCoroutine(text, textColor));
+    }
+
+    private IEnumerator ShowBossDialogueCoroutine(string text, Color textColor)
+    {
+        // 대사와 색상 설정
+        bossScriptContainer.SetActive(true);
+        bossScriptText.text = text;
+        bossScriptText.color = textColor;
+
+        // 5초 동안 대기
+        yield return new WaitForSeconds(5);
+
+        // 대사 숨기기
+        bossScriptContainer.SetActive(false);
     }
 
     // 던전 진행 슬라이더 업데이트 메서드
@@ -798,6 +841,51 @@ public class Dungeon_Popup_UI : UI_Popup
                 3 => "심해의 수호자, 이프리스",
                 _ => "알 수 없는 보스",
             };
+
+            // 보스 등장 대사 활성화
+            string[] bossDialogues = selectedDungeonNumber switch
+            {
+                0 => new string[]
+                {
+                    "숲의 왕, 플리아드가 너희의 도전을 기다렸다. 진정한 자연의 힘을 각오하라!",
+                    "자연의 아름다움에 숨은 힘, 그것은 바로 나, 플리아드. 너희의 용기를 검증하겠다.",
+                    "이 숲의 규칙을 바꾸려는 건가? 플리아드가 너희를 심판할 것이다!"
+                },
+                1 => new string[]
+                {
+                    "별들이 나의 길잡이, 나이트-G. 너희의 운명은 별빛 아래 결정될 것이다!",
+                    "별들의 광채 속에서, 나이트-G가 천체의 힘을 빌어 나타났다.",
+                    "너희에게 별의 축복이 함께하기를, 그것이 너희에게 필요할 테니."
+                },
+                2 => new string[]
+                {
+                    "으하하하하! 내 앞에서 살아남을 수 있을까?",
+                    "죽음의 그림자, 톰바크가 너희를 기다린다!",
+                    "어둠 속에서 깨어난 톰바크, 너희를 파멸로 이끌 것이다!"
+                },
+                3 => new string[]
+                {
+                    "심연의 파도가 나를 부른다, 심해의 수호자 이프리스. 여기가 너희의 끝이다!",
+                    "해저의 어둠 속에서, 나는 너희를 삼킬 것이다!",
+                    "심해의 분노를 맛보아라, 이프리스가 너희를 멸망으로 이끌 것이다!"
+                },
+                _ => new string[] { "" }
+            };
+
+
+            System.Random random = new System.Random();
+            string selectedDialogue = bossDialogues[random.Next(bossDialogues.Length)];
+
+            Color bossColor = selectedDungeonNumber switch
+            {
+                0 => new Color(1.0f, 0.9f, 0.5f), // 연한 노랑
+                1 => new Color(0.7f, 0.9f, 1.0f), // 연한 하늘색
+                2 => new Color(0.8f, 0.7f, 0.5f), // 연한 갈색
+                3 => new Color(0.9f, 0.1f, 0.1f), // 진한 빨강
+                _ => Color.white,
+            };
+
+            ShowAndHideBossDialogue(selectedDialogue, bossColor);
         }
     }
 
