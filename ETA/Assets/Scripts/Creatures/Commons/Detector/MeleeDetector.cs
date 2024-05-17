@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
 
 /// <summary>
@@ -83,7 +84,10 @@ public class MeleeDetector : MonoBehaviourPunCallbacks, IDetector
     public bool IsArriveToTarget()
     {
         if (_target == null) return false;
-        return Vector3.Distance(_target.position, transform.position) <= _attackRange;
+        float radius = _target.GetComponent<NavMeshAgent>().radius;
+        Debug.Log(radius);
+        Debug.Log(Vector3.Distance(_target.position, transform.position));
+        return Vector3.Distance(_target.position, transform.position) <= _attackRange + radius;
     }
 
     public bool IsArriveToTarget(Transform target, float attackRange)
@@ -91,7 +95,8 @@ public class MeleeDetector : MonoBehaviourPunCallbacks, IDetector
         _target = target;
         _attackRange = attackRange;
         if (_target == null) return false;
-        return Vector3.Distance(_target.position, transform.position) <= _attackRange;
+        float radius = _target.GetComponent<NavMeshAgent>().radius;
+        return Vector3.Distance(_target.position, transform.position) <= _attackRange + radius;
     }
 
     [PunRPC]

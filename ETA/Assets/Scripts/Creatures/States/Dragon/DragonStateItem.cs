@@ -15,12 +15,14 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToIdleState();
             _agent.velocity = Vector3.zero;
             _animator.CrossFade(_animData.IdleParamHash, 0.1f);
         }
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (_detector.Target != null)
             {
                 //Debug.Log("IDLE TO CHASE");
@@ -44,6 +46,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToChaseState();
             _agent.speed = _stat.MoveSpeed;
             _controller.MeetPlayer = true;
             _animator.CrossFade(_animData.ChaseParamHash, 0.1f);
@@ -51,6 +54,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (_detector.Target == null)
             {
                 //Debug.Log("CHASE TO IDLE");
@@ -85,6 +89,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToIdleBattleState();
             _agent.velocity = Vector3.zero;
             LookAtEnemy();
             _animator.CrossFade(_animData.IdleBattleParamHash, 0.25f);
@@ -92,6 +97,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (!_detector.IsArriveToTarget())
             {
                 //Debug.Log("IDLE_BATTLE TO IDLE");
@@ -140,6 +146,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToBreathEnableState();
             _agent.velocity = Vector3.zero;
             _controller.IsBreath = true;
             IncreaseDEF();
@@ -153,6 +160,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if ( _controller.IsMeetConditionHit )
             {
@@ -183,6 +191,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToBreathState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.BreathAnim.length);
@@ -194,6 +203,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold * 2.0f)
             {
@@ -218,6 +228,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToCryToFireState();
             _agent.velocity = Vector3.zero;
             _controller.IsFireball = true;
 
@@ -230,6 +241,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_controller.IsMeetConditionFire)
             {
@@ -259,6 +271,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToFlyFireBallState();
             _agent.velocity = Vector3.zero;
 
             //InitTime(_animData.FlyFireBallAnim.length);
@@ -269,6 +282,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (IsStayForSeconds(1.0f))
             {
                 //Debug.Log("FLY_FIRE_BALL TO SKY_DOWN_ATTACK_STATE");
@@ -292,6 +306,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToCryToDownState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.CryToDownAnim.length);
@@ -303,6 +318,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             if (_controller.IsMeetConditionDown)
@@ -336,6 +352,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToSkyDownAttackState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.SkyDownAttackAnim.length);
@@ -348,6 +365,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             if (_animTime >= _threadHold * 2.0f)
@@ -372,6 +390,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToFearEnableState();
             _agent.velocity = Vector3.zero;
             // 0.15초 동안 유지되기 떄문에 카운터를 치지 않았음에도 true 조건을 만족하는 경우를 배제
             _controller.IsHitCounter = false;
@@ -385,6 +404,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             // 카운터에 맞으면 기절 부여
@@ -418,6 +438,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToFearStrongAttackState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.FearAttackAnim.length);
@@ -429,7 +450,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
-            //if (PhotonNetwork.IsMasterClient == false) return;
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold * 2.0F)
             {
@@ -453,6 +474,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToFearAttackState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.FearAttackAnim.length);
@@ -464,7 +486,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
-            //if (PhotonNetwork.IsMasterClient == false) return;
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
@@ -488,6 +510,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToAttackState();
             // 3가지 모션
             if (_controller.AttackCnt % _controller.ChangeAttackCount == 2)
             {
@@ -516,6 +539,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
@@ -539,6 +563,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroundToSkyState();
             _agent.velocity = Vector3.zero;
             IncreaseDEF();
 
@@ -553,6 +578,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
 
             if (_controller.IsCryToDown && (_animTime >= _threadHold * 2.0f))
@@ -583,6 +609,8 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToCryState();
+
             _agent.velocity = Vector3.zero;
             InitTime(_animData.CryAnim.length);
             _animator.CrossFade(_animData.CryParamHash, 0.1f);
@@ -592,6 +620,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             //if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
@@ -618,6 +647,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToGroggyState();
             _agent.velocity = Vector3.zero;
 
             InitTime(_animData.GroggyAnim.length);
@@ -628,7 +658,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
-            //if (PhotonNetwork.IsMasterClient == false) return;
+            if (PhotonNetwork.IsMasterClient == false) return;
             _animTime += Time.deltaTime;
             if (_animTime >= _threadHold)
             {
@@ -651,7 +681,7 @@ namespace DragonStateItem
 
         public override void Enter()
         {
-            //if (PhotonNetwork.IsMasterClient) _controller.ChangeToDieState();
+            if (PhotonNetwork.IsMasterClient) _controller.ChangeToDieState();
             //_playerController.SkillSlot.CurrentSkill?.StopCast();
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
@@ -660,6 +690,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
         }
         public override void Exit()
         {
@@ -681,6 +712,7 @@ namespace DragonStateItem
 
         public override void Execute()
         {
+            if (PhotonNetwork.IsMasterClient == false) return;
             if (_controller.MeetPlayer)
             {
                 _controller.FearTime += Time.deltaTime;

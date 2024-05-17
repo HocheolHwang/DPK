@@ -57,9 +57,9 @@ public class CameraController : MonoBehaviour
     IEnumerator ZoomOutCoroutine()
     {
         
-        while (Camera.main.orthographicSize < 9.99f)
+        while (Camera.main.orthographicSize < 5.99f)
         {
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 10, 0.01f);
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 6, 0.01f);
             yield return null;
         }
         
