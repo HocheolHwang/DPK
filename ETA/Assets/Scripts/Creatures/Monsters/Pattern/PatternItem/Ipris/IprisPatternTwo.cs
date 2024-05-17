@@ -6,8 +6,9 @@ using UnityEngine.AI;
 public class IprisPatternTwo : Pattern
 {
     [Header("개발 편의성")]
-    [SerializeField] float _hitboxRadius = 3.5f;
+    [SerializeField] float _hitboxRadius = 7.0f;
     [SerializeField] float _upPos = 1.0f;
+    [SerializeField] float _forwardPos = 1.3f;
 
     private const float TIME = 3.0F;
 
@@ -22,10 +23,11 @@ public class IprisPatternTwo : Pattern
     public override IEnumerator StartPatternCast()
     {
         Vector3 destToTarget = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
-        yield return new WaitForSeconds(TIME - 0.3f);
+        yield return new WaitForSeconds(TIME * 0.4f);
 
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upPos);
-        Vector3 Pos = _controller.transform.position + rootUp;
+        Vector3 rootForward = transform.TransformDirection(Vector3.forward * _forwardPos);
+        Vector3 Pos = _controller.transform.position + rootUp + rootForward;
 
         yield return StartCoroutine(DownAttack(Pos));
     }
