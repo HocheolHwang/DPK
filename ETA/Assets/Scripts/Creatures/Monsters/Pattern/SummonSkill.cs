@@ -29,7 +29,7 @@ public class SummonSkill : MonoBehaviour
     public int BufferDeathCount { get => _bufferDeathCount; private set => _bufferDeathCount = value; }
     public int WarriorDeathCount { get => _warriorDeathCount; private set => _warriorDeathCount = value; }
 
-    private float _bufferDist = 6.0f;
+    private float _bufferDist = 5.0f;
     private float _warriorDist = 3.0f;
     public float BufferDist { get => _bufferDist; set => _bufferDist = value; }
     public float WarriorDist { get => _warriorDist; set => _warriorDist = value; }
