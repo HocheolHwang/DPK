@@ -346,6 +346,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         dto.partyId = (string)PhotonNetwork.CurrentRoom.CustomProperties["roomID"];
         dto.partyTitle = RoomName;
 
+        Debug.Log("파티 생성");
         Managers.Network.CreatePartyCall(dto, callback);
     }
 
