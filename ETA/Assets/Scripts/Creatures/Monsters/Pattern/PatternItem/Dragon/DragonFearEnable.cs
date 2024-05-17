@@ -65,6 +65,7 @@ public class DragonFearEnable : Pattern
                 ParticleSystem hitRedPs = Managers.Effect.Play(Define.Effect.CounteredEffect_Red, 1, _controller.transform);
                 hitRedPs.transform.SetParent(_controller.transform);
                 hitRedPs.transform.localPosition = new Vector3(0, _upPos, 0);
+                hitRedPs.transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
 
                 Managers.Resource.Destroy(hitbox.gameObject);
                 Managers.Sound.Play("Sounds/Monster/CounterEnableRed_SND", Define.Sound.Effect);
