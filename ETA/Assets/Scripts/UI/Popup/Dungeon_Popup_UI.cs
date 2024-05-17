@@ -833,6 +833,7 @@ public class Dungeon_Popup_UI : UI_Popup
         zone.StopMovement();
         foreach(var player in players)
         {
+            player.Evasion = true;          // 던전을 클리어한 뒤에 보스의 공격에 맞지 않도록 세팅
             player.isFinished = true;
         }
     }

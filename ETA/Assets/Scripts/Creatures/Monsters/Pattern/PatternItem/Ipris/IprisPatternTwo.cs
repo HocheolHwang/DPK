@@ -22,12 +22,16 @@ public class IprisPatternTwo : Pattern
         Vector3 destToTarget = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
         
         float duration = CalcTimeToDest(destToTarget);
-        Debug.Log($"이게 몇초나 나올까 {duration}");
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(duration - 0.3f);
 
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upPos);
         Vector3 Pos = _controller.transform.position + rootUp;
 
+        yield return StartCoroutine(DownAttack(Pos));
+    }
+
+    IEnumerator DownAttack(Vector3 Pos)
+    {
         // 내려찍기 수행
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
         hitbox.SetUp(transform, _attackDamage + _patternDmg);
@@ -35,7 +39,7 @@ public class IprisPatternTwo : Pattern
         hitbox.GetComponent<SphereCollider>().radius = _hitboxRadius;
 
         // EFFECT
-        ParticleSystem rushingPS = Managers.Effect.Play(Define.Effect.Ipris_PatternTwo, duration, transform);
+        ParticleSystem rushingPS = Managers.Effect.Play(Define.Effect.Ipris_PatternTwo, 0, transform);
         rushingPS.transform.position = Pos;
 
         yield return new WaitForSeconds(0.15f);
@@ -63,6 +67,10 @@ public class IprisPatternTwo : Pattern
         }
 
         float timeToDest = remainDist / moveSpeed;
+        if (timeToDest < 3.0f)
+        {
+            timeToDest = 3.0f;
+        }
         return timeToDest;
     }
 }
