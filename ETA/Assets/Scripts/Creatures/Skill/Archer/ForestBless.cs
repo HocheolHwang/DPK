@@ -9,7 +9,7 @@ public class ForestBless : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(25);
+        SetCoolDownTime(20);
         SkillType = Define.SkillType.Immediately;
         base.Init();
     }

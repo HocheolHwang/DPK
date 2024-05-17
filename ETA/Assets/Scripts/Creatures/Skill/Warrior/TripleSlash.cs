@@ -18,7 +18,7 @@ public class TripleSlash : Skill
 
     public override IEnumerator StartSkillCast()
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 10;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage - 5;
 
         yield return new WaitForSeconds(0.05f);
         Managers.Sound.Play("Skill/RSkill");

@@ -19,7 +19,7 @@ public class QuadrupleSlash : Skill
     public override IEnumerator StartSkillCast()
     {
 
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 20;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         yield return new WaitForSeconds(0.05f);
         Managers.Sound.Play("Skill/RSkill");
         _animator.CrossFade("ATTACK5", 0.05f);
@@ -71,7 +71,7 @@ public class QuadrupleSlash : Skill
     {
         Managers.Sound.Play("Skill/TargetSkill");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, Damage / 2);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.SwordVolleyBlue, 2.0f, hitbox.transform);
 

@@ -75,7 +75,7 @@ public class Gravity : Skill
         //ps.Play();
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage + 10, -1, false);
+        hitbox.SetUp(transform, Damage + 30, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2.0f;
         hitbox.transform.rotation = gameObject.transform.rotation;

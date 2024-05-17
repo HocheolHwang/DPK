@@ -73,7 +73,7 @@ public class WindBall : Skill
     {
         Managers.Sound.Play("Skill/ArrowStab");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _controller.Stat.AttackDamage, -1, false);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage + 30, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
