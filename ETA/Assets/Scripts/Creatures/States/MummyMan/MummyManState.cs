@@ -22,6 +22,7 @@ enum EMummyManPattern
 public class MummyManState : State
 {
     protected const int MaxSummonCount = 1;         // 첫 조우 이후에 Buffer와 Warrior가 살아날 수 있는 횟수
+    protected const float RushTime = 3.0f;
 
     protected MummyManController _controller;
     protected MummyManAnimationData _animData;
@@ -166,27 +167,11 @@ public class MummyManState : State
         return false;
     }
 
-    public float CalcTimeToDest(Vector3 Destination)
+    public float CalcSpeedFromDestTime(Vector3 Destination)
     {
-        float moveSpeed = _agent.speed;
-        if (moveSpeed <= 0.1f)
-        {
-            Debug.Log($"{_controller.gameObject.name}의 속도({moveSpeed})가 0.1f보다 낮습니다.");
-            return -1;
-        }
-        else if (moveSpeed > 8.0f)
-        {
-            moveSpeed = 8.0f;
-        }
-
         float remainDist = Vector3.Distance(Destination, _controller.transform.position);
-        if (remainDist < 5.0f)
-        {
-            remainDist = 5.0f;
-        }
-
-        float timeToDest = remainDist / moveSpeed;
-        return timeToDest;
+        
+        return remainDist / RushTime;
     }
 
     #region Temp
@@ -204,26 +189,25 @@ public class MummyManState : State
 
     //    return -1;
     //}
+    //protected float GetPathLength(NavMeshPath path)
+    //{
+    //    float len = 0;
+
+    //    if (path.corners.Length < 2)
+    //    {
+    //        Debug.Log("유효하지 않은 경로");
+    //        return len;
+    //    }
+
+    //    // 경로상의 모든 코너점을 순회하면서 두 점 사이의 거리를 구함
+    //    for (int i = 0; i < path.corners.Length - 1; ++i)
+    //    {
+    //        len += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+    //    }
+
+    //    return len;
+    //}
     #endregion
-
-    protected float GetPathLength(NavMeshPath path)
-    {
-        float len = 0;
-
-        if (path.corners.Length < 2)
-        {
-            Debug.Log("유효하지 않은 경로");
-            return len;
-        }
-
-        // 경로상의 모든 코너점을 순회하면서 두 점 사이의 거리를 구함
-        for (int i = 0; i < path.corners.Length - 1; ++i)
-        {
-            len += Vector3.Distance(path.corners[i], path.corners[i + 1]);
-        }
-
-        return len;
-    }
 
     #endregion
 

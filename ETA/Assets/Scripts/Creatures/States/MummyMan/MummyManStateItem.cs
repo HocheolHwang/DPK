@@ -354,7 +354,6 @@ namespace MummyManStateItem
     {
         Vector3 destination;
         float tempStopDist;
-        float rushTime;
 
         public RushState(MummyManController controller) : base(controller)
         {
@@ -365,11 +364,10 @@ namespace MummyManStateItem
             if (PhotonNetwork.IsMasterClient) _controller.ChangeToRushState();
             tempStopDist = _agent.stoppingDistance;
             _agent.stoppingDistance = 0;
-            _agent.speed = _controller.Stat.MoveSpeed * 3.0f;
 
             destination = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
-
             SetStartAndDestPos(_controller.transform.position, destination);
+            _agent.speed = CalcSpeedFromDestTime(destination);
 
             InitTime(_animData.RushAnim.length);
             _animator.SetFloat("RushSpeed", 2.0f);
@@ -379,13 +377,13 @@ namespace MummyManStateItem
 
             // _controller.DestPos => destination
             _agent.SetDestination(destination);
-            rushTime = CalcTimeToDest(destination);
+            
         }
 
         public override void Execute()
         {
             if (PhotonNetwork.IsMasterClient == false) return;
-            if (IsStayForSeconds(rushTime))
+            if (IsStayForSeconds(RushTime))
             {
                 _controller.ChangeState(_controller.IDLE_BATTLE_STATE);
             }

@@ -9,6 +9,8 @@ public class IprisPatternTwo : Pattern
     [SerializeField] float _hitboxRadius = 3.5f;
     [SerializeField] float _upPos = 1.0f;
 
+    private const float TIME = 3.0F;
+
     public override void Init()
     {
         base.Init();
@@ -20,9 +22,7 @@ public class IprisPatternTwo : Pattern
     public override IEnumerator StartPatternCast()
     {
         Vector3 destToTarget = MonsterManager.Instance.GetBackPosPlayer(_controller.transform);
-        
-        float duration = CalcTimeToDest(destToTarget);
-        yield return new WaitForSeconds(duration - 0.3f);
+        yield return new WaitForSeconds(TIME - 0.3f);
 
         Vector3 rootUp = transform.TransformDirection(Vector3.up * _upPos);
         Vector3 Pos = _controller.transform.position + rootUp;
@@ -44,33 +44,5 @@ public class IprisPatternTwo : Pattern
 
         yield return new WaitForSeconds(0.15f);
         Managers.Resource.Destroy(hitbox.gameObject);
-    }
-
-    private float CalcTimeToDest(Vector3 Destination)
-    {
-        NavMeshAgent agent = _controller.GetComponent<NavMeshAgent>();
-        float moveSpeed = agent.speed;
-        if (moveSpeed <= 0.1f)
-        {
-            Debug.Log($"{_controller.gameObject.name}의 속도({moveSpeed})가 0.1f보다 낮습니다.");
-            return -1;
-        }
-        else if (moveSpeed > 8.0f)
-        {
-            moveSpeed = 8.0f;
-        }
-
-        float remainDist = Vector3.Distance(Destination, _controller.transform.position);
-        if (remainDist < 2.0f)
-        {
-            remainDist = 2.0f;
-        }
-
-        float timeToDest = remainDist / moveSpeed;
-        if (timeToDest < 3.0f)
-        {
-            timeToDest = 3.0f;
-        }
-        return timeToDest;
     }
 }

@@ -60,12 +60,19 @@ public class MummyManShouting : Pattern
         hitbox.transform.rotation = ps.transform.rotation;
         hitbox.transform.position = Pos;
 
+        StunBox stunBox = Managers.Resource.Instantiate("Skill/StunBoxRect").GetComponent<StunBox>();
+        stunBox.SetUp(transform, duration);
+        stunBox.transform.localScale = _patternRange;
+        stunBox.transform.rotation = ps.transform.rotation;
+        stunBox.transform.position = Pos;
+
         float timer = 0;
         // timer가 duration만큼 증가하지 않는 경우가 있다.
         while (timer <= duration - 0.5f)
         {
             Vector3 moveStep = hitbox.transform.forward * _speed * Time.deltaTime;
             hitbox.transform.position += moveStep;
+            stunBox.transform.position += moveStep;
             ps.transform.position += moveStep;
 
             hitbox.transform.localScale += new Vector3(0.02f, 0.02f, 0);
@@ -74,6 +81,7 @@ public class MummyManShouting : Pattern
             yield return null;
         }
         Managers.Resource.Destroy(hitbox.gameObject);
+        Managers.Resource.Destroy(stunBox.gameObject);
         //Managers.Effect.Stop(ps);
     }
 }

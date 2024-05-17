@@ -25,7 +25,7 @@ public class MummyBufferController : BaseMonsterController
 
     #region STATE VARIABLE
     [SerializeField] private const float _threadHoldBuff = 12.0f;
-    private float _buffTime = _threadHoldBuff - 2.0f;
+    private float _buffTime = _threadHoldBuff;
 
     public float BuffTime { get => _buffTime; set => _buffTime = value; }
     public float ThreadHoldBuff { get => _threadHoldBuff; }
