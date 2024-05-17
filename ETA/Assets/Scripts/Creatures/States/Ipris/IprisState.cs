@@ -48,6 +48,10 @@ public class IprisState : State
         }
 
         float timeToDest = remainDist / moveSpeed;
+        if (timeToDest < 3.0f)
+        {
+            timeToDest = 3.0f;
+        }
         return timeToDest;
     }
 }

@@ -93,6 +93,10 @@ namespace DragonStateItem
             _agent.velocity = Vector3.zero;
             LookAtEnemy();
             _animator.CrossFade(_animData.IdleBattleParamHash, 0.25f);
+
+            _controller.HitCounterCnt = 0;
+            _controller.IsMeetConditionDown = false;
+            _controller.IsMeetConditionFire = false;
         }
 
         public override void Execute()
@@ -685,7 +689,7 @@ namespace DragonStateItem
             //_playerController.SkillSlot.CurrentSkill?.StopCast();
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
-            //Managers.Sound.Play("Monster/KnightG/KnightGDie_SND", Define.Sound.Effect);
+            Managers.Sound.Play("Sounds/Monster/Dragon/DragonDie_SND", Define.Sound.Effect);
         }
 
         public override void Execute()

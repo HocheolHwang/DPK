@@ -70,6 +70,7 @@ public abstract class State : IState
     // ------------------------------ Pattern Functions ----------------------------
     protected void StartCast(int patternIdx)
     {
+        // evasion 키기
         BaseMonsterController controller = _animator.GetComponent<BaseMonsterController>();
         controller.PatternInfo.PatternList[patternIdx].Cast();
     }
