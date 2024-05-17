@@ -6,6 +6,7 @@ using UnityEngine;
 using DragonStateItem;
 using System;
 using Unity.VisualScripting;
+using Photon.Pun;
 
 public class DragonController : BaseMonsterController
 {
@@ -81,6 +82,8 @@ public class DragonController : BaseMonsterController
     [SerializeField] public ParticleSystem FearEnableEffect;
     [SerializeField] public ParticleSystem BreathReadyEffect;
     [SerializeField] public ParticleSystem BreathEffect;
+
+    public static event Action OnBossDestroyed;
 
     private DragonAnimationData _animData;
     public DragonAnimationData AnimData { get => _animData; }
@@ -185,4 +188,210 @@ public class DragonController : BaseMonsterController
             }
         }
     }
+    public override void DestroyEvent()
+    {
+        // 보스몬스터 죽었을때 이벤트 발생
+        OnBossDestroyed?.Invoke();
+
+        base.DestroyEvent();
+    }
+
+    /// 
+    /// @@@@@@@@@@@@@@@@@
+
+    public void ChangeToIdleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToIdleState()
+    {
+        ChangeState(IDLE_STATE);
+    }
+
+    public void ChangeToIdleBattleState()
+    {
+        photonView.RPC("RPC_ChangeToIdleBattleState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToIdleBattleState()
+    {
+        ChangeState(IDLE_BATTLE_STATE);
+    }
+
+    public void ChangeToChaseState()
+    {
+        photonView.RPC("RPC_ChangeToChaseState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToChaseState()
+    {
+        ChangeState(CHASE_STATE);
+    }
+
+    public void ChangeToAttackState()
+    {
+        photonView.RPC("RPC_ChangeToAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToAttackState()
+    {
+        ChangeState(ATTACK_STATE);
+    }
+    public void ChangeToCryState()
+    {
+        photonView.RPC("RPC_ChangeToCryState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToCryState()
+    {
+        ChangeState(CRY_STATE);
+    }
+
+
+    public void ChangeToGroggyState()
+    {
+        photonView.RPC("RPC_ChangeToGroggyState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToGroggyState()
+    {
+        ChangeState(GROGGY_STATE);
+    }
+
+
+    public void ChangeToDieState()
+    {
+        photonView.RPC("RPC_ChangeToDieState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToDieState()
+    {
+        ChangeState(DIE_STATE);
+    }
+
+    public void ChangeToFearEnableState()
+    {
+        photonView.RPC("RPC_ChangeToFearEnableState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToFearEnableState()
+    {
+        ChangeState(FEAR_ENABLE_STATE);
+    }
+
+    public void ChangeToFearAttackState()
+    {
+        photonView.RPC("RPC_ChangeToFearAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToFearAttackState()
+    {
+        ChangeState(FEAR_ATTACK_STATE);
+    }
+
+    public void ChangeToFearStrongAttackState()
+    {
+        photonView.RPC("RPC_ChangeToFearStrongAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToFearStrongAttackState()
+    {
+        ChangeState(FEAR_STRONG_ATTACK_STATE);
+    }
+
+    public void ChangeToBreathEnableState()
+    {
+        photonView.RPC("RPC_ChangeToBreathEnableState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToBreathEnableState()
+    {
+        ChangeState(BREATH_ENABLE_STATE);
+    }
+
+    public void ChangeToBreathState()
+    {
+        photonView.RPC("RPC_ChangeToBreathState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToBreathState()
+    {
+        ChangeState(BREATH_STATE);
+    }
+
+    public void ChangeToCryToDownState()
+    {
+        photonView.RPC("RPC_ChangeToCryToDownState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToCryToDownState()
+    {
+        ChangeState(CRY_TO_DOWN_STATE);
+    }
+
+    public void ChangeToGroundToSkyState()
+    {
+        photonView.RPC("RPC_ChangeToGroundToSkyState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToGroundToSkyState()
+    {
+        ChangeState(GROUND_TO_SKY_STATE);
+    }
+
+    public void ChangeToSkyDownAttackState()
+    {
+        photonView.RPC("RPC_ChangeToSkyDownAttackState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToSkyDownAttackState()
+    {
+        ChangeState(SKY_DOWN_ATTACK_STATE);
+    }
+
+    public void ChangeToCryToFireState()
+    {
+        photonView.RPC("RPC_ChangeToCryToFireState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToCryToFireState()
+    {
+        ChangeState(CRY_TO_FIRE_STATE);
+    }
+
+    public void ChangeToFlyFireBallState()
+    {
+        photonView.RPC("RPC_ChangeToFlyFireBallState", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RPC_ChangeToFlyFireBallState()
+    {
+        ChangeState(FLY_FIRE_BALL_STATE);
+    }
+
+
+    [PunRPC]
+    void RPC_TakeDamage(int attackDamage, bool isCounter, int shield, bool evasion, int defense)
+    {
+        CalcDamage(attackDamage, isCounter, shield, evasion, defense);
+    }
+
 }

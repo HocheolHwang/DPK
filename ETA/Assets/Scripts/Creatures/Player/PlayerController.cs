@@ -102,7 +102,11 @@ public class PlayerController : BaseController
     {
         if (photonView.IsMine)
         {
-            Camera.main.GetComponent<CameraController>()._player = GameObject.FindObjectOfType<PlayerZone>().gameObject;
+            if(Camera.main.GetComponent<CameraController>() != null)
+            {
+                Camera.main.GetComponent<CameraController>()._player = GameObject.FindObjectOfType<PlayerZone>().gameObject;
+            }
+            
             
         }
         FindObjectOfType<Dungeon_Scene>()?.AnyOneDied();
