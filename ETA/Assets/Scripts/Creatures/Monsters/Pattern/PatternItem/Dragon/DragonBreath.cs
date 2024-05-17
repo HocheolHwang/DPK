@@ -7,11 +7,11 @@ public class DragonBreath : Pattern
 {
     [Header("options")]
     [SerializeField] Vector3 _pos = new Vector3(0.0f, 2.5f, 1.5f);
-    [SerializeField] Vector3 _scale = new Vector3(8.0f, 5.0f, 1.0f);
+    [SerializeField] Vector3 _scale = new Vector3(12.0f, 5.0f, 1.0f);
     [SerializeField] float _duration;
     [SerializeField] float _boxDuration = 1.5f;
     [SerializeField] float _speed = 20.0f;
-    [SerializeField] float _interval = 0.1f;
+    [SerializeField] float _interval = 0.3f;
 
     private DragonAnimationData _animData;
     private DragonController _dcontroller;
@@ -38,10 +38,10 @@ public class DragonBreath : Pattern
         StartCoroutine(Stun(_boxDuration));
 
         StartCoroutine(Breath(_boxDuration));
-        yield return new WaitForSeconds(_interval);
+        yield return new WaitForSeconds(_createTime);
         Managers.Sound.Play("Sounds/Monster/Dragon/DragonBreath_SND", Define.Sound.Effect);
 
-        #region Breath 9번
+        #region Breath 15번 + EFFECT_STOP
         StartCoroutine(Breath(_boxDuration));
         yield return new WaitForSeconds(_interval);
         StartCoroutine(Breath(_boxDuration));
@@ -57,12 +57,25 @@ public class DragonBreath : Pattern
         StartCoroutine(Breath(_boxDuration));
         yield return new WaitForSeconds(_interval);
         StartCoroutine(Breath(_boxDuration));
+        yield return new WaitForSeconds(_interval);
+        StartCoroutine(Stun(_boxDuration));
+        StartCoroutine(Breath(_boxDuration));
+        yield return new WaitForSeconds(_interval);
+        StartCoroutine(Breath(_boxDuration));
+        yield return new WaitForSeconds(_interval);
+        StartCoroutine(Breath(_boxDuration));
+        yield return new WaitForSeconds(_interval);
+        StartCoroutine(Breath(_boxDuration));
+        yield return new WaitForSeconds(_interval);
+        StartCoroutine(Breath(_boxDuration));
+        yield return new WaitForSeconds(_interval);
+        StartCoroutine(Breath(_boxDuration));
+        _dcontroller.BreathEffect.Stop();
         yield return new WaitForSeconds(_interval);
         StartCoroutine(Breath(_boxDuration));
         #endregion
 
         yield return new WaitForSeconds(_boxDuration + _interval);
-        _dcontroller.BreathEffect.Stop();
     }
 
     IEnumerator Stun(float duration)
