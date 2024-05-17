@@ -6,7 +6,7 @@ public class StormStrike : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(13);
+        SetCoolDownTime(20);
         Damage = 100;
         base.Init();
         SkillType = Define.SkillType.Target;
@@ -45,7 +45,7 @@ public class StormStrike : Skill
         ps03.transform.position = _skillSystem.TargetPosition;
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _controller.Stat.AttackDamage + 80, -1, true);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage * 3, -1, true);
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
         yield return new WaitForSeconds(0.1f);

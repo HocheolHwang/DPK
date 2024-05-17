@@ -56,10 +56,10 @@ public class MoonSword : Skill
         for(int i = 0; i < 10; i++)
         {
             Managers.Sound.Play("Skill/TargetSkill");
-            HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-            hitbox.SetUp(transform, Damage);
-            hitbox.transform.position = dest;
-            yield return new WaitForSeconds(0.1f);
+            // HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+            // hitbox.SetUp(transform, Damage);
+            // hitbox.transform.position = dest;
+            // yield return new WaitForSeconds(0.1f);
         }
 
         yield return new WaitForSeconds(0.4f);

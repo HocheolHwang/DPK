@@ -18,7 +18,7 @@ public class WindSlash : Skill
 
     public override IEnumerator StartSkillCast()
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 50;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 30;
         _animator.CrossFade("COLLAVO", 0.1f);
         yield return new WaitForSeconds(0.1f);
         //Managers.Sound.Play("Skill/RSkill");
@@ -45,6 +45,7 @@ public class WindSlash : Skill
 
     public override IEnumerator StartCollavoSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         _animator.CrossFade("COLLAVO", 0.1f);
         yield return new WaitForSeconds(0.5f);
 

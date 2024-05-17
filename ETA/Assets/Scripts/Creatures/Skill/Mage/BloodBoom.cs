@@ -41,7 +41,7 @@ public class BloodBoom : Skill
 
     private IEnumerator BloodboomCoroutine()
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage * 2;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         _controller.DecreaseHp(Damage / 2);
         Managers.Sound.Play("Skill/BloodBoom1");
 
@@ -54,7 +54,7 @@ public class BloodBoom : Skill
         yield return new WaitForSeconds(1.0f);
         Managers.Sound.Play("Skill/BloodBoom2");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, Damage * 2);
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
 
