@@ -16,9 +16,7 @@ public class Character_Select : MonoBehaviour
     // 캐릭터 정보
     private Image[] characterBackgrounds = new Image[3];
     private Image[] classIcons = new Image[3];
-    private Image[] hpItems = new Image[5];
-    private Image[] apItems = new Image[5];
-    private Image[] dpItems = new Image[5];
+    private Slider[] sliders = new Slider[3];
     private TMP_Text characterNameText;
     private TMP_Text characterDetailText;
     private TMP_Text characterClassText;
@@ -71,14 +69,11 @@ public class Character_Select : MonoBehaviour
         classIcons[1] = GameObject.Find("Archer_Class_Icon").GetComponent<Image>();
         classIcons[2] = GameObject.Find("Mage_Class_Icon").GetComponent<Image>();
 
-        // 캐릭터 스텟 이미지 오브젝트 연결
-        for (int i = 0; i < 5; i++)
-        {
-            hpItems[i] = GameObject.Find($"HP_Item_{i + 1}").GetComponent<Image>();
-            apItems[i] = GameObject.Find($"AP_Item_{i + 1}").GetComponent<Image>();
-            dpItems[i] = GameObject.Find($"DP_Item_{i + 1}").GetComponent<Image>();
-        }
-
+        // 캐릭터 스텟 슬라이더 오브젝트 연결
+        sliders[0] = GameObject.Find("HP_Slider").GetComponent<Slider>();
+        sliders[1] = GameObject.Find("AP_Slider").GetComponent<Slider>();
+        sliders[2] = GameObject.Find("DP_Slider").GetComponent<Slider>();
+        
         // 캐릭터 정보 텍스트 오브젝트 연결
         characterNameText = GameObject.Find("Character_Name_Text").GetComponent<TMP_Text>();
         characterDetailText = GameObject.Find("Character_Detail_Text").GetComponent<TMP_Text>();
@@ -217,25 +212,16 @@ public class Character_Select : MonoBehaviour
         classIcons[2].gameObject.SetActive(className == "Mage");
 
         // HP 아이템 활성화
-        int activeHpItems = hp / 50;
-        for (int i = 0; i < hpItems.Length; i++)
-        {
-            hpItems[i].gameObject.SetActive(i < activeHpItems);
-        }
+        float activeHpItems = Mathf.Clamp(hp / 800f, 0, 1);
+        sliders[0].value = activeHpItems;
 
         // AP 아이템 활성화
-        int activeApItems = ap / 10;
-        for (int i = 0; i < apItems.Length; i++)
-        {
-            apItems[i].gameObject.SetActive(i < activeApItems);
-        }
+        float activeApItems = Mathf.Clamp(ap / 150f, 0, 1);
+        sliders[1].value = activeApItems;
 
         // DP 아이템 활성화
-        int activeDpItems = dp / 5;
-        for (int i = 0; i < dpItems.Length; i++)
-        {
-            dpItems[i].gameObject.SetActive(i < activeDpItems);
-        }
+        float activeDpItems = Mathf.Clamp(dp / 10f, 0, 1);
+        sliders[2].value = activeDpItems;
     }
 
     // 캐릭터 설명 업데이트 메서드
