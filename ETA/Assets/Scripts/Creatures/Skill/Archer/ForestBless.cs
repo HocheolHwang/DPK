@@ -19,7 +19,7 @@ public class ForestBless : Skill
         _animator.CrossFade("SKILL7", 0.1f);
         yield return new WaitForSeconds(0.5f);
         Managers.Sound.Play("Skill/ForestBless");
-        forestBlessCoroutine = StartCoroutine(ForestBlessCoroutine());
+        Managers.Coroutine.Run(ForestBlessCoroutine());
         yield return new WaitForSeconds(0.5f);
         yield return new WaitForSeconds(0.1f);
         ChangeToPlayerMoveState();

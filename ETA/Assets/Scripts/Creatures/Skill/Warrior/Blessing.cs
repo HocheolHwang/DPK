@@ -18,7 +18,7 @@ public class Blessing : Skill
     {
         _animator.CrossFade("BUFF2", 0.1f);
         Managers.Sound.Play("Skill/Heal");
-        blessingCoroutine = StartCoroutine(BlessingCoroutine());
+        Managers.Coroutine.Run(BlessingCoroutine());
 
         yield return new WaitForSeconds(0.5f);
         //_controller.ChangeState(_controller.MOVE_STATE);
