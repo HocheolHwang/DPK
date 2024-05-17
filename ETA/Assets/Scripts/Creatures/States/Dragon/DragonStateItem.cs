@@ -655,7 +655,7 @@ namespace DragonStateItem
             //_playerController.SkillSlot.CurrentSkill?.StopCast();
             _agent.isStopped = true;
             _animator.CrossFade(_animData.DieParamHash, 0.1f);
-            //Managers.Sound.Play("Monster/KnightG/KnightGDie_SND", Define.Sound.Effect);
+            Managers.Sound.Play("Sounds/Monster/Dragon/DragonDie_SND", Define.Sound.Effect);
         }
 
         public override void Execute()

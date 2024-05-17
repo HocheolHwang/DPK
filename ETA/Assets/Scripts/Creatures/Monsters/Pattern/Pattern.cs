@@ -10,12 +10,11 @@ public abstract class Pattern : MonoBehaviour ,IPattern
     [SerializeField] protected float _createTime;
     [SerializeField] protected Vector3 _patternRange;
 
-    [Header(" attackDMG + patternDMG ")]
+    [Header("DMG")]
     [SerializeField] protected int _attackDamage;
     [SerializeField] protected int _patternDmg;
 
     protected BaseMonsterController _controller;
-    //protected int _curStage;                    // 무한의 탑 컨텐츠가 있는 경우 사용
     private Coroutine _currentCoroutine;
 
     protected HitBox _hitbox;
@@ -41,17 +40,13 @@ public abstract class Pattern : MonoBehaviour ,IPattern
     // --------------------------- Pattern Logic ------------------------------
     public void Cast()
     {
-        _currentCoroutine = StartCoroutine(StartPatternCast());
+        _currentCoroutine = Managers.Coroutine.Run(StartPatternCast());
     }
 
     public void StopCast()
     {
         if (_currentCoroutine == null) return;
-        StopCoroutine(_currentCoroutine);
-
-        // Coroutine에서 생성한 게임 오브젝트 제거
-        //if (_hitbox != null) Managers.Resource.Destroy(_hitbox.gameObject);
-        //if (_ps != null) Managers.Effect.Stop(_ps);
+        Managers.Coroutine.Stop(_currentCoroutine);
     }
 
     public abstract IEnumerator StartPatternCast();
