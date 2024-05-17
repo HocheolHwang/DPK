@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class ZoomOutPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Dungeon_Popup_UI dungeonPopupUI;
+
+    private void Update()
+    {
+        dungeonPopupUI?.UpdateDragonHP();
+    }
+
     void OnTriggerEnter(Collider other)
     {
 
@@ -15,7 +21,12 @@ public class ZoomOutPoint : MonoBehaviour
         {
             if(player.IsMine) Camera.main.GetComponent<CameraController>().ZoomOut();
 
+            dungeonPopupUI = FindObjectOfType<Dungeon_Popup_UI>();
+            if (dungeonPopupUI == null) return;
+
+            dungeonPopupUI.UpdateDragonStatus();
         }
-        
     }
+
+
 }
