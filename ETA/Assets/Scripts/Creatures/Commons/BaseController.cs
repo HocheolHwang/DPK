@@ -332,6 +332,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     public void Pushed(int power, float duration)
     {
         if (PhotonNetwork.IsMasterClient == false) return;
+        if (GetComponent<KnockBackBlock>() != null) return;
         StartCoroutine(PushedCoroutine(power, duration));
     }
 

@@ -2220,6 +2220,7 @@ GameObject:
   - component: {fileID: 4263046314222758748}
   - component: {fileID: 3264864747876259525}
   - component: {fileID: 3759242106727337668}
+  - component: {fileID: -7753955916062725320}
   m_Layer: 7
   m_Name: Dragon
   m_TagString: Monster
@@ -2505,6 +2506,18 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-7753955916062725320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756327140979856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea9053d7b191ba4a8044c5ff7e842dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1784271662966944
 GameObject:
   m_ObjectHideFlags: 0
