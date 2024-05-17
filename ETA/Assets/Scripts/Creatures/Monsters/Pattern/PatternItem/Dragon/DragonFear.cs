@@ -17,7 +17,7 @@ public class DragonFear : Pattern
         base.Init();
 
         _createTime = 0.8f;
-        _patternDmg = 100;
+        _patternDmg = 10;
         _animData = GetComponent<DragonAnimationData>();
         _dcontroller = GetComponent<DragonController>();
     }

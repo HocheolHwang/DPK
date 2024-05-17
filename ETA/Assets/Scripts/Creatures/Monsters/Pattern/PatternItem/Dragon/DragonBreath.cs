@@ -25,7 +25,7 @@ public class DragonBreath : Pattern
         _dcontroller = _controller.GetComponent<DragonController>();
         _duration = _animData.BreathAnim.length * 2.0f;
 
-        _patternDmg = 10;
+        _patternDmg = 30;
     }
 
     public override IEnumerator StartPatternCast()
