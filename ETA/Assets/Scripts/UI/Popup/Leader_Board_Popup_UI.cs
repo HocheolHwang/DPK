@@ -353,6 +353,9 @@ public class Leader_Board_Popup_UI : UI_Popup
             {
                 partyList += curRank.playerList[j] + ", ";
             }
+
+            // 마지막 쉼표와 공백 제거
+            partyList = partyList.TrimEnd(',', ' ');
             nicknameTexts[i].text = partyList;
         }
 
