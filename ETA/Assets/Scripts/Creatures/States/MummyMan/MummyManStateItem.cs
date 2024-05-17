@@ -569,7 +569,7 @@ namespace MummyManStateItem
 
                 ps = Managers.Effect.Play(Define.Effect.Groggy, groggyTime, _controller.transform);
                 ps.transform.SetParent(_controller.transform);
-                ps.transform.position = new Vector3(0, 2.0f, 0);
+                ps.transform.localPosition = new Vector3(0, 2.0f, 0);
             }
             else
             {

@@ -308,6 +308,10 @@ namespace PlayerStates
             if (_playerController.photonView.IsMine) _playerController.ChangeToGroggyState();
             _animator.CrossFade("GROGGY", 0.05f);
             StartTime = Time.time;
+
+            ParticleSystem ps = Managers.Effect.Play(Define.Effect.Groggy, 3.0f, _playerController.transform);
+            ps.transform.SetParent(_playerController.transform);
+            ps.transform.localPosition = new Vector3(0, 2.0f, 0);
         }
 
         public override void Execute()

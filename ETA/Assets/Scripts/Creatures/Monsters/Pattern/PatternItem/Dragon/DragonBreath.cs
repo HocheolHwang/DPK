@@ -38,10 +38,10 @@ public class DragonBreath : Pattern
         StartCoroutine(Stun(_boxDuration));
 
         StartCoroutine(Breath(_boxDuration));
-        yield return new WaitForSeconds(_interval);
+        yield return new WaitForSeconds(_createTime);
         Managers.Sound.Play("Sounds/Monster/Dragon/DragonBreath_SND", Define.Sound.Effect);
 
-        #region Breath 12번
+        #region Breath 15번 + EFFECT_STOP
         StartCoroutine(Breath(_boxDuration));
         yield return new WaitForSeconds(_interval);
         StartCoroutine(Breath(_boxDuration));
@@ -58,17 +58,24 @@ public class DragonBreath : Pattern
         yield return new WaitForSeconds(_interval);
         StartCoroutine(Breath(_boxDuration));
         yield return new WaitForSeconds(_interval);
+        StartCoroutine(Stun(_boxDuration));
         StartCoroutine(Breath(_boxDuration));
         yield return new WaitForSeconds(_interval);
         StartCoroutine(Breath(_boxDuration));
         yield return new WaitForSeconds(_interval);
         StartCoroutine(Breath(_boxDuration));
+        yield return new WaitForSeconds(_interval);
+        StartCoroutine(Breath(_boxDuration));
+        yield return new WaitForSeconds(_interval);
+        StartCoroutine(Breath(_boxDuration));
+        yield return new WaitForSeconds(_interval);
+        StartCoroutine(Breath(_boxDuration));
+        _dcontroller.BreathEffect.Stop();
         yield return new WaitForSeconds(_interval);
         StartCoroutine(Breath(_boxDuration));
         #endregion
 
         yield return new WaitForSeconds(_boxDuration + _interval);
-        _dcontroller.BreathEffect.Stop();
     }
 
     IEnumerator Stun(float duration)
