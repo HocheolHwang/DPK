@@ -965,8 +965,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
         if (selectedDungeonNumber!= 0)
         {
-            currentExp += 30;
-            currentExp += 10;
+            currentExp += 40;
 
             int addExp = (selectedDungeonNumber - 1) * 5;
 
@@ -1005,8 +1004,6 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             // 던전 결과 Popup UI를 띄움
             Result_Popup_UI result = Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
-
-            currentExp += 10;
 
             int addExp = (selectedDungeonNumber - 1) * 5;
             currentExp *= addExp != 0 ? addExp : 1;
