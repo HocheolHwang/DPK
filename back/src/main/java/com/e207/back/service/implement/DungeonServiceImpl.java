@@ -2,7 +2,6 @@ package com.e207.back.service.implement;
 
 import com.e207.back.dto.ResponseDto;
 import com.e207.back.dto.common.DungeonRankingDto;
-import com.e207.back.dto.common.PlayerClassDto;
 import com.e207.back.dto.request.DungeonEndRequestDto;
 import com.e207.back.dto.request.DungeonRankingRequestDto;
 import com.e207.back.dto.response.DungeonEndResponseDto;
@@ -57,7 +56,7 @@ public class DungeonServiceImpl implements DungeonService {
         List<DungeonRankingDto> list = new ArrayList<>();
         try{
             Optional<DungeonEntity> dungeon = dungeonRepository.findById(dto.getDungeonCode());
-            List<DungeonLogEntity> entities = dungeonLogRepository.findTop3ByDungeonAndIsClearedTrueOrderByClearTimeAscCreatedAtAsc(dungeon.get());
+            List<DungeonLogEntity> entities = dungeonLogRepository.findTop5ByDungeonAndIsClearedTrueOrderByClearTimeAscCreatedAtAsc(dungeon.get());
 
             entities.forEach((e) -> {
                 DungeonRankingDto ranking = new DungeonRankingDto();
