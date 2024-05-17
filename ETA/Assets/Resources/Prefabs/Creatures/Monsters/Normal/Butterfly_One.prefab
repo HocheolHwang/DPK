@@ -555,7 +555,7 @@ MonoBehaviour:
   _maxHp: 50
   _hp: 50
   _moveSpeed: 3
-  _attackDamage: 20
+  _attackDamage: 10
   _defense: 0
   _shield: 0
 --- !u!114 &6766364674128847522
@@ -587,8 +587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7decfdb592151743b057b60c7a1efdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 18
-  _attackRange: 14
+  _detectRange: 15
+  _attackRange: 10
   _target: {fileID: 0}
   TargetLayerMask:
     serializedVersion: 2
