@@ -425,7 +425,7 @@ namespace IprisStateItem
             }
             else if (IsStayForSeconds(rushTime))
             {
-                Debug.Log("PATTERN_TWO TO BACK_POSITION");
+                //Debug.Log("PATTERN_TWO TO BACK_POSITION");
                 _controller.ChangeState(_controller.BACK_POSITION_STATE); 
             }
         }
