@@ -20,7 +20,7 @@ public class Protection : Skill
 
         yield return new WaitForSeconds(0.2f);
         _animator.CrossFade("CASTING_WAIT", 0.1f);
-        protectionCoroutine = StartCoroutine(ProtectionCoroutine());
+        Managers.Coroutine.Run(ProtectionCoroutine());
 
 
         yield return new WaitForSeconds(0.5f);
