@@ -51,15 +51,18 @@ public class ArrowShower : Skill
 
         yield return new WaitForSeconds(0.7f);
 
-        HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _controller.Stat.AttackDamage+10);
-        hitbox.transform.position = _skillSystem.TargetPosition;
-        hitbox.transform.localScale = skillRange;
-        yield return new WaitForSeconds(0.1f);
-        Managers.Resource.Destroy(hitbox.gameObject);
-        Managers.Sound.Play("Skill/ArrowShowerHit");
-        //ParticleSystem ps = Managers.Resource.Instantiate("Effect/ArrowShower").GetComponent<ParticleSystem>();
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.ArrowShower, 1.0f, gameObject.transform);
-        ps.transform.position = hitbox.transform.position;
+        for (int i = 0; i < 4; i++)
+        {
+            HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
+            hitbox.SetUp(transform, _controller.Stat.AttackDamage + 10);
+            hitbox.transform.position = _skillSystem.TargetPosition;
+            hitbox.transform.localScale = skillRange;
+            yield return new WaitForSeconds(0.1f);
+            Managers.Resource.Destroy(hitbox.gameObject);
+            Managers.Sound.Play("Skill/ArrowShowerHit");
+            //ParticleSystem ps = Managers.Resource.Instantiate("Effect/ArrowShower").GetComponent<ParticleSystem>();
+            ParticleSystem ps = Managers.Effect.Play(Define.Effect.ArrowShower, 1.0f, gameObject.transform);
+            ps.transform.position = hitbox.transform.position;
+        }
     }
 }

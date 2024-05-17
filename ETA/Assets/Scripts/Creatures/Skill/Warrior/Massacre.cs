@@ -16,7 +16,7 @@ public class Massacre : Skill
 
     public override IEnumerator StartSkillCast()
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 20;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage - 5;
         StartCoroutine(MassacreCoroutine());
 
         yield return new WaitForSeconds(1.2f);

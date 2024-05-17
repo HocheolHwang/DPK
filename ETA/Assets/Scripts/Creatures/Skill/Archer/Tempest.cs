@@ -20,7 +20,7 @@ public class Tempest : Skill
         yield return new WaitForSeconds(0.3f);
         Managers.Sound.Play("Skill/ShieldSlam");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, Damage / 2);
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2;
         hitbox.transform.localScale = skillRange;
 

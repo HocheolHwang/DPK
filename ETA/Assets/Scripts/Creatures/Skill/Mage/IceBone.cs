@@ -28,14 +28,14 @@ public class IceBone : Skill
             yield return new WaitForSeconds(0.1f);
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }
 
     private IEnumerator IceBoneCoroutine()
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 5;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         // skillRange 내에서 랜덤한 x, z 좌표 생성
         float randomX = Random.Range(-skillRange.x / 2f, skillRange.x / 2f);
         float randomZ = Random.Range(-skillRange.z / 2f, skillRange.z / 2f);
@@ -44,7 +44,7 @@ public class IceBone : Skill
         Vector3 randomPosition = new Vector3(randomX, transform.position.y, randomZ);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage);
+        hitbox.SetUp(transform, (Damage - 10) / 2);
         hitbox.transform.position = _skillSystem.TargetPosition + randomPosition - transform.up;
         hitbox.transform.localScale = skillRange;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.SpikeIce, hitbox.transform);

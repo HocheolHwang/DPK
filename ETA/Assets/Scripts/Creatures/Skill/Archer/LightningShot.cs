@@ -93,7 +93,7 @@ public class LightningShot : Skill
         //ps.Play();
         Managers.Sound.Play("Skill/LightningShot");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _controller.Stat.AttackDamage, -1, false);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage + 30, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = gameObject.transform.position + transform.forward * 2.0f;
         hitbox.transform.rotation = gameObject.transform.rotation;
