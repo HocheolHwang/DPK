@@ -300,8 +300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 18
-  _attackRange: 14
+  _detectRange: 15
+  _attackRange: 11
   _target: {fileID: 0}
   TargetLayerMask:
     serializedVersion: 2
@@ -375,6 +375,17 @@ MonoBehaviour:
   Stat: {fileID: 0}
   _isHitCounter: 0
   StoneSpawned: {fileID: 8937324602648669133}
+  _meetPlayer: 0
+  _isRangedAttack: 1
+  _isRush: 0
+  _shoutingTime: 0
+  _threadHoldShouting: 14
+  _jumpTime: 0
+  _threadHoldJump: 30.5
+  _target: {fileID: 0}
+  _attackRange: 0
+  _startPos: {x: 0, y: 0, z: 0}
+  _destPos: {x: 0, y: 0, z: 0}
 --- !u!114 &3694731791571937186
 MonoBehaviour:
   m_ObjectHideFlags: 0

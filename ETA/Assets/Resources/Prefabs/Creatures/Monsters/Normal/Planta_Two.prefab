@@ -439,10 +439,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee81152ef09fb14bb6d8decaa883507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 120
-  _hp: 120
+  _maxHp: 100
+  _hp: 100
   _moveSpeed: 3
-  _attackDamage: 20
+  _attackDamage: 15
   _defense: 0
   _shield: 0
 --- !u!114 &-1872373869306839504
@@ -457,8 +457,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5448af9ce4f4044398166c81f8c5ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 18
-  _attackRange: 14
+  _detectRange: 15
+  _attackRange: 10
   _target: {fileID: 0}
   TargetLayerMask:
     serializedVersion: 2

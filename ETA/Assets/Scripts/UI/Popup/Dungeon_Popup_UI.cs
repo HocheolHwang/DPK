@@ -33,6 +33,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 보스 상태
         Boss_Status,
+        Dragon_Status,
 
         // 보스 대사
         Boss_Script_Container,
@@ -57,7 +58,6 @@ public class Dungeon_Popup_UI : UI_Popup
         KnightG_Icon,
         MummyMan_Icon,
         Ipris_Icon,
-        Dragon_Icon,
 
         // 파티원 상태
         Party_Member_1,
@@ -140,6 +140,9 @@ public class Dungeon_Popup_UI : UI_Popup
         Boss_Name_Text,
         Boss_HP_Text,
 
+        // 드래곤 상태
+        Dragon_HP_Text,
+
         // 보스 대사
         Boss_Script_Text,
 
@@ -163,7 +166,10 @@ public class Dungeon_Popup_UI : UI_Popup
         Player_EXP_Slider,
 
         // 보스 상태
-        Boss_HP_Slider
+        Boss_HP_Slider,
+
+        // 드래곤 상태
+        Dragon_HP_Slider
     }
 
     // UI 컴포넌트 바인딩 변수
@@ -171,12 +177,13 @@ public class Dungeon_Popup_UI : UI_Popup
     private Button openMenuButton;
     private GameObject[] dungeonIcons = new GameObject[4];
     private GameObject bossStatus;
+    private GameObject dragonStatus;
     private GameObject bossScriptContainer;
     private GameObject playerHPBar;
     private GameObject playerShieldBar;
     private GameObject[] memberHPBars = new GameObject[3];
     private GameObject[] memberShieldBars = new GameObject[3];
-    private Image[] bossIcons = new Image[5];
+    private Image[] bossIcons = new Image[4];
     private Image[] partyMembers = new Image[3];
     private Image[][] partyMemberIcons = new Image[3][];
     private Image[] skillCooldownImages = new Image[8];
@@ -195,10 +202,12 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI bossLevelText;
     private TextMeshProUGUI bossNameText;
     private TextMeshProUGUI bossHPText;
+    private TextMeshProUGUI dragonHPText;
     private TextMeshProUGUI bossScriptText;
     private TextMeshProUGUI[] skillCooldownTexts = new TextMeshProUGUI[8];
     private Slider dungeonProgressBar;
     private Slider bossHPSlider;
+    private Slider dragonHPSlider;
     private Slider playerEXPSlider;
 
     // 게임 위치 및 진행 상태 변수
@@ -322,7 +331,7 @@ public class Dungeon_Popup_UI : UI_Popup
         // --------------- 보스 정보 UI 초기화 ---------------
 
         // 보스 아이콘 초기화
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
             bossIcons[i] = GetImage((int)Images.FlowerDryad_Icon + i);
         }
@@ -331,11 +340,16 @@ public class Dungeon_Popup_UI : UI_Popup
         bossStatus = GetObject((int)GameObjects.Boss_Status);
         bossStatus.SetActive(false);
 
+        // 드래곤 상태창 초기화 및 비활성화
+        dragonStatus = GetObject((int)GameObjects.Dragon_Status);
+        dragonStatus.SetActive(false);
+        dragonHPText = GetText((int)Texts.Dragon_HP_Text);
+        dragonHPSlider = GetSlider((int)Sliders.Dragon_HP_Slider);
+
         // 보스 대사 초기화
         bossScriptText = GetText((int)Texts.Boss_Script_Text);
         bossScriptContainer = GetObject((int)GameObjects.Boss_Script_Container);
         bossScriptContainer.SetActive(false);
-
 
         // 보스 정보 초기화
         bossLevelText = GetText((int)Texts.Boss_Level_Text);
@@ -526,6 +540,7 @@ public class Dungeon_Popup_UI : UI_Popup
         KnightGController.OnBossDestroyed -= HandleBossDestroyed;
         MummyManController.OnMummyDestroyed -= HandleBossDestroyed;
         PlayerController.OnPlayerDestroyed -= HandlePlayerDestroyed;
+        //DragonController.OnBossDestroyed -= HandlePlayerDestroyed;
 
         if (isTutorialScene)
         {
@@ -660,9 +675,6 @@ public class Dungeon_Popup_UI : UI_Popup
     // 보스 정보 업데이트 메서드
     private void UpdateBossInfo()
     {
-        // 드래곤 아이콘 비활성화
-        bossIcons[4].gameObject.SetActive(false);
-
         // 던전에 맞는 아이콘 활성화
         for (int i = 0; i < 4; i++)
         {
@@ -684,6 +696,7 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 파괴 이벤트 핸들러 등록
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
         MummyManController.OnMummyDestroyed += HandleBossDestroyed;
+        //DragonController.OnBossDestroyed += HandlePlayerDestroyed;
     }
 
     // 파티원 정보 업데이트 메서드
@@ -800,8 +813,8 @@ public class Dungeon_Popup_UI : UI_Popup
         bossScriptText.text = text;
         bossScriptText.color = textColor;
 
-        // 5초 동안 대기
-        yield return new WaitForSeconds(5);
+        // 4초 동안 대기
+        yield return new WaitForSeconds(4);
 
         // 대사 숨기기
         bossScriptContainer.SetActive(false);
