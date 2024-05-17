@@ -808,6 +808,11 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             currentExp += 30;
             currentExp += 10;
+
+            int addExp = (selectedDungeonNumber - 1) * 5;
+
+            currentExp *= addExp != 0 ? addExp : 1;
+
             long originExp = Managers.Player.GetExp();
             int originLevel = Managers.Player.GetLevel();
             long originNeedExp = Managers.Player.GetNeedExp();
@@ -815,7 +820,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
             if (selectedDungeonNumber != 0)
             {
-                SummaryExp(dungeonNameText.text + "던전에서 사망");
+                SummaryExp(dungeonNameText.text + "던전 클리어");
             }
 
             result.Initialize();
@@ -843,6 +848,9 @@ public class Dungeon_Popup_UI : UI_Popup
             Result_Popup_UI result = Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
 
             currentExp += 10;
+
+            int addExp = (selectedDungeonNumber - 1) * 5;
+            currentExp *= addExp != 0 ? addExp : 1;
             long originExp = Managers.Player.GetExp();
             int originLevel = Managers.Player.GetLevel();
             long originNeedExp = Managers.Player.GetNeedExp();
@@ -883,7 +891,6 @@ public class Dungeon_Popup_UI : UI_Popup
         EXPStatisticsReqDto dto = new EXPStatisticsReqDto();
         dto.classCode = Managers.Player.GetClassCode();
         dto.currentExp = Managers.Player.GetExp();
-        dto.classCode = Managers.Player.GetClassCode();
         dto.playerLevel = Managers.Player.GetLevel();
         dto.reason = message;
         dto.expDelta = currentExp;
