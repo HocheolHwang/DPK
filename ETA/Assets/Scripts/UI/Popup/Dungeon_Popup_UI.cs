@@ -11,6 +11,7 @@ using WebSocketSharp;
 using System.Linq;
 using System.IO;
 using ExitGames.Client.Photon;
+using Unity.Mathematics;
 
 public class Dungeon_Popup_UI : UI_Popup
 {
@@ -252,6 +253,60 @@ public class Dungeon_Popup_UI : UI_Popup
 
     // 콜라보 슬롯 이펙트
     private GameObject[,] collavoSlots = new GameObject[3, 8];
+
+    // 드래곤 컨트롤러
+    private DragonController dragonObject;
+
+    // 드래곤 대사
+    private readonly string[] dragonDialogues = new string[]
+    {
+        "나는 이 땅의 수호자, 화염의 용, 이프리스다. 너희의 도전을 받아들이겠노라!",
+        "하늘을 지배하고 대지를 불태우는 나의 힘 앞에 감히 도전하다니! 그 용기를 인정하겠다.",
+        "너희가 여기까지 온 것은 용기일지, 아니면 어리석음일지. 진정한 시험을 시작해보자.",
+        "나는 세상의 끝과 시작을 보았다. 너희의 운명도 내 눈 앞에 펼쳐질 것이다.",
+        "이 불타는 숨결 앞에 서는 자, 모두 재가 될 운명이다. 너희도 예외는 아니다!"
+    };
+
+    // 보스 대사
+    private readonly string[][] bossDialogues = new string[][]
+    {
+        new string[]
+        {
+            "숲의 왕, 플리아드가 너희의 도전을 기다리고 있었다. 자연의 힘을 온몸으로 느껴라!",
+            "자연의 아름다움에 숨은 힘, 그것이 바로 나, 플리아드. 너희의 용기와 지혜를 시험하겠다.",
+            "이 숲의 질서를 어지럽히려는 건가? 플리아드가 너희를 심판할 것이다!"
+        },
+        new string[]
+        {
+            "나는 별들의 길잡이, 나이트-G. 너희의 운명은 별빛 아래에서 결정될 것이다!",
+            "별들의 광채 속에서, 너희의 시험이 시작되리라.",
+            "너희에게 별의 축복이 함께하기를 바란다. 그것이 너희에게 필요할 테니."
+        },
+        new string[]
+        {
+            "으하하하하! 내 앞에서 살아남을 수 있을까?",
+            "죽음의 그림자, 톰바크가 너희를 기다리고 있었다. 이제 너희의 운명이 결정될 것이다!",
+            "어둠 속에서 깨어난 톰바크, 너희를 파멸로 이끌 것이다!"
+        },
+        new string[]
+        {
+            "심연의 파도가 너희를 부른다. 여기가 너희의 끝이 될 것이다!",
+            "해저의 어둠 속에서, 나는 너희를 삼킬 것이다! 심해의 분노를 맛보아라!",
+            "이프리스가 너희를 멸망으로 이끌 것이다! 이제 너희의 운명은 결정되었다."
+        }
+    };
+
+    // 보스 대사 색깔
+    private readonly Color[] bossColors = new Color[]
+    {
+        new(1.0f, 0.9f, 0.5f), // 연한 노랑
+        new(0.7f, 0.9f, 1.0f), // 연한 하늘색
+        new(0.8f, 0.7f, 0.5f), // 연한 갈색
+        new(0.9f, 0.1f, 0.1f), // 진한 빨강
+    };
+
+    // 랜덤 시스템
+    private static readonly System.Random random = new System.Random();
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -540,7 +595,7 @@ public class Dungeon_Popup_UI : UI_Popup
         KnightGController.OnBossDestroyed -= HandleBossDestroyed;
         MummyManController.OnMummyDestroyed -= HandleBossDestroyed;
         PlayerController.OnPlayerDestroyed -= HandlePlayerDestroyed;
-        //DragonController.OnBossDestroyed -= HandlePlayerDestroyed;
+        DragonController.OnBossDestroyed -= HandleBossDestroyed;
 
         if (isTutorialScene)
         {
@@ -696,7 +751,7 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 파괴 이벤트 핸들러 등록
         KnightGController.OnBossDestroyed += HandleBossDestroyed;
         MummyManController.OnMummyDestroyed += HandleBossDestroyed;
-        //DragonController.OnBossDestroyed += HandlePlayerDestroyed;
+        DragonController.OnBossDestroyed += HandleBossDestroyed;
     }
 
     // 파티원 정보 업데이트 메서드
@@ -740,6 +795,20 @@ public class Dungeon_Popup_UI : UI_Popup
         shieldRectTransform.sizeDelta = new Vector2(shieldScale * maxLength, shieldRectTransform.sizeDelta.y);
     }
 
+    // 드래곤 업데이트 메서드
+    public void UpdateDragonHP()
+    {
+        // 드래곤 체력 업데이트
+        if (dragonStatus.activeSelf != false)
+        {
+            if (dragonObject != null)
+            {
+                bossStat = dragonObject.GetComponent<Stat>();
+            }
+            dragonHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
+            dragonHPSlider.value = (float)bossStat.Hp / bossStat.MaxHp;
+        }
+    }
     // HP 업데이트 메서드
     public void UpdateHP()
     {
@@ -820,6 +889,23 @@ public class Dungeon_Popup_UI : UI_Popup
         bossScriptContainer.SetActive(false);
     }
 
+    // 드래곤 상태창 업데이트 메서드
+    public void UpdateDragonStatus()
+    {
+        // 드래곤 상태창을 띄움
+        dragonStatus.SetActive(true);
+
+        // 랜덤한 드래곤 등장 대사 활성화
+        string selectedDialogue = dragonDialogues[random.Next(dragonDialogues.Length)];
+
+        Color dragonColor = new(0.9f, 0.1f, 0.1f);
+
+        // 드래곤 찾기
+        dragonObject = FindObjectOfType<DragonController>();
+
+        ShowAndHideBossDialogue(selectedDialogue, dragonColor);
+    }
+
     // 던전 진행 슬라이더 업데이트 메서드
     public void UpdateProgress()
     {
@@ -855,49 +941,11 @@ public class Dungeon_Popup_UI : UI_Popup
                 _ => "알 수 없는 보스",
             };
 
-            // 보스 등장 대사 활성화
-            string[] bossDialogues = selectedDungeonNumber switch
-            {
-                0 => new string[]
-                {
-                    "숲의 왕, 플리아드가 너희의 도전을 기다렸다. 진정한 자연의 힘을 각오하라!",
-                    "자연의 아름다움에 숨은 힘, 그것은 바로 나, 플리아드. 너희의 용기를 검증하겠다.",
-                    "이 숲의 규칙을 바꾸려는 건가? 플리아드가 너희를 심판할 것이다!"
-                },
-                1 => new string[]
-                {
-                    "별들이 나의 길잡이, 나이트-G. 너희의 운명은 별빛 아래 결정될 것이다!",
-                    "별들의 광채 속에서, 나이트-G가 천체의 힘을 빌어 나타났다.",
-                    "너희에게 별의 축복이 함께하기를, 그것이 너희에게 필요할 테니."
-                },
-                2 => new string[]
-                {
-                    "으하하하하! 내 앞에서 살아남을 수 있을까?",
-                    "죽음의 그림자, 톰바크가 너희를 기다린다!",
-                    "어둠 속에서 깨어난 톰바크, 너희를 파멸로 이끌 것이다!"
-                },
-                3 => new string[]
-                {
-                    "심연의 파도가 나를 부른다, 심해의 수호자 이프리스. 여기가 너희의 끝이다!",
-                    "해저의 어둠 속에서, 나는 너희를 삼킬 것이다!",
-                    "심해의 분노를 맛보아라, 이프리스가 너희를 멸망으로 이끌 것이다!"
-                },
-                _ => new string[] { "" }
-            };
+            // 현재 보스 정보 업데이트
+            string selectedDialogue = bossDialogues[selectedDungeonNumber][random.Next(bossDialogues[selectedDungeonNumber].Length)];
+            Color bossColor = bossColors[selectedDungeonNumber];
 
-
-            System.Random random = new System.Random();
-            string selectedDialogue = bossDialogues[random.Next(bossDialogues.Length)];
-
-            Color bossColor = selectedDungeonNumber switch
-            {
-                0 => new Color(1.0f, 0.9f, 0.5f), // 연한 노랑
-                1 => new Color(0.7f, 0.9f, 1.0f), // 연한 하늘색
-                2 => new Color(0.8f, 0.7f, 0.5f), // 연한 갈색
-                3 => new Color(0.9f, 0.1f, 0.1f), // 진한 빨강
-                _ => Color.white,
-            };
-
+            // 보스 대사 띄우기
             ShowAndHideBossDialogue(selectedDialogue, bossColor);
         }
     }
@@ -906,7 +954,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private void HandleBossDestroyed()
     {
         // 보스 상태창 비활성화
-        bossStatus.SetActive(false);
+        bossStatus?.SetActive(false);
+        dragonStatus?.SetActive(false);
 
         // 보스 클리어
         Managers.Photon.SendDungeonEnd(timeText.text, true);
@@ -916,8 +965,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
         if (selectedDungeonNumber!= 0)
         {
-            currentExp += 30;
-            currentExp += 10;
+            currentExp += 40;
 
             int addExp = (selectedDungeonNumber - 1) * 5;
 
@@ -956,8 +1004,6 @@ public class Dungeon_Popup_UI : UI_Popup
         {
             // 던전 결과 Popup UI를 띄움
             Result_Popup_UI result = Managers.UI.ShowPopupUI<Result_Popup_UI>("[Dungeon]_Result_Popup_UI");
-
-            currentExp += 10;
 
             int addExp = (selectedDungeonNumber - 1) * 5;
             currentExp *= addExp != 0 ? addExp : 1;

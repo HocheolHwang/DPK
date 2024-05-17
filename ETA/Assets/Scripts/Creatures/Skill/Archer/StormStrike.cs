@@ -6,7 +6,7 @@ public class StormStrike : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(13);
         Damage = 100;
         base.Init();
         SkillType = Define.SkillType.Target;

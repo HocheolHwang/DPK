@@ -139,8 +139,14 @@ public class Character_Select : MonoBehaviour
     // Warrior 선택 메서드
     private void WarriorSelect()
     {
+        // 레벨에 따른 스텟 업데이트
+        int warriorLevel = Managers.Player.GetWarriorLevel();
+        int warriorHP = CalculateHP(warriorLevel);
+        int warriorAP = CalculateAP(warriorLevel);
+        int warriorDP = 10;
+
         // 캐릭터 정보 업데이트
-        UpdateCharacterInfo("레오", "Warrior", "보통", Managers.Player.GetWarriorLevel(), 250, 50, 10);
+        UpdateCharacterInfo("레오", "Warrior", "보통", warriorLevel, warriorHP, warriorAP, warriorDP);
 
         // 선택된 캐릭터 코드 업데이트
         selectedClassCode = "C001";
@@ -149,8 +155,14 @@ public class Character_Select : MonoBehaviour
     // Archer 선택 메서드
     private void ArcherSelect()
     {
+        // 레벨에 따른 스텟 업데이트
+        int archerLevel = Managers.Player.GetArcherLevel();
+        int archerHP = CalculateHP(archerLevel);
+        int archerAP = CalculateAP(archerLevel);
+        int archerDP = 5;
+
         // 캐릭터 정보 업데이트
-        UpdateCharacterInfo("아리아", "Archer", "쉬움", Managers.Player.GetArcherLevel(), 250, 50, 10);
+        UpdateCharacterInfo("아리아", "Archer", "쉬움", archerLevel, archerHP, archerAP, archerDP);
 
         // 선택된 캐릭터 코드 업데이트
         selectedClassCode = "C002";
@@ -159,11 +171,29 @@ public class Character_Select : MonoBehaviour
     // Mage 선택 메서드
     private void MageSelect()
     {
+        // 레벨에 따른 스텟 업데이트
+        int mageLevel = Managers.Player.GetMageLevel();
+        int mageHP = CalculateHP(mageLevel);
+        int mageAP = CalculateAP(mageLevel);
+        int mageDP = 5;
+
         // 캐릭터 정보 업데이트
-        UpdateCharacterInfo("이안", "Mage", "어려움", Managers.Player.GetMageLevel(), 250, 50, 10);
+        UpdateCharacterInfo("이안", "Mage", "어려움", mageLevel, mageHP, mageAP, mageDP);
 
         // 선택된 캐릭터 코드 업데이트
         selectedClassCode = "C003";
+    }
+
+    // 체력 계산
+    private int CalculateHP(int level)
+    {
+        return 300 + level * 20;
+    }
+
+    // 공격력 계산
+    private int CalculateAP(int level)
+    {
+        return 20 + level * 5;
     }
 
     // 마우스가 자세히 보기 버튼 위로 올라갔을 때 호출될 메소드
