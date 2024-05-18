@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,6 +26,18 @@ public class Menu_Popup_UI : UI_Popup
         Load_Lobby_Button_Continaer
     }
 
+    enum Sliders
+    {
+        // 전체 음량
+        Sound_Setting_Slider
+    }
+
+    enum Texts
+    {
+        // 전체 음량 텍스트
+        Sound_Setting_Ratio_Text
+    }
+
     // UI 컴포넌트 바인딩 변수
     private Button closeButton;
     private Button openSettingButton;
@@ -33,9 +47,14 @@ public class Menu_Popup_UI : UI_Popup
     private Button cancelButton;
     private GameObject settingPanel;
     private GameObject loadLobbyButtonContinaer;
+    private Slider soundSettingSlider;
+    private TextMeshProUGUI soundSettingRatioText;
 
     // 현재 Scene 상태 변수
     private bool isLobbyScene;
+
+    // 오디오 믹서
+    public AudioMixer soundMixer;
 
 
     // ------------------------------ UI 초기화 ------------------------------
@@ -47,6 +66,8 @@ public class Menu_Popup_UI : UI_Popup
         // 컴포넌트 바인딩
         Bind<Button>(typeof(Buttons));
         Bind<GameObject>(typeof(GameObjects));
+        Bind<Slider>(typeof(Sliders));
+        Bind<TextMeshProUGUI>(typeof(Texts));
 
         // 닫기 버튼 이벤트 등록
         closeButton = GetButton((int)Buttons.Close_Button);
@@ -76,6 +97,15 @@ public class Menu_Popup_UI : UI_Popup
         // 설정 패널 초기화 및 비활성화
         settingPanel = GetObject((int)GameObjects.Setting_Panel);
 
+        // 전체 음량 슬라이더 초기화
+        soundSettingSlider = GetSlider((int)Sliders.Sound_Setting_Slider);
+        soundSettingSlider.value = 1;
+        soundSettingSlider.onValueChanged.AddListener(delegate { OnSliderValueChanged(); });
+
+        // 전체 음량 텍스트 초기화
+        soundSettingRatioText = GetText((int)Texts.Sound_Setting_Ratio_Text);
+        UpdateSoundText(soundSettingSlider.value);
+
         // 설정 닫기
         CloseSetting();
 
@@ -92,6 +122,29 @@ public class Menu_Popup_UI : UI_Popup
 
 
     // ------------------------------ 메서드 정의 ------------------------------
+
+
+    // 슬라이더 값 변경 시 호출될 메서드
+    private void OnSliderValueChanged()
+    {
+        SoundControl();
+        UpdateSoundText(soundSettingSlider.value);
+    }
+
+    // 사운드 설정 메서드
+    private void SoundControl()
+    {
+        float soundValue = soundSettingSlider.value;
+        float volume = Mathf.Log10(Mathf.Max(soundValue, 0.0001f)) * 20;
+        soundMixer.SetFloat("Master", volume);
+    }
+
+    // 음량 텍스트 업데이트 메서드
+    private void UpdateSoundText(float value)
+    {
+        soundSettingRatioText.text = $"{Mathf.FloorToInt(value * 100)}";
+    }
+
 
     // 설정 띄우기 메서드
     private void OpenSetting(PointerEventData data)
