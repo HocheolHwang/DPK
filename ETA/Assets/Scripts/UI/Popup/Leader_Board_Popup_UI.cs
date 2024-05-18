@@ -338,7 +338,7 @@ public class Leader_Board_Popup_UI : UI_Popup
             // 클리어 시간
             float minutes = curRank.clearTime / 60.0f;
             float seconds = curRank.clearTime % 60.0f;
-            string timeText = string.Format("{0:00}:{1:00}", Mathf.RoundToInt(minutes), Mathf.RoundToInt(seconds));
+            string timeText = string.Format("{0:00}:{1:00}", Mathf.FloorToInt(minutes), Mathf.FloorToInt(seconds));
             string clearTime = timeText;
             recordTexts[i].text = clearTime;
 
