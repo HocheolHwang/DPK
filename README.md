@@ -18,7 +18,7 @@
 |:--------------------------------------------------------------------:| :--------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|
 |최명성|김동현|신현기|장수영|정세진|황호철|
 |팀장 <br> Game Client<br>CI/CD<br>Backend|Game Clie nt|Game Client|Backend <br> Game Client|Game Client|Game Client|
-|  API 및 DB 설계<br>Photon Network 연결 및 동기화<br>플레이어 캐릭터 설계 및 구현<br>스킬 설계 및 제작  |몬스터(패턴) 설계 및 구현       | 맵 제작 및 던전 디자인<br>스킬 제작<br>오프닝 컷씬 제작작       | Photon Network 연결 및 동기화 <br> 몬스터 제작 | 스킬 제작 및 밸런스 디자인인 |              UI/UX 기획 및 설계<br>인 게임 UI 설계 및 구현               |
+|  API 및 DB 설계<br>Photon Network 연결 및 동기화<br>플레이어 캐릭터 설계 및 구현<br>스킬 설계 및 제작  |몬스터(패턴) 설계 및 구현       | 맵 제작 및 던전 디자인<br>스킬 제작<br>오프닝 컷씬 제작       | Photon Network 연결 및 동기화 <br> 몬스터 제작 | 스킬 제작 및 밸런스 디자인 |              UI/UX 기획 및 설계<br>인 게임 UI 설계 및 구현               |
 
 <br/>
 <br/>
@@ -54,8 +54,12 @@
 | `오프닝 영상` 오프닝 영상 | `게임 화면` 로비 화면 |
 | <img src="./Docs/GameImg/DungeonGIF.gif"> | <img src="./Docs/GameImg/ClassGIF.gif"> |
 | `던전` 3가지의 테마의 던전 | `직업` 전사, 궁수, 마법사 총 3가지의 직업                      |
-| <img src="./Docs/GameImg/MonsterGIF.gif"> | <img src="./Docs/GameImg/SkillGIF.gif"> |
-| `다양한 몬스터` 일반, 중간 보스, 최종 보스 몬스터          | `다양한 스킬` 직업에 따른 다양한 스킬과 전략적 스킬슬롯                |
+| <img src="./Docs/GameImg/DungeonSelectGIF.gif"> | <img src="./Docs/GameImg/MonsterGIF.gif"> |
+| `던전 선택` 3가지의 테마의 던전 선택창 | `다양한 몬스터` 일반, 중간 보스, 최종 보스 몬스터                     |
+| <img src="./Docs/GameImg/SkillInfoGIF.gif"> | <img src="./Docs/GameImg/SkillGIF.gif"> |
+| `스킬 정보` 직업에 따른 다양한 스킬         | `스킬 슬롯` 전략적 선택이 가능한 스킬슬롯                |
+| <img src="./Docs/GameImg/RankingGIF.gif">     | <img src="./Docs/GameImg/TutorialGIF.gif"> |
+| `랭킹` 유저들의 직업, 던전 랭킹         | `튜토리얼` 게임을 처음 접하는 사람을 위한 튜토리얼                |
 | <img src="./Docs/GameImg/SoloGIF.gif">     | <img src="./Docs/GameImg/MultiGIF.gif"> |
 | `싱글 플레이` 혼자서 플레이 하는 모드          | `멀티 플레이` 다른 사용자들과 함께 플레이                  |
 
