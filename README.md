@@ -14,7 +14,7 @@
 
 ##  낙곱새 팀원 소개 
 
-| <img src="./Docs/Profile/MyeongSeong.jpg" width="100%" height="150">| <img src="./Docs/Profile/DongHyun.jpg" width="100%" height="150"> | <img src="./Docs/Profile/HyunKi.png" width="100%" height="150"> | <img src="./Docs/Profile/Suyeong.png" width="100%" height="150"> | <img src="./Docs/Profile/Sejin.png" width="100%" height="150">                              | <img src="./Docs/Profile/Hocheol.png" width="100%" height="150"> |
+| <img src="./Docs/Profile/MyeongSeong.jpg" width="100%" height="150">| <img src="./Docs/Profile/DongHyun.jpg" width="100%" height="150"> | <img src="./Docs/Profile/HyunKi.png" width="100%" height="150"> | <img src="./Docs/Profile/Suyeong.png" width="100%" height="150"> | <img src="./Docs/Profile/Sejin.jpg" width="100%" height="150">                              | <img src="./Docs/Profile/Hocheol.png" width="100%" height="150"> |
 |:--------------------------------------------------------------------:| :--------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|
 |최명성|김동현|신현기|장수영|정세진|황호철|
 |팀장 <br> Game Client<br>CI/CD<br>Frontend|Game Client|Game Client|Backend <br> Game Client|Game Client|Game Client|
