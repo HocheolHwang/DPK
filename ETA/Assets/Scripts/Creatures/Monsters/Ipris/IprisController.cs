@@ -50,7 +50,7 @@ public class IprisController : BaseMonsterController
     public float PatternTwoTime { get => _patternTwoTime; set => _patternTwoTime = value; }
     public float ThreadHoldPatternTwo { get => _threadHoldPatternTwo; }
     public float WindMillCnt { get => _windMillCnt; set => _windMillCnt = value; }
-    public float ThreadHoldWindMill { get => 2; }           // 3번
+    public float ThreadHoldWindMill { get => 1; }           // 1번
     public int PatternOneCnt { get => _patternOneCnt; set => _patternOneCnt = value; }
     public int ThreadHoldPatternOne { get => _threadHoldPatternOne; }
     public Vector3 StartPos { get => _startPos; set => _startPos = value; }

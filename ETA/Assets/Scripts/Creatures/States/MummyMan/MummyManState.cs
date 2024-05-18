@@ -22,7 +22,7 @@ enum EMummyManPattern
 public class MummyManState : State
 {
     protected const int MaxSummonCount = 1;         // 첫 조우 이후에 Buffer와 Warrior가 살아날 수 있는 횟수
-    protected const float RushTime = 3.0f;
+    protected const float RushTime = 2.0f;
 
     protected MummyManController _controller;
     protected MummyManAnimationData _animData;
