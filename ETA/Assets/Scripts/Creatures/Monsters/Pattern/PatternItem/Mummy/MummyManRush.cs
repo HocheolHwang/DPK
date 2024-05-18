@@ -10,7 +10,7 @@ public class MummyManRush : Pattern
     [SerializeField] Vector3 _hitboxRange = new Vector3(6.0f, 2.0f, 1.0f);
     [SerializeField] float _upPos = 1.0f;
 
-    private const float RushTime = 3.0f;
+    private const float RushTime = 2.0f;
 
     public override void Init()
     {
