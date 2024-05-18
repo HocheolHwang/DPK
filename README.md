@@ -17,8 +17,8 @@
 | <img src="./Docs/Profile/MyeongSeong.jpg" width="100%" height="150">| <img src="./Docs/Profile/DongHyun.jpg" width="100%" height="150"> | <img src="./Docs/Profile/HyunKi.png" width="100%" height="150"> | <img src="./Docs/Profile/Suyeong.png" width="100%" height="150"> | <img src="./Docs/Profile/Sejin.jpg" width="100%" height="150">                              | <img src="./Docs/Profile/Hocheol.png" width="100%" height="150"> |
 |:--------------------------------------------------------------------:| :--------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|
 |최명성|김동현|신현기|장수영|정세진|황호철|
-|팀장 <br> Game Client<br>CI/CD<br>Frontend|Game Client|Game Client|Backend <br> Game Client|Game Client|Game Client|
-|  API 및 DB 설계<br>Photon Network 연결 및 동기화<br>아이템(스킬) 제작  |      API 및 DB 설계<br>아이템(스킬, 상자) 설계 및 구현<br>UCC 제작       |           UI/UX 기획 및 설계<br>몬스터(패턴) 설계 및 구현<br>아이템 제작           | UI/UX 기획 및 설계<br> 레벨 디자인 <br>맵 구조 설계 및 개발<br>몬스터(패턴) 제작<br>아이템 제작 | 플레이어 캐릭터 설계 및 구현<br>아이템(스킬) 설계 및 구현<br>Photon Network 연결 및 동기화<br>웹 페이지 제작<br>CI/CD 구축<br> |              UI/UX 기획 및 설계<br>인 게임 UI 설계 및 구현               |
+|팀장 <br> Game Client<br>CI/CD<br>Backend|Game Clie nt|Game Client|Backend <br> Game Client|Game Client|Game Client|
+|  API 및 DB 설계<br>Photon Network 연결 및 동기화<br>플레이어 캐릭터 설계 및 구현<br>스킬 설계 및 제작  |몬스터(패턴) 설계 및 구현       | 맵 제작 및 던전 디자인<br>스킬 제작<br>오프닝 컷씬 제작작       | Photon Network 연결 및 동기화 <br> 몬스터 제작 | 스킬 제작 및 밸런스 디자인인 |              UI/UX 기획 및 설계<br>인 게임 UI 설계 및 구현               |
 
 <br/>
 <br/>
@@ -103,11 +103,6 @@
 <br/>
 <br/>
 
-## 🧱 서비스 아키텍쳐
-
-![배포아키텍쳐](./Docs/Architecture.png)
-<br/>
-
 
 <br/>
 
@@ -116,3 +111,6 @@
 [Notion 협업링크](https://round-tower-80e.notion.site/E107-439c9a3c4cde4e3dbc1bc20511f64965?pvs=4)
 
 
+## 🎨 와이어 프레임
+
+[Figma 링크](https://www.figma.com/file/PL3NZV5uLviCKsIvZamyQw/E-107?type=design&node-id=341-5148&mode=design)
