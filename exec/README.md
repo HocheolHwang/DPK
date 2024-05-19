@@ -83,3 +83,47 @@ npm run build
 3. Multiplayer Game을 선택하고 Select Photon SDK 를 Pun으로 설정
 4. 프로젝트 생성 AppId 복사
 5. 유니티 -> 포톤 유니티 네트워킹 -> PUN Wizard -> Setup Project -> 복사한 AppId 입력 후 Setup Project
+
+# 시연 시나리오
+
+1. 게임 접속
+
+
+![image.png](./GameImg/LogInGIF.gif)
+
+2. 로비 입장
+
+
+![image.png](./GameImg/LobbyGIF.gif)
+
+3. 캐릭터 창
+
+
+![image.png](./GameImg/ClassGIF.gif)
+
+4. 스킬 설명
+
+
+![image.png](./GameImg/SkillInfoGIF.gif)
+
+5. 스킬 슬롯 설명
+
+
+![image.png](./GameImg/SkillGIF.gif)
+
+6. 던전 입장
+
+
+![image.png](./GameImg/DungeonSelectGIF.gif)
+
+7. 1스테이지 ~ 3스테이지 진행
+
+
+![image.png](./GameImg/MonsterGIF.gif)
+
+8. 랭킹 설명
+
+
+![image.png](./GameImg/RankingGIF.gif)
+
+9. 시연 종료
