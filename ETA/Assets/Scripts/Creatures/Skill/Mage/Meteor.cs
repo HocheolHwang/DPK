@@ -12,7 +12,7 @@ public class Meteor : Skill
         SetCoolDownTime(20);
         base.Init();
         SkillType = Define.SkillType.Range;
-        skillRange = new Vector3(5, 5, 5);
+        skillRange = new Vector3(7, 7, 7);
         RangeType = Define.RangeType.Round;
         Damage = 100;
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/Meteor.png");
