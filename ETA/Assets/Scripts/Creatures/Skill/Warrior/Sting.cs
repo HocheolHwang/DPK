@@ -14,7 +14,7 @@ public class Sting : Skill
 
     public override IEnumerator StartSkillCast()
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage * 2;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         // 대상을 향해 회전하기
         Vector3 directionToTarget = (_skillSystem.TargetPosition - transform.position).normalized;
         Quaternion rotationToTarget = Quaternion.LookRotation(directionToTarget, Vector3.up);
@@ -52,7 +52,7 @@ public class Sting : Skill
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
         Managers.Sound.Play("Skill/TargetSkill");
-        
+
         yield return new WaitForSeconds(0.5f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
