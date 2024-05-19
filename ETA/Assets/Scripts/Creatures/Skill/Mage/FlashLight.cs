@@ -6,7 +6,7 @@ public class FlashLight : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(10);
+        SetCoolDownTime(5);
         Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Immediately;

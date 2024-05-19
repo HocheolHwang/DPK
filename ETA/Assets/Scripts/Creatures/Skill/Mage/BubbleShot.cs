@@ -6,7 +6,7 @@ public class BubbleShot : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(3);
+        SetCoolDownTime(2);
         Damage = 20;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/BubbleShot.png");
