@@ -77,11 +77,11 @@
 
 #### **BE**
 
-<img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white">
-<img src="https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=npm&logoColor=white">
+<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=nestjs&logoColor=white">
+<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=npm&logoColor=white">
+<img src="https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style=for-the-badge&logo=npm&logoColor=white">
 <img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
-<img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white">
 
 #### **INFRA**
 
@@ -107,6 +107,9 @@
 <br/>
 <br/>
 
+## 🔨 아키텍처 구성도
+
+<img src="./Docs/Infra/E207_Infra.png">
 
 <br/>
 
