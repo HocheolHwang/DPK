@@ -6,7 +6,7 @@ public class WindBlast : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(10);
+        SetCoolDownTime(5);
         Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Immediately;

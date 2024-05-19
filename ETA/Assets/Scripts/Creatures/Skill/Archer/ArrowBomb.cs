@@ -7,7 +7,7 @@ public class ArrowBomb : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(10);
+        SetCoolDownTime(5);
         Damage = 30;
         base.Init();
         SkillType = Define.SkillType.Range;

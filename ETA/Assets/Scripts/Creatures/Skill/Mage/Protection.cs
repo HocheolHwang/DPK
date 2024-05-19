@@ -40,7 +40,7 @@ public class Protection : Skill
         buffbox1.transform.position = gameObject.transform.position;
         buffbox1.transform.localScale = new Vector3(20, 5, 20);
 
-        yield return new WaitForSeconds(4.9f);
+        yield return new WaitForSeconds(4.5f);
         Managers.Resource.Destroy(buffbox1.gameObject);
 
         BuffBox buffbox2 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
