@@ -1,0 +1,7 @@
+spring:
+    application:
+        name: back
+    profiles:
+        active: ${profile}
+
+## .yml은 프로덕션 버전이 있을 것
