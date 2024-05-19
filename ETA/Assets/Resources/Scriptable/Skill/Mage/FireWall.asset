@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 729891a97877d1548b59da4304320aef, type: 3}
+  m_Name: FireWall
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 751c8e026bb7391419f1da7f6cb20891, type: 3}
+  IsCollavo: 0
+  IsCounter: 0
+  SkillType: 2
+  RequiredLevel: 4
+  Damage: 5
+  CoolDownTime: 15
+  SkillCode: M205
+  SkillName: FireWall
+  SkillKoreanName: "\uBD88\uC758 \uC7A5\uB9C9"
+  SkillDescription: "\uAE38\uB2E4\uB780 \uBD88\uC758 \uC7A5\uB9C9\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.\n\uC7A5\uB9C9
+    \uC548 \uC801\uB4E4\uC5D0\uAC8C \uD53C\uD574\uB97C \uC8FC\uACE0 \uC801\uC758
+    \uD22C\uC0AC\uCCB4\uB97C \uD0DC\uC6CC\uBC84\uB9BD\uB2C8\uB2E4."
+  ConnectedSkillKoreanName: 
+  CollavoSkillKoreanName: 
+  CollavoSkillDescription: 

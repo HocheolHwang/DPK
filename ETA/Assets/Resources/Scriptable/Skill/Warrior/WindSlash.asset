@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 729891a97877d1548b59da4304320aef, type: 3}
+  m_Name: WindSlash
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 54eafaa3ee2090e45a76c8cb6af7a121, type: 3}
+  IsCollavo: 1
+  IsCounter: 0
+  SkillType: 3
+  RequiredLevel: 3
+  Damage: 100
+  CoolDownTime: 20
+  SkillCode: W402
+  SkillName: WindSlash
+  SkillKoreanName: "\uBC14\uB78C \uAC00\uB974\uAE30"
+  SkillDescription: "\uBC14\uB78C\uC744 \uAC00\uB974\uBA70 \uD06C\uAC8C \uBCA0\uC5B4\uB0C5\uB2C8\uB2E4."
+  ConnectedSkillKoreanName: "\uC21C\uD48D"
+  CollavoSkillKoreanName: "\uC2F8\uC774\uD074\uB860"
+  CollavoSkillDescription: "\uC804\uBC29\uC5D0 \uBC14\uB78C\uC758 \uD798\uC744 \uC2E4\uC740
+    \uAC80\uAE30\uB85C \uCD08\uD1A0\uD654 \uC2DC\uD0A8\uB2E4."
