@@ -15,7 +15,7 @@ public class KnightGCounterAttackPattern : Pattern
         base.Init();
 
         _createTime = 0.47f;
-        _patternDmg = 130;
+        _patternDmg = 180;
     }
 
     public override IEnumerator StartPatternCast()
@@ -29,7 +29,7 @@ public class KnightGCounterAttackPattern : Pattern
         yield return new WaitForSeconds(_createTime);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _attackDamage + _patternDmg);
+        hitbox.SetUp(transform, _patternDmg);
         hitbox.GetComponent<SphereCollider>().radius = _hitboxRadius;
         hitbox.transform.rotation = transform.rotation;
         hitbox.transform.position = objectLoc;
