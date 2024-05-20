@@ -91,10 +91,13 @@ public class Server_Selection_Popup_UI : UI_Popup
 
         // 서버 선택이 성공적으로 이루어졌을 경우
 
-        // 현재 Popup UI를 닫음
-        ClosePopupUI();
+        //// 현재 Popup UI를 닫음
+        //ClosePopupUI();
+        // 모든 Popup UI를 닫음
+        CloseAllPopupUI();
 
         // 로그인 Popup UI를 띄움
+        Managers.UI.ShowPopupUI<Before_Login_Popup_UI>("[Login]_Before_Login_Popup_UI");
         Managers.UI.ShowPopupUI<Login_Popup_UI>("[Login]_Login_Popup_UI");
     }
 
