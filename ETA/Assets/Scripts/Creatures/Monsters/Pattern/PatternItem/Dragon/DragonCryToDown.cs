@@ -43,7 +43,7 @@ public class DragonCryToDown : Pattern
 
         Managers.Sound.Play("Sounds/Monster/Dragon/DragonCryToDown_SND", Define.Sound.Effect);
 
-        yield return new WaitForSeconds(_duration);
+        yield return new WaitForSeconds(_duration + 3.0f);
     }
 
     IEnumerator CreateBox(Vector3 Pos)
@@ -61,9 +61,12 @@ public class DragonCryToDown : Pattern
                 Managers.Effect.Stop(ps);
                 Managers.Sound.Play("Sounds/Monster/CounterEnable_SND", Define.Sound.Effect);
 
-                ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 0, transform);
-                ps.transform.position = Pos;
-                ps.transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
+                ParticleSystem counterEffect = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, transform);
+                counterEffect.transform.parent = null;
+                counterEffect.transform.position = Pos;
+                counterEffect.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+
+                yield return new WaitForSeconds(3.0f);
 
                 yield break;
             }
