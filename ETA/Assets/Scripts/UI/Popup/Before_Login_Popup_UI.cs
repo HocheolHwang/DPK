@@ -67,6 +67,7 @@ public class Before_Login_Popup_UI : UI_Popup
     // 소리 업데이트 메서드
     private void UpdateSound()
     {
+        AudioListener.volume = IsMute ? 0 : 1;
         // TODO: IsMute 값에 따라 소리를 켜고 끄는 로직 추가 필요
     }
 }
