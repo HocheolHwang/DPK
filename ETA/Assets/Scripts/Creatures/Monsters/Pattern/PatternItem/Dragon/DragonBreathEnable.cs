@@ -51,9 +51,9 @@ public class DragonBreathEnable : Pattern
         {
             if (_dcontroller.IsMeetConditionHit)
             {
-                ParticleSystem ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Red, 0, transform);
+                ParticleSystem ps = Managers.Effect.Play(Define.Effect.CounteredEffect_Red, 1, transform);
                 ps.transform.position = Pos;
-                ps.transform.localScale = new Vector3(4.0f, 4.0f, 4.0f);
+                ps.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
 
                 Managers.Effect.Stop(auraPS);
                 _dcontroller.BreathReadyEffect.Stop();
