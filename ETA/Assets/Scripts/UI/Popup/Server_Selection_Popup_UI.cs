@@ -101,6 +101,7 @@ public class Server_Selection_Popup_UI : UI_Popup
 
         //// 현재 Popup UI를 닫음
         //ClosePopupUI();
+        Debug.Log("서버 선택 ㄱㄱ");
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
 
