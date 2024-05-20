@@ -87,21 +87,16 @@ public class Server_Selection_Popup_UI : UI_Popup
     private void ServerSelection(PointerEventData data)
     {
         // TODO: currentServerNumber 숫자에 따라 서로 다른 서버로 접속하는 코드 작성 필요
-        string appId = "";
-        if (_currentServerNumber == 0)
-            appId = "f6389f3a-e687-4cba-84d5-bf19ca54c9bc";
-        else if (_currentServerNumber == 1)
-            appId = "91851ade-708c-4a66-8f90-5b526eba80a2";
-        else if (_currentServerNumber == 2)
-            appId = "169642ab-8e8d-42f1-bb00-ffeffe4d038c";
+        string appId = _currentServerNumber switch
+        {
+            0 => "f6389f3a-e687-4cba-84d5-bf19ca54c9bc",
+            1 => "91851ade-708c-4a66-8f90-5b526eba80a2",
+            2 => "169642ab-8e8d-42f1-bb00-ffeffe4d038c",
+            _ => ""
+        };
 
         PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = appId;
 
-        // 서버 선택이 성공적으로 이루어졌을 경우
-
-        //// 현재 Popup UI를 닫음
-        //ClosePopupUI();
-        Debug.Log("서버 선택 ㄱㄱ");
         // 모든 Popup UI를 닫음
         CloseAllPopupUI();
 

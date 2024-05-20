@@ -55,6 +55,7 @@ public class IprisCounterEnable : Pattern
             {
                 Managers.Resource.Destroy(_hitbox.gameObject);
                 Managers.Effect.Stop(_ps);
+                Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 0);
                 Managers.Sound.Play("Monster/CounterEnable_SND", Define.Sound.Effect);
                 yield break;
             }

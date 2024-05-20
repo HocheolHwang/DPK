@@ -8,7 +8,7 @@ public class KnightGTwoSkillAttack : Pattern
 {
     [Header("개발 편의성")]
     [SerializeField] float _hitboxForwardLoc;
-    [SerializeField] float _hitboxRadius = 4.0f;
+    [SerializeField] float _hitboxRadius = 2.6f;
 
     private Coroutine[] _coroutineList;
 

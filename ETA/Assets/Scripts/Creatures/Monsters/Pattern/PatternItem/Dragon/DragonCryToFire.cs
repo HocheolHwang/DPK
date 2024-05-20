@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class DragonCryToFire : Pattern
 {
@@ -74,6 +75,14 @@ public class DragonCryToFire : Pattern
                 Managers.Effect.Stop(rightPS);
                 Managers.Sound.Play("Sounds/Monster/CounterEnable_SND", Define.Sound.Effect);
 
+                ParticleSystem counterEffectLeft = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1);
+                counterEffectLeft.transform.position = leftPos;
+                counterEffectLeft.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+
+                ParticleSystem counterEffectRight = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1);
+                counterEffectRight.transform.position = rightPos;
+                counterEffectRight.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+
                 yield return StartCoroutine(CreateBodyEffect(bodyPos, duration - timer));
                 yield break;
             }
@@ -99,6 +108,12 @@ public class DragonCryToFire : Pattern
             {
                 Managers.Effect.Stop(ps);
                 Managers.Sound.Play("Sounds/Monster/CounterEnable_SND", Define.Sound.Effect);
+
+                ParticleSystem counterEffect = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1);
+                counterEffect.transform.position = Pos;
+                counterEffect.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+
+                yield return new WaitForSeconds(1.0f);
                 yield break;
             }
             timer += Time.deltaTime;
