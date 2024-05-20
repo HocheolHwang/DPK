@@ -256,6 +256,7 @@ namespace PlayerStates
             _chargeEffect.Play();
 
             GameObject.FindObjectOfType<CollavoSystem>().AddCurrentSkill(_playerController, _playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
+            Managers.Sound.Play("Skill/CollavoSound");
         }
 
         public override void Execute()
@@ -289,6 +290,7 @@ namespace PlayerStates
         {
             Managers.Resource.Destroy(_chargeEffect.gameObject);
             GameObject.Find("Collaboration_Slider").GetComponent<Slider>().value = 0;
+            GameObject.FindObjectOfType<CollavoSystem>().RemoveCurrentSkill(_playerController.SkillSlot.Skills[(int)_playerController._usingSkill].CollavoSkillName);
         }
     }
 

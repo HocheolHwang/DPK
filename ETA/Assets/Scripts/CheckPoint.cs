@@ -8,10 +8,11 @@ public class CheckPoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        gameObject.SetActive(false);
+        
         Debug.Log("Trigger entered by: " + other.gameObject.name);
         if (other.CompareTag("Player"))  // 플레이어와의 충돌 감지
         {
+            gameObject.SetActive(false);
             if (dungeonPopupUI == null)
             {
                 dungeonPopupUI = FindObjectOfType<Dungeon_Popup_UI>();

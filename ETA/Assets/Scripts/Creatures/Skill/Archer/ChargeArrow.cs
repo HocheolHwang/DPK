@@ -6,7 +6,7 @@ public class ChargeArrow : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(15);
+        SetCoolDownTime(10);
         Damage = 50;
         base.Init();
         SkillType = Define.SkillType.Immediately;
