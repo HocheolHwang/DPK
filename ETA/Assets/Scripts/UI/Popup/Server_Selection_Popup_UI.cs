@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class Server_Selection_Popup_UI : UI_Popup
 {
@@ -86,8 +87,15 @@ public class Server_Selection_Popup_UI : UI_Popup
     private void ServerSelection(PointerEventData data)
     {
         // TODO: currentServerNumber 숫자에 따라 서로 다른 서버로 접속하는 코드 작성 필요
+        string appId = "";
+        if (_currentServerNumber == 0)
+            appId = "f6389f3a-e687-4cba-84d5-bf19ca54c9bc";
+        else if (_currentServerNumber == 1)
+            appId = "91851ade-708c-4a66-8f90-5b526eba80a2";
+        else if (_currentServerNumber == 2)
+            appId = "169642ab-8e8d-42f1-bb00-ffeffe4d038c";
 
-
+        PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = appId;
 
         // 서버 선택이 성공적으로 이루어졌을 경우
 
