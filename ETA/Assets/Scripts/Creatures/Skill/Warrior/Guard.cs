@@ -19,6 +19,7 @@ public class Guard : Skill
         yield return new WaitForSeconds(0.05f);
         Managers.Sound.Play("Skill/GuardSkill");
         Managers.Coroutine.Run(GetShieldCoroutine());
+        yield return new WaitForSeconds(0.8f);
 
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
