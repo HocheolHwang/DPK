@@ -19,12 +19,15 @@ public class ZoomOutPoint : MonoBehaviour
 
         if (player != null)
         {
-            if(player.IsMine) Camera.main.GetComponent<CameraController>().ZoomOut();
+            if (player.IsMine)
+            {
+                Camera.main.GetComponent<CameraController>().ZoomOut();
 
-            dungeonPopupUI = FindObjectOfType<Dungeon_Popup_UI>();
-            if (dungeonPopupUI == null) return;
+                dungeonPopupUI = FindObjectOfType<Dungeon_Popup_UI>();
+                if (dungeonPopupUI == null) return;
 
-            dungeonPopupUI.UpdateDragonStatus();
+                dungeonPopupUI.UpdateDragonStatus();
+            }
         }
     }
 

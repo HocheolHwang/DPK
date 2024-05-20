@@ -315,7 +315,7 @@ public class Leader_Board_Popup_UI : UI_Popup
         myRecordText.text = highestLevel.ToString();
 
         // My 랭킹 등수
-        myRankingText.text = "-";
+        myRankingText.text = $"{ playerRankList.personalRanking}";
     }
 
     // 던전 랭킹 업데이트 메서드
