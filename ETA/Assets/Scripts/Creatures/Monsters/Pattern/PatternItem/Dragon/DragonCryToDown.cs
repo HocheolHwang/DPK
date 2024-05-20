@@ -58,14 +58,14 @@ public class DragonCryToDown : Pattern
         {
             if (_dcontroller.IsMeetConditionDown)
             {
-                Managers.Effect.Stop(ps);
-                Managers.Sound.Play("Sounds/Monster/CounterEnable_SND", Define.Sound.Effect);
-
                 ParticleSystem counterEffect = Managers.Effect.Play(Define.Effect.CounteredEffect_Blue, 1, transform);
                 counterEffect.transform.parent = null;
                 counterEffect.transform.position = Pos;
                 counterEffect.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
 
+
+                Managers.Effect.Stop(ps);
+                Managers.Sound.Play("Sounds/Monster/CounterEnable_SND", Define.Sound.Effect);
                 yield return new WaitForSeconds(3.0f);
 
                 yield break;
