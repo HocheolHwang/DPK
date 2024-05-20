@@ -19,7 +19,7 @@ public class MummyManShouting : Pattern
 
         _createTime = 0.45f;
         _patternRange = _hitboxRange;
-        _patternDmg = 20;
+        _patternDmg = 42;
 
         _data = GetComponent<MummyManAnimationData>();
         _intervalTime = _data.ShoutingAnim.length / 2;
@@ -36,16 +36,12 @@ public class MummyManShouting : Pattern
         yield return new WaitForSeconds(_createTime);
         Managers.Sound.Play("Sounds/Monster/Mummy/MummyShouting2_SND", Define.Sound.Effect);
 
-        cos[0] = StartCoroutine(CreateShouting(_attackDamage + _patternDmg, Pos, duration));
+        cos[0] = StartCoroutine(CreateShouting(_patternDmg, Pos, duration));
 
         yield return new WaitForSeconds(_intervalTime);
-        cos[1] = StartCoroutine(CreateShouting(_attackDamage + _patternDmg, Pos, duration));
+        cos[1] = StartCoroutine(CreateShouting(_patternDmg, Pos, duration));
 
         yield return new WaitForSeconds(10.0f);
-        //foreach (var c in cos)
-        //{
-        //    StopCoroutine(c);
-        //}
     }
 
     IEnumerator CreateShouting(int attackDMG, Vector3 Pos, float duration)
