@@ -18,7 +18,7 @@ public class DoubleSlash : Skill
 
     public override IEnumerator StartSkillCast()
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage - 5;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
 
         _controller.SkillSlot.PreviousSkill = this;
         yield return new WaitForSeconds(0.05f);

@@ -10,7 +10,7 @@ public class WhirlWind : Skill
         Damage = 10;
         base.Init();
         SkillType = Define.SkillType.Holding;
-        skillRange = new Vector3(5, 5, 5);
+        skillRange = new Vector3(6, 6, 6);
         CollavoSkillRange = new Vector3(20, 5, 10);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/Whirlwind.png");
         CollavoSkillName = "ThunderStorm";

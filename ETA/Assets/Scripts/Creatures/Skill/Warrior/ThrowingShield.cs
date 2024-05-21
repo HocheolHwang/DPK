@@ -41,7 +41,7 @@ public class ThrowingShield : Skill
         ParticleSystem ps1 = Managers.Effect.Play(Define.Effect.ThrowingShield, duration, transform);
         ps1.transform.parent = null;
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, true, duration);
+        hitbox.SetUp(transform, Damage * 2, -1, true, duration);
         hitbox.transform.parent = ps1.transform;
         hitbox.transform.localScale = new Vector3(1,1,1);
         hitbox.transform.localPosition = new Vector3(0, 0, 0);

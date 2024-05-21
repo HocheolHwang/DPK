@@ -45,7 +45,7 @@ public class Sting : Skill
         // ParticleSystem ps1 = Managers.Resource.Instantiate("Effect/SwordVolleyBlue").GetComponent<ParticleSystem>();
         yield return new WaitForSeconds(0.2f);
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, true);
+        hitbox.SetUp(transform, Damage * 2, -1, true);
         hitbox.transform.position = _skillSystem.TargetPosition;
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(hitbox.gameObject);
