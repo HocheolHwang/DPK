@@ -19,7 +19,7 @@ public class QuadrupleSlash : Skill
     public override IEnumerator StartSkillCast()
     {
 
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage * 2;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 50;
         yield return new WaitForSeconds(0.05f);
         Managers.Sound.Play("Skill/RSkill");
         _animator.CrossFade("ATTACK5", 0.05f);

@@ -10,7 +10,7 @@ public class WindSlash : Skill
         Damage = 25;
         base.Init();
         SkillType = Define.SkillType.Holding;
-        skillRange = new Vector3(3, 3, 3);
+        skillRange = new Vector3(15, 15, 15);
         CollavoSkillRange = new Vector3(15, 15, 15);
         //skillIcon.sprite = Resources.Load<Sprite>("Sprites/SkillIcon/Warrior/WindSlash.png");
         CollavoSkillName = "Cyclone";

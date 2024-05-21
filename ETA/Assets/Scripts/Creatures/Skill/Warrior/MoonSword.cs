@@ -65,7 +65,7 @@ public class MoonSword : Skill
         yield return new WaitForSeconds(0.4f);
         Managers.Sound.Play("Skill/TargetSkill");
         HitBox box = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        box.SetUp(transform, Damage * 2);
+        box.SetUp(transform, Damage * 3);
         box.transform.position = dest;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.MoonSwordEffect, 0, box.transform);
         ps.transform.position = dest;
