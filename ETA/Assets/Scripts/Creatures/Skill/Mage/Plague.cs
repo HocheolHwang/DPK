@@ -8,7 +8,7 @@ public class Plague : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(1);
+        SetCoolDownTime(5);
         Damage = 1;
         base.Init();
         SkillType = Define.SkillType.Range;
@@ -17,6 +17,7 @@ public class Plague : Skill
     }
     public override IEnumerator StartSkillCast()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         _animator.CrossFade("SKILL2", 0.1f);
         targetPos = _skillSystem.TargetPosition;
 
@@ -26,8 +27,9 @@ public class Plague : Skill
         else
             StartCoroutine(PlagueCoroutine());
 
-        yield return new WaitForSeconds(0.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        yield return new WaitForSeconds(0.1f);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator PlagueCoroutine()

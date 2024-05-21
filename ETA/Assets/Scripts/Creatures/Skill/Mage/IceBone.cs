@@ -8,7 +8,7 @@ public class IceBone : Skill
     private Coroutine iceboneCoroutine;
     protected override void Init()
     {
-        SetCoolDownTime(10);
+        SetCoolDownTime(5);
         base.Init();
         SkillType = Define.SkillType.Range;
         skillRange = new Vector3(1, 3, 1);
@@ -28,7 +28,6 @@ public class IceBone : Skill
             yield return new WaitForSeconds(0.1f);
         }
 
-        yield return new WaitForSeconds(0.5f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }
@@ -44,7 +43,7 @@ public class IceBone : Skill
         Vector3 randomPosition = new Vector3(randomX, transform.position.y, randomZ);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, (Damage - 10) / 2);
+        hitbox.SetUp(transform, (Damage + 10) / 2);
         hitbox.transform.position = _skillSystem.TargetPosition + randomPosition - transform.up;
         hitbox.transform.localScale = skillRange;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.SpikeIce, hitbox.transform);

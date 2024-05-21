@@ -6,7 +6,7 @@ public class BubbleShot : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(2);
+        SetCoolDownTime(0.8f);
         Damage = 20;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/BubbleShot.png");
@@ -20,10 +20,10 @@ public class BubbleShot : Skill
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(BubbleShotCoroutine(targetPos));
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.3f);
         _animator.CrossFade("CASTING_OUT", 0.1f);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
     }

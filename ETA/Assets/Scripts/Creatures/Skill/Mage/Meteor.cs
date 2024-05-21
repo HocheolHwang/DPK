@@ -26,7 +26,7 @@ public class Meteor : Skill
         _animator.CrossFade("SKILL5", 0.1f);
         Managers.Sound.Play("Skill/Holy");
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.5f);
         StartCoroutine(MeteorCoroutine());
         //_controller.ChangeState(_controller.MOVE_STATE);
         ChangeToPlayerMoveState();
@@ -55,7 +55,7 @@ public class Meteor : Skill
         Managers.Sound.Play("Skill/Crash");
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage * 4);
+        hitbox.SetUp(transform, Damage * 8);
         hitbox.transform.position = endPos;
 
         // hitbox.transform.position = _skillSystem.TargetPosition;

@@ -24,12 +24,12 @@ public class PoisonMist : Skill
         StartCoroutine(PoisonMistCoroutine());
 
         yield return new WaitForSeconds(0.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator PoisonMistCoroutine()
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 10;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 2;
         Managers.Sound.Play("Skill/PoisonMist");
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.PoisonMist, 5.0f, transform);
