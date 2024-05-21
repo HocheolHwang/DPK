@@ -45,7 +45,7 @@ public class StormStrike : Skill
         ps03.transform.position = _skillSystem.TargetPosition;
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _controller.Stat.AttackDamage * 6, -1, true);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage * 8, -1, true);
         hitbox.transform.position = _skillSystem.TargetPosition;
         hitbox.transform.localScale = skillRange;
         yield return new WaitForSeconds(0.1f);
