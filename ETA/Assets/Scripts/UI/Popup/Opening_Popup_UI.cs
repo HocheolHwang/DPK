@@ -35,12 +35,14 @@ public class Opening_Popup_UI : UI_Popup
 
 
     // ------------------------------ 메서드 정의 ------------------------------
+    
+
 
     private void GoToLogin(PointerEventData data)
     {
         // Scene 이동 전에 모든 스택을 비움
         CloseAllPopupUI();
-
+        FindObjectOfType<SequentialTimelinePlayer>().isSkipped = true;
         Managers.Scene.LoadScene(Define.Scene.Login);
     }
 }

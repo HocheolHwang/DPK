@@ -8,7 +8,7 @@ public class SequentialTimelinePlayer : MonoBehaviour
 {
     public List<PlayableDirector> directors;
     private int currentDirectorIndex = 0;
-
+    public bool isSkipped;
     void Start()
     {
         foreach (PlayableDirector director in directors)
@@ -33,6 +33,7 @@ public class SequentialTimelinePlayer : MonoBehaviour
 
     private void OnDirectorStopped(PlayableDirector director)
     {
+        if (isSkipped) return;
         if (director == directors[currentDirectorIndex])
         {
             currentDirectorIndex++;

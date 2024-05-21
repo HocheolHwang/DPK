@@ -24,8 +24,8 @@ public class MummyManBuff : Pattern
 
         // Buff Stat
         duration = 30.0f;
-        upAmountATK = 10;
-        upAmountDEF = 5;
+        upAmountATK = 15;
+        upAmountDEF = 10;
         healAmount = _controller.Stat.MaxHp / 10;
         upShield = _controller.Stat.MaxHp / 10;
     }

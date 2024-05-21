@@ -39,16 +39,18 @@ public class Protection : Skill
         buffbox1.SetUp(transform, 30 + Damage, BuffBox.stat.Shield);
         buffbox1.transform.position = gameObject.transform.position;
         buffbox1.transform.localScale = new Vector3(20, 5, 20);
-        yield return new WaitForSeconds(0.1f);
+
+        yield return new WaitForSeconds(4.5f);
         Managers.Resource.Destroy(buffbox1.gameObject);
 
-        yield return new WaitForSeconds(5.0f);
-        Debug.Log($"Defense: {_controller.Stat.Shield}");
         BuffBox buffbox2 = Managers.Resource.Instantiate("Skill/BuffBoxRect").GetComponent<BuffBox>();
         buffbox2.SetUp(transform, -(30 + Damage), BuffBox.stat.Shield);
         buffbox2.transform.position = gameObject.transform.position;
         buffbox2.transform.localScale = new Vector3(20, 5, 20);
         if (ps != null)
             Managers.Effect.Stop(ps);
+
+        yield return new WaitForSeconds(0.1f);
+        Managers.Resource.Destroy(buffbox2.gameObject);
     }
 }

@@ -17,7 +17,7 @@ public class IprisPatternTwo : Pattern
         base.Init();
 
         _createTime = 0.1f;
-        _patternDmg = 50;
+        _patternDmg = 80;
     }
 
     public override IEnumerator StartPatternCast()

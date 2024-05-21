@@ -15,7 +15,6 @@ public class IprisPatternOneAttack : Pattern
         base.Init();
 
         _createTime = 0.1f;
-        _patternDmg = 50;
     }
 
     public override IEnumerator StartPatternCast()
@@ -33,7 +32,7 @@ public class IprisPatternOneAttack : Pattern
     private IEnumerator expandCollider(Vector3 Pos)
     {
         HitBox spreadHitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
-        spreadHitbox.SetUp(transform, _attackDamage + _patternDmg, -1, false, _duration);
+        spreadHitbox.SetUp(transform, _attackDamage, -1, false, _duration);
         spreadHitbox.transform.rotation = transform.rotation;
         spreadHitbox.transform.position = Pos;
 

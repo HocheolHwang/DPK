@@ -13,7 +13,8 @@ public class Login_Scene : BaseScene
         SceneType = Define.Scene.Login;
 
         Managers.UI.ShowPopupUI<Before_Login_Popup_UI>("[Login]_Before_Login_Popup_UI");
-        Managers.UI.ShowPopupUI<Login_Popup_UI>("[Login]_Login_Popup_UI");
+        Managers.UI.ShowPopupUI<Server_Selection_Popup_UI>("[Login]_Server_Selection_Popup_UI");
+        // Managers.UI.ShowPopupUI<Login_Popup_UI>("[Login]_Login_Popup_UI");
         Managers.Sound.Play("BackgroundMusic/Login", Define.Sound.BGM);
     }
 

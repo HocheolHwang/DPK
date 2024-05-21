@@ -7,7 +7,7 @@ public class WindSpirit : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(15);
+        SetCoolDownTime(30);
         base.Init();
         SkillType = Define.SkillType.Immediately;
         skillRange = new Vector3(3, 3, 3);

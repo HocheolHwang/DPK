@@ -8,7 +8,7 @@ public class Heal : Skill
 
     protected override void Init()
     {
-        SetCoolDownTime(10);
+        SetCoolDownTime(15);
         SkillType = Define.SkillType.Immediately;
         base.Init();
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/Heal.png");

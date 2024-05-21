@@ -12,7 +12,7 @@ public class Meteor : Skill
         SetCoolDownTime(20);
         base.Init();
         SkillType = Define.SkillType.Range;
-        skillRange = new Vector3(5, 5, 5);
+        skillRange = new Vector3(7, 7, 7);
         RangeType = Define.RangeType.Round;
         Damage = 100;
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/Meteor.png");
@@ -55,7 +55,7 @@ public class Meteor : Skill
         Managers.Sound.Play("Skill/Crash");
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage * 3);
+        hitbox.SetUp(transform, Damage * 4);
         hitbox.transform.position = endPos;
 
         // hitbox.transform.position = _skillSystem.TargetPosition;

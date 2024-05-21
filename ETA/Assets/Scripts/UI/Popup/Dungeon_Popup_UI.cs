@@ -34,6 +34,8 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 보스 상태
         Boss_Status,
+        Boss_HP_Bar,
+        Boss_Shield_Bar,
         Dragon_Status,
 
         // 보스 대사
@@ -164,9 +166,6 @@ public class Dungeon_Popup_UI : UI_Popup
         // 플레이어 상태
         Player_EXP_Slider,
 
-        // 보스 상태
-        Boss_HP_Slider,
-
         // 드래곤 상태
         Dragon_HP_Slider
     }
@@ -178,6 +177,8 @@ public class Dungeon_Popup_UI : UI_Popup
     private GameObject bossStatus;
     private GameObject dragonStatus;
     private GameObject bossScriptContainer;
+    private GameObject bossHPBar;
+    private GameObject bossShieldBar;
     private GameObject playerHPBar;
     private GameObject playerShieldBar;
     private GameObject[] memberHPBars = new GameObject[3];
@@ -203,7 +204,6 @@ public class Dungeon_Popup_UI : UI_Popup
     private TextMeshProUGUI bossScriptText;
     private TextMeshProUGUI[] skillCooldownTexts = new TextMeshProUGUI[8];
     private Slider dungeonProgressBar;
-    private Slider bossHPSlider;
     private Slider dragonHPSlider;
     private Slider playerEXPSlider;
 
@@ -390,6 +390,8 @@ public class Dungeon_Popup_UI : UI_Popup
         // 보스 상태창 초기화 및 비활성화
         bossStatus = GetObject((int)GameObjects.Boss_Status);
         bossStatus.SetActive(false);
+        bossHPBar = GetObject((int)GameObjects.Boss_HP_Bar);
+        bossShieldBar = GetObject((int)GameObjects.Boss_Shield_Bar);
 
         // 드래곤 상태창 초기화 및 비활성화
         dragonStatus = GetObject((int)GameObjects.Dragon_Status);
@@ -406,7 +408,6 @@ public class Dungeon_Popup_UI : UI_Popup
         bossLevelText = GetText((int)Texts.Boss_Level_Text);
         bossNameText = GetText((int)Texts.Boss_Name_Text);
         bossHPText = GetText((int)Texts.Boss_HP_Text);
-        bossHPSlider = GetSlider((int)Sliders.Boss_HP_Slider);
 
         // 보스 정보 업데이트
         UpdateBossInfo();
@@ -730,9 +731,6 @@ public class Dungeon_Popup_UI : UI_Popup
             bossIcons[i].gameObject.SetActive(i == selectedDungeonNumber);
         }
 
-        // 보스 HP 슬라이더 설정
-        bossHPSlider.value = 1;
-
         // 보스 레벨 텍스트 설정
         bossLevelText.text = selectedDungeonNumber switch
         {
@@ -847,11 +845,21 @@ public class Dungeon_Popup_UI : UI_Popup
 
         // 보스 체력 업데이트
         if (bossStatus.activeSelf == false) return;
-        bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
-        bossHPSlider.value = (float)bossStat.Hp / bossStat.MaxHp;
+
+        if (bossStat.Shield > 0)
+        {
+            bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp} (+{bossStat.Shield})";
+        }
+        else
+        {
+            bossHPText.text = $"{bossStat.Hp} / {bossStat.MaxHp}";
+        }
+
+        UpdateHealthAndShieldBars(bossHPBar, bossShieldBar, bossStat, 470);
+
 
         // 이프리스 체력 10% 남았을 시
-        if (selectedDungeonNumber == 3 && bossHPSlider.value <= 0.10f)
+        if (selectedDungeonNumber == 3 && (float)bossStat.Hp / bossStat.MaxHp <= 0.10f)
         {
             // 보스 상태 창 비활성화
             bossStatus.SetActive(false);
@@ -975,7 +983,7 @@ public class Dungeon_Popup_UI : UI_Popup
 
             result.Initialize();
             result.EarnExp(getExp, originExp, originLevel, originNeedExp, "던전 클리어!");
-            Managers.Photon.SendDungeonEnd(timeText.text, false);
+           
         }
 
         PlayerController[] players = GameObject.FindObjectsOfType<PlayerController>();

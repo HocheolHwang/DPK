@@ -62,7 +62,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
         if (Stat.Shield > 0 && _shieldEffect == null)
         {
-            if(this is PlayerController)
+            if (this is PlayerController)
             {
                 _shieldEffect = Managers.Resource.Instantiate("Effect/Shield", transform).GetComponent<ParticleSystem>();
                 _shieldEffect.transform.localPosition += transform.up;
@@ -162,8 +162,8 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
     public virtual void DecreaseSpeed(int amount)
     {
-        Stat.MoveSpeed -= amount;
-        if (Stat.MoveSpeed < 0) Stat.AttackDamage = 0;
+        if (Stat.MoveSpeed > 1)
+            Stat.MoveSpeed -= amount;
     }
 
     // ---------------------------------- IDamage ------------------------------------------
@@ -186,7 +186,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     }
 
 
-    public void CalcDamage(int attackDamage, bool isCounter ,int shield, bool evasion, int defense)
+    public void CalcDamage(int attackDamage, bool isCounter, int shield, bool evasion, int defense)
     {
         if (isCounter)
         {
@@ -259,6 +259,7 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
 
         // 애니메이션은 상태에서 관리 중
         GetComponent<Collider>().enabled = false;
+        GetComponent<NavMeshAgent>().radius = 0;
 
 
     }
@@ -339,13 +340,13 @@ public abstract class BaseController : MonoBehaviour, IDamageable, IBuffStat
     IEnumerator PushedCoroutine(int power, float duration)
     {
         float time = 0;
-        while(time < duration)
+        while (time < duration)
         {
             Agent?.Move(transform.forward * -1 * power * Time.deltaTime);
             time += Time.deltaTime;
             yield return null;
         }
-        
+
     }
 }
 
