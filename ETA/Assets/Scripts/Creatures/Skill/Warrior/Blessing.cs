@@ -27,15 +27,16 @@ public class Blessing : Skill
 
     private IEnumerator BlessingCoroutine()
     {
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BlessingEffect, 10.0f, gameObject.transform);
         if (ps != null)
             ps.transform.SetParent(gameObject.transform);
 
-        _controller.IncreaseDefense(5);
+        _controller.IncreaseDefense(5 + Damage / 20);
 
         // 방어력 증가 후 일정 시간 대기
-        yield return new WaitForSeconds(10.0f);
-        _controller.DecreaseDefense(5);
+        yield return new WaitForSeconds(10.0f + (Damage / 100));
+        _controller.DecreaseDefense(5 + Damage / 20);
 
         // 이전 코드
         /*

@@ -6,7 +6,7 @@ public class ChargeArrow : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(15);
+        SetCoolDownTime(10);
         Damage = 50;
         base.Init();
         SkillType = Define.SkillType.Immediately;
@@ -22,7 +22,7 @@ public class ChargeArrow : Skill
         
         Managers.Coroutine.Run(ChargeArrowCoroutine());
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         ChangeToPlayerMoveState();
     }
@@ -33,7 +33,7 @@ public class ChargeArrow : Skill
         yield return new WaitForSeconds(0.1f);
         Managers.Sound.Play("Skill/WindBlast");
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, _controller.Stat.AttackDamage + 30, -1, false);
+        hitbox.SetUp(transform, _controller.Stat.AttackDamage * 4, -1, false);
         //hitbox.transform.position = gameObject.transform.position + transform.forward;
         hitbox.transform.position = _skillSystem.TargetPosition + transform.forward * 2.0f;
         hitbox.transform.localScale = skillRange;

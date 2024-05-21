@@ -99,8 +99,9 @@ public class Menu_Popup_UI : UI_Popup
 
         // 전체 음량 슬라이더 초기화
         soundSettingSlider = GetSlider((int)Sliders.Sound_Setting_Slider);
-        soundSettingSlider.value = 1;
-        soundSettingSlider.onValueChanged.AddListener(delegate { OnSliderValueChanged(); });
+        soundSettingSlider.value = AudioListener.volume;
+        soundSettingSlider.onValueChanged.AddListener(OnSliderValueChanged);
+
 
         // 전체 음량 텍스트 초기화
         soundSettingRatioText = GetText((int)Texts.Sound_Setting_Ratio_Text);
@@ -125,18 +126,17 @@ public class Menu_Popup_UI : UI_Popup
 
 
     // 슬라이더 값 변경 시 호출될 메서드
-    private void OnSliderValueChanged()
+    private void OnSliderValueChanged(float value)
     {
-        SoundControl();
-        UpdateSoundText(soundSettingSlider.value);
+        SoundControl(value);
+        UpdateSoundText(value);
+
     }
 
     // 사운드 설정 메서드
-    private void SoundControl()
+    private void SoundControl(float value)
     {
-        float soundValue = soundSettingSlider.value;
-        float volume = Mathf.Log10(Mathf.Max(soundValue, 0.0001f)) * 20;
-        soundMixer.SetFloat("Master", volume);
+        AudioListener.volume = value;
     }
 
     // 음량 텍스트 업데이트 메서드

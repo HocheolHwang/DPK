@@ -6,7 +6,7 @@ public class Fear : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(5);
+        SetCoolDownTime(4);
         Damage = 20;
         base.Init();
         skillRange = new Vector3(2, 2, 2);

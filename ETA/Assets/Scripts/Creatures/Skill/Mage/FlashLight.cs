@@ -6,7 +6,7 @@ public class FlashLight : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(5);
+        SetCoolDownTime(4);
         Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Immediately;
@@ -21,7 +21,8 @@ public class FlashLight : Skill
         StartCoroutine(FlashLightCoroutine());
 
         yield return new WaitForSeconds(0.5f);
-        _controller.ChangeState(_controller.MOVE_STATE);
+        //_controller.ChangeState(_controller.MOVE_STATE);
+        ChangeToPlayerMoveState();
     }
 
     private IEnumerator FlashLightCoroutine()
@@ -34,7 +35,7 @@ public class FlashLight : Skill
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.FlashLight, 2.0f, hiddenbox.transform);
 
         HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxRect").GetComponent<HitBox>();
-        hitbox.SetUp(transform, Damage, -1, true);
+        hitbox.SetUp(transform, Damage + 10, -1, true);
         hitbox.transform.position = gameObject.transform.position;
         hitbox.transform.localScale = skillRange;
 

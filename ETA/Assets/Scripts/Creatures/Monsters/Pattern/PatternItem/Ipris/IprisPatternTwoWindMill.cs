@@ -14,7 +14,7 @@ public class IprisPatternTwoWindMill : Pattern
         base.Init();
 
         _createTime = 0.1f;
-        _patternDmg = 50;
+        _patternDmg = 110;
     }
 
     public override IEnumerator StartPatternCast()

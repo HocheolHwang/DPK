@@ -9133,7 +9133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 844974559}
   - component: {fileID: 844974558}
-  - component: {fileID: 844974557}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -9141,18 +9140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &844974557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844974556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b780196d8f5b89a47ba7c106e010e5e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &844974558
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ public class SwordWave : Skill
 
     public override IEnumerator StartSkillCast()
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 50;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage + 80;
         // 대상을 향해 회전하기
         Vector3 directionToTarget = (_skillSystem.TargetPosition - transform.position).normalized;
         Quaternion rotationToTarget = Quaternion.LookRotation(directionToTarget, Vector3.up);

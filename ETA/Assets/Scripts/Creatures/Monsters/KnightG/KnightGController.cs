@@ -26,10 +26,10 @@ public class KnightGController : BaseMonsterController
     #endregion
 
     #region STATE VARIABLE
-    private int _attackCnt = 0;                 // 평타를 번갈아가면서 공격할 수 있음
-    private int _twoSkillTrigger = 1;           // 1번 사용할 수 있다.
-    private int _counterTimeTrigger = 1;        // 처음 플레이어를 직면한 후에 counterTime을 계산하기 시작한다.
-    private float _counterTime = 0;             // 카운터 공격을 할 수 있는 시간을 관리
+    [SerializeField] private int _attackCnt = 0;                 // 평타를 번갈아가면서 공격할 수 있음
+    [SerializeField] private int _twoSkillTrigger = 1;           // 1번 사용할 수 있다.
+    [SerializeField] private int _counterTimeTrigger = 1;        // 처음 플레이어를 직면한 후에 counterTime을 계산하기 시작한다.
+    [SerializeField] private float _counterTime = 0;             // 카운터 공격을 할 수 있는 시간을 관리
 
     public int AttackCnt { get => _attackCnt; set => _attackCnt = value; }
     public int TwoSkillTrigger { get => _twoSkillTrigger; set => _twoSkillTrigger = value; }

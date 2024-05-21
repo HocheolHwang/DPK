@@ -7,11 +7,11 @@ public class ChainLightning : Skill
 {
     protected override void Init()
     {
-        SetCoolDownTime(3);
+        SetCoolDownTime(1);
         Damage = 20;
         base.Init();
         SkillType = Define.SkillType.Immediately;
-        skillRange = new Vector3(15, 15, 15);
+        skillRange = new Vector3(20, 20, 20);
         skillIcon = Resources.Load<Sprite>("Sprites/SkillIcon/Mage/ChainLightning.png");
     }
 
@@ -21,15 +21,15 @@ public class ChainLightning : Skill
         Vector3 targetPos = gameObject.transform.position;
 
         yield return new WaitForSeconds(0.1f);
-        StartCoroutine(ChainLightningCoroutine(targetPos));
+        Managers.Coroutine.Run(ChainLightningCoroutine(targetPos));
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         _controller.ChangeState(_controller.MOVE_STATE);
     }
 
     private IEnumerator ChainLightningCoroutine(Vector3 targetPos)
     {
-        Damage = _controller.GetComponent<PlayerStat>().AttackDamage / 2;
+        Damage = _controller.GetComponent<PlayerStat>().AttackDamage;
         Managers.Sound.Play("Skill/FlashLight");
         List<Transform> monstersInHitbox = new List<Transform>();
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.Thunder3, 2.0f, transform);
@@ -56,6 +56,9 @@ public class ChainLightning : Skill
         foreach ((Transform monster, float distance) in distanceSorted)
         {
             HitBox hitbox = Managers.Resource.Instantiate("Skill/HitBoxCircle").GetComponent<HitBox>();
+            hitbox.SetUp(transform, Damage);
+            hitbox.transform.localScale = new Vector3(1, 1, 1);
+            hitbox.transform.position = monster.position;
             hitbox.SetUp(transform, Damage);
             hitbox.transform.localScale = new Vector3(1, 1, 1);
             hitbox.transform.position = monster.position;
