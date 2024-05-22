@@ -115,9 +115,9 @@
 
 ## 📜 프로젝트 기록
 
-[Notion 협업링크](https://round-tower-80e.notion.site/E107-439c9a3c4cde4e3dbc1bc20511f64965?pvs=4)
+[Notion 협업링크](https://round-tower-80e.notion.site/E207-4a8c3c76629d491dbe766f275c40e086?pvs=4)
 
 
 ## 🎨 와이어 프레임
 
-[Figma 링크](https://www.figma.com/file/PL3NZV5uLviCKsIvZamyQw/E-107?type=design&node-id=341-5148&mode=design)
+[Figma 링크](https://www.figma.com/design/w8kqyEbbvF3L6kCHBu4gFw/E207-%EC%9E%90%EC%9C%A8?node-id=594%3A227&t=2QI79v45bhP9rKSU-1)
