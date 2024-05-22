@@ -17,8 +17,8 @@
 | <img src="./Docs/Profile/MyeongSeong.jpg" width="100%" height="150">| <img src="./Docs/Profile/DongHyun.jpg" width="100%" height="150"> | <img src="./Docs/Profile/HyunKi.png" width="100%" height="150"> | <img src="./Docs/Profile/Suyeong.png" width="100%" height="150"> | <img src="./Docs/Profile/Sejin.jpg" width="100%" height="150">                              | <img src="./Docs/Profile/Hocheol.png" width="100%" height="150"> |
 |:--------------------------------------------------------------------:| :--------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------:|
 |최명성|김동현|신현기|장수영|정세진|황호철|
-|팀장 <br> Game Client<br>CI/CD<br>Backend|Game Clie nt|Game Client|Backend <br> Game Client|Game Client|Game Client|
-|  API 및 DB 설계<br>Photon Network 연결 및 동기화<br>플레이어 캐릭터 설계 및 구현<br>스킬 설계 및 제작  |몬스터 AI 기획, 설계 및 구현       | 맵 제작 및 던전 디자인<br>스킬 제작<br>오프닝 컷씬 제작       | Photon Network 연결 및 동기화 <br> 몬스터 제작 | 스킬 제작 및 밸런스 디자인 |              UI/UX 기획 및 설계<br>인 게임 UI 설계 및 구현               |
+|팀장 <br> Game Client<br>Infra<br>Backend<br>Frontend|Game Client|Game Client|Game Client|Game Client|Game Client|
+|  API 및 DB 설계<br>Photon Network 연결 및 동기화<br>플레이어 캐릭터 설계 및 구현<br>스킬 설계 및 제작<br>전투 흐름 설계 및 구현  |몬스터 AI 기획, 설계 및 구현       | 맵 제작 및 던전 디자인<br>스킬 제작<br>오프닝 컷씬 제작       | Photon Network 연결 및 동기화 <br> 몬스터 제작 | 스킬 제작 및 밸런스 디자인 |              UI/UX 기획 및 설계<br>인 게임 UI 설계 및 구현               |
 
 <br/>
 <br/>
@@ -77,9 +77,9 @@
 
 #### **BE**
 
-<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=nestjs&logoColor=white">
-<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=npm&logoColor=white">
-<img src="https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style=for-the-badge&logo=npm&logoColor=white">
+<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
+<img src="https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style=for-the-badge&logo=jpa&logoColor=white">
 <img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 
