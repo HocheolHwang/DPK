@@ -21,7 +21,6 @@
 |  API 및 DB 설계<br>Photon Network 연결 및 동기화<br>플레이어 캐릭터 설계 및 구현<br>스킬 설계 및 제작<br>전투 흐름 설계 및 구현  |몬스터 AI 기획, 설계 및 구현       | 맵 제작 및 던전 디자인<br>스킬 제작<br>오프닝 컷씬 제작       | Photon Network 연결 및 동기화 <br> 몬스터 제작 | 스킬 제작 및 밸런스 디자인 |              UI/UX 기획 및 설계<br>인 게임 UI 설계 및 구현               |
 
 <br/>
-<br/>
 
 ## 서비스 소개
 
@@ -40,7 +39,6 @@
 
 ### 스킬 시스템
 세계에 마력이 흐르게 되면서 사람들도 마법을 사용하게 되었습니다. **레벨 업**을 통해 새로운 **스킬**을 획득하고 자신만의 스타일로 **스킬 슬롯**을 제작하여 던전에 입장해보세요! 다양한 스킬 조합은 매 플레이마다 새로운 전략과 재미를 선사합니다.
-
 
 <br/>
 
@@ -67,6 +65,10 @@
 
 ## 🧂 사용 기술
 
+#### **Game**
+
+<img src="https://img.shields.io/badge/Unity-FFFFFF?style=for-the-badge&logo=unity&logoColor=black"> <img src="https://img.shields.io/badge/Photon-004480?style=for-the-badge&logo=photon&logoColor=white">
+
 #### **FE**
 
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
@@ -77,34 +79,16 @@
 
 #### **BE**
 
-<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
-<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
-<img src="https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style=for-the-badge&logo=jpa&logoColor=white">
-<img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style=for-the-badge&logo=jpa&logoColor=white"> <img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 
 #### **INFRA**
 
-<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white">
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
-<img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white"/> 
-<img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"/>
-<img src="https://img.shields.io/badge/letsencrypt-003A70?style=for-the-badge&logo=letsencrypt&logoColor=white">
-
-#### **Game**
-
-<img src="https://img.shields.io/badge/Unity-FFFFFF?style=for-the-badge&logo=unity&logoColor=black">
-<img src="https://img.shields.io/badge/Photon-004480?style=for-the-badge&logo=photon&logoColor=white">
+<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white"/>  <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"/> <img src="https://img.shields.io/badge/letsencrypt-003A70?style=for-the-badge&logo=letsencrypt&logoColor=white">
 
 #### **협업**
 
-<img src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white">
-<img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jirasoftware&logoColor=white">
-<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
-<img src="https://img.shields.io/badge/mattermost-0058CC?style=for-the-badge&logo=mattermost&logoColor=white">
-<img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">
+<img src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white"> <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jirasoftware&logoColor=white"> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/mattermost-0058CC?style=for-the-badge&logo=mattermost&logoColor=white"> <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">
 
-<br/>
 <br/>
 
 ## 🔨 아키텍처 구성도
@@ -117,6 +101,7 @@
 
 [Notion 협업링크](https://round-tower-80e.notion.site/E207-4a8c3c76629d491dbe766f275c40e086?pvs=4)
 
+<br/>
 
 ## 🎨 와이어 프레임
 
